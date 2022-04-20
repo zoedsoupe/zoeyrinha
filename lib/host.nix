@@ -34,9 +34,9 @@ with builtins;
       networking.hostName = "${name}";
       networking.interfaces = networkCfg;
       networking.wireless.interfaces = wifi;
-
       networking.networkmanager.enable = true;
       networking.useDHCP = false;
+      networking.nameservers = [ "8.8.8.8" ];
 
       hardware.cpu.intel.updateMicrocode = true;
       powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";

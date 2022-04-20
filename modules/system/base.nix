@@ -12,6 +12,54 @@ in {
   };
 
   config = mkIf (cfg.enable) {
+    i18n.defaultLocale = "en_CA.UTF-8";
+    console.useXkbConfig = true;
+    time.timeZone = "America/Sao_Paulo";
+
+    location = {
+      provider = "manual";
+      latitude = -21.7629877;
+      longitude = -41.296212;
+    };
+
+    fonts.fonts = with pkgs; [
+      cantarell-fonts
+      font-awesome_4
+      material-design-icons
+      corefonts
+      (nerdfonts.override {
+        fonts = [
+          "FiraCode"
+          "Iosevka"
+          "JetBrainsMono"
+          "Monofur"
+        ];
+      })
+    ];
+
+    programs = {
+      steam.enable = true;
+      command-not-found.enable = true;
+      gnupg.agent = {
+        enable = true;
+        enableSSHSupport = true;
+        pinentryFlavor = "curses";
+      };
+    };
+
+    services = {
+      fstrim = {
+        enable = true;
+        interval = "weekly";
+      };
+
+      logind = {
+        extraConfig = ''
+        LidSwitchIgnoreInhibited=no
+        '';
+        #lidSwitch = "ignore";
+      };
+    };
     environment = {
       variables = {
         EDITOR = "nvim";
