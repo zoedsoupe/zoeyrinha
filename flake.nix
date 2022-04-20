@@ -34,19 +34,28 @@
       inherit (nixlib) lib;
 
       util = import .lib {
-        inherit system pkgs home-manager lib; overlays = (pkgs.overlays);
+        inherit system pkgs home-manager lib;
+        overlays = (pkgs.overlays);
       };
 
       inherit (util) user;
       inherit (util) host;
 
       pkgs = import nixpkgs {
-        inherit system;
+        inherit system overlays;
         config.allowUnfree = true;
         overlays = [];
       };
 
       system = "x86_64-linux";
+
+      scripts = import ./scripts {
+        inherit pkgs lib;
+      };
+
+      inherit (import ./overlays {
+        inherit system pkgs lib scripts;
+      }) overlays;
     in {
       homeManagerConfigurations = {
         zoedsoupe = user.mkHMUser {
