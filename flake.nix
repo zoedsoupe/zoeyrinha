@@ -44,7 +44,6 @@
       pkgs = import nixpkgs {
         inherit system overlays;
         config.allowUnfree = true;
-        overlays = [];
       };
 
       system = "x86_64-linux";
