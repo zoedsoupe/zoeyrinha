@@ -20,7 +20,7 @@ in {
       command-not-found.enable = true;
     };
 
-    home.packages = with pkgs [
+    home.packages = with pkgs; [
       # chat
       tdesktop
       discord

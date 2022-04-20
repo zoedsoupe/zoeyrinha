@@ -31,9 +31,9 @@
     , ...
     }@inputs:
     let
-      inherit (nixlib) lib;
+      lib = { nixosSystem = nixpkgs.lib.nixosSystem; } // nixlib.lib;
 
-      util = import .lib {
+      util = import ./lib {
         inherit system pkgs home-manager lib;
         overlays = (pkgs.overlays);
       };
@@ -65,12 +65,11 @@
             clipmenu.enable = true;
             direnv.enable = true;
             dunst.enable = true;
-            fish.enable = true;
             fzf.enable = true;
             vscodium.enable = true;
             kitty.enable = true;
             starship.enable = true;
-            udiskie = true;
+            udiskie.enable = true;
             git = {
               enable = true;
               userName = "Zoey de Souza Pessanha";
@@ -87,9 +86,25 @@
                 statusbar.enable = true;
                 screenlock.enable = true;
               };
-              xorg = {
-                enable = false;
-                screenlock.enable = true;
+              # xorg = {
+              #   enable = false;
+              #   screenlock.enable = true;
+              # };
+            };
+            fish = {
+              enable = true;
+              aliases = {
+                lg = "lazygit";
+                ps = "procs";
+                top = "ytop";
+                ls = "exa -l";
+                cheat = "tldr $argv";
+                prettyjson = "python -m json.tool | bat";
+                d = "rm -rf $argv";
+                please = "sudo $argv";
+                "..." = "cd ../../";
+                nvim = "nix run github:zoedsoupe/copper#nvim.";
+                vim = "nix run github:zoedsoupe/copper#nvim.";
               };
             };
           };
@@ -111,7 +126,6 @@
             "splash"
             "udev.log_priority=3"
           ];
-          systemConfig = {};
           cpuCores = 8;
           users = [{
             name = "zoedsoupe";
@@ -121,21 +135,20 @@
           }];
           systemConfig = {
             base.enable = true;
-            boot.enable = true;
+            boot = "efi";
             picom.enable = true;
             screen.enable = true;
             security.enable = true;
-            virtualisation = true;
-            zram = true;
+            virtualisation.enable = true;
+            zram.enable = true;
             graphical = {
-              xorg.enable = false;
+              xorg.enable = true;
               wayland = {
                 enable = true;
                 swaylock-pam = true;
               };
             };
             connectivity = {
-              networkmanager.enable = true;
               bluetooth.enable = true;
               sound.enable = true;
               printing.enable = true;

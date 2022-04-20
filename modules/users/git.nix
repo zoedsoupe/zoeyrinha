@@ -38,7 +38,7 @@ in {
 
     ignores = mkOption {
       description = "List of files to be global ignored";
-      type = types.list types.str;
+      type = types.listOf types.str;
       default = [];
     };
   };
@@ -76,7 +76,7 @@ in {
         init = { defaultBranch = "main"; };
         pull = { rebase = false; };
         commit = {
-          template = builtins.toString gitMessagePath;
+          template = builtins.toString ./misc/gitmessage;
         };
         log = {
           follow = true;

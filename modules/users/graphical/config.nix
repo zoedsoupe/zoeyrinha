@@ -6,11 +6,11 @@ with lib;
   config.zoedsoupe.graphical = {
     wayland = {
       enable = mkDefault false;
-      type = mkDefault null;
+      desktop-environment = mkDefault null;
 
       background = {
         enable = mkDefault false;
-        image = mkDefault ../../..//wallpapers/syscalls.png;
+        image = mkDefault /home/zoedsoupe/documents/privy/zoeyrinha/wallpapers/syscalls.png;
         mode = mkDefault "fill";
         pkg = mkDefault pkgs.swaybg;
       };
