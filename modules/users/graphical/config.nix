@@ -10,7 +10,7 @@ with lib;
 
       background = {
         enable = mkDefault false;
-        image = mkDefault ./wallpapers/.jpg;
+        image = mkDefault ../../..//wallpapers/syscalls.png;
         mode = mkDefault "fill";
         pkg = mkDefault pkgs.swaybg;
       };
