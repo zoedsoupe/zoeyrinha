@@ -3,6 +3,7 @@
 {
   imports = [
     ./config.nix
+    ./shared.nix
     ./wayland.nix
   ];
 }
