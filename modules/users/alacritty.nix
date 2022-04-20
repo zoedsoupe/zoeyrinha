@@ -15,7 +15,7 @@ in {
 
   config = mkIf (cfg.enable) {
     programs.alacritty = {
-      enable = true;
+      inherit (cfg) enable;
       settings = {
         cursor = {
           style = {

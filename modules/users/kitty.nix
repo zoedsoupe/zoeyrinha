@@ -15,7 +15,7 @@ in {
 
   config = mkIf (cfg.enable) {
     programs.kitty = {
-      enable = true;
+      inherit (cfg) enable;
       font = {
         name = "JetBrainsMono Nerd Font Mono";
         size = 14;

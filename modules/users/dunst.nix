@@ -15,7 +15,7 @@ in {
 
   config = mkIf (cfg.enable) {
     services.dunst = {
-      enable = true;
+      inherit (cfg) enable;
       iconTheme = {
         name = "arc-icon-theme";
         package = pkgs.arc-icon-theme;
