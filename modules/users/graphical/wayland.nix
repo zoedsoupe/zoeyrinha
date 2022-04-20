@@ -26,14 +26,14 @@ let
     exec ${swayStartup}/bin/sway-setup
 
     # Alt key
-    set $mod Mod1
+    set $mod mod4
 
     set $left h
     set $down j
     set $up k
     set $right l
 
-    set $term ${pkgs.foot}/bin/foot
+    set $term kitty
     set $menu ${pkgs.j4-dmenu-desktop}/bin/j4-dmenu-desktop --dmenu="BEMENU_SCALE=2 ${pkgs.bemenu}/bin/bemenu -i -l 8 --scrollbar autohide" --term="$term" --no-generic | xargs swaymsg exec --
 
     bindsym $mod+Return exec $term
@@ -193,7 +193,7 @@ in
     };
 
     systemd.user.targets = {
-      sway-session = mkIf (cfg.type == "sway") {
+      sway-session = mkIf (cfg.desktop-environment == "sway") {
         Unit = {
           Description = "sway compositor session";
           Documentation = [ "man:systemd.special(7)" ];

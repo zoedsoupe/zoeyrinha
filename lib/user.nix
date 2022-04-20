@@ -18,7 +18,7 @@ with builtins;
               description = "Settings passed from nixos system configuration. If not present will be empty";
             };
 
-            config = { inherit machineData };
+            config = { inherit machineData; };
           };
         in {
           zoedsoupe = userConfig;
@@ -49,5 +49,5 @@ with builtins;
       extraGroups = groups;
       initialPassword = "nixos";
     };
-  }
+  };
 }

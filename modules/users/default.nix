@@ -2,18 +2,18 @@
 
 {
   imports = [
-    ./alacritty
-    ./applications
-    ./clipmenu
-    ./direnv
-    ./dunst
-    ./fish
-    ./fzf
+    ./alacritty.nix
+    ./applications.nix
+    ./clipmenu.nix
+    ./direnv.nix
+    ./dunst.nix
+    ./fish.nix
+    ./fzf.nix
     ./git.nix
     ./graphical
-    ./kitty
-    ./starship
-    ./udiskie
-    ./vscodium
+    ./kitty.nix
+    ./starship.nix
+    ./udiskie.nix
+    ./vscodium.nix
   ];
 }

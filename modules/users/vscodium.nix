@@ -10,39 +10,39 @@ let
       name = "vsc-material-theme";
       publisher = "Equinusocio";
       version = "33.4.0";
-      sha256 = "";
+      sha256 = "sha256-BthKoGzj0XeZINAmgkHPArvm2gIzDaOaAnkoWVqOkoY=";
     }
     {
       name = "gc-excelviewer";
       publisher = "GrapeCity";
       version = "4.2.54";
-      sha256 = "";
+      sha256 = "sha256-uMfCPk3ZwNCiHLVle7Slxw6n/FiIrlMR2T/jCggtK+s=";
     }
     {
       name = "path-intellisense";
       publisher = "christian-kohler";
       version = "2.8.0";
-      sha256 = "";
+      sha256 = "sha256-VPzy9o0DeYRkNwTGphC51vzBTNgQwqKg+t7MpGPLahM=";
     }
     {
       name = "vscode-phoenix-snippets";
       publisher = "jamilabreu";
       version = "1.2.0";
-      sha256 = "";
+      sha256 = "sha256-iMrO+HiD7bf2TV7J/KpxvYmLkxHAlS/PSK9Evge7HoI=";
     }
     {
       name = "surface";
       publisher = "msaraiva";
       version = "0.7.0";
-      sha256 = "";
+      sha256 = "sha256-9ps0gN/NcokAryZcc+EPqP8M3qypZqh9dB/kSckFtfg=";
     }
   ];
 in {
   options.zoedsoupe.vscodium = {
-    enable = mkIf {
+    enable = mkOption {
       description = "Enable VSCodium";
       type = types.bool;
-      default = true;
+      default = false;
     };
   };
 
@@ -50,7 +50,6 @@ in {
     programs.vscode = {
       inherit (cfg) enable;
       package = pkgs.vscodium;
-      haskell.enable = true;
       userSettings = {
         editor = {
           linkedEditing = true;

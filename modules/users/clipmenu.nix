@@ -5,7 +5,7 @@ with lib;
 let
   cfg = config.zoedsoupe.clipmenu;
 in {
-  options.zoedsoupe.services = {
+  options.zoedsoupe.clipmenu = {
     enable = mkOption {
       description = "Enable Clipmenu";
       type = types.bool;
@@ -14,6 +14,6 @@ in {
   };
 
   config = mkIf (cfg.enable) {
-    services.clipmenu.enable = { inherit (cfg) enable; };
+    services.clipmenu = { inherit (cfg) enable; };
   };
 }

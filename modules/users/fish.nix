@@ -61,7 +61,7 @@ in {
 
   config = mkIf (cfg.enable) {
     programs.fish = {
-      inherit (cfg enable);
+      inherit (cfg) enable;
       shellInit = (base + functions);
       shellAliases = cfg.aliases;
       plugins = [
