@@ -49,7 +49,29 @@
       system = "x86_64-linux";
     in {
       homeManagerConfigurations = {
-        zoedsoupe = user.mkHMUser {};
+        zoedsoupe = user.mkHMUser {
+          username = "zoedsoupe";
+          userConfig = {
+            alacritty.enable = false;
+            applications.enable = true;
+            clipmenu.enable = true;
+            direnv.enable = true;
+            dunst.enable = true;
+            fish.enable = true;
+            fzf.enable = true;
+            git = {
+              enable = true;
+              userName = "Zoey de Souza Pessanha";
+              userEmail = "zoey.spessanha@outlook.com";
+              lfs.enable = true;
+              delta.enable = true;
+              ignores = [ "*.swp" "*.swo" ".nix-*" ".postgres" ".direnv" ];
+            };
+            kitty.enable = true;
+            starship.enable = true;
+            udiskie = true;
+          };
+        };
       };
 
       nixosConfigurations = {
