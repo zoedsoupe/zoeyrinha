@@ -2,6 +2,11 @@
 
 {
   imports = [
+    ./alacritty
+    ./dunst
+    ./fish
     ./git.nix
+    ./kitty
+    ./starship
   ];
 }
