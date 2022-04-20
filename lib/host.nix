@@ -38,6 +38,9 @@ with builtins;
       networking.networkmanager.enable = true;
       networking.useDHCP = false;
 
+      hardware.cpu.intel.updateMicrocode = true;
+      powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
+
       boot = {
         initrd.availableKernelModules = initrdMods;
         kernelModules = kernelMods;
