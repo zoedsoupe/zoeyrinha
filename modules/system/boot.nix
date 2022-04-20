@@ -24,7 +24,7 @@ in
         devices = [ "nodev" ];
         efiSupport = true;
         useOSProber = true;
-        splashImage = ./boot_wallpaper.jpg;
+        splashImage = ./misc/boot_wallpaper.jpg;
         version = 2;
         extraEntries = ''
         menuentry "Reboot" {
