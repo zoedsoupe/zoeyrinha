@@ -19,7 +19,7 @@
       url = "github:edolstra/flake-compat";
       flake = false;
     };
-  }:
+  };
 
   outputs =
     { self
