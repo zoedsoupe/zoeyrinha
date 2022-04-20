@@ -60,6 +60,9 @@
             fish.enable = true;
             fzf.enable = true;
             vscodium.enable = true;
+            kitty.enable = true;
+            starship.enable = true;
+            udiskie = true;
             git = {
               enable = true;
               userName = "Zoey de Souza Pessanha";
@@ -68,9 +71,19 @@
               delta.enable = true;
               ignores = [ "*.swp" "*.swo" ".nix-*" ".postgres" ".direnv" ];
             };
-            kitty.enable = true;
-            starship.enable = true;
-            udiskie = true;
+            graphical = {
+              wayland = {
+                enable = true;
+                desktop-environment = "sway";
+                background.enable = true;
+                statusbar.enable = true;
+                screenlock.enable = true;
+              };
+              xorg = {
+                enable = false;
+                screenlock.enable = true;
+              };
+            };
           };
         };
       };
@@ -98,6 +111,29 @@
             uid = 1000;
             shell = pkgs.fish;
           }];
+          systemConfig = {
+            base.enable = true;
+            boot.enable = true;
+            picom.enable = true;
+            screen.enable = true;
+            security.enable = true;
+            virtualisation = true;
+            zram = true;
+            graphical = {
+              xorg.enable = false;
+              wayland = {
+                enable = true;
+                swaylock-pam = true;
+              };
+            };
+            connectivity = {
+              networkmanager.enable = true;
+              bluetooth.enable = true;
+              sound.enable = true;
+              printing.enable = true;
+              firewall.enable = true;
+            };
+          };
         };
       };
     };
