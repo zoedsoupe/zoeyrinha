@@ -13,5 +13,6 @@
     ./kitty
     ./starship
     ./udiskie
+    ./vscodium
   ];
 }

@@ -59,6 +59,7 @@
             dunst.enable = true;
             fish.enable = true;
             fzf.enable = true;
+            vscodium.enable = true;
             git = {
               enable = true;
               userName = "Zoey de Souza Pessanha";
