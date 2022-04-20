@@ -142,7 +142,7 @@
             virtualisation.enable = true;
             zram.enable = true;
             graphical = {
-              xorg.enable = true;
+              # xorg.enable = true;
               wayland = {
                 enable = true;
                 swaylock-pam = true;
@@ -153,6 +153,7 @@
               sound.enable = true;
               printing.enable = true;
               firewall.enable = true;
+              wifi.enable = true;
             };
           };
         };

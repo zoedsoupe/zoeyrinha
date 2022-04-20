@@ -25,7 +25,7 @@ let
   swayConfig = ''
     exec ${swayStartup}/bin/sway-setup
 
-    # Alt key
+    # Super key
     set $mod mod4
 
     set $left h
@@ -36,15 +36,21 @@ let
     set $term kitty
     set $menu ${pkgs.j4-dmenu-desktop}/bin/j4-dmenu-desktop --dmenu="BEMENU_SCALE=2 ${pkgs.bemenu}/bin/bemenu -i -l 8 --scrollbar autohide" --term="$term" --no-generic | xargs swaymsg exec --
 
+    set $screenshot flameshot gui
+
+    font pango:JetBrainsMono 10
+
     bindsym $mod+Return exec $term
-    bindsym $mod+Shift+c kill
+    bindsym $mod+q kill
     bindsym $mod+p exec '$menu'
-    bindsym $mod+Shift+q exec swaynag -t warning -m 'Do you really want to exit?' -B 'Yes' 'swaymsg exit'
+    bindsym $mod+Shift+c reload
+    bindsym $mod+Shift+q exit
 
     bindsym $mod+f+$left focus left
     bindsym $mod+f+$down focus down
     bindsym $mod+f+$up focus up
     bindsym $mod+f+$right focus right
+    bindsym $mod+Print exec $screenshot
 
     bindsym $mod+v splitv
     bindsym $mod+h splith
@@ -73,8 +79,16 @@ let
       ${pkgs.scripts.soundTools}/bin/stools vol toggle
 
     smart_borders on
+    gaps inner 10
+
     default_border pixel 2
     output eDP-1 scale 1
+
+    input * {
+      xkb_layout us
+      xkb_variant intl
+      xkb_options ctrl:swapcaps
+    }
 
     input "type:touchpad" {
       dwt enabled
@@ -82,6 +96,105 @@ let
       natural_scroll enabled
       drag enabled
     }
+
+    # Workspaces
+    set $ws1   1:
+    set $ws2   2:
+    set $ws3   3:3
+    set $ws4   4:4
+    set $ws5   5:5
+    set $ws6   6:6
+    set $ws7   7:7
+    set $ws8   8:8
+    set $ws9   9:9
+    set $ws0   10:10
+    set $wsF1  11:
+    set $wsF2  12:
+    set $wsF3  13:13
+    set $wsF4  14:14
+    set $wsF5  15:15
+    set $wsF6  16:16
+    set $wsF7  17:17
+    set $wsF8  18:
+    set $wsF9  19:19
+    set $wsF10 20:20
+    set $wsF11 21:
+    set $wsF12 22:
+
+    bindsym $mod+1   workspace $ws1
+    bindsym $mod+2   workspace $ws2
+    bindsym $mod+3   workspace $ws3
+    bindsym $mod+4   workspace $ws4
+    bindsym $mod+5   workspace $ws5
+    bindsym $mod+6   workspace $ws6
+    bindsym $mod+7   workspace $ws7
+    bindsym $mod+8   workspace $ws8
+    bindsym $mod+9   workspace $ws9
+    bindsym $mod+0   workspace $ws0
+    bindsym $mod+F1  workspace $wsF1
+    bindsym $mod+F2  workspace $wsF2
+    bindsym $mod+F3  workspace $wsF3
+    bindsym $mod+F4  workspace $wsF4
+    bindsym $mod+F5  workspace $wsF5
+    bindsym $mod+F6  workspace $wsF6
+    bindsym $mod+F7  workspace $wsF7
+    bindsym $mod+F8  workspace $wsF8
+    bindsym $mod+F9  workspace $wsF9
+    bindsym $mod+F10 workspace $wsF10
+    bindsym $mod+F11 workspace $wsF11
+    bindsym $mod+F12 workspace $wsF12
+
+    # move focused container to workspace
+    bindsym $mod+Shift+1    move container to workspace $ws1
+    bindsym $mod+Shift+2    move container to workspace $ws2
+    bindsym $mod+Shift+3    move container to workspace $ws3
+    bindsym $mod+Shift+4    move container to workspace $ws4
+    bindsym $mod+Shift+5    move container to workspace $ws5
+    bindsym $mod+Shift+6    move container to workspace $ws6
+    bindsym $mod+Shift+7    move container to workspace $ws7
+    bindsym $mod+Shift+8    move container to workspace $ws8
+    bindsym $mod+Shift+9    move container to workspace $ws9
+    bindsym $mod+Shift+0    move container to workspace $ws0
+    bindsym $mod+Shift+F1   move container to workspace $wsF1
+    bindsym $mod+Shift+F2   move container to workspace $wsF2
+    bindsym $mod+Shift+F3   move container to workspace $wsF3
+    bindsym $mod+Shift+F4   move container to workspace $wsF4
+    bindsym $mod+Shift+F5   move container to workspace $wsF5
+    bindsym $mod+Shift+F6   move container to workspace $wsF6
+    bindsym $mod+Shift+F7   move container to workspace $wsF7
+    bindsym $mod+Shift+F8   move container to workspace $wsF8
+    bindsym $mod+Shift+F9   move container to workspace $wsF9
+    bindsym $mod+Shift+F10  move container to workspace $wsF10
+    bindsym $mod+Shift+F11  move container to workspace $wsF11
+    bindsym $mod+Shift+F12  move container to workspace $wsF12
+
+    # Modes
+    mode "resize" {
+      bindsym Left resize shrink width 10px
+      bindsym Down resize grow height 10px
+      bindsym Up resize shrink height 10px
+      bindsym Right resize grow width 10px
+
+      # return to default mode
+      bindsym Return mode "default"
+      bindsym Escape mode "default"
+    }
+    bindsym $mod+r mode "resize"
+
+    set $mode_system System: (l) lock, (e) logout, (s) suspend, (r) reboot, (S) shutdown, (R) UEFI
+    mode "$mode_system" {
+      bindsym l exec $lock, mode "default"
+      bindsym e exit
+      bindsym s exec --no-startup-id systemctl suspend, mode "default"
+      bindsym r exec --no-startup-id systemctl reboot, mode "default"
+      bindsym Shift+s exec --no-startup-id systemctl poweroff -i, mode "default"
+      bindsym Shift+r exec --no-startup-id systemctl reboot --firmware-setup, mode "default"
+
+      # return to default mode
+      bindsym Return mode "default"
+      bindsym Escape mode "default"
+    }
+    bindsym $mod+Shift+e mode "$mode_system"
   '';
 in
 {
@@ -233,7 +346,7 @@ in
       package = cfg.statusbar.pkg;
       settings = [
         ({
-          layer = "top";
+          layer = "bottom";
 
           modules-left = [];
           modules-center = [ "clock" ];

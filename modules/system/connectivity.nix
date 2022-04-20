@@ -46,7 +46,8 @@ in {
       scripts.soundTools
     ] else [ ]);
 
-    networking.wireless.enable = cfg.wifi.enable;
+
+    networking.networkmanager.enable = cfg.wifi.enable;
     networking.firewall.enable = cfg.firewall.enable;
 
     services.pipewire = {
