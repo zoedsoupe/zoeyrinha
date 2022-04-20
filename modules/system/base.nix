@@ -59,6 +59,19 @@ in {
         '';
         #lidSwitch = "ignore";
       };
+
+      openssh.enable = true;
+
+      upower.enable = true;
+
+      dbus.enable = true;
+
+      openvpn.servers = {
+        solfacilVPN = {
+          autoStart = false;
+          config = "config /etc/openvpn/config.ovpn";
+        };
+      };
     };
     environment = {
       variables = {

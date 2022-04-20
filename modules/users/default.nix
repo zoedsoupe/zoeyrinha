@@ -10,6 +10,7 @@
     ./fish
     ./fzf
     ./git.nix
+    ./graphical
     ./kitty
     ./starship
     ./udiskie
