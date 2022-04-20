@@ -55,19 +55,6 @@ with builtins;
           "vm.overcommit_memory" = "1";
           "vm.swappiness" = 100; # if you're using (z)swap and/or zram. if you aren't, you should.
         };
-        loader = {
-          timeout = 0;
-          grub.enable = true;
-          grub.version = 2;
-          grub.efiSupport = true;
-          grub.device = "nodev"; # or "nodev" for efi only
-          grub.splashImage = ./boot_wallpaper.jpg;
-          grub.useOSProber = true;
-          efi = {
-            canTouchEfiVariables = true;
-            efiSysMountPoint = "/boot/efi";
-          };
-        };
       };
 
       nixpkgs.pkgs = pkgs;
