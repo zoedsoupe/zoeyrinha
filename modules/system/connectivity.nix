@@ -82,6 +82,7 @@ in {
     };
 
     hardware.pulseaudio.enable = false;
+    sound.enable = false;
 
     services.printing = {
       enable = cfg.printing.enable;
