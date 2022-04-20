@@ -53,6 +53,22 @@
       };
 
       nixosConfigurations = {
+        work = host.mkHost {
+          name = "work";
+          NICs = [ "enp4s0" "wlp0s20f3" ];
+          kernelPackage = pkgs.linuxPackages;
+          initrdMods = ["xhci_pci" "ahci" "nvme" "usb_storage" "sd_mod" ];
+          kernelMods = [ "kvm-intel" ];
+          kernelParams = [];
+          systemConfig = {};
+          cpuCores = 8;
+          users = [{
+            name = "zoedsoupe";
+            groups = [ "wheel" "networkmanager" "video" "audio" "docker" "libvirtd" ];
+            uid = 1000;
+            shell = pkgs.fish;
+          }];
+        };
       };
     };
   }
