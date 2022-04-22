@@ -35,6 +35,7 @@
 
       util = import ./lib {
         inherit system pkgs home-manager lib;
+        nixos = nixpkgs;
         overlays = (pkgs.overlays);
       };
 
@@ -156,6 +157,17 @@
               wifi.enable = true;
             };
           };
+        };
+      };
+
+      installMedia = {
+        minimal = host.mkISO {
+          name = "nixos";
+          kernelPackage = pkgs.linuxPackages_latest;
+          initrdMods = [ "xhci_pci" "ahci" "usb_storage" "sd_mod" "nvme" "usbhid" ];
+          kernelMods = [ "kvm-intel" "iwlwifi" ];
+          kernelParams = [];
+          systemConfig = {};
         };
       };
     };
