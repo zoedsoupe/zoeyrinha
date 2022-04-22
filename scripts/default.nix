@@ -1,6 +1,18 @@
 { pkgs, lib }:
 
 let
+  setupTools = with pkgs; writeScriptBin "setup" ''
+  #!${runtimeShell}
+
+  mkdir /mnt
+  mount /dev/disk/by-label/nixos /mnt
+
+  mkdir /mnt/boot
+  mount /dev/disk/by-label/boot /mnt/boot
+
+  nixos-generate-config --root /mnt
+  '';
+
   bluetoothTools = with pkgs; writeScriptBin "btools" ''
     #!${runtimeShell}
     case $1 in
@@ -126,6 +138,7 @@ let
   '';
 in {
   overlay = (final: prev: {
+    scripts.setupTools = setupTools;
     scripts.bluetoothTools = bluetoothTools;
     scripts.soundTools = soundTools;
   });

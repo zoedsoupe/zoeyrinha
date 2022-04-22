@@ -1,8 +1,33 @@
-{ system, pkgs, home-manager, lib, user, ... }:
+{ system, pkgs, home-manager, lib, user, nixos, ... }:
 
 with builtins;
 
 {
+  mkISO = { name, initrdMods, kernelMods, kernelParams, kernelPackage, systemConfig }: lib.nixosSystem {
+    inherit system;
+
+    specialArgs = {};
+
+    modules = [
+      "${nixos}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+      {
+        imports = [ ../modules/iso ];
+
+        networking.hostName = "${name}";
+        networking.networkmanager.enable = true;
+        networking.useDHCP = false;
+
+        boot.initrd.availableKernelModules = initrdMods;
+        boot.kernelModules = kernelMods;
+
+        boot.kernelParams = kernelParams;
+        boot.kernelPackages = kernelPackage;
+
+        nixpkgs.pkgs = pkgs;
+      }
+    ];
+  };
+
   mkHost = { name, NICs, initrdMods, kernelMods, kernelParams, kernelPackage,
     systemConfig, cpuCores, users, wifi ? [], cpuTempSensor ? null
   }:
