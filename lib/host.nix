@@ -38,6 +38,9 @@ with builtins;
         networking.useDHCP = false;
         networking.nameservers = [ "8.8.8.8" ];
 
+        nixpkgs.config.allowUnfree = true;
+        hardware.enableRedistributableFirmware = true;
+        hardware.enableAllFirmware = true;
         hardware.cpu.intel.updateMicrocode = true;
         powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 
