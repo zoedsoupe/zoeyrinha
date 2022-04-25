@@ -132,7 +132,7 @@
             name = "zoedsoupe";
             groups = [ "wheel" "networkmanager" "video" "audio" "docker" "libvirtd" ];
             uid = 1000;
-            shell = pkgs.fish;
+            shell = pkgs.zsh;
           }];
           systemConfig = {
             base.enable = true;
