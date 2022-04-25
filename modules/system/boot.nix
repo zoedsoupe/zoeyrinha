@@ -15,10 +15,7 @@ in
   config = mkIf (cfg == "efi") {
     boot.loader = {
       timeout = 0;
-      efi = {
-        canTouchEfiVariables = true;
-        efiSysMountPoint = "/boot/efi";
-      };
+      efi.canTouchEfiVariables = true;
       grub = {
         enable = true;
         devices = [ "nodev" ];
@@ -39,17 +36,18 @@ in
 
     fileSystems."/" =
       {
-        device = "/dev/disk/by-uuid/fa9faaf3-53a3-4089-812c-710adc959e4b";
+        device = "/dev/disk/by-uuid/30d680e4-5a0e-4a4b-8e6d-afeabe12be09";
         fsType = "btrfs";
-        options = [ "subvol=system" ];
+        options = [ "subvol=nixos" ];
       };
 
-      fileSystems."/boot/efi" =
+      fileSystems."/boot" =
         {
-          device = "/dev/disk/by-uuid/83FB-9CE3";
+          device = "/dev/disk/by-uuid/BF28-A1B6";
           fsType = "vfat";
         };
 
         swapDevices = [];
       };
     }
+

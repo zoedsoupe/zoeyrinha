@@ -71,7 +71,7 @@ in {
             owner = "jethrokuan";
             repo = "z";
             rev = "HEAD";
-            sha256 = "05z6lnkmzbl212cbfp291p63qfzzqp73nkfizsgbmm0fbiqbi74p";
+            sha256 = "+FUBM7CodtZrYKqU542fQD+ZDGrd2438trKM0tIESs0=";
           };
         }
         {
@@ -80,7 +80,7 @@ in {
             owner = "getomni";
             repo = "fish";
             rev = "v1.0.0";
-            sha256 = "1q1mvw6wh6msksxmkysjq33b0hrgfvnljdbmj72kw12ya2iksxz6";
+            sha256 = "wEwYrIED3vootteL/x8SQqtkUMSFPrv+il7VWf/O39s=";
           };
         }
         {

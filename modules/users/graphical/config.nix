@@ -8,9 +8,12 @@ with lib;
       enable = mkDefault false;
       desktop-environment = mkDefault null;
 
+      # correct wallpaper
+      # /home/zoedsoupe/documents/privy/zoeyrinha/wallpapers/syscalls.png;
+
       background = {
         enable = mkDefault false;
-        image = mkDefault /home/zoedsoupe/documents/privy/zoeyrinha/wallpapers/syscalls.png;
+        image = mkDefault ../../system/misc/boot_wallpaper.jpg;
         mode = mkDefault "fill";
         pkg = mkDefault pkgs.swaybg;
       };

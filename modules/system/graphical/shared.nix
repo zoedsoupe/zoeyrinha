@@ -29,7 +29,7 @@ in
           ''
         ] else [ ]) ++ (if cfg.wayland.enable then [
           ''
-          if [ -z "$DISPLAY" ] && [ "''${XDG_VTNR}" -eq 2 ]; then
+          if [ -z "$DISPLAY" ] && [ "''${XDG_VTNR}" -eq 1 ]; then
           exec $HOME/.winitrc
           fi
           ''
