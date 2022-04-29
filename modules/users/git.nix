@@ -50,7 +50,7 @@ in {
       delta.enable = cfg.delta.enable;
       signing = {
         gpgPath = "${pkgs.gnupg}/bin/gpg2";
-        key = "0718 425B 7A24 6B61 4CCC  9B77 903A 1428 05CD 5121";
+        key = null;
         signByDefault = true;
       };
       aliases = {
