@@ -50,6 +50,7 @@ in {
       heroku
       obsidian
       gitter
+      doctl
 
       # audio
       spotify

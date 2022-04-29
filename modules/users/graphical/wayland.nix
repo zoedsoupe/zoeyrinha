@@ -62,11 +62,6 @@ let
     bindsym $mod+Shift+$up move up
     bindsym $mod+Shift+$right move right
 
-    bindsym $mod+r+$left resize shrink width 5px
-    bindsym $mod+r+$down resize grow height 5px
-    bindsym $mod+r+$up resize shrink height 5px
-    bindsym $mod+r+$right resize grow width 5px
-
     bindsym $mod+Shift+space fullscreen toggle
     bindsym $mod+m layout stacking
     bindsym $mod+t fullscreen disable, floating disable, layout default
