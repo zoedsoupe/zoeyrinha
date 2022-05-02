@@ -51,6 +51,7 @@ in {
       obsidian
       gitter
       doctl
+      elixir_ls
 
       # audio
       spotify
