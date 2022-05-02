@@ -29,7 +29,7 @@
   <a href="#screenshots">Screenshots</a> •
   <a href="https://github.com/zoedsoupe/copper" target="_blank">Neovim</a> •
   <a href="#emacs">Emacs</a> •
-  <a href="#vscodium">VSCodium</a> •
+  <a href="#vscode">VSCode</a> •
   <a href="#install">Install</a>
 </p>
 
@@ -44,7 +44,7 @@ This repo is a fresh start from old config [nixnad](https://github.com/zoedsoupe
 ## Emacs
 **TODO**
 
-## VSCodium
+## VSCode
 **TODO**
 
 ## How to use
