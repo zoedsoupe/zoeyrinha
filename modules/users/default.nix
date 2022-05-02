@@ -14,6 +14,6 @@
     ./kitty.nix
     ./starship.nix
     ./udiskie.nix
-    ./vscodium.nix
+    ./vscode.nix
   ];
 }

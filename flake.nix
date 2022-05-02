@@ -67,7 +67,7 @@
             direnv.enable = true;
             dunst.enable = true;
             fzf.enable = true;
-            vscodium.enable = true;
+            vscode.enable = true;
             kitty.enable = true;
             starship.enable = true;
             udiskie.enable = true;

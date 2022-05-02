@@ -3,7 +3,7 @@
 with lib;
 
 let
-  cfg = config.zoedsoupe.vscodium;
+  cfg = config.zoedsoupe.vscode;
 
   marketplace = pkgs.vscode-utils.extensionsFromVscodeMarketplace [
     {
@@ -38,9 +38,9 @@ let
     }
   ];
 in {
-  options.zoedsoupe.vscodium = {
+  options.zoedsoupe.vscode = {
     enable = mkOption {
-      description = "Enable VSCodium";
+      description = "Enable VSCode";
       type = types.bool;
       default = false;
     };
@@ -49,9 +49,12 @@ in {
   config = mkIf (cfg.enable) {
     programs.vscode = {
       inherit (cfg) enable;
-      package = pkgs.vscodium;
       userSettings = {
         editor = {
+          suggest = {
+            maxVisibleSuggestions = 10;
+            localityBonus = true;
+          };
           linkedEditing = true;
           minimap.enabled = true;
           fontLigatures = true;
@@ -61,8 +64,60 @@ in {
           formatOnPaste = true;
           formatOnSave = true;
           formatOnType = true;
+          renderLineHighlight = "gutter";
+          cursorBlinking = "smooth";
+          cursorSmoothCaretAnimation = true;
+          smoothScrolling = true;
+          suggestSelection = "recentlyUsedByPrefix";
+          quickSuggestionsDelay = 0;
+          fontWeight = "300";
         };
-        files.autoSave = "onWindowChange";
+        workbench = {
+          editor = {
+            highlightModifiedTabs = true;
+            labelFormat = "short";
+          };
+          iconTheme = "material-icon-theme";
+          colorTheme = "Material Theme";
+        };
+        window = {
+          closeWhenEmpty = true;
+          doubleClickIconToClose = true;
+          menuBarVisibility = "toggle";
+          openFoldersInNewWindow = true;
+          zoomLevel = 0;
+        };
+        files = {
+          autoSave = "onWindowChange";
+          trimFinalNewlines = true;
+          autoSaveDelay = 10;
+          insertFinalNewline = false;
+          simpleDiaalog.enable = true;
+          trimTrailingWhitespace = true;
+        };
+        explorer = {
+          confirmDelete = false;
+          incrementalNaming = "smart";
+          confirmDragAndDrop = false;
+          compactFolders = false;
+        };
+        material-icon-theme.folders.associations = {
+          infra = "app";
+          entities = "class";
+          schemas = "class";
+          typeorm = "database";
+          repositories = "mappings";
+          http = "container";
+          migrations = "tools";
+          modules = "components";
+          implementations = "core";
+          dtos = "typescript";
+          fakes = "mock";
+          websockets = "pipe";
+          protos = "pipe";
+          grpc = "pipe";
+          useCases = "controller";
+        };
         emmet.triggerExpansionOnTab = true;
       };
       keybindings = [];
