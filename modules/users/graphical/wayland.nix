@@ -51,6 +51,7 @@ let
     bindsym $mod+f+$up focus up
     bindsym $mod+f+$right focus right
     bindsym $mod+Print exec $screenshot
+    bindsym $mod+c exec clipmenu
 
     bindsym $mod+v splitv
     bindsym $mod+h splith

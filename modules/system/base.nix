@@ -88,6 +88,7 @@ in {
         EDITOR = "nvim";
         TERMINAL = "kitty";
         GC_INITIAL_HEAP_SIZE = "32M";
+        CM_LAUNCHER = "${pkgs.j4-dmenu-desktop}/bin/j4-dmenu-desktop";
       };
       systemPackages = with pkgs; [
         # terminal & tools
