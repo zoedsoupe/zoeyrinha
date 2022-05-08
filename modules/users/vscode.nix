@@ -84,7 +84,8 @@ in {
           closeWhenEmpty = true;
           doubleClickIconToClose = true;
           menuBarVisibility = "toggle";
-          openFoldersInNewWindow = true;
+          openFoldersInNewWindow = "on";
+          openFilesInNewWindow = "on";
           zoomLevel = 0;
         };
         files = {
@@ -119,6 +120,7 @@ in {
           useCases = "controller";
         };
         emmet.triggerExpansionOnTab = true;
+        terminal.integrated.sendKeybindingsToShell = true;
       };
       keybindings = [];
       extensions = with pkgs.vscode-extensions; marketplace ++ [
@@ -131,6 +133,8 @@ in {
         pkief.material-icon-theme
         esbenp.prettier-vscode
         jakebecker.elixir-ls
+        jnoortheen.nix-ide
+        vscodevim.vim
       ];
     };
   };
