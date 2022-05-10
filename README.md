@@ -49,5 +49,3 @@ This repo is a fresh start from old config [nixnad](https://github.com/zoedsoupe
 
 ## How to use
 **TODO**
-
-This flake is configured with the use of [[https://github.com/divnix/digga][digga]].
