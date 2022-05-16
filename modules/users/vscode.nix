@@ -135,6 +135,7 @@ in {
         jakebecker.elixir-ls
         jnoortheen.nix-ide
         vscodevim.vim
+        tomoki1207.pdf
       ];
     };
   };
