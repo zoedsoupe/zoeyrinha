@@ -42,7 +42,7 @@
       inherit (util) user;
       inherit (util) host;
 
-      pkgs = import nixpkgs {
+      pkgs = import latest {
         inherit system overlays;
         config.allowUnfree = true;
       };
