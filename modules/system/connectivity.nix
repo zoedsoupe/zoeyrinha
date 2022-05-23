@@ -41,10 +41,12 @@ in {
     environment.systemPackages = with pkgs; [
     ] ++ (if (cfg.bluetooth.enable) then [
       scripts.bluetoothTools
-    ] else [ ]) ++ (if (cfg.sound.enable) then [
+    ] else []) ++ (if (cfg.sound.enable) then [
       pulseaudio
       scripts.soundTools
-    ] else [ ]);
+    ] else []) ++ (if (cfg.printing.enable) then [
+      hplip
+    ] else []);
 
 
     networking.networkmanager.enable = cfg.wifi.enable;
@@ -88,6 +90,7 @@ in {
     services.printing = {
       enable = cfg.printing.enable;
       drivers = [ pkgs.hplipWithPlugin ];
+      webInterface = true;
     };
 
     hardware.bluetooth = {
