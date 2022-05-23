@@ -70,6 +70,9 @@ in {
       bitwarden-cli
       zoom-us
       arandr
+
+      wine
+      winePackages.stableFull
     ];
   };
 }
