@@ -31,27 +31,28 @@ in {
 
       # dev
       agda
-
-      # tools
+      deno
+      elixir_ls
+      doctl
       beekeeper-studio
-      exercism
       docker-compose
       docker-compose_2
       insomnia
-      qbittorrent
       gitAndTools.gh
-      exodus
       earthly
       awscli2
       ngrok
       flyctl
+      heroku
+
+      # tools
+      exercism
+      gitter
+      qbittorrent
+      exodus
       gcolor3
       t-rec
-      heroku
       obsidian
-      gitter
-      doctl
-      elixir_ls
 
       # audio
       spotify
@@ -70,9 +71,6 @@ in {
       bitwarden-cli
       zoom-us
       arandr
-
-      wine
-      winePackages.stableFull
     ];
   };
 }
