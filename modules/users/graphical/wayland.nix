@@ -83,7 +83,7 @@ let
     input * {
       xkb_layout us
       xkb_variant intl
-      xkb_options ctrl:swapcaps, compose:right_ctrl
+      xkb_options ctrl:swapcaps, compose:rctrl
     }
 
     input "type:touchpad" {
