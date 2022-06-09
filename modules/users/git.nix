@@ -75,6 +75,8 @@ in {
         user = { username = "zoedsoupe"; };
         init = { defaultBranch = "main"; };
         pull = { rebase = false; };
+        # TODO: remove hard coded
+        safe = { directory = "/home/zoedsoupe/documents/privy/zoeyrinha"; };
         commit = {
           template = builtins.toString ./misc/gitmessage;
         };
