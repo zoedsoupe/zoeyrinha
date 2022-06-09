@@ -2,7 +2,7 @@
   description = "Zoey's eprsonal config, aka dotfiles";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-21.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-22.05";
     latest.url = "github:nixos/nixpkgs/nixos-unstable";
 
     nixlib.url = "github:nix-community/nixpkgs.lib";
@@ -10,7 +10,7 @@
     # My custom NeoVim config
     copper.url = "github:zoedsoupe/copper";
 
-    home-manager.url = "github:nix-community/home-manager/release-21.11";
+    home-manager.url = "github:nix-community/home-manager/release-22.05";
     home-manager.inputs.nixpkgs.follows = "nixlib";
 
     flake-utils-plus.url = "github:gytis-ivaskevicius/flake-utils-plus";
