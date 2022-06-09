@@ -99,7 +99,7 @@ in {
         ncdu lazygit glow
         fd nnn jq tldr
         git alacritty acpi
-        ag
+        silver-searcher
 
         # window manager
         moc pamixer
