@@ -273,7 +273,7 @@ in
       gnomeExtensions.paperwm
     ] else [ ];
 
-    home.file = {
+    home.file = mkIf (cfg.desktop-environment == "sway") {
       ".winitrc" = {
         executable = true;
         text = ''
@@ -285,8 +285,7 @@ in
           export MOZ_ENABLE_XINPUT2=1
           export XDG_CURRENT_DESKTOP=sway
 
-          ${if (cfg.desktop-environment == "sway") then "${pkgs.sway}/bin/sway" 
-            else "${pkgs.gnome.gnome-shell}/bin/gnome-shell --display-server --wayland"}
+          ${pkgs.sway}/bin/sway
 
           wait $!
           systemctl --user stop graphical-session.target
