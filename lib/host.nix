@@ -88,8 +88,8 @@ with builtins;
             kernelParams = kernelParams;
             kernelPackages = kernelPackage;
             consoleLogLevel = 0;
-            initrd.verbose = false;
-            plymouth.enable = true;
+            # initrd.verbose = false;
+            # plymouth.enable = true;
             supportedFilesystems = [ "ntfs" "btrfs" ];
             cleanTmpDir = true;
             kernel.sysctl = {
