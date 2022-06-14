@@ -4,6 +4,9 @@ with lib;
 
 let
   cfg = config.zoedsoupe.graphical;
+  systemCfg = config.machineData.systemConfig;
+
+  isGnome = systemCfg.graphical.wayland.desktop-environment == "gnome";
 in
 {
   config = {
@@ -27,7 +30,7 @@ in
           exec startx
           fi
         ''
-      ] else [ ]) ++ (if cfg.wayland.enable && (cfg.wayland.desktop-environment != "gnome") then [
+      ] else [ ]) ++ (if cfg.wayland.enable && !isGnome then [
         ''
           if [ -z "$DISPLAY" ] && [ "''${XDG_VTNR}" -eq 1 ]; then
           exec $HOME/.winitrc
