@@ -27,7 +27,7 @@ in
           exec startx
           fi
         ''
-      ] else [ ]) ++ (if cfg.wayland.enable && cfg.desktop-environment != "gnome" then [
+      ] else [ ]) ++ (if cfg.wayland.enable && cfg.wayland.desktop-environment != "gnome" then [
         ''
           if [ -z "$DISPLAY" ] && [ "''${XDG_VTNR}" -eq 1 ]; then
           exec $HOME/.winitrc
