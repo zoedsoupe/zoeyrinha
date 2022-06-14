@@ -12,7 +12,8 @@ let
     rev = "HEAD";
     sha256 = "sha256-NSZjkG+rY6h8d7FYq5kipPAjMDAgyaYAgOOOJlfqBCI=";
   };
-in {
+in
+{
   config = mkIf (cfg.wayland.enable) {
     home.packages = with pkgs; [
       pavucontrol

@@ -4,7 +4,8 @@ with lib;
 
 let
   cfg = config.zoedsoupe.base;
-in {
+in
+{
   options.zoedsoupe.base.enable = mkOption {
     description = "Enable base programs";
     type = types.bool;
@@ -55,7 +56,7 @@ in {
 
       logind = {
         extraConfig = ''
-        LidSwitchIgnoreInhibited=no
+          LidSwitchIgnoreInhibited=no
         '';
         #lidSwitch = "ignore";
       };
@@ -74,12 +75,12 @@ in {
       };
 
       getty.helpLine = ''
-      [0;34;40m ███    ██ ██ ██   ██  ██████  ███████ 
-      [0;34;40m ████   ██ ██  ██ ██  ██    ██ ██      
-      [0;34;40m ██ ██  ██ ██   ███   ██    ██ ███████ 
-      [0;34;40m ██  ██ ██ ██  ██ ██  ██    ██      ██ 
-      [0;34;40m ██   ████ ██ ██   ██  ██████  ███████ 
-      [0;37;40m
+        [0;34;40m ███    ██ ██ ██   ██  ██████  ███████ 
+        [0;34;40m ████   ██ ██  ██ ██  ██    ██ ██      
+        [0;34;40m ██ ██  ██ ██   ███   ██    ██ ███████ 
+        [0;34;40m ██  ██ ██ ██  ██ ██  ██    ██      ██ 
+        [0;34;40m ██   ████ ██ ██   ██  ██████  ███████ 
+        [0;37;40m
       '';
     };
 
@@ -92,29 +93,48 @@ in {
       };
       systemPackages = with pkgs; [
         # terminal & tools
-        neofetch procs wget
-        unzip exa pciutils
-        unrar psmisc bat
-        cmatrix iw curl
-        ncdu lazygit glow
-        fd nnn jq tldr
-        git alacritty acpi
+        neofetch
+        procs
+        wget
+        unzip
+        exa
+        pciutils
+        unrar
+        psmisc
+        bat
+        cmatrix
+        iw
+        curl
+        ncdu
+        lazygit
+        glow
+        fd
+        nnn
+        jq
+        tldr
+        git
+        alacritty
+        acpi
         silver-searcher
 
         # window manager
-        moc pamixer
+        moc
+        pamixer
         screenkey
         wirelesstools
         betterlockscreen
 
         # editor/ide
-        vim neovim
+        vim
+        neovim
 
         # browser
         google-chrome
 
         # dev
-        google-cloud-sdk gcc tree-sitter
+        google-cloud-sdk
+        gcc
+        tree-sitter
 
         # tools
         gparted

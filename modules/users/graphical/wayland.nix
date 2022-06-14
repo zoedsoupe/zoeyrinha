@@ -253,16 +253,27 @@ in
       message = "To enable xorg for user, it must be enabled for system";
     }];
 
-    home.packages = with pkgs; [
+    services = mkIf (cfg.desktop-environment == "gnome") {
+      gnome-keyring.enable = true;
+    };
+
+    home.packages = with pkgs; if (cfg.desktop-environment == "sway") then [
       sway
       foot
       bemenu
       libappindicator-gtk3
       (if cfg.background.enable then swaybg else null)
       (assert systemCfg.graphical.wayland.swaylock-pam; (if cfg.screenlock.enable then swaylock else null))
-    ];
+    ] else if (cfg.desktop-environment == "gnome") then [
+      gnome.gnome-tweaks
+      gnomeExtensions.emoji-selector
+      gnomeExtensions.clipboard-indicator
+      gnomeExtensions.application-volume-mixer
+      gnomeExtensions.switcher
+      gnomeExtensions.paperwm
+    ] else [ ];
 
-    home.file = {
+    home.file = mkIf (cfg.desktop-environment == "sway") {
       ".winitrc" = {
         executable = true;
         text = ''
@@ -289,7 +300,7 @@ in
       };
     };
 
-    xdg.configFile = {
+    xdg.configFile = mkIf (cfg.desktop-environment == "sway") {
       "foot/foot.ini" = {
         text = ''
           pad = 2x2 center
@@ -344,7 +355,7 @@ in
         ({
           layer = "bottom";
 
-          modules-left = [];
+          modules-left = [ ];
           modules-center = [ "clock" ];
           modules-right = [ "cpu" "memory" "temperature" "battery" "backlight" "pulseaudio" "network" "tray" ];
 
@@ -365,7 +376,7 @@ in
               format = "{used:0.1f}G/{total:0.1f}G ";
               tooltip = true;
             };
-            temperature = {};
+            temperature = { };
             battery = {
               bat = "BAT1";
               states = {

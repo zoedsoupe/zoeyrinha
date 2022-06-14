@@ -4,7 +4,8 @@ with lib;
 
 let
   cfg = config.zoedsoupe.alacritty;
-in {
+in
+{
   options.zoedsoupe.alacritty = {
     enable = mkOption {
       description = "Enable Alacritty";

@@ -13,6 +13,11 @@ in
       default = false;
     };
 
+    desktop-environment = mkOption {
+      type = types.enum [ "gnome" "sway" ];
+      description = "What desktop/wm to use";
+    };
+
     swaylock-pam = mkOption {
       description = "Enable swaylock pam";
       type = types.bool;
@@ -32,6 +37,17 @@ in
       };
     };
 
-    security.pam.services.swaylock = mkIf (cfg.swaylock-pam) {};
+    services = mkIf (cfg.desktop-environment == "gnome") {
+      xserver = {
+        desktopManager.gnome.enable = true;
+
+        displayManager.gdm = {
+          enable = true;
+          wayland = true;
+        };
+      };
+    };
+
+    security.pam.services.swaylock = mkIf (cfg.swaylock-pam) { };
   };
 }

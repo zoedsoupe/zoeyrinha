@@ -4,7 +4,8 @@ with lib;
 
 let
   cfg = config.zoedsoupe.screen;
-in {
+in
+{
   options.zoedsoupe.screen.enable = mkOption {
     description = "Enable screen related services";
     type = types.bool;

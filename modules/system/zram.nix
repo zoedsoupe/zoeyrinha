@@ -4,7 +4,8 @@ with lib;
 
 let
   cfg = config.zoedsoupe.zram;
-in {
+in
+{
   options.zoedsoupe.zram.enable = mkOption {
     description = "Enable Zram";
     type = types.bool;

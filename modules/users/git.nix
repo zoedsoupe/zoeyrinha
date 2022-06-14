@@ -4,7 +4,8 @@ with lib;
 
 let
   cfg = config.zoedsoupe.git;
-in {
+in
+{
   options.zoedsoupe.git = {
     enable = mkOption {
       description = "Enable git";
@@ -39,7 +40,7 @@ in {
     ignores = mkOption {
       description = "List of files to be global ignored";
       type = types.listOf types.str;
-      default = [];
+      default = [ ];
     };
   };
 

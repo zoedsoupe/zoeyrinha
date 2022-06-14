@@ -4,7 +4,8 @@ with lib;
 
 let
   cfg = config.zoedsoupe.starship;
-in {
+in
+{
   options.zoedsoupe.starship = {
     enable = mkOption {
       description = "Enable Starship";

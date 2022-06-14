@@ -24,18 +24,35 @@
   hardware.enableRedistributableFirmware = true;
 
   environment.systemPackages = with pkgs; [
-    wget pciutils curl
-    bind killall dmidecode
-    neofetch bat unzip
-    file zip p7zip strace ltrace
-    exa silver-searcher neovim
+    wget
+    pciutils
+    curl
+    bind
+    killall
+    dmidecode
+    neofetch
+    bat
+    unzip
+    file
+    zip
+    p7zip
+    strace
+    ltrace
+    exa
+    silver-searcher
+    neovim
 
-    git git-crypt
+    git
+    git-crypt
 
     scripts.setupTools
 
-    gptfdisk zsh iotop
-    nvme-cli nix-index
-    pstree acpi
+    gptfdisk
+    zsh
+    iotop
+    nvme-cli
+    nix-index
+    pstree
+    acpi
   ];
 }

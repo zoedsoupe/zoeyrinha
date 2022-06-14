@@ -4,7 +4,8 @@ with lib;
 
 let
   cfg = config.zoedsoupe.direnv;
-in {
+in
+{
   options.zoedsoupe.direnv = {
     enable = mkOption {
       description = "Enable direnv";

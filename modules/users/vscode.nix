@@ -37,7 +37,8 @@ let
       sha256 = "sha256-9ps0gN/NcokAryZcc+EPqP8M3qypZqh9dB/kSckFtfg=";
     }
   ];
-in {
+in
+{
   options.zoedsoupe.vscode = {
     enable = mkOption {
       description = "Enable VSCode";
@@ -122,7 +123,7 @@ in {
         emmet.triggerExpansionOnTab = true;
         terminal.integrated.sendKeybindingsToShell = true;
       };
-      keybindings = [];
+      keybindings = [ ];
       extensions = with pkgs.vscode-extensions; marketplace ++ [
         naumovs.color-highlight
         mikestead.dotenv
