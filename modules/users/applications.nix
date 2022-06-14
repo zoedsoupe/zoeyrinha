@@ -31,9 +31,9 @@ in
       onlyoffice-bin
 
       # dev
-      agda
-      deno
-      elixir_ls
+      # agda
+      # deno
+      # elixir_ls
       doctl
       beekeeper-studio
       docker-compose
@@ -44,16 +44,16 @@ in
       awscli2
       ngrok
       flyctl
-      heroku
+      # heroku
 
       # tools
       exercism
-      gitter
+      # gitter
       qbittorrent
       exodus
       gcolor3
       t-rec
-      obsidian
+      # obsidian
 
       # audio
       spotify
@@ -71,7 +71,7 @@ in
       any-nix-shell
       bitwarden-cli
       zoom-us
-      arandr
+      # arandr
     ];
   };
 }
