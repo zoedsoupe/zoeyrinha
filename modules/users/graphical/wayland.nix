@@ -285,7 +285,8 @@ in
           export MOZ_ENABLE_XINPUT2=1
           export XDG_CURRENT_DESKTOP=sway
 
-          ${if (cfg.desktop-environment == "sway") then "${pkgs.sway}/bin/sway" else "dbus-run-session -- gnome-shell --display-server --wayland"}
+          ${if (cfg.desktop-environment == "sway") then "${pkgs.sway}/bin/sway" 
+            else "${pkgs.gnome.gnome-shell}/bin/gnome-shell --display-server --wayland"}
 
           wait $!
           systemctl --user stop graphical-session.target
