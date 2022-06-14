@@ -14,7 +14,7 @@ in
 
   config = mkIf (cfg == "efi") {
     boot.loader = {
-      # timeout = 0;
+      timeout = 0;
       efi.canTouchEfiVariables = true;
       grub = {
         enable = true;
