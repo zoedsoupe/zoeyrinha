@@ -61,6 +61,9 @@ in
         #lidSwitch = "ignore";
       };
 
+      # see https://github.com/NixOS/nixpkgs/issues/30336
+      flatpak.enable = true;
+
       openssh.enable = true;
 
       upower.enable = true;

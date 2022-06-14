@@ -266,11 +266,12 @@ in
       (assert systemCfg.graphical.wayland.swaylock-pam; (if cfg.screenlock.enable then swaylock else null))
     ] else if (cfg.desktop-environment == "gnome") then [
       gnome.gnome-tweaks
-      gnomeExtensions.emoji-selector
+      # gnomeExtensions.emoji-selector
       gnomeExtensions.clipboard-indicator
       gnomeExtensions.application-volume-mixer
-      gnomeExtensions.switcher
-      gnomeExtensions.paperwm
+      # gnomeExtensions.switcher
+      # gnomeExtensions.paperwm
+      gnomeExtensions.material-shell
     ] else [ ];
 
     home.file = mkIf (cfg.desktop-environment == "sway") {
