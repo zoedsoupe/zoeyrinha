@@ -38,7 +38,7 @@ in
       };
     };
 
-    services = mkIf (cfg.desktop-environment == "gnome") {
+    services = {
       xserver = {
         desktopManager.gnome.enable = true;
 
