@@ -276,7 +276,7 @@ in
       gnomeExtensions.application-volume-mixer
       # gnomeExtensions.switcher
       # gnomeExtensions.paperwm
-      gnomeExtensions.material-shell
+      # gnomeExtensions.material-shell
     ] else [ ];
 
     home.file = {
