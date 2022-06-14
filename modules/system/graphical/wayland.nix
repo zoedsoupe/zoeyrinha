@@ -16,6 +16,7 @@ in
     desktop-environment = mkOption {
       type = types.enum [ "gnome" "sway" ];
       description = "What desktop/wm to use";
+      default = "gnome";
     };
 
     swaylock-pam = mkOption {
