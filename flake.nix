@@ -141,6 +141,7 @@
             zram.enable = true;
             graphical = {
               wayland = {
+                desktop-environment = "gnome";
                 enable = true;
                 swaylock-pam = true;
               };
