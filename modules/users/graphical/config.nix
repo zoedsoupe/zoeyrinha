@@ -6,7 +6,7 @@ with lib;
   config.zoedsoupe.graphical = {
     wayland = {
       enable = mkDefault false;
-      desktop-environment = mkDefault null;
+      desktop-environment = mkDefault "gnome";
 
       # correct wallpaper
       # /home/zoedsoupe/documents/privy/zoeyrinha/wallpapers/syscalls.png;
