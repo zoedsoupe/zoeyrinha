@@ -4,7 +4,8 @@ with lib;
 
 let
   cfg = config.zoedsoupe.connectivity;
-in {
+in
+{
   options.zoedsoupe.connectivity = {
     wifi.enable = mkOption {
       description = "Enable wifi with default options";
@@ -41,12 +42,12 @@ in {
     environment.systemPackages = with pkgs; [
     ] ++ (if (cfg.bluetooth.enable) then [
       scripts.bluetoothTools
-    ] else []) ++ (if (cfg.sound.enable) then [
+    ] else [ ]) ++ (if (cfg.sound.enable) then [
       pulseaudio
       scripts.soundTools
-    ] else []) ++ (if (cfg.printing.enable) then [
+    ] else [ ]) ++ (if (cfg.printing.enable) then [
       hplip
-    ] else []);
+    ] else [ ]);
 
 
     networking.networkmanager.enable = cfg.wifi.enable;

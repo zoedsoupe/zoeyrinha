@@ -4,7 +4,8 @@ with lib;
 
 let
   cfg = config.zoedsoupe.picom;
-in {
+in
+{
   options.zoedsoupe.picom.enable = mkOption {
     description = "Enable picom";
     type = types.bool;

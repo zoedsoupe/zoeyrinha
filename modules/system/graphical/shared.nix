@@ -20,20 +20,20 @@ in
           if [ -f "$HOME/.profile" ]; then
           . "$HOME/.profile"
           fi
-          ''
-        ] ++ (if cfg.xorg.enable then [
-          ''
+        ''
+      ] ++ (if cfg.xorg.enable then [
+        ''
           if [ -z "$DISPLAY" ] && [ "''${XDG_VTNR}" -eq 1 ]; then
           exec startx
           fi
-          ''
-        ] else [ ]) ++ (if cfg.wayland.enable then [
-          ''
+        ''
+      ] else [ ]) ++ (if cfg.wayland.enable && cfg.desktop-environment != "gnome" then [
+        ''
           if [ -z "$DISPLAY" ] && [ "''${XDG_VTNR}" -eq 1 ]; then
           exec $HOME/.winitrc
           fi
-          ''
-        ] else [ ]));
-      };
+        ''
+      ] else [ ]));
     };
-  }
+  };
+}

@@ -4,7 +4,8 @@ with lib;
 
 let
   cfg = config.zoedsoupe.clipmenu;
-in {
+in
+{
   options.zoedsoupe.clipmenu = {
     enable = mkOption {
       description = "Enable Clipmenu";

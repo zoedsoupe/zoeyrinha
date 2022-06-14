@@ -18,9 +18,9 @@ let
     set fish_greeting # suppress fish initital greeting
 
     set HISTCONTROL ignoreboth # ignore commands with initial space and duplicates
-    '';
+  '';
 
-    functions = ''
+  functions = ''
     ### FUNCTIONS ###
     function tre
     command tree -aC \
@@ -43,8 +43,9 @@ let
     function clean_node_modules
     command find . -name "node_modules" -type d -prune -exec rm -rf '{}' +
     end
-    '';
-in {
+  '';
+in
+{
   options.zoedsoupe.fish = {
     enable = mkOption {
       description = "Enable Fish";
@@ -55,7 +56,7 @@ in {
     aliases = mkOption {
       description = "Shell aliases";
       type = types.attrs;
-      default = {};
+      default = { };
     };
   };
 

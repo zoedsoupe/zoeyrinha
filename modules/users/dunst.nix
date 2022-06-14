@@ -4,7 +4,8 @@ with lib;
 
 let
   cfg = config.zoedsoupe.dunst;
-in {
+in
+{
   options.zoedsoupe.dunst = {
     enable = mkOption {
       description = "Enable Dunst";

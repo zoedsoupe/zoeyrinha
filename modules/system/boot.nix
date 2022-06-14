@@ -24,12 +24,12 @@ in
         splashImage = ./misc/boot_wallpaper.jpg;
         version = 2;
         extraEntries = ''
-        menuentry "Reboot" {
-          reboot
-        }
-        menuentry "Power off" {
-          halt
-        }
+          menuentry "Reboot" {
+            reboot
+          }
+          menuentry "Power off" {
+            halt
+          }
         '';
       };
     };
@@ -41,13 +41,13 @@ in
         options = [ "subvol=nixos" ];
       };
 
-      fileSystems."/boot" =
-        {
-          device = "/dev/disk/by-uuid/BF28-A1B6";
-          fsType = "vfat";
-        };
-
-        swapDevices = [];
+    fileSystems."/boot" =
+      {
+        device = "/dev/disk/by-uuid/BF28-A1B6";
+        fsType = "vfat";
       };
-    }
+
+    swapDevices = [ ];
+  };
+}
 

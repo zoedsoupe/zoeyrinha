@@ -4,7 +4,8 @@ with lib;
 
 let
   cfg = config.zoedsoupe.virtualisation;
-in {
+in
+{
   options.zoedsoupe.virtualisation.enable = mkOption {
     description = "Enable virtualisation";
     type = types.bool;

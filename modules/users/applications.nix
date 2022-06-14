@@ -5,7 +5,8 @@ with lib;
 let
   cfg = config.zoedsoupe.applications;
   agda = pkgs.agda.withPackages (p: [ p.standard-library ]);
-in {
+in
+{
   options.zoedsoupe.applications = {
     enable = mkOption {
       description = "Enable a set of common applications";

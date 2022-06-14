@@ -56,7 +56,8 @@
       inherit (import ./overlays {
         inherit system pkgs lib scripts;
       }) overlays;
-    in {
+    in
+    {
       homeManagerConfigurations = {
         zoedsoupe = user.mkHMUser {
           username = "zoedsoupe";
@@ -82,10 +83,10 @@
             graphical = {
               wayland = {
                 enable = true;
-                desktop-environment = "sway";
-                background.enable = true;
-                statusbar.enable = true;
-                screenlock.enable = true;
+                desktop-environment = "gnome";
+                background.enable = false;
+                statusbar.enable = false;
+                screenlock.enable = false;
               };
             };
             fish = {
@@ -113,7 +114,7 @@
           name = "work";
           NICs = [ "enp4s0" "wlp0s20f3" ];
           kernelPackage = pkgs.linuxPackages_latest;
-          initrdMods = ["xhci_pci" "ahci" "nvme" "usb_storage" "sd_mod" ];
+          initrdMods = [ "xhci_pci" "ahci" "nvme" "usb_storage" "sd_mod" ];
           kernelMods = [ "kvm-intel" "iwlwifi" ];
           kernelParams = [
             "vt.default_red=0x4c,0xff,0xa3,0xdb,0x5c,0xb9,0x27,0xff,0x63,0xf9,0x4f,0xdb,0x69,0xb9,0x70,0xff"
@@ -139,7 +140,6 @@
             virtualisation.enable = true;
             zram.enable = true;
             graphical = {
-              # xorg.enable = true;
               wayland = {
                 enable = true;
                 swaylock-pam = true;
@@ -162,9 +162,9 @@
           kernelPackage = pkgs.linuxPackages_latest;
           initrdMods = [ "xhci_pci" "ahci" "usb_storage" "sd_mod" "nvme" "usbhid" ];
           kernelMods = [ "kvm-intel" "iwlwifi" ];
-          kernelParams = [];
-          systemConfig = {};
+          kernelParams = [ ];
+          systemConfig = { };
         };
       };
     };
-  }
+}

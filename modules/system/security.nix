@@ -5,7 +5,8 @@ with lib;
 let
   cfg = config.zoedsoupe.security;
   lectureFile = builtins.toString ./modules/misc/groot.txt;
-in {
+in
+{
   options.zoedsoupe.security.enable = mkOption {
     description = "Enable security modules";
     type = types.bool;

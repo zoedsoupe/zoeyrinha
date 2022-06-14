@@ -4,7 +4,8 @@ with lib;
 
 let
   cfg = config.zoedsoupe.fzf;
-in {
+in
+{
   options.zoedsoupe.fzf = {
     enable = mkOption {
       description = "Enable fzf";

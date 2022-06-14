@@ -10,17 +10,18 @@ with builtins;
       configuration =
         let
           trySettings = tryEval (fromJSON (readFile /etc/hmsystemdata.json));
-          machineData = if trySettings.success then trySettings.value else {};
+          machineData = if trySettings.success then trySettings.value else { };
 
           machineModule = { pkgs, config, lib, ... }: {
             options.machineData = lib.mkOption {
-              default = {};
+              default = { };
               description = "Settings passed from nixos system configuration. If not present will be empty";
             };
 
             config = { inherit machineData; };
           };
-        in {
+        in
+        {
           zoedsoupe = userConfig;
 
           nixpkgs = {
