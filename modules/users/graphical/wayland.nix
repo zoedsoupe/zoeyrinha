@@ -192,6 +192,11 @@ let
     }
     bindsym $mod+Shift+e mode "$mode_system"
   '';
+
+  sway_cmd = "${pkg.sway}/bin/sway";
+  gnome_cmd = "${pkgs.gnome.gnome-shell}/bin/gnome-shell --wayland --display-server";
+
+  isSway = cfg.desktop-environment == "sway";
 in
 {
   options.zoedsoupe.graphical.wayland = {
@@ -274,7 +279,7 @@ in
       gnomeExtensions.material-shell
     ] else [ ];
 
-    home.file = mkIf (cfg.desktop-environment == "sway") {
+    home.file = {
       ".winitrc" = {
         executable = true;
         text = ''
@@ -284,19 +289,21 @@ in
           # firefox enable wayland
           export MOZ_ENABLE_WAYLAND=1
           export MOZ_ENABLE_XINPUT2=1
-          export XDG_CURRENT_DESKTOP=sway
+          export XDG_CURRENT_DESKTOP=${if isSway then "sway" else "gnome"}
 
-          ${pkgs.sway}/bin/sway
+          ${if isSway then sway_cmd else gnome_cmd}
 
-          wait $!
-          systemctl --user stop graphical-session.target
-          systemctl --user stop graphical-session-pre.target
+          if [ "$XDG_CURRENT_DESKTOP" == "sway" ]; then
+            wait $!
+            systemctl --user stop graphical-session.target
+            systemctl --user stop graphical-session-pre.target
 
-          # Wait until the units actually stop.
-          while [ -n "$(systemctl --user --no-legend --state=deactivating list-units)" ];
-          do
-            sleep 0.5
-          done
+            # Wait until the units actually stop.
+            while [ -n "$(systemctl --user --no-legend --state=deactivating list-units)" ];
+            do
+              sleep 0.5
+            done
+          fi
         '';
       };
     };

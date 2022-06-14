@@ -113,7 +113,7 @@
         work = host.mkHost {
           name = "work";
           NICs = [ "enp4s0" "wlp0s20f3" ];
-          kernelPackage = pkgs.linuxPackages_latest;
+          kernelPackage = pkgs.linuxPackages_zen;
           initrdMods = [ "xhci_pci" "ahci" "nvme" "usb_storage" "sd_mod" ];
           kernelMods = [ "kvm-intel" "iwlwifi" ];
           kernelParams = [
