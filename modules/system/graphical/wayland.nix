@@ -37,14 +37,7 @@ in
     };
 
     services = mkIf (cfg.desktop-environment == "gnome") {
-      xserver = {
-        desktopManager.gnome.enable = true;
-
-        displayManager.gdm = {
-          enable = true;
-          wayland = false;
-        };
-      };
+      xserver.desktopManager.gnome.enable = true;
     };
 
     security.pam.services.swaylock = mkIf (cfg.swaylock-pam) { };
