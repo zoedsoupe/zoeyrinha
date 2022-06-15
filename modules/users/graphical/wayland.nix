@@ -274,9 +274,13 @@ in
       # gnomeExtensions.emoji-selector
       gnomeExtensions.clipboard-indicator
       gnomeExtensions.application-volume-mixer
-      # gnomeExtensions.switcher
+      gnomeExtensions.switcher
+      gnomeExtensions.pop-shell
       # gnomeExtensions.paperwm
       # gnomeExtensions.material-shell
+      pop-gtk-theme
+      gnomeExtensions.pop-launcher-super-key
+      gnomeExtensions.github-notifications
     ] else [ ];
 
     home.file = {
