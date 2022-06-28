@@ -271,6 +271,7 @@ in
       (assert systemCfg.graphical.wayland.swaylock-pam; (if cfg.screenlock.enable then swaylock else null))
     ] else if (cfg.desktop-environment == "gnome") then [
       gnome.gnome-tweaks
+      gnome.gnome-screenshot
       # gnomeExtensions.emoji-selector
       gnomeExtensions.clipboard-indicator
       gnomeExtensions.application-volume-mixer
