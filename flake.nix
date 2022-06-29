@@ -12,27 +12,17 @@
 
     home-manager.url = "github:nix-community/home-manager/release-22.05";
     home-manager.inputs.nixpkgs.follows = "nixlib";
-
-    flake-utils-plus.url = "github:gytis-ivaskevicius/flake-utils-plus";
-
-    flake-compat = {
-      url = "github:edolstra/flake-compat";
-      flake = false;
-    };
   };
 
   outputs =
     { self
     , nixlib
     , nixpkgs
-    , latest
     , home-manager
-    , flake-utils-plus
     , ...
     }@inputs:
     let
       lib = { nixosSystem = nixpkgs.lib.nixosSystem; } // nixlib.lib;
-
       util = import ./lib {
         inherit system pkgs home-manager lib;
         nixos = nixpkgs;
@@ -54,7 +44,7 @@
       };
 
       inherit (import ./overlays {
-        inherit system pkgs lib scripts;
+        inherit system lib scripts inputs;
       }) overlays;
     in
     {
@@ -101,8 +91,8 @@
                 d = "rm -rf $argv";
                 please = "sudo $argv";
                 "..." = "cd ../../";
-                nvim = "nix run github:zoedsoupe/copper#nvim.";
-                vim = "nix run github:zoedsoupe/copper#nvim.";
+                # nvim = "nix run github:zoedsoupe/copper#nvim.";
+                # vim = "nix run github:zoedsoupe/copper#nvim.";
               };
             };
           };
@@ -134,7 +124,7 @@
           systemConfig = {
             base.enable = true;
             boot = "efi";
-            picom.enable = true;
+            picom.enable = false;
             screen.enable = true;
             security.enable = true;
             virtualisation.enable = true;

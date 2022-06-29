@@ -30,9 +30,9 @@ in
     xdg = {
       portal = {
         enable = true;
-        extraPortals = with pkgs; [
-          xdg-desktop-portal-wlr
-        ];
+        extraPortals = with pkgs; if (cfg.desktop-environment == "gnome") then [
+          xdg-desktop-portal-gnome
+        ] else [ ];
       };
     };
 
