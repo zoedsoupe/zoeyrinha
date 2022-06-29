@@ -1,5 +1,11 @@
-{ pkgs, scripts, system, lib, ... }:
+{ scripts, system, lib, inputs, ... }:
 
+let
+  inherit (inputs) copper;
+in
 {
-  overlays = [ scripts.overlay ];
+  overlays = [
+    inputs.copper.overlays.default
+    scripts.overlay
+  ];
 }

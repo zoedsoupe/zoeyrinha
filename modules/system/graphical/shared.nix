@@ -10,7 +10,6 @@ in
     xdg.portal = {
       enable = true;
       gtkUsePortal = true;
-      extraPortals = [ pkgs.xdg-desktop-portal-gnome ];
     };
 
     environment.etc = {

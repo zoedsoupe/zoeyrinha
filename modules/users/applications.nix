@@ -31,10 +31,12 @@ in
       onlyoffice-bin
 
       # dev
+      copper # my neovim config
+
       # agda
       # deno
-      # elixir_ls
       doctl
+      google-cloud-sdk
       beekeeper-studio
       docker-compose
       docker-compose_2
@@ -44,6 +46,7 @@ in
       awscli2
       ngrok
       flyctl
+      nixpkgs-fmt
       # heroku
 
       # tools
@@ -72,6 +75,18 @@ in
       bitwarden-cli
       zoom-us
       # arandr
+
+      # audio & video
+      mpv
+      pavucontrol
+      ffmpeg
+
+      # image
+      feh
+
+      # others
+      zathura
+      inotify-tools
     ];
   };
 }

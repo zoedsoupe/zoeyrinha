@@ -116,47 +116,21 @@ in
         jq
         tldr
         git
-        alacritty
         acpi
         silver-searcher
 
         # window manager
-        moc
+        # moc
         pamixer
         screenkey
-        wirelesstools
-        betterlockscreen
+        # wirelesstools
+        # betterlockscreen
 
-        # editor/ide
+        # editor
         vim
-        neovim
-
-        # browser
-        google-chrome
-
-        # dev
-        google-cloud-sdk
-        gcc
-        tree-sitter
 
         # tools
         gparted
-
-        # audio & video
-        mpv
-        pavucontrol
-        ffmpeg
-
-        # image
-        feh
-
-        # others
-        zathura
-        inotify-tools
-
-        # xorg
-        xorg.xrandr
-        xclip
 
         # games
         steamcmd

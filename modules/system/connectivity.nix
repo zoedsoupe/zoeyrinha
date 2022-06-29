@@ -59,6 +59,11 @@ in
       alsa.support32Bit = cfg.sound.enable;
       pulse.enable = cfg.sound.enable;
       jack.enable = true;
+      wireplumber.enable = false;
+      media-session.enable = true;
+      config.pipewire = {
+        "default.metadata" = true;
+      };
       media-session.config.bluez-monitor.rules = [
         {
           # Matches all cards
