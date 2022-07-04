@@ -38,7 +38,6 @@ in
       doctl
       google-cloud-sdk
       beekeeper-studio
-      docker-compose
       docker-compose_2
       insomnia
       gitAndTools.gh
@@ -47,6 +46,8 @@ in
       ngrok
       flyctl
       nixpkgs-fmt
+      tmux
+      tmate
       # heroku
 
       # tools
@@ -57,6 +58,8 @@ in
       gcolor3
       t-rec
       # obsidian
+      google-chrome
+      microsoft-edge-dev
 
       # audio
       spotify
