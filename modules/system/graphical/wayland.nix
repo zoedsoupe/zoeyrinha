@@ -52,7 +52,7 @@ in
               package = pkgs.numix-cursor-theme;
             };
           };
-	      };
+        };
       };
     };
 
