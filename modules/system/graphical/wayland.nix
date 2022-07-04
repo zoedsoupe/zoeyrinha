@@ -39,7 +39,10 @@ in
     services = mkIf (cfg.desktop-environment == "gnome") {
       xserver = {
         desktopManager.gnome.enable = true;
-        displayManager.gdm.enable = false;
+        displayManager.gdm = {
+          enable = true;
+	  wayland = false;
+	};
       };
     };
 
