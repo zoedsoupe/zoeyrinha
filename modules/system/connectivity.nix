@@ -43,7 +43,6 @@ in
     ] ++ (if (cfg.bluetooth.enable) then [
       scripts.bluetoothTools
     ] else [ ]) ++ (if (cfg.sound.enable) then [
-      pulseaudio
       scripts.soundTools
     ] else [ ]) ++ (if (cfg.printing.enable) then [
       hplip
@@ -58,7 +57,6 @@ in
       alsa.enable = cfg.sound.enable;
       alsa.support32Bit = cfg.sound.enable;
       pulse.enable = cfg.sound.enable;
-      jack.enable = true;
       wireplumber.enable = false;
       media-session.enable = true;
       config.pipewire = {

@@ -19,6 +19,7 @@
     , nixlib
     , nixpkgs
     , home-manager
+    , latest
     , ...
     }@inputs:
     let
