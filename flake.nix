@@ -72,8 +72,9 @@
               ignores = [ "*.swp" "*.swo" ".nix-*" ".postgres" ".direnv" ];
             };
             graphical = {
+              xorg.enable = true;
               wayland = {
-                enable = true;
+                enable = false;
                 desktop-environment = "gnome";
                 background.enable = false;
                 statusbar.enable = false;
@@ -131,9 +132,10 @@
             virtualisation.enable = true;
             zram.enable = true;
             graphical = {
+              xorg.enable = true;
               wayland = {
                 desktop-environment = "gnome";
-                enable = true;
+                enable = false;
                 swaylock-pam = false;
               };
             };

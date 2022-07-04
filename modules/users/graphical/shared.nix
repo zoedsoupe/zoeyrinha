@@ -1,11 +1,6 @@
 { pkgs, config, lib, ... }:
 
-with lib;
-
 let
-  cfg = config.zoedsoupe.graphical;
-  systemCfg = config.machineData.systemConfig;
-
   gtk-omni = pkgs.fetchFromGitHub {
     owner = "getomni";
     repo = "gtk";
@@ -14,9 +9,8 @@ let
   };
 in
 {
-  config = mkIf (cfg.wayland.enable) {
+  config = {
     home.packages = with pkgs; [
-      pavucontrol
       lxappearance
       numix-cursor-theme
     ];
@@ -28,8 +22,12 @@ in
         name = "Omni";
       };
       iconTheme = {
-        package = pkgs.arc-icon-theme;
-        name = "arc-icon";
+        package = pkgs.numix-icon-theme-circle;
+        name = "Numix-Icon-Circle";
+      };
+      cursorTheme = {
+        package = pkgs.numix-cursor-theme;
+        name = "Numix-Cursor-Light";
       };
       gtk3.extraConfig = {
         gtk-application-prefer-dark-theme = true;
