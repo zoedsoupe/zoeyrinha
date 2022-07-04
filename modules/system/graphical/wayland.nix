@@ -39,10 +39,20 @@ in
     services = mkIf (cfg.desktop-environment == "gnome") {
       xserver = {
         desktopManager.gnome.enable = true;
-        displayManager.gdm = {
+        displayManager.lightdm = {
           enable = true;
-	  wayland = false;
-	};
+          greeters.gtk = {
+            enable = true;
+            theme = {
+              name = "Numix";
+              package = pkgs.numix-gtk-theme;
+            };
+            cursorTheme = {
+              name = "Numix-Cursor";
+              package = pkgs.numix-cursor-theme;
+            };
+          };
+	      };
       };
     };
 
