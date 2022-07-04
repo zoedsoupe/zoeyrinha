@@ -33,7 +33,7 @@
       inherit (util) user;
       inherit (util) host;
 
-      pkgs = import latest {
+      pkgs = import nixpkgs {
         inherit system overlays;
         config.allowUnfree = true;
       };
