@@ -4,8 +4,8 @@ let
   gtk-omni = pkgs.fetchFromGitHub {
     owner = "getomni";
     repo = "gtk";
-    rev = "HEAD";
-    sha256 = "sha256-NSZjkG+rY6h8d7FYq5kipPAjMDAgyaYAgOOOJlfqBCI=";
+    rev = "e81b3fbebebf53369cffe1fb662abc400edb04f7";
+    sha256 = "NSZjkG+rY6h8d7FYq5kipPAjMDAgyaYAgOOOJlfqBCI=";
   };
 in
 {
@@ -13,6 +13,12 @@ in
     home.packages = with pkgs; [
       lxappearance
       numix-cursor-theme
+      gnomeExtensions.clipboard-indicator
+      gnomeExtensions.application-volume-mixer
+      gnomeExtensions.switcher
+      gnomeExtensions.pop-shell
+      gnome.gnome-screenshot
+      gnomeExtensions.github-notifications
     ];
 
     gtk = {
