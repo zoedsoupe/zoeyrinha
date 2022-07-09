@@ -58,7 +58,6 @@ in
       gcolor3
       t-rec
       # obsidian
-      google-chrome
       microsoft-edge-dev
 
       # audio

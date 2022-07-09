@@ -72,7 +72,6 @@
               ignores = [ "*.swp" "*.swo" ".nix-*" ".postgres" ".direnv" ];
             };
             graphical = {
-              xorg.enable = true;
               wayland = {
                 enable = false;
                 desktop-environment = "gnome";
