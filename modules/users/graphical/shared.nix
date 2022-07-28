@@ -11,8 +11,6 @@ in
 {
   config = {
     home.packages = with pkgs; [
-      lxappearance
-      numix-cursor-theme
       gnomeExtensions.clipboard-indicator
       gnomeExtensions.application-volume-mixer
       gnomeExtensions.switcher
@@ -24,12 +22,12 @@ in
     gtk = {
       enable = true;
       theme = {
-        package = gtk-omni;
-        name = "Omni";
+        package = pkgs.rose-pine-gtk-theme;
+        name = "Rose-Pine";
       };
       iconTheme = {
         package = pkgs.numix-icon-theme-circle;
-        name = "Numix-Icon-Circle";
+        name = "Numix-Circle-Light";
       };
       cursorTheme = {
         package = pkgs.numix-cursor-theme;
