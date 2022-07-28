@@ -18,8 +18,9 @@ in
     programs.kitty = {
       inherit (cfg) enable;
       font = {
-        name = "JetBrainsMono Nerd Font Mono";
-        size = 14;
+        package = pkgs.iosevka;
+        name = "Iosevka Term";
+        size = 15;
       };
       keybindings = {
         # windows
