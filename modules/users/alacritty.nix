@@ -28,8 +28,11 @@ in
           dynamic_title = true;
           dynamic_padding = false;
           decorations = "full";
+          opacity = 1;
         };
-        selection = { save_to_clipboard = true; };
+        selection = {
+          save_to_clipboard = false;
+        };
         scrolling = {
           history = 50000;
           multiplier = 2;
@@ -101,7 +104,6 @@ in
           };
         };
         draw_bold_text_with_bright_colors = true;
-        background_opacity = 1;
       };
     };
   };

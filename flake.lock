@@ -92,6 +92,8 @@
         "nvim-code-action-menu": "nvim-code-action-menu",
         "nvim-colorizer-lua": "nvim-colorizer-lua",
         "nvim-comment": "nvim-comment",
+        "nvim-dap": "nvim-dap",
+        "nvim-dap-ui": "nvim-dap-ui",
         "nvim-lspconfig": "nvim-lspconfig",
         "nvim-neoclip": "nvim-neoclip",
         "nvim-tree-lua": "nvim-tree-lua",
@@ -121,11 +123,11 @@
         "vimtex": "vimtex"
       },
       "locked": {
-        "lastModified": 1658746974,
-        "narHash": "sha256-qTTYfUIj2Fx3qS539nKeghTA2xpgWAzwvavx+c7DQXM=",
+        "lastModified": 1658852453,
+        "narHash": "sha256-o9n0b25bSDo1QJ6FACr99iL7SZLUC058lDokLJpzfLM=",
         "owner": "zoedsoupe",
         "repo": "copper",
-        "rev": "56591f1eedf1e26b77cdc11a1b57eca3a0b403ec",
+        "rev": "d6ef6aec9c975ff20690ea35bc23837b6031dd61",
         "type": "github"
       },
       "original": {
@@ -348,11 +350,11 @@
     },
     "latest": {
       "locked": {
-        "lastModified": 1658648081,
-        "narHash": "sha256-RL5nr4Xhp0zQeEGG/I3t3FmqaI9QrBg5PH31NF+7A/A=",
+        "lastModified": 1658826464,
+        "narHash": "sha256-94ZTF0uIX/iZdiD4RJ5f933ak/OM4XLl7hF+gCa4Iuk=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "e494a908e8895b9cba18e21d5fc83362f64b3f6a",
+        "rev": "ce49cb7792a7ffd65ef352dda1110a4e4a204eac",
         "type": "github"
       },
       "original": {
@@ -561,11 +563,11 @@
     },
     "nixpkgs_3": {
       "locked": {
-        "lastModified": 1658500284,
-        "narHash": "sha256-g7vwZ5UF8PvC9f2/7Zf5O6zxgJiMSuh1CiGZVuuOhEQ=",
+        "lastModified": 1658912196,
+        "narHash": "sha256-GTP5XCLPU2Hg2bQC5dVqSBF9ef5C/J6pD4qM09Ba4Gk=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "e3583ad6e533a9d8dd78f90bfa93812d390ea187",
+        "rev": "d9536b9b1e33377fb520e115bc8588d093ed97be",
         "type": "github"
       },
       "original": {
@@ -652,6 +654,38 @@
       "original": {
         "owner": "terrortylor",
         "repo": "nvim-comment",
+        "type": "github"
+      }
+    },
+    "nvim-dap": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1658773594,
+        "narHash": "sha256-NgGLnWX7Mm+hLTM0ekVZhEJL848ZIBAF0cSswB+4xEA=",
+        "owner": "mfussenegger",
+        "repo": "nvim-dap",
+        "rev": "2a52cf60799274d2881a91019bc69a3ccc69177f",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mfussenegger",
+        "repo": "nvim-dap",
+        "type": "github"
+      }
+    },
+    "nvim-dap-ui": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1658566121,
+        "narHash": "sha256-Wy9aCqVDvGaGL11Vx1st/2vek3YZOjVosugO/Ey/Euw=",
+        "owner": "rcarriga",
+        "repo": "nvim-dap-ui",
+        "rev": "b7b71444128f5aa90e4aee8dbfa36b14afddfb7a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "rcarriga",
+        "repo": "nvim-dap-ui",
         "type": "github"
       }
     },

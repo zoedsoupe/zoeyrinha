@@ -92,8 +92,6 @@
                 d = "rm -rf $argv";
                 please = "sudo $argv";
                 "..." = "cd ../../";
-                # nvim = "nix run github:zoedsoupe/copper#nvim.";
-                # vim = "nix run github:zoedsoupe/copper#nvim.";
               };
             };
           };
