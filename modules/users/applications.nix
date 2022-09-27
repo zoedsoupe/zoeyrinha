@@ -16,6 +16,43 @@ in
   };
 
   config = mkIf (cfg.enable) {
+    xdg.configFile."nvim/coc-settings.json".source = pkgs.writeTextFile {
+      name = "coc-settings.json";
+      text = builtins.toJSON {
+        "codeLens.enable" = true;
+        "rust-client" = {
+          "disableRustup" = true;
+          "rlsPath" = "${pkgs.rls}/bin/rls";
+        };
+        "suggest" = {
+          "noselect" = true;
+          "removeDuplicateItems" = true;
+        };
+        "languageserver" = {
+          "elixirLS" = {
+            "command" = "${pkgs.elixir_ls}/bin/elixir-ls";
+            "filetypes" = [ "elixir" "eexlixir" "heexlixir" ];
+          };
+          "rust" = {
+            "command" = "${pkgs.rls}/bin/rls";
+            "rootPatterns" = [ "Cargo.toml" ];
+            "filetypes" = [ "rs" ];
+          };
+          "nix" = { "command" = "${pkgs.rnix-lsp}/bin/rnix-lsp"; };
+        };
+        "coc.preferences" = {
+          "useQuickfixForLocations" = true;
+          "snippets.enable" = true;
+          "extensionsUpdateCheck" = "never";
+          "formatOnSaveFiletypes" = [
+            "elixir"
+            "rust"
+            "nix"
+          ];
+        };
+      };
+    };
+
     programs = {
       home-manager.enable = true;
       command-not-found.enable = true;
@@ -59,6 +96,7 @@ in
       t-rec
       # obsidian
       microsoft-edge-dev
+      whatsapp-for-linux
 
       # audio
       spotify
