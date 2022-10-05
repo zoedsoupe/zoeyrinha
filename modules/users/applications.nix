@@ -39,10 +39,11 @@ in
             "filetypes" = [ "rs" ];
           };
           "nix" = { "command" = "${pkgs.rnix-lsp}/bin/rnix-lsp"; "filetypes" = [ "nix" ]; };
-          "solargraph" = {
-            "command" = "${pkgs.solargraph}/bin/solargraph";
-            "filetypes" = [ "rb" "erb" ];
-          };
+          # FIX ME
+          # "solargraph" = {
+          #   "commandPath" = "${pkgs.solargraph}/bin";
+          #   "filetypes" = [ "rb" "erb" ];
+          # };
         };
         "coc.preferences" = {
           "useQuickfixForLocations" = true;
@@ -76,6 +77,7 @@ in
 
       # agda
       # deno
+      solargraph # remove me
       doctl
       google-cloud-sdk
       beekeeper-studio

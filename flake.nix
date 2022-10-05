@@ -60,7 +60,6 @@
             dunst.enable = false;
             fzf.enable = true;
             vscode.enable = false;
-            emacs.enable = true;
             kitty = {
               enable = true;
               theme = "rose-pine";
