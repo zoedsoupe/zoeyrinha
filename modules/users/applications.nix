@@ -38,7 +38,11 @@ in
             "rootPatterns" = [ "Cargo.toml" ];
             "filetypes" = [ "rs" ];
           };
-          "nix" = { "command" = "${pkgs.rnix-lsp}/bin/rnix-lsp"; };
+          "nix" = { "command" = "${pkgs.rnix-lsp}/bin/rnix-lsp"; "filetypes" = [ "nix" ]; };
+          "solargraph" = {
+            "command" = "${pkgs.solargraph}/bin/solargraph";
+            "filetypes" = [ "rb" "erb" ];
+          };
         };
         "coc.preferences" = {
           "useQuickfixForLocations" = true;
