@@ -59,7 +59,7 @@ in
       gcolor3
       t-rec
       # obsidian
-      microsoft-edge-dev
+      microsoft-edge
       whatsapp-for-linux
 
       # audio
