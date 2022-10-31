@@ -75,13 +75,8 @@
               ignores = [ "*.swp" "*.swo" ".nix-*" ".postgres" ".direnv" ];
             };
             graphical = {
-              wayland = {
-                enable = false;
-                desktop-environment = "gnome";
-                background.enable = false;
-                statusbar.enable = false;
-                screenlock.enable = false;
-              };
+              enable = true;
+              gtk.enable = false;
             };
             fish = {
               enable = true;

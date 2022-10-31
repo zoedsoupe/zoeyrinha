@@ -10,10 +10,12 @@
     ./fish.nix
     ./fzf.nix
     ./git.nix
-    ./graphical
+    ./graphical.nix
     ./kitty.nix
     ./starship.nix
     ./udiskie.nix
     ./vscode.nix
   ];
+
+  targets.genericLinux.enable = true;
 }

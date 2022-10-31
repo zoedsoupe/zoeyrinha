@@ -1,5 +1,7 @@
 { pkgs, config, lib, ... }:
 
+with lib;
+
 let
   gtk-omni = pkgs.fetchFromGitHub {
     owner = "getomni";
@@ -7,19 +9,23 @@ let
     rev = "e81b3fbebebf53369cffe1fb662abc400edb04f7";
     sha256 = "NSZjkG+rY6h8d7FYq5kipPAjMDAgyaYAgOOOJlfqBCI=";
   };
+
+  cfg = config.zoedsoupe.graphical;
 in
 {
-  config = {
+  options.zoedsoupe.graphical = {
+    enable = mkEnableOption "GTK and gnome pkgs";
+    gtk.enable = mkEnableOption "GTK customize";
+  };
+
+  config = mkIf (cfg.enable) {
     home.packages = with pkgs; [
       gnomeExtensions.clipboard-indicator
       gnomeExtensions.application-volume-mixer
-      gnomeExtensions.switcher
-      gnomeExtensions.pop-shell
-      gnome.gnome-screenshot
-      gnomeExtensions.github-notifications
+      # gnomeExtensions.pop-shell
     ];
 
-    gtk = {
+    gtk = mkIf (cfg.gtk.enable) {
       enable = true;
       theme = {
         package = pkgs.rose-pine-gtk-theme;
