@@ -28,7 +28,7 @@ in
       slack-dark
 
       # office
-      onlyoffice-bin
+      # onlyoffice-bin
 
       # dev
       copper # my neovim config
@@ -37,30 +37,30 @@ in
       # deno
       solargraph # required by coc-nvim (see copper)
       doctl
-      google-cloud-sdk
+      # google-cloud-sdk
       beekeeper-studio
       docker-compose_2
-      insomnia
+      # insomnia
       gitAndTools.gh
-      earthly
+      # earthly
       awscli2
       ngrok
       flyctl
       nixpkgs-fmt
-      tmux
+      # tmux
       tmate
       # heroku
 
       # tools
-      exercism
+      # exercism
       # gitter
-      qbittorrent
-      exodus
-      gcolor3
-      t-rec
+      # qbittorrent
+      # exodus
+      # gcolor3
+      # t-rec
       # obsidian
-      microsoft-edge
-      whatsapp-for-linux
+      # microsoft-edge
+      # whatsapp-for-linux
 
       # audio
       spotify
@@ -71,25 +71,25 @@ in
 
       # images
       peek
-      flameshot
+      # flameshot
       imagemagick
 
       # others
       any-nix-shell
-      bitwarden-cli
+      # bitwarden-cli
       zoom-us
       # arandr
 
       # audio & video
-      mpv
-      pavucontrol
+      # mpv
+      # pavucontrol
       ffmpeg
 
       # image
-      feh
+      # feh
 
       # others
-      zathura
+      # zathura
       inotify-tools
     ];
   };
