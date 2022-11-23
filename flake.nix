@@ -53,7 +53,7 @@
         zoedsoupe = user.mkHMUser {
           username = "zoedsoupe";
           userConfig = {
-            alacritty.enable = false;
+            alacritty.enable = true;
             applications.enable = true;
             clipmenu.enable = false;
             direnv.enable = true;
