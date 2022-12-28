@@ -5,7 +5,7 @@ let
 in
 {
   overlays = [
-    inputs.copper.overlays.default
     scripts.overlay
+    copper.overlays.default
   ];
 }
