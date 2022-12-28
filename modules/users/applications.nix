@@ -23,7 +23,7 @@ in
 
     home.packages = with pkgs; [
       # chat
-      tdesktop
+      # tdesktop
       discord
       slack-dark
 
@@ -35,13 +35,13 @@ in
 
       # agda
       # deno
-      solargraph # required by coc-nvim (see copper)
+      clojure
       doctl
       # google-cloud-sdk
       beekeeper-studio
-      docker-compose_2
+      # docker-compose_2
       # insomnia
-      gitAndTools.gh
+      # gitAndTools.gh
       # earthly
       awscli2
       ngrok
@@ -50,6 +50,7 @@ in
       # tmux
       tmate
       # heroku
+      nixgl.nixGLIntel
 
       # tools
       # exercism
