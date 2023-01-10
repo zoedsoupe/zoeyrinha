@@ -25,7 +25,7 @@ in
       # chat
       # tdesktop
       discord
-      slack-dark
+      # slack-dark
 
       # office
       # onlyoffice-bin
@@ -36,21 +36,21 @@ in
       # agda
       # deno
       clojure
+      leiningen
       doctl
       # google-cloud-sdk
-      beekeeper-studio
+      # beekeeper-studio
       # docker-compose_2
       # insomnia
       # gitAndTools.gh
       # earthly
-      awscli2
+      # awscli2
       ngrok
       flyctl
       nixpkgs-fmt
       # tmux
       tmate
       # heroku
-      nixgl.nixGLIntel
 
       # tools
       # exercism
@@ -78,7 +78,7 @@ in
       # others
       any-nix-shell
       # bitwarden-cli
-      zoom-us
+      # zoom-us
       # arandr
 
       # audio & video
