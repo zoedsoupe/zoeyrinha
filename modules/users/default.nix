@@ -17,5 +17,5 @@
     ./vscode.nix
   ];
 
-  targets.genericLinux.enable = true;
+  targets.genericLinux.enable = false;
 }
