@@ -38,7 +38,7 @@
         config.allowUnfree = true;
       };
 
-      system = "x86_64-linux";
+      system = "aarch64-darwin";
 
       scripts = import ./scripts {
         inherit pkgs lib;
@@ -51,7 +51,7 @@
     {
       homeManagerConfigurations = {
         zoedsoupe = user.mkHMUser {
-          username = "zoedsoupe";
+          username = "zoey.pessanha";
           userConfig = {
             alacritty.enable = false;
             applications.enable = true;
@@ -64,12 +64,12 @@
               enable = false;
               theme = "rose-pine";
             };
-            starship.enable = false;
+            starship.enable = true;
             udiskie.enable = false;
             git = {
               enable = true;
               userName = "Zoey de Souza Pessanha";
-              userEmail = "zoey.spessanha@outlook.com";
+              userEmail = "zoey.pessanha@nubank.com.br";
               lfs.enable = true;
               delta.enable = true;
               ignores = [ "*.swp" "*.swo" ".nix-*" ".postgres" ".direnv" ];
@@ -79,7 +79,7 @@
               gtk.enable = false;
             };
             fish = {
-              enable = false;
+              enable = true;
               aliases = {
                 lg = "lazygit";
                 ps = "procs";
@@ -113,7 +113,7 @@
           ];
           cpuCores = 8;
           users = [{
-            name = "zoedsoupe";
+            name = "zoey.pessanha";
             groups = [ "wheel" "networkmanager" "video" "audio" "docker" "libvirtd" ];
             uid = 1000;
             shell = pkgs.zsh;

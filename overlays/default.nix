@@ -6,6 +6,6 @@ in
 {
   overlays = [
     scripts.overlay
-    copper.overlays.default
+    copper.overlays.aarch64-darwin.default
   ];
 }

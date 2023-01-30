@@ -34,12 +34,12 @@ with builtins;
           home = {
             inherit username;
             stateVersion = "21.05";
-            homeDirectory = "/home/${username}";
+            homeDirectory = "/Users/${username}";
           };
 
           imports = [ ../modules/users machineModule ];
         };
-      homeDirectory = "/home/${username}";
+      homeDirectory = "/Users/${username}";
     };
 
   mkSystemUser = { name, groups, uid, shell }: {

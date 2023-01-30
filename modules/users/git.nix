@@ -50,8 +50,8 @@ in
       lfs.enable = cfg.lfs.enable;
       delta.enable = cfg.delta.enable;
       signing = {
-        key = "E94200AB14334C56";
-        gpgPath = "/usr/bin/gpg";
+        key = "A227728F4E3B4365";
+        gpgPath = "/opt/homebrew/bin/gpg";
         signByDefault = true;
       };
       aliases = {

@@ -7,6 +7,8 @@ let
 
   base = ''
     ### PROMPT ###
+    set -x PATH $PATH /usr/local/opt/curl/bin /opt/homebrew/sbin /usr/local/sbin /usr/local/bin /opt/homebrew/bin /opt/homebrew/bin /Users/zoey.pessanha/.nix-profile/bin /nix/var/nix/profiles/default/bin
+
     starship init fish | source
 
     any-nix-shell fish --info-right | source
@@ -16,6 +18,8 @@ let
     set -x STARSHIP_CONFIG ~/.config/starship.toml
 
     set fish_greeting # suppress fish initital greeting
+
+    fish_config theme choose "Rosé Pine Moon"
 
     set HISTCONTROL ignoreboth # ignore commands with initial space and duplicates
   '';
@@ -82,6 +86,15 @@ in
             repo = "fish";
             rev = "v1.0.0";
             sha256 = "wEwYrIED3vootteL/x8SQqtkUMSFPrv+il7VWf/O39s=";
+          };
+        }
+        {
+          name = "rose-pine";
+          src = pkgs.fetchFromGitHub {
+            owner = "rose-pine";
+            repo = "fish";
+            rev = "main";
+            sha256 = "bSGGksL/jBNqVV0cHZ8eJ03/8j3HfD9HXpDa8G/Cmi8=";
           };
         }
         {

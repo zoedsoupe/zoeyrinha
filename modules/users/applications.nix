@@ -25,7 +25,7 @@ in
       # chat
       # tdesktop
       # discord
-      slack-dark
+      # slack-dark
 
       # office
       # onlyoffice-bin
@@ -35,18 +35,19 @@ in
 
       # agda
       # deno
-      # clojure
-      # leiningen
+      clojure
+      leiningen
       doctl
+      elixir_1_14
       # google-cloud-sdk
       # beekeeper-studio
       # docker-compose_2
       # insomnia
-      # gitAndTools.gh
-      # earthly
+      gitAndTools.gh
+      earthly
       # awscli2
       ngrok
-      flyctl
+      # flyctl
       nixpkgs-fmt
       # tmux
       tmate
@@ -62,18 +63,22 @@ in
       # obsidian
       # microsoft-edge
       # whatsapp-for-linux
+      exa
+      ripgrep
+      fd
+      bat
 
       # audio
-      spotify
+      # spotify
 
       # text
       # jabref
       # texlive.combined.scheme-full
 
       # images
-      peek
+      # peek
       # flameshot
-      imagemagick
+      # imagemagick
 
       # others
       any-nix-shell
@@ -91,7 +96,7 @@ in
 
       # others
       # zathura
-      inotify-tools
+      # inotify-tools
     ];
   };
 }
