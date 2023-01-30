@@ -53,7 +53,7 @@
         zoedsoupe = user.mkHMUser {
           username = "zoedsoupe";
           userConfig = {
-            alacritty.enable = true;
+            alacritty.enable = false;
             applications.enable = true;
             clipmenu.enable = false;
             direnv.enable = true;
@@ -61,10 +61,10 @@
             fzf.enable = true;
             vscode.enable = false;
             kitty = {
-              enable = true;
+              enable = false;
               theme = "rose-pine";
             };
-            starship.enable = true;
+            starship.enable = false;
             udiskie.enable = false;
             git = {
               enable = true;
@@ -75,11 +75,11 @@
               ignores = [ "*.swp" "*.swo" ".nix-*" ".postgres" ".direnv" ];
             };
             graphical = {
-              enable = true;
+              enable = false;
               gtk.enable = false;
             };
             fish = {
-              enable = true;
+              enable = false;
               aliases = {
                 lg = "lazygit";
                 ps = "procs";
