@@ -50,7 +50,7 @@ in
       lfs.enable = cfg.lfs.enable;
       delta.enable = cfg.delta.enable;
       signing = {
-        key = null;
+        key = "E94200AB14334C56";
         gpgPath = "/usr/bin/gpg";
         signByDefault = true;
       };

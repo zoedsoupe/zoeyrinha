@@ -24,8 +24,8 @@ in
     home.packages = with pkgs; [
       # chat
       # tdesktop
-      discord
-      # slack-dark
+      # discord
+      slack-dark
 
       # office
       # onlyoffice-bin
@@ -35,8 +35,8 @@ in
 
       # agda
       # deno
-      clojure
-      leiningen
+      # clojure
+      # leiningen
       doctl
       # google-cloud-sdk
       # beekeeper-studio
