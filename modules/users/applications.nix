@@ -18,7 +18,7 @@ in
   config = mkIf (cfg.enable) {
     programs = {
       home-manager.enable = true;
-      command-not-found.enable = true;
+      command-not-found.enable = false;
     };
 
     home.packages = with pkgs; [
@@ -34,14 +34,16 @@ in
       copper # my neovim config
 
       # agda
-      # deno
+      deno
       clojure
       leiningen
+      stack
       doctl
       elixir_1_14
+      rustc
+      cargo
       # google-cloud-sdk
       # beekeeper-studio
-      # docker-compose_2
       # insomnia
       gitAndTools.gh
       earthly
@@ -54,7 +56,7 @@ in
       # heroku
 
       # tools
-      # exercism
+      exercism
       # gitter
       # qbittorrent
       # exodus
