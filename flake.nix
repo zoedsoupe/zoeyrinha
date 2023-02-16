@@ -61,7 +61,7 @@
             fzf.enable = true;
             vscode.enable = false;
             kitty = {
-              enable = false;
+              enable = true;
               theme = "rose-pine";
             };
             starship.enable = true;
