@@ -144,6 +144,22 @@
         "type": "github"
       }
     },
+    "conjure": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1673111254,
+        "narHash": "sha256-zBY3C7udP5sJ/HLp/bEt6gBBXLMINw/WQNXOXnoDLiw=",
+        "owner": "Olical",
+        "repo": "conjure",
+        "rev": "d2e69a13b32e8574decfe81ea275292234eba6ea",
+        "type": "github"
+      },
+      "original": {
+        "owner": "Olical",
+        "repo": "conjure",
+        "type": "github"
+      }
+    },
     "copper": {
       "inputs": {
         "boo": "boo",
@@ -155,6 +171,7 @@
         "cmp-treesitter": "cmp-treesitter",
         "cmp-vsnip": "cmp-vsnip",
         "codi-vim": "codi-vim",
+        "conjure": "conjure",
         "dashboard-nvim": "dashboard-nvim",
         "direnv-vim": "direnv-vim",
         "doom-one": "doom-one",
@@ -210,17 +227,19 @@
         "vim-highlightedyank": "vim-highlightedyank",
         "vim-matchup": "vim-matchup",
         "vim-polyglot": "vim-polyglot",
+        "vim-sexp": "vim-sexp",
+        "vim-sexp-mappings": "vim-sexp-mappings",
         "vim-vsnip": "vim-vsnip",
         "vimagit": "vimagit",
         "vimtex": "vimtex",
         "which-key": "which-key"
       },
       "locked": {
-        "lastModified": 1676581757,
-        "narHash": "sha256-mj/2MsYvArE+h2quS1a9xGgEparGyQUwAaGaEWG1vSg=",
+        "lastModified": 1676588803,
+        "narHash": "sha256-pRMaTqaEtH9YJJxVasG2xBWVX3TNr68CLFxnuoDeTfM=",
         "owner": "zoedsoupe",
         "repo": "copper",
-        "rev": "3585b46f9c31af07e84254cf7932bda1ee2001ea",
+        "rev": "36121176e168200c915425e3beed4ae250adac15",
         "type": "github"
       },
       "original": {
@@ -442,11 +461,11 @@
     },
     "latest": {
       "locked": {
-        "lastModified": 1676391076,
-        "narHash": "sha256-t2Awu5Aucb5kVan9BniyIHn2gqDy1muzQTox9MQl09A=",
+        "lastModified": 1676481215,
+        "narHash": "sha256-afma/1RU0EePRyrBPcjBdOt+dV8z1bJH9dtpTN/WXmY=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "5a3b04e58b86d885bb441ee52ed2d23128fc9156",
+        "rev": "28319deb5ab05458d9cd5c7d99e1a24ec2e8fc4b",
         "type": "github"
       },
       "original": {
@@ -1302,6 +1321,38 @@
       "original": {
         "owner": "sheerun",
         "repo": "vim-polyglot",
+        "type": "github"
+      }
+    },
+    "vim-sexp": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1615186630,
+        "narHash": "sha256-HRNzyh3M6KrPyoRmPNug3Qldc5hRim3out4vKG/PM40=",
+        "owner": "guns",
+        "repo": "vim-sexp",
+        "rev": "14464d4580af43424ed8f2614d94e62bfa40bb4d",
+        "type": "github"
+      },
+      "original": {
+        "owner": "guns",
+        "repo": "vim-sexp",
+        "type": "github"
+      }
+    },
+    "vim-sexp-mappings": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1669483180,
+        "narHash": "sha256-VsIP7eZtL0loYd7WDMrmRuQPacA5PqiueOBqv7BvJUs=",
+        "owner": "tpope",
+        "repo": "vim-sexp-mappings-for-regular-people",
+        "rev": "cc5923e357373ea6ef0c13eae82f44e6b9b1d374",
+        "type": "github"
+      },
+      "original": {
+        "owner": "tpope",
+        "repo": "vim-sexp-mappings-for-regular-people",
         "type": "github"
       }
     },
