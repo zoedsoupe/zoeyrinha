@@ -76,6 +76,11 @@ in
         user = { username = "zoedsoupe"; };
         init = { defaultBranch = "main"; };
         pull = { rebase = false; };
+        url = {
+          "git@github.com" = {
+            insteadOf = "git://github.com/";
+          };
+        };
         commit = {
           template = builtins.toString ./misc/gitmessage;
         };
