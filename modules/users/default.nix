@@ -4,6 +4,7 @@
   imports = [
     ./alacritty.nix
     ./applications.nix
+    ./bat.nix
     ./clipmenu.nix
     ./direnv.nix
     ./dunst.nix
@@ -15,6 +16,7 @@
     ./starship.nix
     ./udiskie.nix
     ./vscode.nix
+    ./zsh.nix
   ];
 
   targets.genericLinux.enable = false;

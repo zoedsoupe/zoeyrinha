@@ -6,24 +6,24 @@ let
   cfg = config.zoedsoupe.fish;
 
   base = ''
-    ### PROMPT ###
-    set -x PATH $PATH /usr/local/opt/curl/bin /opt/homebrew/sbin /usr/local/sbin /usr/local/bin /opt/homebrew/bin /opt/homebrew/bin /Users/zoey.pessanha/.nix-profile/bin /nix/var/nix/profiles/default/bin
+     ### PROMPT ###
+     set -x PATH $PATH /usr/local/opt/curl/bin /opt/homebrew/sbin /usr/local/sbin /usr/local/bin /opt/homebrew/bin /opt/homebrew/bin /Users/zoey.pessanha/.nix-profile/bin /nix/var/nix/profiles/default/bin
 
-    starship init fish | source
-    any-nix-shell fish --info-right | source
-    set -x GPG_TTY (tty)
-    set -x STARSHIP_CONFIG ~/.config/starship.toml
-    set fish_greeting # suppress fish initital greeting
-    fish_config theme choose "Rosé Pine Moon"
-    set HISTCONTROL ignoreboth # ignore commands with initial space and duplicates
+     starship init fish | source
+     any-nix-shell fish --info-right | source
+     set -x GPG_TTY (tty)
+     set -x STARSHIP_CONFIG ~/.config/starship.toml
+     set fish_greeting # suppress fish initital greeting
+     fish_config theme choose "Rosé Pine Moon"
+     set HISTCONTROL ignoreboth # ignore commands with initial space and duplicates
 
-   # Nuabank related
-   # Generated for envman. Do not edit.
-   [ -s "$HOME/.config/envman/load.fish" ] && source "$HOME/.config/envman/load.fish"
-   set -U -x NU_HOME "$HOME/dev/nu"
-   set -U -x NUCLI_HOME "$NU_HOME/nucli"
+    # Nuabank related
+    # Generated for envman. Do not edit.
+    [ -s "$HOME/.config/envman/load.fish" ] && source "$HOME/.config/envman/load.fish"
+    set -U -x NU_HOME "$HOME/dev/nu"
+    set -U -x NUCLI_HOME "$NU_HOME/nucli"
    
-   set -x PATH $NUCLI_HOME $PATH
+    set -x PATH $NUCLI_HOME $PATH
   '';
 
   functions = ''
