@@ -68,7 +68,6 @@ in
       exa
       ripgrep
       fd
-      bat
 
       # audio
       # spotify

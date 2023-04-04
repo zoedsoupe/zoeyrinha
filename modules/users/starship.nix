@@ -12,12 +12,19 @@ in
       type = types.bool;
       default = false;
     };
+
+    theme.flavour = mkOption {
+      description = "starship theme style";
+      type = types.enum [ "latte" "frappe" "macchiato" "mocha" ];
+      default = "frappe";
+    };
   };
 
   config = mkIf (cfg.enable) {
     programs.starship = {
       inherit (cfg) enable;
       enableFishIntegration = true;
+      enableZshIntegration = true;
       settings = {
         directory = {
           format = "[$path]($style)[$read_only]($read_only_style) ";
@@ -68,7 +75,14 @@ in
           "$rust"
           "$character"
         ];
-      };
+        palette = "catppuccin_${cfg.theme.flavour}";
+      } // builtins.fromTOML (builtins.readFile (pkgs.fetchFromGitHub
+      {
+        owner = "catppuccin";
+        repo = "starship";
+        rev = "HEAD";
+        sha256 = "soEBVlq3ULeiZFAdQYMRFuswIIhI9bclIU8WXjxd7oY=";
+      } + /palettes/${cfg.theme.flavour}.toml));
     };
   };
 }

@@ -60,6 +60,8 @@
             dunst.enable = false;
             fzf.enable = true;
             vscode.enable = false;
+            bat.enable = true;
+            zsh.enable = true;
             kitty = {
               enable = true;
               theme = "rose-pine";
@@ -79,7 +81,7 @@
               gtk.enable = false;
             };
             fish = {
-              enable = true;
+              enable = false;
               aliases = {
                 lg = "lazygit";
                 ps = "procs";
