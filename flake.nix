@@ -63,7 +63,7 @@
             bat.enable = true;
             zsh.enable = true;
             kitty = {
-              enable = true;
+              enable = false;
               theme = "rose-pine";
             };
             starship.enable = true;
