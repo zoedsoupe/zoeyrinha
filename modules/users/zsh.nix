@@ -44,12 +44,15 @@ in
           ignoreDups = true;
           ignoreSpace = true;
         };
+        shellGlobalAliases = let
+          nvim-server = "nvim --listen /tmp/nvimsocket";
+        in { nvim = nvim-server; };
         sessionVariables = {
           GPG_TTY = "$(tty)";
           NU_COUNTRY = "br";
           NU_HOME = "$HOME/dev/nu";
           NUCLI_HOME = "$HOME/dev/nu/nucli";
-          GO_PATH = "$HOME/go";
+          GOPATH = "$HOME/go";
           GITHUB_TOKEN = "";
           MONOREPO_ROOT = "$HOME/dev/nu/mini-meta-repo";
           FLUTTER_SDK_HOME = "$HOME/sdk-flutter";
@@ -60,9 +63,11 @@ in
         };
         dirHashes = {
           nu = "$HOME/dev/nu";
+          nunos-bff = "$HOME/dev/nu/nunos-bff";
           pescarte = "$HOME/dev/pescarte";
-          pescarte-api = "$HOME/dev/pescarte/pescarte";
-          pescarte-plataforma = "$HOME/dev/pescarte/plataforma";
+          pescarte-api = "$HOME/dev/pescarte/pescarte-api";
+          pescarte-plataforma = "$HOME/dev/pescarte/pescarte-plataforma";
+          pescarte-ds = "$HOME/dev/pescarte/pescarte-ds";
           zoey = "$HOME/dev/zoey";
           zoeyrinha = "$HOME/dev/zoey/zoeyrinha";
           copper = "$HOME/dev/zoey/copper";

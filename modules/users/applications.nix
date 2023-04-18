@@ -35,6 +35,7 @@ in
 
       # agda
       deno
+      neovim-remote
       clojure
       leiningen
       stack
