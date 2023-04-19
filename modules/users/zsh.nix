@@ -43,11 +43,13 @@ in
           extended = true;
           ignoreDups = true;
           ignoreSpace = true;
+          ignorePatterns = [ "nu *" "nu-br *" ];
         };
         shellGlobalAliases = let
           nvim-server = "nvim --listen /tmp/nvimsocket";
         in { nvim = nvim-server; };
         sessionVariables = {
+          NODE_OPTIONS = "--openssl-legacy-provider";
           GPG_TTY = "$(tty)";
           NU_COUNTRY = "br";
           NU_HOME = "$HOME/dev/nu";

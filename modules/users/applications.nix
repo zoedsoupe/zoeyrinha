@@ -4,7 +4,7 @@ with lib;
 
 let
   cfg = config.zoedsoupe.applications;
-  agda = pkgs.agda.withPackages (p: [ p.standard-library ]);
+  # agda = pkgs.agda.withPackages (p: [ p.standard-library ]);
 in
 {
   options.zoedsoupe.applications = {
@@ -35,7 +35,7 @@ in
 
       # agda
       deno
-      neovim-remote
+      nodejs-16_x
       clojure
       leiningen
       stack
