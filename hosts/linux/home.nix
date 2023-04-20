@@ -1,6 +1,11 @@
 { pkgs, ... }:
 
 {
+  home.username = "zoey.pessanha";
+  home.homeDirectory = "/home/zoey.pessanha";
+
+  home.stateVersion = "22.11";
+
   programs = {
     home-manager.enable = true;
     command-not-found.enable = false;
