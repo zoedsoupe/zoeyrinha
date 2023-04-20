@@ -1,23 +1,9 @@
-{ pkgs, config, lib, ... }:
+{ pkgs, ... }:
 
-with lib;
-
-let
-  cfg = config.zoedsoupe.fzf;
-in
 {
-  options.zoedsoupe.fzf = {
-    enable = mkOption {
-      description = "Enable fzf";
-      type = types.bool;
-      default = false;
-    };
-  };
-
-  config = mkIf (cfg.enable) {
-    programs.fzf = {
-      inherit (cfg) enable;
-      enableFishIntegration = config.zoedsoupe.fish.enable;
-    };
+  programs.fzf = {
+    enable = true;
+    enableFishIntegration = false;
+    enableZshIntegration = true;
   };
 }

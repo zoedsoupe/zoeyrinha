@@ -14,26 +14,18 @@
   <strong>Powered by</strong>
   <br>
   <img src="https://img.shields.io/badge/-NixOS-informational?style=for-the-badge&logo=NixOS&logoColor=white&color=5277C3" alt="NixOS" />
-
-  <img src="https://img.shields.io/badge/-Fish-informational?style=for-the-badge&logoColor=white&color=5927E3" alt="Fish shell" />
-
-  <img src="https://img.shields.io/badge/-Haskell-informational?style=for-the-badge&logo=Haskell&logoColor=white&color=5D4F85" alt="Haskell" />
-
-  <img src="https://img.shields.io/badge/-Elixir-informational?style=for-the-badge&logo=Elixir&logoColor=white&color=4B275F" alt="Elixir" />
-
-  <img src="https://img.shields.io/badge/-Emacs-informational?style=for-the-badge&logo=GNU-Emacs&logoColor=white&color=7F5AB6" alt="Emacs" />
 </div>
 
 <p align="center">
   <a href="#programs">Programs</a> •
   <a href="#screenshots">Screenshots</a> •
   <a href="https://github.com/zoedsoupe/copper" target="_blank">Neovim</a> •
-  <a href="#emacs">Emacs</a> •
-  <a href="#vscode">VSCode</a> •
-  <a href="#install">Install</a>
+  <a href="#how-to-use">How to use</a>
 </p>
 
 This repo is a fresh start from old config [nixnad](https://github.com/zoedsoupe/nixnad).
+
+<a id="programs" />
 
 ## You'll be installing...
 **TODO**
@@ -41,11 +33,18 @@ This repo is a fresh start from old config [nixnad](https://github.com/zoedsoupe
 ## Screenshots
 **TODO**
 
-## Emacs
-**TODO**
-
-## VSCode
-**TODO**
-
 ## How to use
-**TODO**
+
+To build the home configuration you can run:
+
+```sh dark
+nix build <flake-url>#homeManagerConfigurations.zoedsoupe.activationPackage
+```
+
+If you want to build a bootable ISO, with minimal NixOS config, run:
+
+```sh dark
+nix build <flake-url>#installMedia.minimal.config.system.build.isoImage
+```
+
+> If you're building locally, `<flake-url>` will be `.`!
