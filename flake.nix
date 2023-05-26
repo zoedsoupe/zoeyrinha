@@ -2,23 +2,23 @@
   description = "Zoey's personal config, aka dotfiles";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-22.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
 
     darwin = {
       url = "github:lnl7/nix-darwin/master";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nixlib.url = "github:nix-community/nixpkgs.lib";
-
     # My custom NeoVim config
     copper.url = "github:zoedsoupe/copper";
+    mnvim.url = "github:zoedsoupe/mnvim";
 
-    home-manager.url = "github:nix-community/home-manager/release-22.11";
-    home-manager.inputs.nixpkgs.follows = "nixlib";
+    # need to solve this about fcitx-engines
+    home-manager.url = "github:nix-community/home-manager/master";
+    home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, home-manager, copper, ... }:
+  outputs = { self, nixpkgs, home-manager, copper, mnvim, ... }:
     let
       inherit (nixpkgs.lib) nixosSystem;# maybe I'll bought a linux machine????
       # inherit (darwin.lib) darwinSystem; I'll use only when I bought my own mac
@@ -28,7 +28,10 @@
       homeManagerConfigurations.zoedsoupe = homeManagerConfiguration {
         pkgs = import nixpkgs rec {
           system = "aarch64-darwin";
-          overlays = [ copper.overlays."${system}".default ];
+          overlays = [
+            copper.overlays."${system}".default
+            mnvim.overlays."${system}".default
+          ];
           config.allowUnfree = true;
         };
         modules = [

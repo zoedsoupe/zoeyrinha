@@ -14,14 +14,15 @@
   home.packages = with pkgs; [
     # dev
     copper # my neovim config
+    # mnvim # my minimal neovim config
 
     # agda
     deno
-    nodejs-16_x
+    nodejs_18
     clojure
     leiningen
     stack
-    elixir_1_14
+    elixir
     rustc
     cargo
     gitAndTools.gh
