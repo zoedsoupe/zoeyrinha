@@ -25,7 +25,7 @@
 
     # agda
     deno
-    nodejs-16_x
+    nodejs_18
     clojure
     leiningen
     stack

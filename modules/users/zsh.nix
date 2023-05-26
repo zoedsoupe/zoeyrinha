@@ -27,12 +27,8 @@
         ignoreSpace = true;
         ignorePatterns = [ "nu *" "nu-br *" ];
       };
-      shellGlobalAliases =
-        let
-          nvim-server = "nvim --listen /tmp/nvimsocket";
-        in
-        { nvim = nvim-server; };
       sessionVariables = {
+        DOCKER_HOST = "unix:///Users/zoey.pessanha/.docker/run/docker.sock"; # for personal mac, might improve it
         NODE_OPTIONS = "--openssl-legacy-provider";
         GPG_TTY = "$(tty)";
         NU_COUNTRY = "br";
