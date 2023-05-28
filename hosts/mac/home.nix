@@ -13,7 +13,7 @@
 
   home.packages = with pkgs; [
     # dev
-    copper # my neovim config
+    lvim # my neovim config
     # mnvim # my minimal neovim config
 
     # agda

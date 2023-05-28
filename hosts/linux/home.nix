@@ -21,7 +21,7 @@
     onlyoffice-bin
 
     # dev
-    copper # my neovim config
+    lvim # my neovim config
 
     # agda
     deno

@@ -10,7 +10,7 @@
     };
 
     # My custom NeoVim config
-    copper.url = "github:zoedsoupe/copper";
+    lvim.url = "github:zoedsoupe/lvim";
     mnvim.url = "github:zoedsoupe/mnvim";
 
     # need to solve this about fcitx-engines
@@ -18,7 +18,7 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { self, nixpkgs, home-manager, copper, mnvim, ... }:
+  outputs = { nixpkgs, home-manager, lvim, mnvim, ... }:
     let
       inherit (nixpkgs.lib) nixosSystem;# maybe I'll bought a linux machine????
       # inherit (darwin.lib) darwinSystem; I'll use only when I bought my own mac
@@ -29,7 +29,7 @@
         pkgs = import nixpkgs rec {
           system = "aarch64-darwin";
           overlays = [
-            copper.overlays."${system}".default
+            lvim.overlays."${system}".default
             mnvim.overlays."${system}".default
           ];
           config.allowUnfree = true;
