@@ -4,13 +4,13 @@
   programs.git = {
     enable = true;
     userName = "Zoey de Souza Pessanha";
-    userEmail = "zoey.pessanha@outlook.com";
+    userEmail = "zoey.spessanha@gmail.com";
     ignores = [ "*.swp" "*.swo" ".nix-*" ".postgres" ".direnv" ];
     lfs.enable = true;
     delta.enable = true;
     signing = {
-      key = "A227728F4E3B4365";
-      gpgPath = "/opt/homebrew/bin/gpg";
+      key = null;
+      gpgPath = "${pkgs.gnupg}/bin/gpg";
       signByDefault = true;
     };
     aliases = {

@@ -18,30 +18,63 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
-  outputs = { nixpkgs, home-manager, lvim, mnvim, ... }:
+  outputs = { nixpkgs, home-manager, lvim, mnvim, darwin, ... }:
     let
-      inherit (nixpkgs.lib) nixosSystem;# maybe I'll bought a linux machine????
-      # inherit (darwin.lib) darwinSystem; I'll use only when I bought my own mac
+      inherit (nixpkgs.lib) nixosSystem;
+      inherit (darwin.lib) darwinSystem;
       inherit (home-manager.lib) homeManagerConfiguration;
     in
     {
-      homeManagerConfigurations.zoedsoupe = homeManagerConfiguration {
+      darwinConfigurations.nubank = darwinSystem {
         pkgs = import nixpkgs rec {
           system = "aarch64-darwin";
-          overlays = [
-            lvim.overlays."${system}".default
-            mnvim.overlays."${system}".default
-          ];
+          overlays = [ lvim.overlays."${system}".default ];
           config.allowUnfree = true;
         };
         modules = [
-          ./hosts/mac/home.nix
-          ./modules/users/bat.nix
-          ./modules/users/fzf.nix
-          ./modules/users/git.nix
-          ./modules/users/zsh.nix
-          ./modules/users/direnv.nix
-          ./modules/users/starship.nix
+          home-manager.darwinModules.home-manager {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.zoey.pessanha = {
+              imports = [
+	        ./hosts/nubank/home.nix
+		./modules/users/bat.nix
+		./modules/users/fzf.nix
+		./modules/users/git.nix
+		./modules/users/zsh.nix
+		./modules/users/direnv.nix
+		./modules/users/starship.nix
+              ];
+            };
+          }
+        ];
+      };
+
+
+      darwinConfigurations.zoedsoupe = darwinSystem {
+        pkgs = import nixpkgs rec {
+          system = "aarch64-darwin";
+          overlays = [ lvim.overlays."${system}".default ];
+          config.allowUnfree = true;
+        };
+        modules = [
+          ./hosts/mac/configuration.nix
+
+          home-manager.darwinModules.home-manager {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.users.zoedsoupe = {
+              imports = [
+	        ./hosts/mac/home.nix
+		./modules/users/bat.nix
+		./modules/users/fzf.nix
+		./modules/users/git.nix
+		./modules/users/zsh.nix
+		./modules/users/direnv.nix
+		./modules/users/starship.nix
+              ];
+            };
+          }
         ];
       };
 

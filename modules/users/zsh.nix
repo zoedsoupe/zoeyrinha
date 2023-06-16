@@ -41,7 +41,7 @@
         FLUTTER_ROOT = "$HOME/sdk-flutter";
         JAVA_HOME = "$(/usr/libexec/java_home -v 11.0)";
         CPPFLAGS = "-I/opt/homebrew/opt/openjdk@11/include";
-        PATH = "$PATH:$MONOREPO_ROOT/monocli/bin:/opt/homebrew/bin:/opt/homebrew/opt/openjdk@11/bin:$HOME/.cargo/bin:$HOME/.nix-profile/bin:$NUCLI_HOME:$GO_PATH:$FLUTTER_SDK_HOME/bin:$HOME/dev/nu/.pub-cache/bin:$FLUTTER_ROOT/bin/cache/dart-sdk/bin";
+        PATH = "$PATH:$MONOREPO_ROOT/monocli/bin:/opt/homebrew/bin:/opt/homebrew/opt/openjdk@11/bin:$HOME/.cargo/bin:$HOME/.nix-profile/bin:$NUCLI_HOME:$GO_PATH:$FLUTTER_SDK_HOME/bin:$HOME/dev/nu/.pub-cache/bin:$FLUTTER_ROOT/bin/cache/dart-sdk/bin:/etc/profiles/per-user/zoedsoupe/bin";
       };
       dirHashes = {
         nu = "$HOME/dev/nu";
