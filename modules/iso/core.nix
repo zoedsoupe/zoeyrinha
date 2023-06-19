@@ -1,6 +1,9 @@
-{ pkgs, lib, modulesPath, ... }:
-
 {
+  pkgs,
+  lib,
+  modulesPath,
+  ...
+}: {
   system.stateVersion = "21.11";
 
   nix = {
@@ -13,7 +16,7 @@
   };
 
   # Make this config a iso config
-  imports = [ "${modulesPath}/installer/cd-dvd/iso-image.nix" ];
+  imports = ["${modulesPath}/installer/cd-dvd/iso-image.nix"];
 
   networking.hostName = "nixos";
   networking.wireless.enable = false;
@@ -22,9 +25,9 @@
   isoImage.makeEfiBootable = true;
   isoImage.makeUsbBootable = true;
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "usb_storage" "sd_mod" "nvme" "usbhid" ];
-  boot.kernelModules = [ "kvm-intel" "iwlwifi" ];
-  boot.kernelParams = [ ];
+  boot.initrd.availableKernelModules = ["xhci_pci" "ahci" "usb_storage" "sd_mod" "nvme" "usbhid"];
+  boot.kernelModules = ["kvm-intel" "iwlwifi"];
+  boot.kernelParams = [];
   boot.kernelPackages = pkgs.linuxPackages_latest;
 
   powerManagement.cpuFreqGovernor = lib.mkDefault "performance";

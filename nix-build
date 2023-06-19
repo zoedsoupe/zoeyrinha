@@ -5,20 +5,23 @@ if (( # == 0 )); then
   exit 1
 fi
 
-values=
-
 case "$1" in
   "nubank")
     nix build .#homeManagerConfigurations.zoedsoupe.activationPackage
     ./result/activate
     ;;
 
+  "personal")
+     nix build .#darwinConfigurations.zoedsoupe.system
+     sudo ./result/activate
+     ;;
+
   "iso")
     nix build .#installMedia..config.system.build.isoImage
     ;;
 
   *)
-    print >&2 "Available options are \"nubank\" and \"iso\" for now"
+    print >&2 "Available options are \"nubank\", \"personal\" \"iso\" for now"
     exit 1
     ;;
 esac
