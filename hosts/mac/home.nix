@@ -13,11 +13,8 @@
     # mnvim # my minimal neovim config
 
     gnupg
-    deno
-    nodejs_18
     elixir
     gitAndTools.gh
-    earthly
     ngrok
     tmate
     alejandra
