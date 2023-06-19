@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-let
+{pkgs, ...}: let
   base = ''
      ### PROMPT ###
      set -x PATH $PATH /usr/local/opt/curl/bin /opt/homebrew/sbin /usr/local/sbin /usr/local/bin /opt/homebrew/bin /opt/homebrew/bin /Users/zoey.pessanha/.nix-profile/bin /nix/var/nix/profiles/default/bin
@@ -21,8 +19,7 @@ let
 
     set -x PATH $NUCLI_HOME $PATH
   '';
-in
-{
+in {
   programs.fish = {
     enable = true;
     shellInit = base;

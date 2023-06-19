@@ -1,7 +1,8 @@
-{ pkgs, lib, ... }:
-
-
 {
+  pkgs,
+  lib,
+  ...
+}: {
   nix.configureBuildUsers = true;
 
   nix.extraOptions = ''
@@ -18,7 +19,6 @@
 
   # Add ability to used TouchID for sudo authentication
   security.pam.enableSudoTouchIdAuth = true;
-
 
   users.users.zoedsoupe = {
     home = "/Users/zoedsoupe";

@@ -1,11 +1,9 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   programs.git = {
     enable = true;
     userName = "Zoey de Souza Pessanha";
     userEmail = "zoey.spessanha@gmail.com";
-    ignores = [ "*.swp" "*.swo" ".nix-*" ".postgres" ".direnv" ];
+    ignores = ["*.swp" "*.swo" ".nix-*" ".postgres" ".direnv"];
     lfs.enable = true;
     delta.enable = true;
     signing = {
@@ -24,17 +22,17 @@
       lg = "log --graph --oneline --decorate --abbrev-commit";
     };
     extraConfig = {
-      github = { user = "zoedsoupe"; };
-      grep = { linenumber = true; };
-      merge = { log = true; };
-      rebase = { autosquash = true; };
-      fetch = { prune = true; };
-      push = { default = "current"; };
-      apply = { whitespace = "nowarn"; };
-      help = { autocorrect = 0; };
-      user = { username = "zoedsoupe"; };
-      init = { defaultBranch = "main"; };
-      pull = { rebase = false; };
+      github = {user = "zoedsoupe";};
+      grep = {linenumber = true;};
+      merge = {log = true;};
+      rebase = {autosquash = true;};
+      fetch = {prune = true;};
+      push = {default = "current";};
+      apply = {whitespace = "nowarn";};
+      help = {autocorrect = 0;};
+      user = {username = "zoedsoupe";};
+      init = {defaultBranch = "main";};
+      pull = {rebase = false;};
       url = {
         "git@github.com" = {
           insteadOf = "git://github.com/";

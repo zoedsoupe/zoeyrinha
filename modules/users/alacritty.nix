@@ -1,6 +1,4 @@
-{ pkgs, ... }:
-
-{
+{pkgs, ...}: {
   programs.alacritty = {
     enable = true;
     settings = {
@@ -36,9 +34,9 @@
         }
       ];
       font = {
-        normal = { family = "JetBrainsMono Nerd Font Mono"; };
-        bold = { family = "JetBrainsMono Nerd Font Mono"; };
-        italic = { family = "JetBrainsMono Nerd Font Mono"; };
+        normal = {family = "JetBrainsMono Nerd Font Mono";};
+        bold = {family = "JetBrainsMono Nerd Font Mono";};
+        italic = {family = "JetBrainsMono Nerd Font Mono";};
         offset = {
           x = 0;
           y = 0;
