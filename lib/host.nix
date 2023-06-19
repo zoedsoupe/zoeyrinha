@@ -1,68 +1,80 @@
-{ system, pkgs, home-manager, lib, user, nixos, ... }:
-
-with builtins;
-
 {
-  mkISO = { name, initrdMods, kernelMods, kernelParams, kernelPackage, systemConfig }: lib.nixosSystem {
-    inherit system;
+  system,
+  pkgs,
+  home-manager,
+  lib,
+  user,
+  nixos,
+  ...
+}:
+with builtins; {
+  mkISO = {
+    name,
+    initrdMods,
+    kernelMods,
+    kernelParams,
+    kernelPackage,
+    systemConfig,
+  }:
+    lib.nixosSystem {
+      inherit system;
 
-    specialArgs = { };
+      specialArgs = {};
 
-    modules = [
-      "${nixos}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
-      {
-        imports = [ ../modules/iso ];
+      modules = [
+        "${nixos}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+        {
+          imports = [../modules/iso];
 
-        networking.hostName = "${name}";
-        networking.networkmanager.enable = true;
-        networking.useDHCP = false;
+          networking.hostName = "${name}";
+          networking.networkmanager.enable = true;
+          networking.useDHCP = false;
 
-        boot.initrd.availableKernelModules = initrdMods;
-        boot.kernelModules = kernelMods;
+          boot.initrd.availableKernelModules = initrdMods;
+          boot.kernelModules = kernelMods;
 
-        boot.kernelParams = kernelParams;
-        boot.kernelPackages = kernelPackage;
+          boot.kernelParams = kernelParams;
+          boot.kernelPackages = kernelPackage;
 
-        nixpkgs.pkgs = pkgs;
-      }
-    ];
-  };
+          nixpkgs.pkgs = pkgs;
+        }
+      ];
+    };
 
-  mkHost =
-    { name
-    , NICs
-    , initrdMods
-    , kernelMods
-    , kernelParams
-    , kernelPackage
-    , systemConfig
-    , cpuCores
-    , users
-    , wifi ? [ ]
-    , cpuTempSensor ? null
-    }:
-    let
-      networkCfg = listToAttrs (map
-        (n: {
-          name = "${n}";
-          value = { useDHCP = true; };
-        })
-        NICs);
+  mkHost = {
+    name,
+    NICs,
+    initrdMods,
+    kernelMods,
+    kernelParams,
+    kernelPackage,
+    systemConfig,
+    cpuCores,
+    users,
+    wifi ? [],
+    cpuTempSensor ? null,
+  }: let
+    networkCfg = listToAttrs (map
+      (n: {
+        name = "${n}";
+        value = {useDHCP = true;};
+      })
+      NICs);
 
-      userCfg = {
-        inherit name NICs systemConfig cpuCores cpuTempSensor;
-      };
+    userCfg = {
+      inherit name NICs systemConfig cpuCores cpuTempSensor;
+    };
 
-      sys_users = (map (u: user.mkSystemUser u) users);
+    sys_users = map (u: user.mkSystemUser u) users;
 
-      usernames = map (u: u.name) users;
-    in
+    usernames = map (u: u.name) users;
+  in
     lib.nixosSystem {
       inherit system;
 
       modules = [
         {
-          imports = [ ../modules/system ] ++ sys_users;
+          imports = [../modules/system] ++ sys_users;
 
           zoedsoupe = systemConfig;
 
@@ -74,7 +86,7 @@ with builtins;
           networking.interfaces = networkCfg;
           networking.wireless.interfaces = wifi;
           networking.useDHCP = false;
-          networking.nameservers = [ "8.8.8.8" ];
+          networking.nameservers = ["8.8.8.8"];
 
           nixpkgs.config.allowUnfree = true;
           hardware.enableRedistributableFirmware = true;
@@ -90,7 +102,7 @@ with builtins;
             consoleLogLevel = 0;
             initrd.verbose = false;
             plymouth.enable = true;
-            supportedFilesystems = [ "ntfs" "btrfs" ];
+            supportedFilesystems = ["ntfs" "btrfs"];
             cleanTmpDir = true;
             kernel.sysctl = {
               "vm.overcommit_memory" = "1";
@@ -107,13 +119,13 @@ with builtins;
               dates = "weekly";
               options = "--delete-older-than 7d";
             };
-            trustedUsers = [ "@wheel" ] ++ usernames;
+            trustedUsers = ["@wheel"] ++ usernames;
             package = pkgs.nixFlakes;
             extraOptions = ''
               keep-outputs = true
               keep-derivations = true
-              min-free = ${toString (1  * 1024*1024*1024)}
-              max-free = ${toString (10 * 1024*1024*1024)}
+              min-free = ${toString (1 * 1024 * 1024 * 1024)}
+              max-free = ${toString (10 * 1024 * 1024 * 1024)}
               experimental-features = nix-command flakes
             '';
           };

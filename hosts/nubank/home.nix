@@ -1,6 +1,8 @@
 {pkgs, ...}: {
+  home.username = "zoey.pessanha";
+  home.homeDirectory = "/Users/zoey.pessanha";
+
   home.stateVersion = "22.11";
-  home.homeDirectory = "/Users/zoedsoupe";
 
   programs = {
     home-manager.enable = true;
@@ -12,18 +14,23 @@
     lvim # my neovim config
     # mnvim # my minimal neovim config
 
-    gnupg
+    # agda
     deno
     nodejs_18
+    clojure
+    leiningen
+    stack
     elixir
+    rustc
+    cargo
     gitAndTools.gh
     earthly
     ngrok
+    nixpkgs-fmt
     tmate
-    alejandra
 
     # tools
-    bat
+    exercism
     exa
     ripgrep
     fd
