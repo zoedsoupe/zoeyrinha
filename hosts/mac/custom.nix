@@ -21,7 +21,7 @@
     sessionVariables = {
       GPG_TTY = "$(tty)";
       GITHUB_TOKEN = "";
-      PATH = "$PATH:$HOME/.nix-profile/bin:/etc/profiles/per-user/zoedsoupe/bin";
+      PATH = "$PATH:/etc/profiles/per-user/zoedsoupe/bin";
     };
     dirHashes = {
       zoeyrinha = "$HOME/dev/personal/zoeyrinha";
