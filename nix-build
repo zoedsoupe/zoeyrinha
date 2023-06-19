@@ -7,13 +7,11 @@ fi
 
 case "$1" in
   "nubank")
-    nix build .#darwinConfigurations.nubank.system
-    sudo ./result/activate
+    nix build .#darwinConfigurations.nubank.system && sudo ./result/activate
     ;;
 
   "personal")
-     nix build .#darwinConfigurations.zoedsoupe.system
-     sudo ./result/activate
+     nix build .#darwinConfigurations.zoedsoupe.system && sudo ./result/activate
      ;;
 
   "iso")
