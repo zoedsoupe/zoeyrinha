@@ -22,15 +22,13 @@
     nixpkgs,
     home-manager,
     lvim,
-    mnvim,
     darwin,
     ...
   }: let
     inherit (nixpkgs.lib) nixosSystem;
     inherit (darwin.lib) darwinSystem;
-    inherit (home-manager.lib) homeManagerConfiguration;
   in {
-    darwinConfigurations.nubank = darwinSystem {
+    darwinConfigurations.nubank = darwinSystem rec {
       pkgs = import nixpkgs rec {
         system = "aarch64-darwin";
         overlays = [lvim.overlays."${system}".default];
@@ -41,6 +39,9 @@
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
+          home-manager.extraSpecialArgs = {
+            custom-config = import ./hosts/nubank/custom.nix {inherit pkgs;};
+          };
           home-manager.users.zoey.pessanha = {
             imports = [
               ./hosts/nubank/home.nix
@@ -56,7 +57,7 @@
       ];
     };
 
-    darwinConfigurations.zoedsoupe = darwinSystem {
+    darwinConfigurations.zoedsoupe = darwinSystem rec {
       pkgs = import nixpkgs rec {
         system = "aarch64-darwin";
         overlays = [lvim.overlays."${system}".default];
@@ -69,6 +70,9 @@
         {
           home-manager.useGlobalPkgs = true;
           home-manager.useUserPackages = true;
+          home-manager.extraSpecialArgs = {
+            custom-config = import ./hosts/mac/custom.nix {inherit pkgs;};
+          };
           home-manager.users.zoedsoupe = {
             imports = [
               ./hosts/mac/home.nix
