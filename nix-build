@@ -7,8 +7,8 @@ fi
 
 case "$1" in
   "nubank")
-    nix build .#homeManagerConfigurations.zoedsoupe.activationPackage
-    ./result/activate
+    nix build .#darwinConfigurations.nubank.system
+    sudo ./result/activate
     ;;
 
   "personal")
