@@ -42,7 +42,7 @@
           home-manager.extraSpecialArgs = {
             custom-config = import ./hosts/nubank/custom.nix {inherit pkgs;};
           };
-          home-manager.users.zoey.pessanha = {
+          home-manager.users."zoey.pessanha" = {
             imports = [
               ./hosts/nubank/home.nix
               ./modules/users/bat.nix
