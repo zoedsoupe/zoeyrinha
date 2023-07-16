@@ -13,6 +13,11 @@ in {
       description = "Set up environment variables";
       type = types.nullOr types.attr;
     };
+    profileExtra = mkOption {
+      description = "Extra config to go on .zprofile";
+      type = types.str;
+      default = "";
+    };
     dirHashes = mkOption {
       description = "Set up alias for common paths";
       type = types.nullOr types.attr;
@@ -30,6 +35,10 @@ in {
         default = "frappe";
       };
     };
+    history.ignorePatterns = mkOption {
+      description = "Ignores given patterns on history";
+      type = types.listOf types.str;
+    };
   };
 
   config = mkIf cfg.enable {
@@ -44,7 +53,7 @@ in {
         }
         + /themes/${fileName}.zsh);
     in {
-      inherit (cfg) enable sessionVariables dirHashes;
+      inherit (cfg) enable sessionVariables dirHashes profileExtra;
       enableAutosuggestions = true;
       enableCompletion = true;
       enableSyntaxHighlighting = true;
@@ -52,11 +61,11 @@ in {
       autocd = true;
       initExtraFirst = catppuccinThemePath;
       history = {
+        inherit (cfg.history) ignorePatterns;
         expireDuplicatesFirst = true;
         extended = true;
         ignoreDups = true;
         ignoreSpace = true;
-        ignorePatterns = ["nu *" "nu-br *"];
       };
     };
   };

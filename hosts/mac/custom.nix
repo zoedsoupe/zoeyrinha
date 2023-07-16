@@ -13,6 +13,13 @@
   };
   zsh = {
     enable = true;
+    profileExtra = ''
+      eval "$(/opt/homebrew/bin/brew shellenv)"
+      . $(brew --prefix asdf)/libexec/asdf.sh
+    '';
+    history = {
+      ignorePatterns = ["git commit -m *" "git clone *" "mix test --only *" "mkdir *"];
+    };
     theme = {
       enable = true;
       name = "catppuccin";
@@ -21,7 +28,7 @@
     sessionVariables = {
       GPG_TTY = "$(tty)";
       GITHUB_TOKEN = "";
-      PATH = "$PATH:$HOME/.nix-profile/bin:/etc/profiles/per-user/zoedsoupe/bin";
+      PATH = "$PATH:$HOME/.nix-profile/bin:/etc/profiles/per-user/zoedsoupe/bin:/run/current-system/sw/bin";
     };
     dirHashes = {
       zoeyrinha = "$HOME/dev/personal/zoeyrinha";

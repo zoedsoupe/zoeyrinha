@@ -20,6 +20,15 @@
   # Add ability to used TouchID for sudo authentication
   security.pam.enableSudoTouchIdAuth = true;
 
+  homebrew = {
+    enable = true;
+    onActivation = {
+      autoUpdate = true;
+      upgrade = true;
+    };
+    brews = ["asdf"];
+  };
+
   users.users.zoedsoupe = {
     home = "/Users/zoedsoupe";
     name = "zoedsoupe";

@@ -18,6 +18,9 @@
       name = "catppuccin";
       flavour = "frappe";
     };
+    history = {
+      ignorePatterns = ["nu *" "nu-br *"];
+    };
     sessionVariables = {
       DOCKER_HOST = "unix:///Users/zoey.pessanha/.docker/run/docker.sock";
       NODE_OPTIONS = "--openssl-legacy-provider";
