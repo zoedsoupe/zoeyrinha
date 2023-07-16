@@ -1,4 +1,4 @@
-{pkgs, ...}: {
+{ pkgs, ... }: {
   nix.configureBuildUsers = true;
 
   nix.extraOptions = ''
@@ -18,7 +18,7 @@
 
   users.users."zoey.pessanha" = {
     home = "/Users/zoey.pessanha";
-    name = "Zoey Pessanha";
+    name = "zoey.pessanha";
     shell = pkgs.zsh;
   };
 }

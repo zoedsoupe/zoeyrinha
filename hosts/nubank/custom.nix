@@ -6,7 +6,7 @@
       email = "zoey.pessanha@nubank.com.br";
     };
     signing = {
-      key = "A22772F4E3B4365";
+      key = "A227728F4E3B4365";
       signByDefault = true;
       gpgPath = "${pkgs.gnupg}/bin/gpg";
     };
@@ -18,6 +18,7 @@
       name = "catppuccin";
       flavour = "frappe";
     };
+    profileExtra = "";
     history = {
       ignorePatterns = ["nu *" "nu-br *"];
     };
@@ -35,7 +36,11 @@
       FLUTTER_ROOT = "$HOME/sdk-flutter";
       JAVA_HOME = "$(/usr/libexec/java_home -v 11.0)";
       CPPFLAGS = "-I/opt/homebrew/opt/openjdk@11/include";
-      PATH = "$PATH:$MONOREPO_ROOT/monocli/bin:/opt/homebrew/bin:/opt/homebrew/opt/openjdk@11/bin:$HOME/.cargo/bin:$HOME/.nix-profile/bin:$NUCLI_HOME:$GO_PATH:$FLUTTER_SDK_HOME/bin:$HOME/dev/nu/.pub-cache/bin:$FLUTTER_ROOT/bin/cache/dart-sdk/bin:/etc/profiles/per-user/zoedsoupe/bin";
+      PATH = "$PATH:$MONOREPO_ROOT/monocli/bin:/opt/homebrew/bin:/opt/homebrew/opt/openjdk@11/bin:$HOME/.cargo/bin:$NUCLI_HOME:$GO_PATH:$FLUTTER_SDK_HOME/bin:$HOME/dev/nu/.pub-cache/bin:$FLUTTER_ROOT/bin/cache/dart-sdk/bin:/etc/profiles/per-user/zoey.pessanha/bin:/nix/var/nix/profiles/default/bin";
+    };
+    dirHashes = {
+      metarepo = "$HOME/dev/nu/mini-meta-repo";
+      zoeyrinha = "$HOME/dev/zoeyrinha";
     };
   };
 }
