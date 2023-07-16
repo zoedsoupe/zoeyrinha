@@ -14,7 +14,7 @@
     mnvim.url = "github:zoedsoupe/mnvim";
 
     # need to solve this about fcitx-engines
-    home-manager.url = "github:nix-community/home-manager/master";
+    home-manager.url = "github:nix-community/home-manager/release-23.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
