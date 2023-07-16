@@ -23,6 +23,7 @@
     tmate
 
     # tools
+    bat
     exa
     ripgrep
     fd
