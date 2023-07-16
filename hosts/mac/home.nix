@@ -22,8 +22,8 @@
     # tools
     bat
     exa
-    ripgrep
     fd
+    silver-searcher
 
     # others
     any-nix-shell
