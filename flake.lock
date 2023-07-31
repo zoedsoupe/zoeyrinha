@@ -71,11 +71,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1690247892,
-        "narHash": "sha256-WMGc1yq1cqRd+kzjWgbvHxckJIe8VQfiZ5RfR8tgABw=",
+        "lastModified": 1690431538,
+        "narHash": "sha256-Uml8ivMMOFPB9fNSDcw72imGHRdJpaK12sRm2DTLLe8=",
         "owner": "lnl7",
         "repo": "nix-darwin",
-        "rev": "efd35d99ce412335c478dff9da9a4256bbd39757",
+        "rev": "16c07487ac9bc59f58b121d13160c67befa3342e",
         "type": "github"
       },
       "original": {
@@ -98,6 +98,22 @@
       "original": {
         "owner": "direnv",
         "repo": "direnv.vim",
+        "type": "github"
+      }
+    },
+    "earthly-vim": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1650649012,
+        "narHash": "sha256-KOlYUXasMYHMUY8uthiwPh2uLZaQSI76anJD0W1+qes=",
+        "owner": "earthly",
+        "repo": "earthly.vim",
+        "rev": "9402908f41c5165fa69317da9fe1c47ea5f9e5dd",
+        "type": "github"
+      },
+      "original": {
+        "owner": "earthly",
+        "repo": "earthly.vim",
         "type": "github"
       }
     },
@@ -324,6 +340,7 @@
       "inputs": {
         "conjure": "conjure",
         "copilot": "copilot",
+        "earthly-vim": "earthly-vim",
         "flake-utils": "flake-utils",
         "gitsigns-nvim": "gitsigns-nvim",
         "hlargs": "hlargs",
@@ -367,6 +384,7 @@
         "telescope-nvim": "telescope-nvim",
         "theme-catppuccin": "theme-catppuccin",
         "theme-doom-one": "theme-doom-one",
+        "theme-dracula-pro": "theme-dracula-pro",
         "theme-gruvbox": "theme-gruvbox",
         "theme-rose-pine": "theme-rose-pine",
         "trouble-nvim": "trouble-nvim",
@@ -377,11 +395,11 @@
         "which-key": "which-key"
       },
       "locked": {
-        "lastModified": 1690255950,
-        "narHash": "sha256-4kDp0yCz89sOGJfj/1ECbRN58AHEz53owQ/redXl2cM=",
+        "lastModified": 1690806449,
+        "narHash": "sha256-NxlmJ3ENkgnZCArHybnrwg3hs3ByjQxVfeM8r2Y9Rt0=",
         "owner": "zoedsoupe",
         "repo": "lvim",
-        "rev": "5bd3134308700556376841a5b8a405d1997dfec4",
+        "rev": "01e0af8149c2e3460fb9a476dccd5858b901ee0c",
         "type": "github"
       },
       "original": {
@@ -560,11 +578,11 @@
     },
     "nixpkgs_4": {
       "locked": {
-        "lastModified": 1690148897,
-        "narHash": "sha256-l/j/AX1d2K79EWslwgWR2+htkzCbtjKZsS5NbWXnhz4=",
+        "lastModified": 1690630041,
+        "narHash": "sha256-gbnvqm5goS9DSKAqGFpq3398aOpwejmq4qWikqmQyRo=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "ac1acba43b2f9db073943ff5ed883ce7e8a40a2c",
+        "rev": "d57e8c535d4cbb07f441c30988ce52eec69db7a8",
         "type": "github"
       },
       "original": {
@@ -1222,6 +1240,22 @@
         "owner": "NTBBloodbath",
         "repo": "doom-one.nvim",
         "type": "github"
+      }
+    },
+    "theme-dracula-pro": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1690804456,
+        "narHash": "sha256-jUCQMfICbpAtqKtWZ60SSWFwZcrrv54gl85DG1hF+Hk=",
+        "ref": "refs/heads/main",
+        "rev": "bfe5d63fc72862cd80110d35db0d19d4151f0e6e",
+        "revCount": 1,
+        "type": "git",
+        "url": "ssh://git@github.com/zoedsoupe/dracula-pro-vim"
+      },
+      "original": {
+        "type": "git",
+        "url": "ssh://git@github.com/zoedsoupe/dracula-pro-vim"
       }
     },
     "theme-gruvbox": {
