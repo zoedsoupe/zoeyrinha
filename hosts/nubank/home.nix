@@ -1,4 +1,6 @@
-{pkgs, ...}: {
+{pkgs, ...}: let
+  neovim = pkgs.callPackage ./neovim.nix {inherit (pkgs) mkNeovim;};
+in {
   home.homeDirectory = "/Users/zoey.pessanha";
 
   home.stateVersion = "22.11";
@@ -10,8 +12,7 @@
 
   home.packages = with pkgs; [
     # dev
-    lvim # my neovim config
-    # mnvim # my minimal neovim config
+    neovim # my neovim config
 
     alejandra
     nodejs_18
