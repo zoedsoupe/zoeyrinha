@@ -55,7 +55,7 @@
         enable = true;
         name = "catppuccin";
         flavour = {
-          light = "latter";
+          light = "latte";
           dark = "frappe";
         };
       };

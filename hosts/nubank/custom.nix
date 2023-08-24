@@ -18,6 +18,7 @@
       name = "catppuccin";
       flavour = "frappe";
     };
+    profileExtra = "";
     history = {
       ignorePatterns = ["nu *" "nu-br *"];
     };
