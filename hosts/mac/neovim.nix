@@ -53,10 +53,10 @@
       };
       theme = {
         enable = true;
-        name = "rose-pine";
+        name = "catppuccin";
         flavour = {
-          light = "dawn";
-          dark = "moon";
+          light = "latte";
+          dark = "frappe";
         };
       };
       treesitter = {
@@ -75,7 +75,6 @@
           "json"
           "markdown"
           "nix"
-          "rust"
           "scss"
           "toml"
           "yaml"
