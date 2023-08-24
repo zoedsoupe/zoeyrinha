@@ -21,6 +21,7 @@ in {
 
     # tools
     bat
+    flyctl
     exa
     fd
     silver-searcher
