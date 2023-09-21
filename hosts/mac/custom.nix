@@ -3,10 +3,10 @@
     enable = true;
     user = {
       name = "Zoey de Souza Pessanha";
-      email = "zoey.spessanha@gmail.com";
+      email = "zoey.spessanha@zeetech.io";
     };
     signing = {
-      key = "80973361457F1AA6";
+      key = "E9C743148106E2C3";
       signByDefault = true;
       gpgPath = "${pkgs.gnupg}/bin/gpg";
     };
