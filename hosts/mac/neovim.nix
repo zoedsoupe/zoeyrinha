@@ -1,6 +1,7 @@
 {mkNeovim}: let
   config = {
     lvim = {
+      zen-mode.enable = true;
       autopair.enable = true;
       comments.enable = true;
       completion = {
