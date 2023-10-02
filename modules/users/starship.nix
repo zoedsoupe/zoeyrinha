@@ -65,7 +65,7 @@
           owner = "catppuccin";
           repo = "starship";
           rev = "HEAD";
-          sha256 = "soEBVlq3ULeiZFAdQYMRFuswIIhI9bclIU8WXjxd7oY=";
+          sha256 = "nsRuxQFKbQkyEI4TXgvAjcroVdG+heKX5Pauq/4Ota0=";
         }
         + /palettes/macchiato.toml));
   };

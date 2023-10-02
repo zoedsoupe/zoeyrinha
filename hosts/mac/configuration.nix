@@ -1,8 +1,4 @@
-{
-  pkgs,
-  lib,
-  ...
-}: {
+{pkgs, ...}: {
   nix.configureBuildUsers = true;
 
   nix.extraOptions = ''

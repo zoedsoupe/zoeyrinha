@@ -1,4 +1,5 @@
 {pkgs, ...}: {
+  helix.enable = true;
   git = {
     enable = true;
     user = {

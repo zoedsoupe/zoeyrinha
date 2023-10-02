@@ -81,6 +81,7 @@
               ./modules/users/bat.nix
               ./modules/users/fzf.nix
               ./modules/users/git.nix
+              ./modules/users/helix.nix
               ./modules/users/zsh.nix
               ./modules/users/direnv.nix
               ./modules/users/starship.nix
