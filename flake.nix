@@ -85,6 +85,7 @@
               ./modules/users/zsh.nix
               ./modules/users/direnv.nix
               ./modules/users/starship.nix
+              # ./modules/users/xplr.nix
             ];
           };
         }
