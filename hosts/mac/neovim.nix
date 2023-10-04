@@ -85,11 +85,7 @@
         enable = true;
         word_highlight.enable = true;
         semantic_highlightment.enable = true;
-        matchup.enable = false;
         which_key.enable = true;
-        legendary.enable = false;
-        noice.enable = false;
-        tabout.enable = false;
       };
       visuals = {
         icons.enable = true;
