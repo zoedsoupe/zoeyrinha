@@ -3,6 +3,10 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
+    rust-overlay = {
+      url = "github:oxalica/rust-overlay";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     darwin = {
       url = "github:lnl7/nix-darwin/master";
@@ -21,6 +25,7 @@
   outputs = {
     nixpkgs,
     home-manager,
+    rust-overlay,
     lvim,
     darwin,
     ...
@@ -59,12 +64,18 @@
       ];
     };
 
-    darwinConfigurations.zoedsoupe = darwinSystem rec {
-      pkgs = import nixpkgs rec {
-        system = "aarch64-darwin";
-        overlays = [lvim.overlays."${system}".default];
-        config.allowUnfree = true;
-      };
+    darwinConfigurations.zoedsoupe = 
+      let 
+        pkgs = import nixpkgs rec {
+          system = "aarch64-darwin";
+          overlays = [
+            rust-overlay.overlays.default
+            lvim.overlays."${system}".default
+          ];
+          config.allowUnfree = true;
+        };      
+      in darwinSystem rec {
+      inherit pkgs;
       modules = [
         ./hosts/mac/configuration.nix
 
@@ -85,6 +96,8 @@
               ./modules/users/zsh.nix
               ./modules/users/direnv.nix
               ./modules/users/starship.nix
+              ./modules/users/zellij.nix
+              ./modules/users/zoxide.nix
               # ./modules/users/xplr.nix
             ];
           };
