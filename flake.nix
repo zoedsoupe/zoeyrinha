@@ -2,7 +2,7 @@
   description = "Zoey's personal config, aka dotfiles";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -18,7 +18,7 @@
     mnvim.url = "github:zoedsoupe/mnvim";
 
     # need to solve this about fcitx-engines
-    home-manager.url = "github:nix-community/home-manager/release-23.05";
+    home-manager.url = "github:nix-community/home-manager";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
   };
 
@@ -64,46 +64,47 @@
       ];
     };
 
-    darwinConfigurations.zoedsoupe = 
-      let 
-        pkgs = import nixpkgs rec {
-          system = "aarch64-darwin";
-          overlays = [
-            rust-overlay.overlays.default
-            lvim.overlays."${system}".default
-          ];
-          config.allowUnfree = true;
-        };      
-      in darwinSystem rec {
-      inherit pkgs;
-      modules = [
-        ./hosts/mac/configuration.nix
+    darwinConfigurations.zoedsoupe = let
+      pkgs = import nixpkgs rec {
+        system = "aarch64-darwin";
+        overlays = [
+          rust-overlay.overlays.default
+          lvim.overlays."${system}".default
+        ];
+        config.allowUnfree = true;
+      };
+    in
+      darwinSystem rec {
+        inherit pkgs;
+        modules = [
+          ./hosts/mac/configuration.nix
 
-        home-manager.darwinModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.extraSpecialArgs = {
-            custom-config = import ./hosts/mac/custom.nix {inherit pkgs;};
-          };
-          home-manager.users.zoedsoupe = {
-            imports = [
-              ./hosts/mac/home.nix
-              ./modules/users/bat.nix
-              ./modules/users/fzf.nix
-              ./modules/users/git.nix
-              ./modules/users/helix.nix
-              ./modules/users/zsh.nix
-              ./modules/users/direnv.nix
-              ./modules/users/starship.nix
-              ./modules/users/zellij.nix
-              ./modules/users/zoxide.nix
-              # ./modules/users/xplr.nix
-            ];
-          };
-        }
-      ];
-    };
+          home-manager.darwinModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.extraSpecialArgs = {
+              custom-config = import ./hosts/mac/custom.nix {inherit pkgs;};
+            };
+            home-manager.users.zoedsoupe = {
+              imports = [
+                ./hosts/mac/home.nix
+                ./modules/users/bat.nix
+                ./modules/users/fzf.nix
+                ./modules/users/git.nix
+                ./modules/users/helix.nix
+                ./modules/users/direnv.nix
+                # ./modules/users/nnn.nix
+                ./modules/users/starship.nix
+                ./modules/users/zellij.nix
+                ./modules/users/zoxide.nix
+                ./modules/users/zsh.nix
+                ./modules/users/xplr.nix
+              ];
+            };
+          }
+        ];
+      };
 
     installMedia = {
       minimal = let

@@ -1,7 +1,12 @@
 {mkNeovim}: let
   config = {
     lvim = {
-      zen-mode.enable = true;
+      zen-mode = {
+        enable = true;
+        goyo.enable = true;
+        limelight.enable = true;
+        true-zen.enable = false;
+      };
       autopair.enable = true;
       comments.enable = true;
       completion = {
@@ -54,11 +59,7 @@
       };
       theme = {
         enable = true;
-        name = "catppuccin";
-        flavour = {
-          light = "latte";
-          dark = "frappe";
-        };
+        name = "melange";
       };
       treesitter = {
         enable = true;
