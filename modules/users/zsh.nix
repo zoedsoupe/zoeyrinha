@@ -56,7 +56,7 @@ in {
       inherit (cfg) enable sessionVariables dirHashes profileExtra;
       enableAutosuggestions = true;
       enableCompletion = true;
-      enableSyntaxHighlighting = true;
+      syntaxHighlighting.enable = true;
       enableVteIntegration = true;
       autocd = true;
       initExtraFirst = catppuccinThemePath;

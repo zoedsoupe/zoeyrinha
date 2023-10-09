@@ -17,11 +17,11 @@ in {
   };
 
   config = mkIf cfg.enable {
-    home.packages = [beam.elixir-ls pkgs.clojure-lsp pkgs.nil vscode-lsp];
+    home.packages = [beam.elixir-ls pkgs.clojure-lsp pkgs.nil pkgs.alejandra vscode-lsp];
     programs.helix = {
       inherit (cfg) enable;
       settings = {
-        theme = "catppuccin_latte";
+        theme = "base16_transparent";
         editor = {
           line-number = "relative";
           lsp.display-messages = true;
@@ -29,6 +29,23 @@ in {
         keys.normal = {
           esc = ["collapse_selection" "keep_primary_selection"];
         };
+      };
+      languages = {
+        language = [
+          {
+            name = "elixir";
+            auto-format = true;
+            formatter = {
+              command = "mix";
+              args = ["format"];
+            };
+          }
+          {
+            name = "nix";
+            auto-format = true;
+            formatter = {command = "alejandra";};
+          }
+        ];
       };
     };
   };

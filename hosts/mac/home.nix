@@ -23,7 +23,7 @@ in {
     # tools
     bat
     # flyctl
-    exa
+    eza # exa fork
     fd
     silver-searcher
 

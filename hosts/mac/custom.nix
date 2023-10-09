@@ -17,6 +17,8 @@
     profileExtra = ''
       eval "$(/opt/homebrew/bin/brew shellenv)"
       . $(brew --prefix asdf)/libexec/asdf.sh
+
+      alias ls="nnn -de"
     '';
     history = {
       ignorePatterns = ["git commit -m *" "git clone *" "mix test --only *" "mkdir *"];
@@ -30,6 +32,7 @@
       GPG_TTY = "$(tty)";
       GITHUB_TOKEN = "";
       PATH = "$PATH:$HOME/.nix-profile/bin:/etc/profiles/per-user/zoedsoupe/bin:/run/current-system/sw/bin";
+      EDITOR = "${pkgs.helix}/bin/hx";
     };
     dirHashes = {
       zoeyrinha = "$HOME/dev/personal/zoeyrinha";
