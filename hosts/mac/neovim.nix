@@ -42,7 +42,7 @@
           nil.enable = true;
           nixd.enable = false;
         };
-        rust.enable = false;
+        rust.enable = true;
         typescript.enable = false;
         null-ls.enable = true;
         trouble.enable = true;
