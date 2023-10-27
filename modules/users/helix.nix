@@ -7,6 +7,13 @@
 }: let
   inherit (lib) mkEnableOption mkIf;
   cfg = custom-config.helix;
+  elixir = cfg.languages.elixir;
+  rust = cfg.languages.rust;
+  clojure = cfg.languages.clojure;
+  nix = cfg.languages.nix;
+  html = cfg.languages.html;
+  css = cfg.languages.css;
+  json = cfg.languages.json;
   erl = pkgs.beam.interpreters.erlang_25.overrideAttrs (old: {
     configureFlags = ["--disable-jit"] ++ old.configureFlags;
   });
@@ -15,35 +22,50 @@
 in {
   options.helix = {
     enable = mkEnableOption "Enbales Helix Editor";
+    languages = {
+      elixir.enable = mkEnableOption "Enables Elixir Support";
+      nix.enable = mkEnableOption "Enables Nix Support";
+      rust.enable = mkEnableOption "Enables Rust Support";
+      clojure.enable = mkEnableOption "Enables Clojure Support";
+      html.enable = mkEnableOption "Enables HTML Support";
+      css.enable = mkEnableOption "Enables CSS Support";
+      json.enable = mkEnableOption "Enables JSON Support";
+    };
   };
 
   config = mkIf cfg.enable {
-    # home.packages = [pkgs.alejandra pkgs.nil pkgs.rust-analyzer vscode-lsp beam.elixir-ls next-ls];
     programs.helix = {
       inherit (cfg) enable;
       settings = {
-        theme = "base16_transparent";
+        theme = "catppuccin_frappe";
         editor = {
+          cursorline = true;
+          color-modes = true;
           line-number = "relative";
           lsp.display-messages = true;
+          indent-guides.render = true;
+          cursor-shape = {
+            insert = "bar";
+            normal = "block";
+            select = "underline";
+          };
         };
         keys.normal = {
           esc = ["collapse_selection" "keep_primary_selection"];
         };
       };
+
       languages = {
         language-server = {
-          /*
-             next-ls = {
-            command = "${next-ls}/bin/next-ls";
+          nextls = mkIf elixir.enable {
+            command = "${next-ls.packages.aarch64-darwin.default}/bin/nextls";
             args = ["--stdio=true"];
           };
-          */
-          nil.command = "${pkgs.nil}/bin/nil";
-          elixir-ls.command = "${beam.elixir-ls}/bin/elixir-ls";
-          clojure-lsp.command = "${pkgs.clojure-lsp}/bin/clojure-lsp";
-          rust-analyzer.command = "${pkgs.rust-analyzer}bin/rust-analyzer";
-          vscode-css-language-server = {
+          nil.command = mkIf nix.enable "${pkgs.nil}/bin/nil";
+          elixir-ls.command = mkIf elixir.enable "${beam.elixir-ls}/bin/elixir-ls";
+          clojure-lsp.command = mkIf clojure.enable "${pkgs.clojure-lsp}/bin/clojure-lsp";
+          rust-analyzer.command = mkIf rust.enable "${pkgs.rust-analyzer}bin/rust-analyzer";
+          vscode-css-language-server = mkIf css.enable {
             command = "${vscode-lsp}/bin/vscode-css-language-server";
             args = ["--stdio"];
             config = {
@@ -51,7 +73,7 @@ in {
               css = {validate = {enable = true;};};
             };
           };
-          vscode-html-language-server = {
+          vscode-html-language-server = mkIf html.enable {
             command = "${vscode-lsp}/bin/vscode-css-language-server";
             args = ["--stdio"];
             config = {
@@ -59,7 +81,7 @@ in {
               html = {validate = {enable = true;};};
             };
           };
-          vscode-json-language-server = {
+          vscode-json-language-server = mkIf json.enable {
             command = "${vscode-lsp}/bin/vscode-css-language-server";
             args = ["--stdio"];
             config = {
@@ -69,26 +91,35 @@ in {
           };
         };
 
-        language = [
-          {
-            name = "elixir";
-            auto-format = true;
-            /*
-               language-server = {
-              command = "nextls";
-              args = ["--stdio=true"];
-            };
-            */
+        language = let
+          mix = {
             formatter = {
               command = "mix";
               args = ["format" "-"];
             };
-          }
-          {
+          };
+        in [
+          (mkIf elixir.enable {
+            inherit (mix) formatter;
+            name = "elixir";
+            auto-format = true;
+            language-servers = ["nextls" "elixir-ls"];
+          })
+          (mkIf elixir.enable {
+            inherit (mix) formatter;
+            name = "heex";
+            auto-format = true;
+          })
+          (mkIf elixir.enable {
+            inherit (mix) formatter;
+            name = "eex";
+            auto-format = true;
+          })
+          (mkIf nix.enable {
             name = "nix";
             auto-format = true;
             formatter = {command = "${pkgs.alejandra}/bin/alejandra";};
-          }
+          })
         ];
       };
     };

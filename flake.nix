@@ -23,7 +23,10 @@
 
     # LSP elixir
     next-ls.url = "github:elixir-tools/next-ls";
+    # Custom Helix package
     helix.url = "github:helix-editor/helix";
+    # Slide terminal presentation tool
+    presenterm.url = "github:mfontanini/presenterm";
   };
 
   outputs = {
@@ -32,6 +35,7 @@
     rust-overlay,
     next-ls,
     helix,
+    presenterm,
     lvim,
     darwin,
     ...
@@ -91,7 +95,7 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.extraSpecialArgs = {
-              inherit next-ls helix;
+              inherit next-ls helix presenterm;
               custom-config = import ./hosts/mac/custom.nix {inherit pkgs;};
             };
             home-manager.users.zoedsoupe = {

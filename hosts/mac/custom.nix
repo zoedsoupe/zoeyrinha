@@ -1,5 +1,16 @@
 {pkgs, ...}: {
-  helix.enable = true;
+  helix = {
+    enable = true;
+    languages = {
+      elixir.enable = true;
+      clojure.enable = false;
+      html.enable = true;
+      css.enable = true;
+      json.enable = true;
+      rust.enable = true;
+      nix.enable = true;
+    };
+  };
   git = {
     enable = true;
     user = {
