@@ -1,4 +1,8 @@
-{pkgs, ...}: let
+{
+  pkgs,
+  presenterm,
+  ...
+}: let
   neovim = pkgs.callPackage ./neovim.nix {inherit (pkgs) mkNeovim;};
   elixir_1_15 = pkgs.beam.packages.erlang_26.elixir_1_15;
 in {
@@ -11,6 +15,8 @@ in {
   };
 
   home.packages = with pkgs; [
+    slides
+    presenterm.packages.aarch64-darwin.default
     neovim # my custom config neovim
 
     gnupg
