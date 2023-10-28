@@ -14,10 +14,7 @@
   html = cfg.languages.html;
   css = cfg.languages.css;
   json = cfg.languages.json;
-  erl = pkgs.beam.interpreters.erlang_25.overrideAttrs (old: {
-    configureFlags = ["--disable-jit"] ++ old.configureFlags;
-  });
-  beam = pkgs.beam.packagesWith erl;
+  lexical-lsp = pkgs.beam.packages.erlangR26.callPackage ../../custom/lexical-lsp.nix {};
   vscode-lsp = pkgs.nodePackages.vscode-langservers-extracted;
 in {
   options.helix = {
@@ -58,11 +55,12 @@ in {
       languages = {
         language-server = {
           nextls = mkIf elixir.enable {
-            command = "${next-ls.packages.aarch64-darwin.default}/bin/nextls";
+            command = "${next-ls.packages."${pkgs.system}".default}/bin/nextls";
             args = ["--stdio=true"];
           };
           nil.command = mkIf nix.enable "${pkgs.nil}/bin/nil";
-          elixir-ls.command = mkIf elixir.enable "${beam.elixir-ls}/bin/elixir-ls";
+          lexical-lsp.command = mkIf elixir.enable "${lexical-lsp}/bin/lexical";
+          # elixir-ls.command = mkIf elixir.enable "${beam.elixir-ls}/bin/elixir-ls";
           clojure-lsp.command = mkIf clojure.enable "${pkgs.clojure-lsp}/bin/clojure-lsp";
           rust-analyzer.command = mkIf rust.enable "${pkgs.rust-analyzer}bin/rust-analyzer";
           vscode-css-language-server = mkIf css.enable {
@@ -103,7 +101,7 @@ in {
             inherit (mix) formatter;
             name = "elixir";
             auto-format = true;
-            language-servers = ["nextls" "elixir-ls"];
+            language-servers = ["lexical-lsp" "nextls"];
           })
           (mkIf elixir.enable {
             inherit (mix) formatter;

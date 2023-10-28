@@ -1,4 +1,14 @@
 {pkgs, ...}: {
+  alacritty.enable = false;
+  bat.enable = true;
+  direnv.enable = true;
+  fish.enable = false;
+  fzf.enable = true;
+  kitty.enable = false;
+  starship.enable = true;
+  xplr.enable = true;
+  zellij.enable = true;
+  zoxide.enable = true;
   helix = {
     enable = true;
     languages = {

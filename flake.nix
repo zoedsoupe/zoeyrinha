@@ -22,11 +22,10 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     # LSP elixir
-    next-ls.url = "github:elixir-tools/next-ls";
+    lexical-lsp.url = "github:lexical-lsp/lexical";
+    next-ls.url = "github:elixir-tools/next-ls?ref=v0.14.1";
     # Custom Helix package
     helix.url = "github:helix-editor/helix";
-    # Slide terminal presentation tool
-    presenterm.url = "github:mfontanini/presenterm";
   };
 
   outputs = {
@@ -34,8 +33,8 @@
     home-manager,
     rust-overlay,
     next-ls,
+    lexical-lsp,
     helix,
-    presenterm,
     lvim,
     darwin,
     ...
@@ -43,36 +42,40 @@
     inherit (nixpkgs.lib) nixosSystem;
     inherit (darwin.lib) darwinSystem;
   in {
-    darwinConfigurations.nubank = darwinSystem rec {
-      pkgs = import nixpkgs rec {
-        system = "aarch64-darwin";
-        overlays = [lvim.overlays."${system}".default];
+    /*
+       nixosConfigurations.cumbuca = let
+      pkgs = import nixpkgs {
+        system = "x86_64-linux";
+        overlays = [helix.overlays.default];
         config.allowUnfree = true;
       };
-      modules = [
-        ./hosts/nubank/configuration.nix
+    in
+      nixosSystem {
+        inherit pkgs;
+        modules = [
+          ./hosts/cumbuca/configuration.nix
 
-        home-manager.darwinModules.home-manager
-        {
-          home-manager.useGlobalPkgs = true;
-          home-manager.useUserPackages = true;
-          home-manager.extraSpecialArgs = {
-            custom-config = import ./hosts/nubank/custom.nix {inherit pkgs;};
-          };
-          home-manager.users."zoey.pessanha" = {
-            imports = [
-              ./hosts/nubank/home.nix
-              ./modules/users/bat.nix
-              ./modules/users/fzf.nix
-              ./modules/users/git.nix
-              ./modules/users/zsh.nix
-              ./modules/users/direnv.nix
-              ./modules/users/starship.nix
-            ];
-          };
-        }
-      ];
-    };
+          home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+
+              useUserPackages = true;
+              extraSpecialArgs = {
+                inherit next-ls helix;
+                custom-config = import ./hosts/cumbuca/custom.nix {inherit pkgs;};
+              };
+              users.zoedsoupe = {
+                imports = [
+                  ./hosts/cumbuca/home.nix
+                  ./modules/users
+                ];
+              };
+            };
+          }
+        ];
+      };
+    */
 
     darwinConfigurations.zoedsoupe = let
       pkgs = import nixpkgs rec {
@@ -95,23 +98,13 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.extraSpecialArgs = {
-              inherit next-ls helix presenterm;
+              inherit next-ls helix lexical-lsp;
               custom-config = import ./hosts/mac/custom.nix {inherit pkgs;};
             };
             home-manager.users.zoedsoupe = {
               imports = [
                 ./hosts/mac/home.nix
-                ./modules/users/bat.nix
-                ./modules/users/fzf.nix
-                ./modules/users/git.nix
-                ./modules/users/helix.nix
-                ./modules/users/direnv.nix
-                # ./modules/users/nnn.nix
-                ./modules/users/starship.nix
-                ./modules/users/zellij.nix
-                ./modules/users/zoxide.nix
-                ./modules/users/zsh.nix
-                ./modules/users/xplr.nix
+                ./modules/users
               ];
             };
           }
