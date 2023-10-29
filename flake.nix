@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -31,28 +32,23 @@
   outputs = {
     nixpkgs,
     home-manager,
-    rust-overlay,
-    next-ls,
-    lexical-lsp,
-    helix,
-    lvim,
     darwin,
     ...
-  }: let
+  } @ inputs: let
     inherit (nixpkgs.lib) nixosSystem;
     inherit (darwin.lib) darwinSystem;
   in {
-    /*
-       nixosConfigurations.cumbuca = let
+    nixosConfigurations.cumbuca = let
       pkgs = import nixpkgs {
         system = "x86_64-linux";
-        overlays = [helix.overlays.default];
+        overlays = [inputs.helix.overlays.default];
         config.allowUnfree = true;
       };
     in
       nixosSystem {
         inherit pkgs;
         modules = [
+          ./hosts/cumbuca/bootstrap.nix
           ./hosts/cumbuca/configuration.nix
 
           home-manager.nixosModules.home-manager
@@ -62,25 +58,21 @@
 
               useUserPackages = true;
               extraSpecialArgs = {
-                inherit next-ls helix;
+                inherit (inputs) next-ls helix;
                 custom-config = import ./hosts/cumbuca/custom.nix {inherit pkgs;};
               };
               users.zoedsoupe = {
-                imports = [
-                  ./hosts/cumbuca/home.nix
-                  ./modules/users
-                ];
+                imports = [./hosts/cumbuca/home ./modules/users];
               };
             };
           }
         ];
       };
-    */
 
     darwinConfigurations.zoedsoupe = let
       pkgs = import nixpkgs rec {
         system = "aarch64-darwin";
-        overlays = [
+        overlays = with inputs; [
           rust-overlay.overlays.default
           lvim.overlays."${system}".default
           helix.overlays.default
@@ -98,7 +90,7 @@
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
             home-manager.extraSpecialArgs = {
-              inherit next-ls helix lexical-lsp;
+              inherit (inputs) next-ls helix;
               custom-config = import ./hosts/mac/custom.nix {inherit pkgs;};
             };
             home-manager.users.zoedsoupe = {

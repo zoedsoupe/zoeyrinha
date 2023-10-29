@@ -40,7 +40,17 @@ in {
           color-modes = true;
           line-number = "relative";
           lsp.display-messages = true;
-          indent-guides.render = true;
+          rainbow-brackets = true;
+          true-color = true;
+          statusline.center = ["position-percentage"];
+          whitespace.characters = {
+            newline = "↴";
+            tab = "⇥";
+          };
+          indent-guides = {
+            render = true;
+            rainbow-option = "dim";
+          };
           cursor-shape = {
             insert = "bar";
             normal = "block";
