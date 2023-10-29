@@ -1,13 +1,13 @@
 #! /bin/zsh
 
 if (( # == 0 )); then
-  print >&2 "Usage: $0 nubank"
+  print >&2 "Usage: $0 cumbuca"
   exit 1
 fi
 
 case "$1" in
-  "nubank")
-    nix build .#darwinConfigurations.nubank.system && sudo ./result/activate
+  "cumbuca")
+    nix build .#nixosConfigurations.cumbuca.system && sudo ./result/activate
     ;;
 
   "personal")
