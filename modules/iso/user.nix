@@ -1,4 +1,5 @@
 {pkgs, ...}: {
+  programs.zsh.enable = true;
   users.users.nixos = {
     name = "nixos";
     isNormalUser = true;

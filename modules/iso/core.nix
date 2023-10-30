@@ -44,7 +44,7 @@
     unzip
     file
     zip
-    exa
+    eza
     silver-searcher
     git
     gptfdisk
