@@ -3,6 +3,8 @@
   lib,
   ...
 }: {
+  imports = [./hardware-configuration.nix];
+
   hardware.cpu.intel.updateMicrocode = true;
   powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
 
