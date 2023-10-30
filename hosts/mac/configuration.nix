@@ -30,4 +30,10 @@
     name = "zoedsoupe";
     shell = pkgs.zsh;
   };
+
+  users.users.zoeycumbuca = {
+    home = "/Users/zoeycumbuca";
+    name = "zoeycumbuca";
+    shell = pkgs.zsh;
+  };
 }
