@@ -80,47 +80,30 @@
         config.allowUnfree = true;
       };
     in {
-      cumbuca-darwin = darwinSystem {
-        inherit pkgs;
-        modules = [
-          ./hosts/cumbuca-darwin/configuration.nix
-
-          home-manager.darwinModules.home-manager
-          {
-            home-manager.useGlobalPkgs = true;
-            home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = {
-              inherit (inputs) next-ls helix;
-              custom-config = import ./hosts/cumbuca-darwin/custom.nix {inherit pkgs;};
-            };
-            home-manager.users.zoeycumbuca = {
-              imports = [
-                ./hosts/cumbuca-darwin/home.nix
-                ./modules/users
-              ];
-            };
-          }
-        ];
-      };
-
       zoedsoupe = darwinSystem rec {
         inherit pkgs;
-        modules = [
+        modules = let
+          zoedsoupe.custom-config = import ./hosts/mac/custom.nix {inherit pkgs;};
+          zoeycumbuca.custom-config = import ./hosts/cumbuca-darwin/custom.nix {inherit pkgs;};
+        in [
           ./hosts/mac/configuration.nix
 
           home-manager.darwinModules.home-manager
           {
             home-manager.useGlobalPkgs = true;
             home-manager.useUserPackages = true;
-            home-manager.extraSpecialArgs = {
-              inherit (inputs) next-ls helix;
-              custom-config = import ./hosts/mac/custom.nix {inherit pkgs;};
-            };
-            home-manager.users.zoedsoupe = {
-              imports = [
-                ./hosts/mac/home.nix
-                ./modules/users
-              ];
+            home-manager.sharedModules = [./modules/users];
+
+            home-manager.users = {
+              zoeycumbuca = {
+                _module.args = {inherit (inputs) next-ls helix; inherit (zoeycumbuca) custom-config;};
+                imports = [./hosts/cumbuca-darwin/home.nix];
+              };
+
+              zoedsoupe = {
+                _module.args = {inherit (inputs) next-ls helix; inherit (zoedsoupe) custom-config;};
+                imports = [./hosts/mac/home.nix];
+              };
             };
           }
         ];
