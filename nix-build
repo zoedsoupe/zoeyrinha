@@ -15,7 +15,7 @@ case "$1" in
      ;;
 
   "iso")
-    nix build .#installMedia.config.system.build.isoImage
+    nix build .#installMedia.minimal.config.system.build.isoImage
     ;;
 
   *)
