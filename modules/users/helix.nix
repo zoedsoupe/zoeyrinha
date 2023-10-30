@@ -40,7 +40,6 @@ in {
           color-modes = true;
           line-number = "relative";
           lsp.display-messages = true;
-          rainbow-brackets = true;
           true-color = true;
           statusline.center = ["position-percentage"];
           whitespace.characters = {
