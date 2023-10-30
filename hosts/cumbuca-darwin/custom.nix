@@ -29,7 +29,7 @@
       email = "zoey.pessanha@cumbuca.com";
     };
     signing = {
-      key = "E9C743148106E2C3";
+      key = "D4AAFA7DF2BFE793";
       signByDefault = true;
       gpgPath = "${pkgs.gnupg}/bin/gpg";
     };
@@ -39,7 +39,6 @@
     profileExtra = ''
       eval "$(/opt/homebrew/bin/brew shellenv)"
       . $(brew --prefix asdf)/libexec/asdf.sh
-      }
     '';
     history = {
       ignorePatterns = ["git commit -m *" "git clone *" "mix test --only *" "mkdir *"];
@@ -52,7 +51,7 @@
     sessionVariables = {
       GPG_TTY = "$(tty)";
       GITHUB_TOKEN = "";
-      PATH = "$PATH:$HOME/.nix-profile/bin:/etc/profiles/per-user/zoedsoupe/bin:/run/current-system/sw/bin";
+      PATH = "$PATH:$HOME/.nix-profile/bin:/etc/profiles/per-user/zoeycumbuca/bin:/run/current-system/sw/bin";
       EDITOR = "${pkgs.helix}/bin/hx";
     };
     dirHashes = {
