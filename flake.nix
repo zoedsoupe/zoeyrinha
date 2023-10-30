@@ -69,7 +69,7 @@
         ];
       };
 
-    darwinConfigurations.zoedsoupe = let
+    darwinConfigurations = let
       pkgs = import nixpkgs rec {
         system = "aarch64-darwin";
         overlays = with inputs; [
@@ -79,8 +79,31 @@
         ];
         config.allowUnfree = true;
       };
-    in
-      darwinSystem rec {
+    in {
+      cumbuca-darwin = darwinSystem {
+        inherit pkgs;
+        modules = [
+          ./hosts/cumbuca-darwin/configuration.nix
+
+          home-manager.darwinModules.home-manager
+          {
+            home-manager.useGlobalPkgs = true;
+            home-manager.useUserPackages = true;
+            home-manager.extraSpecialArgs = {
+              inherit (inputs) next-ls helix;
+              custom-config = import ./hosts/cumbuca-darwin/custom.nix {inherit pkgs;};
+            };
+            home-manager.users.zoeycumbuca = {
+              imports = [
+                ./hosts/cumbuca-darwin/home.nix
+                ./modules/users
+              ];
+            };
+          }
+        ];
+      };
+
+      zoedsoupe = darwinSystem rec {
         inherit pkgs;
         modules = [
           ./hosts/mac/configuration.nix
@@ -102,6 +125,7 @@
           }
         ];
       };
+    };
 
     installMedia = {
       minimal = let
