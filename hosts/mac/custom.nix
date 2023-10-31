@@ -19,6 +19,7 @@
       json.enable = true;
       rust.enable = true;
       nix.enable = true;
+      typescript.enable = false;
     };
   };
   git = {
