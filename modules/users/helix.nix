@@ -14,6 +14,7 @@
   html = cfg.languages.html;
   css = cfg.languages.css;
   json = cfg.languages.json;
+  typescript = cfg.languages.typescript;
   lexical-lsp = pkgs.beam.packages.erlangR26.callPackage ../../custom/lexical-lsp.nix {};
   vscode-lsp = pkgs.nodePackages.vscode-langservers-extracted;
 in {
@@ -27,6 +28,7 @@ in {
       html.enable = mkEnableOption "Enables HTML Support";
       css.enable = mkEnableOption "Enables CSS Support";
       json.enable = mkEnableOption "Enables JSON Support";
+      typescript.enable = mkEnableOption "Enables Typescript Support";
     };
   };
 
@@ -67,6 +69,12 @@ in {
             command = "${next-ls.packages."${pkgs.system}".default}/bin/nextls";
             args = ["--stdio=true"];
           };
+          typescript-language-server = let 
+            ts-server = pkgs.nodePackages.typescript-language-server;
+          in mkIf typescript.enable  {
+            command = "${ts-server}/bin/typescript-language-server";
+            args = ["--stdio"];
+          };
           nil.command = mkIf nix.enable "${pkgs.nil}/bin/nil";
           lexical-lsp.command = mkIf elixir.enable "${lexical-lsp}/bin/lexical";
           # elixir-ls.command = mkIf elixir.enable "${beam.elixir-ls}/bin/elixir-ls";
@@ -101,8 +109,20 @@ in {
         language = let
           mix = {
             formatter = {
-              command = "mix";
+              command = "${pkgs.elixir}/bin/mix";
               args = ["format" "-"];
+            };
+          };
+
+          n = {
+            formatter = {
+              command = "${pkgs.alejandra}/bin/alejandra";
+            };
+          };
+
+          ts = {
+            formatter = {
+              command = "${pkgs.nodePackages.prettier}/bin/prettier";
             };
           };
         in [
@@ -123,9 +143,14 @@ in {
             auto-format = true;
           })
           (mkIf nix.enable {
+            inherit (n) formatter;
             name = "nix";
             auto-format = true;
-            formatter = {command = "${pkgs.alejandra}/bin/alejandra";};
+          })
+          (mkIf typescript.enable {
+            inherit (ts) formatter;
+            name = "typescript";
+            auto-format = true;
           })
         ];
       };
