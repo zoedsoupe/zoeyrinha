@@ -18,7 +18,7 @@
       css.enable = true;
       json.enable = true;
       rust.enable = false;
-      nix.enable = false;
+      nix.enable = true;
       typescript.enable = true;
     };
   };
