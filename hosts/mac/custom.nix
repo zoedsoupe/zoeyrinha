@@ -40,7 +40,6 @@
       . $(brew --prefix asdf)/libexec/asdf.sh
 
       alias ls="xplr"
-      }
     '';
     history = {
       ignorePatterns = ["git commit -m *" "git clone *" "mix test --only *" "mkdir *"];
