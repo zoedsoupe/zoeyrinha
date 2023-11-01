@@ -86,7 +86,7 @@ in {
           abbrevCommit = true;
         };
         core = {
-          editor = "nvim";
+          editor = "${pkgs.helix}/bin/hx";
           autocrlf = "input";
           whitespace = "fix,-indent-with-non-tab,trailing-space,cr-at-eol";
         };
