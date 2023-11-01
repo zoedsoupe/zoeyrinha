@@ -18,7 +18,7 @@
       css.enable = true;
       json.enable = true;
       rust.enable = false;
-      nix.enable = false;
+      nix.enable = true;
       typescript.enable = true;
     };
   };
@@ -29,7 +29,7 @@
       email = "zoey.pessanha@cumbuca.com";
     };
     signing = {
-      key = "E9C743148106E2C3";
+      key = "D4AAFA7DF2BFE793";
       signByDefault = true;
       gpgPath = "${pkgs.gnupg}/bin/gpg";
     };
