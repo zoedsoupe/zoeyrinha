@@ -5,7 +5,7 @@
   custom-config,
   ...
 }: let
-  inherit (lib) mkEnableOption mkIf;
+  inherit (lib) mkEnableOption mkIf mkOption types;
   cfg = custom-config.helix;
   elixir = cfg.languages.elixir;
   rust = cfg.languages.rust;
@@ -15,13 +15,21 @@
   css = cfg.languages.css;
   json = cfg.languages.json;
   typescript = cfg.languages.typescript;
-  lexical-lsp = pkgs.beam.packages.erlangR26.callPackage ../../custom/lexical-lsp.nix {};
+  lexical-lsp = elixir.erlang.callPackage ../../custom/lexical-lsp.nix {};
   vscode-lsp = pkgs.nodePackages.vscode-langservers-extracted;
 in {
   options.helix = {
     enable = mkEnableOption "Enbales Helix Editor";
     languages = {
-      elixir.enable = mkEnableOption "Enables Elixir Support";
+      elixir = {
+        enable = mkEnableOption "Enables Elixir Support";
+        erlang = mkOption {
+          default = pkgs.beam.packages.erlangR26;
+          optional = true;
+          type = types.package;
+          description = "The Erlang pkg used to build both next-ls and lexical-lsp";
+        };
+      };
       nix.enable = mkEnableOption "Enables Nix Support";
       rust.enable = mkEnableOption "Enables Rust Support";
       clojure.enable = mkEnableOption "Enables Clojure Support";
@@ -69,12 +77,13 @@ in {
             command = "${next-ls.packages."${pkgs.system}".default}/bin/nextls";
             args = ["--stdio=true"];
           };
-          typescript-language-server = let 
+          typescript-language-server = let
             ts-server = pkgs.nodePackages.typescript-language-server;
-          in mkIf typescript.enable  {
-            command = "${ts-server}/bin/typescript-language-server";
-            args = ["--stdio"];
-          };
+          in
+            mkIf typescript.enable {
+              command = "${ts-server}/bin/typescript-language-server";
+              args = ["--stdio"];
+            };
           nil.command = mkIf nix.enable "${pkgs.nil}/bin/nil";
           lexical-lsp.command = mkIf elixir.enable "${lexical-lsp}/bin/lexical";
           # elixir-ls.command = mkIf elixir.enable "${beam.elixir-ls}/bin/elixir-ls";

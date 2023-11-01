@@ -12,7 +12,6 @@
   helix = {
     enable = true;
     languages = {
-      elixir.enable = true;
       clojure.enable = false;
       html.enable = false;
       css.enable = true;
@@ -20,6 +19,10 @@
       rust.enable = false;
       nix.enable = true;
       typescript.enable = true;
+      elixir = {
+        enable = true;
+        erlang = pkgs.beam.packages.erlangR24;
+      };
     };
   };
   git = {

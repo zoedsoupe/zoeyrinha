@@ -7,14 +7,14 @@
   src = fetchFromGitHub {
     owner = "lexical-lsp";
     repo = "lexical";
-    rev = "v0.4.0";
+    rev = "HEAD";
     sha256 = "GKUZqRmh8a/u9oGc6WIE//P8jRkHYjPl09VlPJ/CIsY=";
   };
 in
   mixRelease rec {
     inherit src;
     pname = "lexical";
-    version = "development";
+    version = "production";
 
     mixFodDeps = fetchMixDeps {
       inherit pname version src;
@@ -23,7 +23,7 @@ in
 
     installPhase = ''
       runHook preInstall
-      mix do compile --no-deps-check, package --path "$out"
+      INDEXING_ENABLED=true mix do compile --no-deps-check, package --path "$out"
       runHook postInstall
     '';
 
