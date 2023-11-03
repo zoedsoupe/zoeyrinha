@@ -10,6 +10,7 @@
     ./kitty.nix
     ./starship.nix
     ./xplr.nix
+    ./warp.nix
     ./zellij.nix
     ./zoxide.nix
     ./zsh.nix
