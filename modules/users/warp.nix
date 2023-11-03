@@ -111,6 +111,12 @@ in {
         text = warp-themes "papercolor_light";
       };
 
+      onedark-theme = {
+        enable = true;
+        target = ".warp/themes/onedark.yml";
+        text = warp-themes "onedark";
+      };
+
       melange-dark-theme = {
         enable = true;
         target = ".warp/themes/melange-dark.yml";
