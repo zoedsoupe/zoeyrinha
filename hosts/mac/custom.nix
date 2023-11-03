@@ -7,6 +7,7 @@
   kitty.enable = false;
   starship.enable = true;
   xplr.enable = true;
+  warp.enable = true;
   zellij.enable = true;
   zoxide.enable = true;
   helix = {
