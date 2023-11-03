@@ -44,7 +44,7 @@ in {
     programs.helix = {
       inherit (cfg) enable;
       settings = {
-        theme = "base16_transparent";
+        theme = "onedark";
         editor = {
           cursorline = true;
           color-modes = true;
