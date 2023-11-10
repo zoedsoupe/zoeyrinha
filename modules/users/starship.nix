@@ -41,16 +41,12 @@ in {
           rust = {
             format = "[rust](white)\\([$version]($style)\\) ";
           };
-          elm = {
-            format = "[elm](white)\\([$version]($style)\\) ";
-          };
-          lua = {
-            format = "[lua](white)\\([$version]($style)\\) ";
-          };
-          character = {
-            success_symbol = "\n[](bold green)";
-            error_symbol = "\n[](bold red)";
-            vicmd_symbol = "\n[](bold green)";
+          custom = {
+            direnv = {
+              format = "[\\[direnv\\]]($style) ";
+              style = "fg:yellow dimmed";
+              when = "env | grep -E '^DIRENV_FILE='";
+            };
           };
           format = lib.concatStrings [
             "$directory"
@@ -58,11 +54,9 @@ in {
             "$git_status"
             "$nix_shell"
             "$elixir"
-            "$elm"
             "$nodejs"
-            "$haskell"
             "$rust"
-            "$character"
+            "$direnv"
           ];
           palette = "catppuccin_macchiato";
         }
