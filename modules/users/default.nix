@@ -5,6 +5,7 @@
     ./direnv.nix
     ./fish.nix
     ./fzf.nix
+    ./gh.nix
     ./git.nix
     ./helix.nix
     ./kitty.nix

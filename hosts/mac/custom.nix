@@ -5,6 +5,7 @@
   fish.enable = false;
   fzf.enable = true;
   kitty.enable = false;
+  gh.enable = true;
   starship.enable = true;
   xplr.enable = true;
   warp.enable = true;
