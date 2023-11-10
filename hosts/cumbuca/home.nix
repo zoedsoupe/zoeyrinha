@@ -10,15 +10,13 @@ in {
   };
 
   home.packages = with pkgs; [
+    pinentry_mac
     gnupg
-    elixir_1_15
-    gitAndTools.gh
     ngrok
     presenterm
 
     # tools
     bat
-    # flyctl
     eza # exa fork
     fd
     silver-searcher

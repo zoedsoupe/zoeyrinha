@@ -74,13 +74,11 @@
               zoeycumbuca = {
                 _module.args = args zoeycumbuca;
                 imports = [./hosts/cumbuca/home.nix];
-                home.packages = [pkgs.pinentry_mac];
               };
 
               zoedsoupe = {
                 _module.args = args zoedsoupe;
                 imports = [./hosts/mac/home.nix];
-                home.packages = [pkgs.pinentry_mac];
               };
             };
           }

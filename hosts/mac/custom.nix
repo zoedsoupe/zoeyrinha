@@ -10,6 +10,7 @@
   starship.enable = true;
   xplr.enable = true;
   warp.enable = true;
+  wezterm.enable = true;
   zellij.enable = true;
   zoxide.enable = true;
   helix = {
