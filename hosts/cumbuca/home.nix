@@ -14,6 +14,7 @@ in {
     elixir_1_15
     gitAndTools.gh
     ngrok
+    presenterm
 
     # tools
     bat

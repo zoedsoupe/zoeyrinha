@@ -35,10 +35,6 @@ in {
         default = "frappe";
       };
     };
-    history.ignorePatterns = mkOption {
-      description = "Ignores given patterns on history";
-      type = types.listOf types.str;
-    };
   };
 
   config = mkIf cfg.enable {
@@ -61,9 +57,10 @@ in {
       autocd = true;
       initExtraFirst = catppuccinThemePath;
       history = {
-        inherit (cfg.history) ignorePatterns;
+        ignorePatterns = ["rm -rf *" "cd *" "mix *" "iex *" "mkdir *" "git *" "nix *" "docker *"];
         expireDuplicatesFirst = true;
         extended = true;
+        ignoreAllDups = true;
         ignoreDups = true;
         ignoreSpace = true;
       };

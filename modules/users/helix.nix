@@ -44,7 +44,7 @@ in {
     programs.helix = {
       inherit (cfg) enable;
       settings = {
-        theme = "catppuccin_frappe";
+        theme = "onedark";
         editor = {
           cursorline = true;
           color-modes = true;
