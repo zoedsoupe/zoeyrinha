@@ -5,7 +5,6 @@
   fish.enable = false;
   fzf.enable = true;
   kitty.enable = false;
-  presenterm.enable = true;
   starship.enable = true;
   xplr.enable = true;
   warp.enable = true;
@@ -14,25 +13,27 @@
   helix = {
     enable = true;
     languages = {
-      elixir.enable = true;
-      elixir.erlang = pkgs.beam.packages.erlangR26;
       clojure.enable = false;
-      html.enable = true;
+      html.enable = false;
       css.enable = true;
       json.enable = true;
-      rust.enable = true;
+      rust.enable = false;
       nix.enable = true;
       typescript.enable = true;
+      elixir = {
+        enable = true;
+        erlang = pkgs.beam.packages.erlangR24;
+      };
     };
   };
   git = {
     enable = true;
     user = {
       name = "Zoey de Souza Pessanha";
-      email = "zoey.spessanha@zeetech.io";
+      email = "zoey.pessanha@cumbuca.com";
     };
     signing = {
-      key = "E9C743148106E2C3";
+      key = "D4AAFA7DF2BFE793";
       signByDefault = true;
       gpgPath = "${pkgs.gnupg}/bin/gpg";
     };
@@ -51,16 +52,13 @@
       flavour = "frappe";
     };
     sessionVariables = {
-      DIRENV_LOG_FORMAT = "";
       GPG_TTY = "$(tty)";
       GITHUB_TOKEN = "";
-      PATH = "$PATH:$HOME/.nix-profile/bin:/etc/profiles/per-user/zoedsoupe/bin:/run/current-system/sw/bin";
+      PATH = "$PATH:$HOME/.nix-profile/bin:/etc/profiles/per-user/zoeycumbuca/bin:/run/current-system/sw/bin";
       EDITOR = "${pkgs.helix}/bin/hx";
     };
     dirHashes = {
-      zoeyrinha = "$HOME/dev/personal/zoeyrinha";
-      lvim = "$HOME/dev/personal/lvim";
-      pescarte = "$HOME/dev/pescarte/pescarte-plataforma";
+      zoeyrinha = "$HOME/dev/zoeyrinha";
     };
   };
 }
