@@ -18,7 +18,7 @@ in {
     gitAndTools.gh
     ngrok
     tmate
-    alejandra
+    presenterm
 
     # tools
     bat

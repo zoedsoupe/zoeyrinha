@@ -47,9 +47,7 @@ in {
       lfs.enable = true;
       delta.enable = true;
       signing = {
-        key = cfg.signing.key;
-        gpgPath = cfg.signing.gpgPath;
-        signByDefault = cfg.signing.signByDefault;
+        inherit (cfg.signing) key gpgPath signByDefault;
       };
       aliases = {
         p = "push";

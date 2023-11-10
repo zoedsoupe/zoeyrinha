@@ -27,6 +27,8 @@
     next-ls.url = "github:elixir-tools/next-ls?ref=v0.14.1";
     # Custom Helix package
     helix.url = "github:helix-editor/helix";
+
+    presenterm.url = "github:mfontanini/presenterm";
   };
 
   outputs = {
@@ -38,37 +40,6 @@
     inherit (nixpkgs.lib) nixosSystem;
     inherit (darwin.lib) darwinSystem;
   in {
-    nixosConfigurations.cumbuca = let
-      pkgs = import nixpkgs {
-        system = "x86_64-linux";
-        overlays = [inputs.helix.overlays.default];
-        config.allowUnfree = true;
-      };
-    in
-      nixosSystem {
-        inherit pkgs;
-        modules = [
-          ./hosts/cumbuca/bootstrap.nix
-          ./hosts/cumbuca/configuration.nix
-
-          home-manager.nixosModules.home-manager
-          {
-            home-manager = {
-              useGlobalPkgs = true;
-
-              useUserPackages = true;
-              extraSpecialArgs = {
-                inherit (inputs) next-ls helix;
-                custom-config = import ./hosts/cumbuca/custom.nix {inherit pkgs;};
-              };
-              users.zoedsoupe = {
-                imports = [./hosts/cumbuca/home ./modules/users];
-              };
-            };
-          }
-        ];
-      };
-
     darwinConfigurations = let
       pkgs = import nixpkgs rec {
         system = "aarch64-darwin";
@@ -84,7 +55,7 @@
         inherit pkgs;
         modules = let
           zoedsoupe.custom-config = import ./hosts/mac/custom.nix {inherit pkgs;};
-          zoeycumbuca.custom-config = import ./hosts/cumbuca-darwin/custom.nix {inherit pkgs;};
+          zoeycumbuca.custom-config = import ./hosts/cumbuca/custom.nix {inherit pkgs;};
         in [
           ./hosts/mac/configuration.nix
 
@@ -94,15 +65,22 @@
             home-manager.useUserPackages = true;
             home-manager.sharedModules = [./modules/users];
 
-            home-manager.users = {
+            home-manager.users = let
+              args = host: {
+                inherit (inputs) next-ls helix presenterm;
+                inherit (host) custom-config;
+              };
+            in {
               zoeycumbuca = {
-                _module.args = {inherit (inputs) next-ls helix; inherit (zoeycumbuca) custom-config;};
-                imports = [./hosts/cumbuca-darwin/home.nix];
+                _module.args = args zoeycumbuca;
+                imports = [./hosts/cumbuca/home.nix];
+                home.packages = [pkgs.pinentry_mac];
               };
 
               zoedsoupe = {
-                _module.args = {inherit (inputs) next-ls helix; inherit (zoedsoupe) custom-config;};
+                _module.args = args zoedsoupe;
                 imports = [./hosts/mac/home.nix];
+                home.packages = [pkgs.pinentry_mac];
               };
             };
           }
