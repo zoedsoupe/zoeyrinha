@@ -6,6 +6,7 @@
   fzf.enable = true;
   kitty.enable = false;
   gh.enable = true;
+  presenterm.enable = true;
   starship.enable = true;
   xplr.enable = true;
   warp.enable = true;
@@ -22,7 +23,7 @@
       json.enable = true;
       rust.enable = true;
       nix.enable = true;
-      typescript.enable = false;
+      typescript.enable = true;
     };
   };
   git = {
@@ -51,6 +52,7 @@
       flavour = "frappe";
     };
     sessionVariables = {
+      DIRENV_LOG_FORMAT = "";
       GPG_TTY = "$(tty)";
       GITHUB_TOKEN = "";
       PATH = "$PATH:$HOME/.nix-profile/bin:/etc/profiles/per-user/zoedsoupe/bin:/run/current-system/sw/bin";
