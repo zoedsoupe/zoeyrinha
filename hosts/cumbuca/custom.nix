@@ -5,9 +5,12 @@
   fish.enable = false;
   fzf.enable = true;
   kitty.enable = false;
+  gh.enable = true;
   presenterm.enable = true;
   starship.enable = true;
   xplr.enable = true;
+  warp.enable = true;
+  wezterm.enable = true;
   zellij.enable = true;
   zoxide.enable = true;
   helix = {
@@ -42,7 +45,6 @@
     enable = true;
     profileExtra = ''
       eval "$(/opt/homebrew/bin/brew shellenv)"
-      . $(brew --prefix asdf)/libexec/asdf.sh
     '';
     history = {
       ignorePatterns = ["git commit -m *" "git clone *" "mix test --only *" "mkdir *"];

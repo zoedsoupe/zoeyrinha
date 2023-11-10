@@ -12,6 +12,7 @@
     ./starship.nix
     ./xplr.nix
     ./warp.nix
+    ./wezterm.nix
     ./zellij.nix
     ./zoxide.nix
     ./zsh.nix
