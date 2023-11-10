@@ -11,6 +11,7 @@ in {
   };
 
   home.packages = with pkgs; [
+    pinentry_mac
     neovim # my custom config neovim
 
     gnupg
@@ -22,7 +23,6 @@ in {
 
     # tools
     bat
-    # flyctl
     eza # exa fork
     fd
     silver-searcher
