@@ -24,9 +24,9 @@
 
     # LSP elixir
     lexical-lsp.url = "github:lexical-lsp/lexical";
-    next-ls.url = "github:elixir-tools/next-ls?ref=v0.14.1";
+    next-ls.url = "github:elixir-tools/next-ls?ref=v0.15.0";
     # Custom Helix package
-    helix.url = "github:helix-editor/helix";
+    helix.url = "github:helix-editor/helix?ref=HEAD";
 
     presenterm.url = "github:mfontanini/presenterm";
   };

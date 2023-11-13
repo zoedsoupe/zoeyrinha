@@ -15,7 +15,7 @@
   css = cfg.languages.css;
   json = cfg.languages.json;
   typescript = cfg.languages.typescript;
-  lexical-lsp = elixir.erlang.callPackage ../../custom/lexical-lsp.nix {};
+  lexical-lsp = elixir.erlang.callPackage ../../custom/lexical-lsp.nix {elixir = elixir.package;};
   vscode-lsp = pkgs.nodePackages.vscode-langservers-extracted;
 in {
   options.helix = {
@@ -23,6 +23,12 @@ in {
     languages = {
       elixir = {
         enable = mkEnableOption "Enables Elixir Support";
+        package = mkOption {
+          default = pkgs.beam.packages.erlangR26.elixir;
+          optional = true;
+          type = types.package;
+          description = "The Elixir pkg used to build both next-ls and lexical-lsp";
+        };
         erlang = mkOption {
           default = pkgs.beam.packages.erlangR26;
           optional = true;
