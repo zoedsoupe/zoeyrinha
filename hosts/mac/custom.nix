@@ -16,8 +16,6 @@
   helix = {
     enable = true;
     languages = {
-      elixir.enable = true;
-      elixir.erlang = pkgs.beam.packages.erlangR26;
       clojure.enable = false;
       html.enable = true;
       css.enable = true;
@@ -25,6 +23,13 @@
       rust.enable = true;
       nix.enable = true;
       typescript.enable = true;
+      elixir = let
+        inherit (pkgs.beam.packages) erlangR26;
+      in {
+        enable = true;
+        package = erlangR26.elixir;
+        erlang = erlangR26;
+      };
     };
   };
   git = {

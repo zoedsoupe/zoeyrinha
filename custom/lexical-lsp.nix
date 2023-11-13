@@ -3,18 +3,20 @@
   fetchMixDeps,
   erlang,
   fetchFromGitHub,
+  elixir,
 }: let
   src = fetchFromGitHub {
     owner = "lexical-lsp";
     repo = "lexical";
-    rev = "HEAD";
+    rev = "v0.4.1";
     sha256 = "GKUZqRmh8a/u9oGc6WIE//P8jRkHYjPl09VlPJ/CIsY=";
   };
 in
   mixRelease rec {
-    inherit src;
+    inherit src elixir;
     pname = "lexical";
     version = "production";
+    mixEnv = "prod";
 
     mixFodDeps = fetchMixDeps {
       inherit pname version src;
