@@ -9,7 +9,7 @@
     owner = "lexical-lsp";
     repo = "lexical";
     rev = "v0.4.1";
-    sha256 = "GKUZqRmh8a/u9oGc6WIE//P8jRkHYjPl09VlPJ/CIsY=";
+    sha256 = "5xXormT3+eFyz7jeLDDidFjIWwbn98EXAzRiRvAkSMs=";
   };
 in
   mixRelease rec {
@@ -20,7 +20,7 @@ in
 
     mixFodDeps = fetchMixDeps {
       inherit pname version src;
-      sha256 = "SQiXUjHmvtXUbHpPI1WSqsvPCauw+wiQmuwqUXOOscM=";
+      sha256 = "V9iBKPSiGZy4Pp96VsNz8iyzvAYT8faqQ/csnYQMgjA=";
     };
 
     installPhase = ''

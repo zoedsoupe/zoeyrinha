@@ -1,3 +1,4 @@
 # Nix result objetcs
 /.direnv/
 result
+/.lexical/
