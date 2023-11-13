@@ -23,12 +23,9 @@
       rust.enable = false;
       nix.enable = true;
       typescript.enable = true;
-      elixir = let
-        inherit (pkgs.beam.packages) erlangR24;
-      in {
+      elixir = {
         enable = true;
-        package = erlangR24.elixir_1_14;
-        erlang = erlangR24;
+        erlang = pkgs.beam.packages.erlangR24;
       };
     };
   };
