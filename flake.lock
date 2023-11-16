@@ -646,17 +646,17 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "lastModified": 1699460725,
-        "narHash": "sha256-X9oXx7+BjsfzVpPwZeI9ezuwHGDyvrSx940LsR6Mw8A=",
-        "owner": "lexical-lsp",
+        "lastModified": 1700077050,
+        "narHash": "sha256-HquX9ye2BfNuGw6kyaWg2PmYLXwLtzUR1eJdgT9ji8E=",
+        "owner": "zoedsoupe",
         "repo": "lexical",
-        "rev": "32bfa1d2aba5532aac4ab3449d9863d40d17b25b",
+        "rev": "1eeb7715e2eb2a21795801cb002798f055ade3aa",
         "type": "github"
       },
       "original": {
-        "owner": "lexical-lsp",
-        "ref": "v0.4.1",
+        "owner": "zoedsoupe",
         "repo": "lexical",
+        "rev": "1eeb7715e2eb2a21795801cb002798f055ade3aa",
         "type": "github"
       }
     },
