@@ -2,7 +2,7 @@
   pkgs,
   lib,
   next-ls,
-  #  lexical-lsp,
+  lexical-lsp,
   custom-config,
   ...
 }: let
@@ -46,24 +46,35 @@ in {
       settings = {
         theme = "onedark";
         editor = {
+          auto-save = true;
+          completion-replace = true;
           cursorline = true;
           color-modes = true;
           line-number = "relative";
-          lsp.display-messages = true;
-          true-color = true;
           statusline.center = ["position-percentage"];
-          whitespace.characters = {
-            newline = "↴";
-            tab = "⇥";
-          };
-          indent-guides = {
-            render = true;
-            rainbow-option = "dim";
+          indent-guides.render = false;
+          soft-wrap.enable = true;
+          whitespace = {
+            render = {
+              space = "none";
+              newline = "all";
+              nbsp = "none";
+              tab = "none";
+              tabpad = "none";
+            };
+            characters = {
+              newline = "↴";
+              tab = "⇥";
+            };
           };
           cursor-shape = {
             insert = "bar";
             normal = "block";
             select = "underline";
+          };
+          lsp = {
+            display-messages = true;
+            display-inlay-hints = true;
           };
         };
         keys.normal = {
@@ -85,10 +96,7 @@ in {
               args = ["--stdio"];
             };
           nil.command = mkIf nix.enable "${pkgs.nil}/bin/nil";
-          lexical-lsp.command = let
-            lexical-lsp = elixir.erlang.callPackage ../../custom/lexical-lsp.nix {};
-          in
-            mkIf elixir.enable "${lexical-lsp}/bin/lexical";
+          lexical-lsp.command = mkIf elixir.enable "${lexical-lsp.packages.${pkgs.system}.default}/bin/lexical";
           # elixir-ls.command = mkIf elixir.enable "${beam.elixir-ls}/bin/elixir-ls";
           clojure-lsp.command = mkIf clojure.enable "${pkgs.clojure-lsp}/bin/clojure-lsp";
           rust-analyzer.command = mkIf rust.enable "${pkgs.rust-analyzer}bin/rust-analyzer";
