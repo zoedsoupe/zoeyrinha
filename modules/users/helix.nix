@@ -55,13 +55,7 @@ in {
           indent-guides.render = false;
           soft-wrap.enable = true;
           whitespace = {
-            render = {
-              space = "none";
-              newline = "all";
-              nbsp = "none";
-              tab = "none";
-              tabpad = "none";
-            };
+            render = "none";
             characters = {
               newline = "↴";
               tab = "⇥";

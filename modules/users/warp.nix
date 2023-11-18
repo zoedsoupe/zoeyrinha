@@ -128,6 +128,36 @@ in {
         target = ".warp/themes/melange-light.yml";
         text = melange "light";
       };
+
+      edge-dark-neon-theme = {
+        enable = true;
+        target = ".warp/themes/edge-neon.yml";
+        text = ''
+          foreground: '#c5cdd9'
+          background: '#2b2d3a'
+          accent: '#fbfcfc'
+          details: darker
+          terminal_colors:
+            normal:
+              black: '#363a4e'
+              red: '#ec7279'
+              green: '#a0c980'
+              yellow: '#deb974'
+              blue: '#6cb6eb'
+              magenta: '#d38aea'
+              cyan: '#5dbbc1'
+              white: '#c5cdd9'
+            bright:
+              black: '#363a4e'
+              red: '#ec7279'
+              green: '#a0c980'
+              yellow: '#deb974'
+              blue: '#6cb6eb'
+              magenta: '#d38aea'
+              cyan: '#5dbbc1'
+              white: '#c5cdd9'
+        '';
+      };
     };
   };
 }
