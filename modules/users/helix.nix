@@ -18,6 +18,7 @@
   typescript = cfg.languages.typescript;
   vscode-lsp = pkgs.nodePackages.vscode-langservers-extracted;
   inherit (pkgs.beam.packages) erlangR25;
+  inherit (pkgs.beam.interpreters.erlang_25) elixir_1_15;
 in {
   options.helix = {
     enable = mkEnableOption "Enbales Helix Editor";
@@ -28,6 +29,11 @@ in {
           default = mkDefault erlangR25;
           type = types.package;
           description = "The Erlang pkg used to build both next-ls and lexical-lsp";
+        };
+        package = mkOption {
+          default = mkDefault elixir_1_15;
+          type = types.package;
+          description = "The Elixir pkg used to build both next-ls and lexical-lsp";
         };
       };
       nix.enable = mkEnableOption "Enables Nix Support";
@@ -90,7 +96,12 @@ in {
               args = ["--stdio"];
             };
           nil.command = mkIf nix.enable "${pkgs.nil}/bin/nil";
-          lexical-lsp.command = mkIf elixir.enable "${lexical-lsp.packages.${pkgs.system}.default}/bin/lexical";
+          lexical-lsp.command = let
+            inherit (lexical-lsp.lib) mkLexical;
+            erlang = elixir.erlang.extend (_: _: {elixir = elixir.package;});
+            lexical = mkLexical {inherit erlang;};
+          in
+            mkIf elixir.enable "${lexical}/bin/lexical";
           # elixir-ls.command = mkIf elixir.enable "${beam.elixir-ls}/bin/elixir-ls";
           clojure-lsp.command = mkIf clojure.enable "${pkgs.clojure-lsp}/bin/clojure-lsp";
           rust-analyzer.command = mkIf rust.enable "${pkgs.rust-analyzer}bin/rust-analyzer";
