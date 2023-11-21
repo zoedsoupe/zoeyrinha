@@ -60,6 +60,7 @@ in {
         lg = "log --graph --oneline --decorate --abbrev-commit";
       };
       extraConfig = {
+        safe = {directory = "/opt/homebrew";};
         github = {user = "zoedsoupe";};
         grep = {linenumber = true;};
         merge = {log = true;};
