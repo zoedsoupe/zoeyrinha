@@ -10,6 +10,7 @@
   cfg = custom-config.helix;
   elixir = cfg.languages.elixir;
   rust = cfg.languages.rust;
+  go = cfg.languages.go;
   clojure = cfg.languages.clojure;
   nix = cfg.languages.nix;
   html = cfg.languages.html;
@@ -43,6 +44,7 @@ in {
       css.enable = mkEnableOption "Enables CSS Support";
       json.enable = mkEnableOption "Enables JSON Support";
       typescript.enable = mkEnableOption "Enables Typescript Support";
+      go.enable = mkEnableOption "Enables Go support";
     };
   };
 
@@ -104,7 +106,8 @@ in {
             mkIf elixir.enable "${lexical}/bin/lexical";
           # elixir-ls.command = mkIf elixir.enable "${beam.elixir-ls}/bin/elixir-ls";
           clojure-lsp.command = mkIf clojure.enable "${pkgs.clojure-lsp}/bin/clojure-lsp";
-          rust-analyzer.command = mkIf rust.enable "${pkgs.rust-analyzer}bin/rust-analyzer";
+          rust-analyzer.command = mkIf rust.enable "${pkgs.rust-analyzer}/bin/rust-analyzer";
+          gopls.command = mkIf go.enable "${pkgs.gopls}/bin/gopls";
           vscode-css-language-server = mkIf css.enable {
             command = "${vscode-lsp}/bin/vscode-css-language-server";
             args = ["--stdio"];
