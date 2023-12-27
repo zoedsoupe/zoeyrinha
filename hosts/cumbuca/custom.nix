@@ -21,6 +21,7 @@
       css.enable = true;
       json.enable = true;
       rust.enable = false;
+      go.enable = false;
       nix.enable = true;
       typescript.enable = true;
       elixir = let
