@@ -52,7 +52,7 @@ in {
     programs.helix = {
       inherit (cfg) enable;
       settings = {
-        theme = "onedark";
+        theme = "kaolin-valley-dark";
         editor = {
           auto-save = true;
           completion-replace = true;
