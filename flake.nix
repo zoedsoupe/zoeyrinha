@@ -23,12 +23,12 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     # LSP elixir
-    lexical-lsp.url = "github:hauleth/lexical?ref=ft/move-from-flake-uitls-to-flake-parts";
+    lexical-lsp.url = "github:lexical-lsp/lexical?ref=HEAD";
     next-ls.url = "github:elixir-tools/next-ls?ref=v0.15.0";
     # Custom Helix package
     helix.url = "github:helix-editor/helix?ref=HEAD";
 
-    presenterm.url = "github:mfontanini/presenterm";
+    presenterm.url = "github:mfontanini/presenterm?ref=HEAD";
   };
 
   outputs = {
