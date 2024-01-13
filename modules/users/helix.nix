@@ -16,6 +16,7 @@
   html = cfg.languages.html;
   css = cfg.languages.css;
   json = cfg.languages.json;
+  zig = cfg.languages.zig;
   typescript = cfg.languages.typescript;
   vscode-lsp = pkgs.nodePackages.vscode-langservers-extracted;
   inherit (pkgs.beam.packages) erlangR25;
@@ -45,6 +46,7 @@ in {
       json.enable = mkEnableOption "Enables JSON Support";
       typescript.enable = mkEnableOption "Enables Typescript Support";
       go.enable = mkEnableOption "Enables Go support";
+      zig.enable = mkEnableOption "Enables Zig support";
     };
   };
 
@@ -52,7 +54,7 @@ in {
     programs.helix = {
       inherit (cfg) enable;
       settings = {
-        theme = "kaolin-valley-dark";
+        theme = "sonokai";
         editor = {
           auto-save = true;
           completion-replace = true;
@@ -103,8 +105,9 @@ in {
             erlang = elixir.erlang.extend (_: _: {elixir = elixir.package;});
             lexical = mkLexical {inherit erlang;};
           in
-            mkIf elixir.enable "${lexical}/bin/lexical";
+            mkIf (elixir.enable) "${lexical}/bin/lexical";
           # elixir-ls.command = mkIf elixir.enable "${beam.elixir-ls}/bin/elixir-ls";
+          zls.command = mkIf zig.enable "${pkgs.zls}/bin/zls";
           clojure-lsp.command = mkIf clojure.enable "${pkgs.clojure-lsp}/bin/clojure-lsp";
           rust-analyzer.command = mkIf rust.enable "${pkgs.rust-analyzer}/bin/rust-analyzer";
           gopls.command = mkIf go.enable "${pkgs.gopls}/bin/gopls";

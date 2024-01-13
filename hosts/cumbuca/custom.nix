@@ -22,15 +22,13 @@
       json.enable = true;
       rust.enable = false;
       go.enable = false;
+      zig.enable = false;
       nix.enable = true;
       typescript.enable = true;
       elixir = let
         inherit (pkgs.beam) packagesWith;
-        inherit (pkgs.beam.interpreters) erlangR24;
-        erl = erlangR24.overrideAttrs (old: {
-          configureFlags = ["--disable-jit"] ++ old.configureFlags;
-        });
-        erlang = packagesWith erl;
+        inherit (pkgs.beam.interpreters) erlangR25;
+        erlang = packagesWith erlangR25;
         package = erlang.elixir_1_13;
       in {
         inherit package erlang;
