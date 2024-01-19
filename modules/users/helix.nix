@@ -17,6 +17,7 @@
   css = cfg.languages.css;
   json = cfg.languages.json;
   zig = cfg.languages.zig;
+  nim = cfg.languages.nim;
   typescript = cfg.languages.typescript;
   vscode-lsp = pkgs.nodePackages.vscode-langservers-extracted;
   inherit (pkgs.beam.packages) erlangR25;
@@ -38,6 +39,7 @@ in {
           description = "The Elixir pkg used to build both next-ls and lexical-lsp";
         };
       };
+      nim.enable = mkEnableOption "Enables Nim support";
       nix.enable = mkEnableOption "Enables Nix Support";
       rust.enable = mkEnableOption "Enables Rust Support";
       clojure.enable = mkEnableOption "Enables Clojure Support";
@@ -108,6 +110,7 @@ in {
             mkIf (elixir.enable) "${lexical}/bin/lexical";
           # elixir-ls.command = mkIf elixir.enable "${beam.elixir-ls}/bin/elixir-ls";
           zls.command = mkIf zig.enable "${pkgs.zls}/bin/zls";
+          nimlsp.command = mkIf nim.enable "${pkgs.nimlsp}/bin/nimlsp";
           clojure-lsp.command = mkIf clojure.enable "${pkgs.clojure-lsp}/bin/clojure-lsp";
           rust-analyzer.command = mkIf rust.enable "${pkgs.rust-analyzer}/bin/rust-analyzer";
           gopls.command = mkIf go.enable "${pkgs.gopls}/bin/gopls";
@@ -120,7 +123,7 @@ in {
             };
           };
           vscode-html-language-server = mkIf html.enable {
-            command = "${vscode-lsp}/bin/vscode-css-language-server";
+            command = "${vscode-lsp}/bin/vscode-html-language-server";
             args = ["--stdio"];
             config = {
               provideFormatter = true;
@@ -128,7 +131,7 @@ in {
             };
           };
           vscode-json-language-server = mkIf json.enable {
-            command = "${vscode-lsp}/bin/vscode-css-language-server";
+            command = "${vscode-lsp}/bin/vscode-json-language-server";
             args = ["--stdio"];
             config = {
               provideFormatter = true;
@@ -157,6 +160,11 @@ in {
             };
           };
         in [
+          (mkIf nim.enable {
+            name = "nim";
+            auto-format = true;
+            language-servers = ["nimlsp"];
+          })
           (mkIf elixir.enable {
             inherit (mix) formatter;
             name = "elixir";
