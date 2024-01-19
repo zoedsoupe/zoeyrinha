@@ -1,0 +1,59 @@
+name = "Falcon"
+author = "Michael Welford"
+license = "MIT"
+
+# Syntax Highlighting
+"comment" = { fg = "gray" }
+"string" = { fg = "light-blue" }
+"constant" = { fg = "white" }
+"function" = { fg = "yellow" }
+"keyword" = { fg = "yellow" }
+"operator" = { fg = "orange" }
+"type" = { fg = "white" }
+"variable" = { fg = "light-cyan" }
+"tag" = { fg = "orange" }
+
+# UI Configuration
+"ui.background" = { bg = "default" }
+"ui.cursor" = { fg = "white", bg = "gray" }
+"ui.linenr" = { fg = "dark-gray" }
+"ui.linenr.selected" = { fg = "white" }
+"ui.statusline" = { fg = "gray", bg = "dark-blue" }
+"ui.statusline.insert" = { fg = "light-green" }
+"ui.statusline.select" = { fg = "light-yellow" }
+"ui.popup" = { fg = "light-gray", bg = "dark-blue" }
+"ui.window" = { fg = "white", bg = "dark-purple" }
+"ui.selection" = { bg = "purple" }
+"ui.selection.primary" = { bg = "light-magenta" }
+"ui.cursorline" = { bg = "dark-purple" }
+"ui.text" = { fg = "white" }
+"ui.virtual" = { fg = "light-gray" }
+"ui.virtual.whitespace" = { fg = "dark-gray" }
+"ui.virtual.indent-guide" = { fg = "dark-gray" }
+"ui.virtual.ruler" = { fg = "light-gray" }
+"ui.menu" = { fg = "white", bg = "dark-blue" }
+"ui.help" = { fg = "light-gray", bg = "dark-blue" }
+
+# Palette
+[palette]
+default = "#020221"
+black = "#000004"
+red = "#FF3600"
+green = "#859933"
+yellow = "#FFC552"
+blue = "#635196"
+magenta = "#FF761A"
+cyan = "#34BFA4"
+gray = "#B4B4B9"
+dark-gray = "#57575E"
+light-red = "#FF8E78"
+light-green = "#B2BC55"
+light-yellow = "#FFD392"
+light-blue = "#99A4BC"
+light-magenta = "#FFB07B"
+light-cyan = "#8BCCBF"
+white = "#F8F8FF"
+dark-blue = "#18182A"
+dark-purple = "#1E1E2F"
+purple = "#2D1078"
+
