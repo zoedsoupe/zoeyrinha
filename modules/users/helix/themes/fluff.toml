@@ -1,0 +1,82 @@
+name = "Fluffy Dark Theme"
+author = "Ported from Visual Studio Code"
+
+# Syntax Definitions
+"comment" = { fg = "comment" }
+"variable" = { fg = "variable" }
+"constant" = { fg = "constant" }
+"invalid" = { fg = "error" }
+"keyword" = { fg = "keyword" }
+"storage" = { fg = "storage" }
+"operator" = { fg = "storage" }
+"function" = { fg = "info" }
+"variable.other.property" = { fg = "storage" }
+"entity.name.function" = { fg = "info", modifiers = ["bold"] }
+"variable.parameter" = { fg = "variable", modifiers = ["italic"] }
+"support.other.variable" = { fg = "keyword" }
+"constant.numeric" = { fg = "constant" }
+"string" = { fg = "inserted" }
+"string.special.symbol" = { fg = "symbol" }
+"entity.name" = { fg = "keyword", modifiers = ["bold"] }
+"support.type" = { fg = "info" }
+"source.css support.type.property-name" = { fg = "storage" }
+"entity.other.attribute-name" = { fg = "storage" }
+"string.other.link.title.markdown" = { fg = "link" }
+"string.other.link.description.title.markdown" = { fg = "changed" }
+"constant.other.reference.link.markdown" = { fg = "storage" }
+"markup.raw.block" = { fg = "changed" }
+"markup.inserted" = { fg = "inserted" }
+"markup.deleted" = { fg = "deleted" }
+"markup.changed" = { fg = "changed" }
+"string.regexp" = { fg = "regexp" }
+"constant.character.escape" = { fg = "regexp" }
+"url" = { modifiers = ["underline"] }
+"decorator" = { fg = "decorator", modifiers = ["italic"] }
+
+# UI Configuration
+"ui.background" = { bg = "background" }
+"ui.cursor" = { fg = "foreground" }
+"ui.cursor.primary" = { bg = "background" }
+"ui.linenr" = { fg = "foreground" }
+"ui.linenr.selected" = { fg = "selection" }
+"ui.statusline" = { bg = "background", fg = "foreground" }
+"ui.statusline.normal" = { bg = "background", fg = "info" }
+"ui.statusline.insert" = { bg = "background", fg = "inserted" }
+"ui.statusline.select" = { bg = "background", fg = "selection" }
+"ui.statusline.inactive" = { bg = "background", fg = "foreground" }
+"ui.popup" = { bg = "background", fg = "foreground" }
+"ui.window" = { bg = "background", fg = "foreground" }
+"ui.selection" = { bg = "selection" }
+"ui.selection.primary" = { bg = "inserted" }
+"ui.cursorline" = { bg = "selection" }
+"ui.text" = { fg = "foreground" }
+"ui.virtual" = { fg = "foreground" }
+"ui.virtual.whitespace" = { fg = "foreground" }
+"ui.virtual.indent-guide" = { fg = "foreground", bg = "background" }
+"ui.virtual.ruler" = { fg = "foreground", bg = "background" }
+"ui.menu" = { fg = "foreground", bg = "background" }
+"ui.help" = { fg = "foreground", bg = "background" }
+
+# Palette
+[palette]
+background = "#263238"
+foreground = "#FF9EB5"
+selection = "#585555ab"
+error = "#ff0000"
+warning = "#FFDBA7"
+info = "#9DDBD6"
+hint = "#89DDFF"
+comment = "#AAAAAA"
+variable = "#ADBEEF"
+constant = "#ABC8CC"
+keyword = "#FEF5D8"
+storage = "#EF96C5"
+tag = "#f07178"
+link = "#82AAFF"
+changed = "#C792EA"
+inserted = "#C3E88D"
+deleted = "#FF5370"
+regexp = "#89DDFF"
+decorator = "#82AAFF"
+symbol = "#C792EA"
+

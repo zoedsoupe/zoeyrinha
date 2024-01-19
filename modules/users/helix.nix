@@ -1,6 +1,7 @@
 {
   pkgs,
   lib,
+  config,
   next-ls,
   lexical-lsp,
   custom-config,
@@ -53,6 +54,13 @@ in {
   };
 
   config = mkIf cfg.enable {
+    home.file.${config.xdg.configHome} = {
+      enable = true;
+      target = "./.config/helix/themes";
+      source = ./helix/themes;
+      recursive = true;
+    };
+
     programs.helix = {
       inherit (cfg) enable;
       settings = {
@@ -192,39 +200,6 @@ in {
             auto-format = true;
           })
         ];
-
-        themes = {
-          edge-neon = let
-            pallete = {
-              foreground = "#c5cdd9";
-              background = "#2b2d3a";
-              black = "#363a4e";
-              red = "#ec7279";
-              green = "#a0c980";
-              yellow = "#deb974";
-              blue = "#6cb6eb";
-              magenta = "#d38aea";
-              cyan = "#5dbbc1";
-              white = "#c5cdd9";
-              light-red = "#ec7279";
-              light-green = "#a0c980";
-              light-yellow = "#deb974";
-              light-blue = "#6cb6eb";
-              light-magenta = "#d38aea";
-              light-cyan = "#5dbbc1";
-            };
-          in
-            with pallete; {
-              string = green;
-              operator = magenta;
-              diff = {
-              };
-              ui = {
-                inherit background;
-                cursor = foreground;
-              };
-            };
-        };
       };
     };
   };
