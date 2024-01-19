@@ -24,6 +24,7 @@
       go.enable = false;
       zig.enable = false;
       nix.enable = true;
+      nim.enable = false;
       typescript.enable = true;
       elixir = let
         inherit (pkgs.beam) packagesWith;

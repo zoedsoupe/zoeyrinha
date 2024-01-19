@@ -23,6 +23,7 @@
       rust.enable = true;
       go.enable = true;
       nix.enable = true;
+      nim.enable = true;
       zig.enable = true;
       typescript.enable = true;
       elixir = let
