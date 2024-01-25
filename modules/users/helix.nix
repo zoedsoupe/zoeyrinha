@@ -130,6 +130,11 @@ in {
               css = {validate = {enable = true;};};
             };
           };
+          vscode-eslint-language-server = mkIf typescript.enable {
+            command = "${vscode-lsp}/bin/vscode-eslint-language-server";
+            args = ["--stdio"];
+            config = {provideFormatter = true;};
+          };
           vscode-html-language-server = mkIf html.enable {
             command = "${vscode-lsp}/bin/vscode-html-language-server";
             args = ["--stdio"];
@@ -194,10 +199,39 @@ in {
             name = "nix";
             auto-format = true;
           })
+          (mkIf go.enable {
+            name = "go";
+            auto-format = true;
+            language-servers = [
+              {
+                name = "gopls";
+                except-features = ["inlay-hints"];
+              }
+            ];
+          })
           (mkIf typescript.enable {
             inherit (ts) formatter;
             name = "typescript";
             auto-format = true;
+            language-servers = [
+              {
+                name = "typescript-language-server";
+                except-features = ["inlay-hints"];
+              }
+              "vscode-eslint-language-server"
+            ];
+          })
+          (mkIf typescript.enable {
+            inherit (ts) formatter;
+            name = "javascript";
+            auto-format = true;
+            language-servers = [
+              {
+                name = "typescript-language-server";
+                except-features = ["inlay-hints"];
+              }
+              "vscode-eslint-language-server"
+            ];
           })
         ];
       };

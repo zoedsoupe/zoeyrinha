@@ -23,8 +23,8 @@ in {
           selection_word_boundary = " \t\n{}[]()\"'`,;:@│┃*…$",
           exit_behavior = "Close",
           window_close_confirmation = "NeverPrompt",
-          font = wezterm.font("Monaspace Neon"),
-          font_size = 16.0,
+          font = wezterm.font("Dank Mono"),
+          font_size = 17.5,
           color_scheme = "OneDark (base16)",
           hide_tab_bar_if_only_one_tab = true
         }
