@@ -35,20 +35,20 @@
       sha256 = "2CCfjbR/0A9Q13ATPukQbejIQHl1KdAzdXyjXgns/8M=";
     };
 
-  melange = theme:
-    theme-source {
-      path = /dist/melange_${theme}.yml;
-      repo = "melange-warp";
-      owner = "zoedsoupe";
-      sha256 = "YzuqgfUA4986ZO+gPk3CjtaIjDhL15+iICcizZr96Hc=";
-    };
+  # melange = theme:
+  #   theme-source {
+  #     path = /dist/melange_${theme}.yml;
+  #     repo = "melange-warp";
+  #     owner = "zoedsoupe";
+  #     sha256 = "I8ZW2//+bgDmmD9xFXZQRPEf2BwkV4TBXTJ4dnY2A3U=";
+  #   };
 
   warp-themes = theme:
     theme-source {
       path = /base16/base16_${theme}.yaml;
       repo = "themes";
       owner = "warpdotdev";
-      sha256 = "YDk3lKSuPPfia9hdxBUPuBg2VJLbp/EdRPRkRsdmXDA=";
+      sha256 = "I8ZW2//+bgDmmD9xFXZQRPEf2BwkV4TBXTJ4dnY2A3U=";
     };
 in {
   options.warp = {
@@ -117,17 +117,17 @@ in {
         text = warp-themes "onedark";
       };
 
-      melange-dark-theme = {
-        enable = true;
-        target = ".warp/themes/melange-dark.yml";
-        text = melange "dark";
-      };
+      # melange-dark-theme = {
+      #   enable = true;
+      #   target = ".warp/themes/melange-dark.yml";
+      #   text = melange "dark";
+      # };
 
-      melange-light-theme = {
-        enable = true;
-        target = ".warp/themes/melange-light.yml";
-        text = melange "light";
-      };
+      # melange-light-theme = {
+      #   enable = true;
+      #   target = ".warp/themes/melange-light.yml";
+      #   text = melange "light";
+      # };
 
       edge-dark-neon-theme = {
         enable = true;
