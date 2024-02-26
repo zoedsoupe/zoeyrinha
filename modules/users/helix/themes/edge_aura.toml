@@ -31,7 +31,6 @@
 "constructor" = "yellow"
 "module" = "red"
 "special" = "orange"
-"string.special.symbol" = "red"
 
 "markup.heading.marker" = "grey"
 "markup.heading.1" = { fg = "purple", modifiers = ["bold"] }

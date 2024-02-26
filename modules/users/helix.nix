@@ -64,7 +64,7 @@ in {
     programs.helix = {
       inherit (cfg) enable;
       settings = {
-        theme = "sonokai";
+        theme = "zed_onedark";
         editor = {
           auto-save = true;
           completion-replace = true;
