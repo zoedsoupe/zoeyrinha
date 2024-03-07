@@ -23,7 +23,7 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     # LSP elixir
-    lexical-lsp.url = "github:lexical-lsp/lexical?rev=083653254bb981cb5d56645da99b19761a1ef888";
+    lexical-lsp.url = "github:lexical-lsp/lexical?ref=HEAD";
     next-ls.url = "github:elixir-tools/next-ls?ref=v0.18.0";
     # Custom Helix package
     helix.url = "github:helix-editor/helix?ref=HEAD";
