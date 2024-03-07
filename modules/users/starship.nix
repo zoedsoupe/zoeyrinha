@@ -28,7 +28,7 @@ in {
             format = "[$all_status$ahead_behind]($style) ";
           };
           nix_shell = {
-            format = "[nix](white)\\([$version]($style)\\) ";
+            format = "[nix](white)\\([$state( \($name\))]($style)\\) ";
             pure_msg = "λ";
             impure_msg = "⎔";
           };
