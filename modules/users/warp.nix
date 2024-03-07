@@ -24,7 +24,7 @@
       path = /dist/catppuccin_${theme}.yml;
       owner = "catppuccin";
       repo = "warp";
-      sha256 = "s2DIO5ZKHL5od3EUyuvAUqSxvQHvDvgepP24z+Sb1As=";
+      sha256 = "Q1N9Vwrv+Ub4jprb/Ys8p8GfNs1sN7Q1fLFHVAeH1e0=";
     };
 
   ayu = theme:
@@ -43,13 +43,13 @@
   #     sha256 = "I8ZW2//+bgDmmD9xFXZQRPEf2BwkV4TBXTJ4dnY2A3U=";
   #   };
 
-  warp-themes = theme:
-    theme-source {
-      path = /base16/base16_${theme}.yaml;
-      repo = "themes";
-      owner = "warpdotdev";
-      sha256 = "I8ZW2//+bgDmmD9xFXZQRPEf2BwkV4TBXTJ4dnY2A3U=";
-    };
+  # warp-themes = theme:
+  #  theme-source {
+  #    path = /base16/base16_${theme}.yaml;
+  #    repo = "themes";
+  #    owner = "warpdotdev";
+  #    sha256 = "I8ZW2//+bgDmmD9xFXZQRPEf2BwkV4TBXTJ4dnY2A3U=";
+  #  };
 in {
   options.warp = {
     enable = mkEnableOption "Enables warp configurations";
@@ -105,17 +105,17 @@ in {
         '';
       };
 
-      papercolor-light-theme = {
-        enable = true;
-        target = ".warp/themes/papercolor-light.yml";
-        text = warp-themes "papercolor_light";
-      };
+      # papercolor-light-theme = {
+      #  enable = true;
+      #  target = ".warp/themes/papercolor-light.yml";
+      #  text = warp-themes "papercolor_light";
+      # };
 
-      onedark-theme = {
-        enable = true;
-        target = ".warp/themes/onedark.yml";
-        text = warp-themes "onedark";
-      };
+      # onedark-theme = {
+      #  enable = true;
+      #  target = ".warp/themes/onedark.yml";
+      #  text = warp-themes "onedark";
+      # };
 
       # melange-dark-theme = {
       #   enable = true;
