@@ -16,7 +16,7 @@
   helix = {
     enable = true;
     languages = {
-      clojure.enable = false;
+      clojure.enable = true;
       html.enable = true;
       css.enable = true;
       json.enable = true;
@@ -27,12 +27,12 @@
       zig.enable = true;
       typescript.enable = true;
       elixir = let
-        inherit (pkgs.beam.packages) erlangR25;
-        package = erlangR25.elixir_1_15;
+        inherit (pkgs.beam.packages) erlangR26;
+        package = erlangR26.elixir_1_16;
       in {
         inherit package;
         enable = true;
-        erlang = erlangR25;
+        erlang = erlangR26;
       };
     };
   };
