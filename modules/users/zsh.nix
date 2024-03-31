@@ -50,7 +50,7 @@ in {
         + /themes/${fileName}.zsh);
     in {
       inherit (cfg) enable sessionVariables dirHashes profileExtra;
-      enableAutosuggestions = true;
+      autosuggestion.enable = true;
       enableCompletion = true;
       syntaxHighlighting.enable = true;
       enableVteIntegration = true;
