@@ -622,18 +622,17 @@
         "systems": "systems_2"
       },
       "locked": {
-        "lastModified": 1709178342,
-        "narHash": "sha256-HWqwJ7PAz80bm6YeDG84hLWPE11n06K98GOyeDQWZWU=",
-        "owner": "lexical-lsp",
-        "repo": "lexical",
-        "rev": "a06bb03f2873f4a2bf41edf4bc7c0e68d1e1bdbb",
-        "type": "github"
+        "lastModified": 1711919563,
+        "narHash": "sha256-u9bfd4RDrqzylUuiL82DuNBcuZXHqXvX8ycRrkXXxsw=",
+        "ref": "refs/heads/main",
+        "rev": "e3268cdb66feb268051c40223932d2e1f4b664d4",
+        "revCount": 528,
+        "type": "git",
+        "url": "file:///Users/zoedsoupe/dev/personal/lexical"
       },
       "original": {
-        "owner": "lexical-lsp",
-        "ref": "v0.5.2",
-        "repo": "lexical",
-        "type": "github"
+        "type": "git",
+        "url": "file:///Users/zoedsoupe/dev/personal/lexical"
       }
     },
     "limelight-vim": {
