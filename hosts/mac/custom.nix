@@ -13,19 +13,31 @@
   wezterm.enable = true;
   zellij.enable = true;
   zoxide.enable = true;
+  zed = {
+    enable = true;
+    elixir = let
+      inherit (pkgs.beam) packagesWith;
+      inherit (pkgs.beam.interpreters) erlangR26;
+      erlang = packagesWith erlangR26;
+      package = erlang.elixir_1_16;
+    in {
+      inherit package erlang;
+      lsp = "next_ls";
+    };
+  };
   helix = {
     enable = true;
     languages = {
-      clojure.enable = true;
+      clojure.enable = false;
       html.enable = true;
       css.enable = true;
       json.enable = true;
-      rust.enable = true;
+      rust.enable = false;
       go.enable = true;
       nix.enable = true;
       nim.enable = true;
-      zig.enable = true;
-      typescript.enable = true;
+      zig.enable = false;
+      typescript.enable = false;
       elixir = let
         inherit (pkgs.beam.packages) erlangR26;
         package = erlangR26.elixir_1_16;

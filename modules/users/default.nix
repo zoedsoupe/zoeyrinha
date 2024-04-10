@@ -16,5 +16,6 @@
     ./zellij.nix
     ./zoxide.nix
     ./zsh.nix
+    ./zed.nix
   ];
 }
