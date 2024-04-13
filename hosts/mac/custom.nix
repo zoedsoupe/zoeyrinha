@@ -40,7 +40,7 @@
       typescript.enable = false;
       elixir = let
         inherit (pkgs.beam.packages) erlangR26;
-        package = erlangR26.elixir_1_16;
+        package = erlangR26.elixir_1_15;
       in {
         inherit package;
         enable = true;
@@ -55,7 +55,7 @@
       email = "zoey.spessanha@zeetech.io";
     };
     signing = {
-      key = "E9C743148106E2C3";
+      key = null;
       signByDefault = true;
       gpgPath = "${pkgs.gnupg}/bin/gpg";
     };
