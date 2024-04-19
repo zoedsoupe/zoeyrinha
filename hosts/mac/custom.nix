@@ -38,14 +38,7 @@
       nim.enable = true;
       zig.enable = false;
       typescript.enable = false;
-      elixir = let
-        inherit (pkgs.beam.packages) erlangR26;
-        package = erlangR26.elixir_1_15;
-      in {
-        inherit package;
-        enable = true;
-        erlang = erlangR26;
-      };
+      elixir.enable = true;
     };
   };
   git = {

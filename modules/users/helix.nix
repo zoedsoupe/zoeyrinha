@@ -7,7 +7,7 @@
   custom-config,
   ...
 }: let
-  inherit (lib) mkEnableOption mkIf mkOption types mkDefault;
+  inherit (lib) mkEnableOption mkIf;
   cfg = custom-config.helix;
   elixir = cfg.languages.elixir;
   rust = cfg.languages.rust;
@@ -21,25 +21,18 @@
   nim = cfg.languages.nim;
   typescript = cfg.languages.typescript;
   vscode-lsp = pkgs.nodePackages.vscode-langservers-extracted;
-  inherit (pkgs.beam.packages) erlangR25;
-  inherit (pkgs.beam.interpreters.erlang_25) elixir_1_15;
+
+  inherit (pkgs.beam) packagesWith;
+  inherit (pkgs.beam.interpreters) erlangR26;
+  beam = packagesWith erlangR26;
+
+  inherit (lexical-lsp.lib) mkLexical;
+  lexical = mkLexical {erlang = beam;};
 in {
   options.helix = {
     enable = mkEnableOption "Enbales Helix Editor";
     languages = {
-      elixir = {
-        enable = mkEnableOption "Enables Elixir Support";
-        erlang = mkOption {
-          default = mkDefault erlangR25;
-          type = types.package;
-          description = "The Erlang pkg used to build both next-ls and lexical-lsp";
-        };
-        package = mkOption {
-          default = mkDefault elixir_1_15;
-          type = types.package;
-          description = "The Elixir pkg used to build both next-ls and lexical-lsp";
-        };
-      };
+      elixir.enable = mkEnableOption "Enables Elixir Support";
       nim.enable = mkEnableOption "Enables Nim support";
       nix.enable = mkEnableOption "Enables Nix Support";
       rust.enable = mkEnableOption "Enables Rust Support";
@@ -110,13 +103,8 @@ in {
               args = ["--stdio"];
             };
           nil.command = mkIf nix.enable "${pkgs.nil}/bin/nil";
-          lexical-lsp.command = let
-            inherit (lexical-lsp.lib) mkLexical;
-            erlang = elixir.erlang.extend (_: _: {elixir = elixir.package;});
-            lexical = mkLexical {inherit erlang;};
-          in
-            mkIf (elixir.enable) "${lexical}/bin/lexical";
-          # elixir-ls.command = mkIf elixir.enable "${beam.elixir-ls}/bin/elixir-ls";
+          lexical-lsp.command = mkIf (elixir.enable) "${lexical}/bin/lexical";
+          elixir-ls.command = mkIf elixir.enable "${beam.elixir-ls}/bin/elixir-ls";
           zls.command = mkIf zig.enable "${pkgs.zls}/bin/zls";
           nimlsp.command = mkIf nim.enable "${pkgs.nimlsp}/bin/nimlsp";
           clojure-lsp.command = mkIf clojure.enable "${pkgs.clojure-lsp}/bin/clojure-lsp";
@@ -181,8 +169,9 @@ in {
           (mkIf elixir.enable {
             inherit (mix) formatter;
             name = "elixir";
-            auto-format = true;
+            auto-format = false;
             language-servers = ["lexical-lsp" "nextls"];
+            # language-servers = ["elixir-ls"];
           })
           (mkIf elixir.enable {
             inherit (mix) formatter;

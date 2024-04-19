@@ -1,6 +1,4 @@
-{pkgs, ...}: let
-  elixir_1_15 = pkgs.beam.packages.erlang_26.elixir_1_15;
-in {
+{pkgs, ...}: {
   home.stateVersion = "22.11";
   home.homeDirectory = "/Users/zoeycumbuca";
 
