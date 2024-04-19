@@ -38,15 +38,7 @@
       nix.enable = true;
       nim.enable = false;
       typescript.enable = false;
-      elixir = let
-        inherit (pkgs.beam) packagesWith;
-        inherit (pkgs.beam.interpreters) erlangR26;
-        erlang = packagesWith erlangR26;
-        package = erlang.elixir_1_16;
-      in {
-        inherit package erlang;
-        enable = true;
-      };
+      elixir.enable = true;
     };
   };
   git = {

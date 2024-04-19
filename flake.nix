@@ -2,7 +2,7 @@
   description = "Zoey's personal config, aka dotfiles";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
+    nixpkgs.url = "flake:nixpkgs/nixos-23.11";
 
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
@@ -26,7 +26,7 @@
     lexical-lsp.url = "git+file:///Users/zoedsoupe/dev/personal/lexical";
     next-ls.url = "github:elixir-tools/next-ls?ref=v0.20.2";
     # Custom Helix package
-    helix.url = "github:helix-editor/helix?ref=HEAD";
+    helix.url = "github:helix-editor/helix?ref=24.03";
 
     presenterm.url = "github:mfontanini/presenterm?ref=HEAD";
   };
