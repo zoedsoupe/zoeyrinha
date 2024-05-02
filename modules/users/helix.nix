@@ -110,6 +110,10 @@ in {
           clojure-lsp.command = mkIf clojure.enable "${pkgs.clojure-lsp}/bin/clojure-lsp";
           rust-analyzer.command = mkIf rust.enable "${pkgs.rust-analyzer}/bin/rust-analyzer";
           gopls.command = mkIf go.enable "${pkgs.gopls}/bin/gopls";
+          tailwindcss-intellisense = mkIf css.enable {
+            command = "${pkgs.tailwindcss-language-server}/bin/tailwindcss-language-server";
+            args = ["--stdio"];
+          };
           vscode-css-language-server = mkIf css.enable {
             command = "${vscode-lsp}/bin/vscode-css-language-server";
             args = ["--stdio"];
@@ -117,11 +121,6 @@ in {
               provideFormatter = true;
               css = {validate = {enable = true;};};
             };
-          };
-          vscode-eslint-language-server = mkIf typescript.enable {
-            command = "${vscode-lsp}/bin/vscode-eslint-language-server";
-            args = ["--stdio"];
-            config = {provideFormatter = true;};
           };
           vscode-html-language-server = mkIf html.enable {
             command = "${vscode-lsp}/bin/vscode-html-language-server";
@@ -161,6 +160,16 @@ in {
             };
           };
         in [
+          (mkIf css.enable {
+            name = "css";
+            auto-format = true;
+            language-servers = ["tailwindcss-intellisense" "vscode-css-language-server"];
+          })
+          (mkIf css.enable {
+            name = "scss";
+            auto-format = true;
+            language-servers = ["tailwindcss-intellisense" "vscode-css-language-server"];
+          })
           (mkIf nim.enable {
             name = "nim";
             auto-format = true;
@@ -176,12 +185,12 @@ in {
           (mkIf elixir.enable {
             inherit (mix) formatter;
             name = "heex";
-            auto-format = true;
+            auto-format = false;
           })
           (mkIf elixir.enable {
             inherit (mix) formatter;
             name = "eex";
-            auto-format = true;
+            auto-format = false;
           })
           (mkIf nix.enable {
             inherit (n) formatter;
