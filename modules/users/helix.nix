@@ -179,7 +179,7 @@ in {
             inherit (mix) formatter;
             name = "elixir";
             auto-format = false;
-            language-servers = ["lexical-lsp" "nextls"];
+            language-servers = ["nextls" "lexical-lsp"];
             # language-servers = ["elixir-ls"];
           })
           (mkIf elixir.enable {
