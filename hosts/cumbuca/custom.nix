@@ -57,6 +57,7 @@
     enable = true;
     profileExtra = ''
       eval "$(/opt/homebrew/bin/brew shellenv)"
+      ${pkgs.pokemon-colorscripts-mac}/bin/pokemon-colorscripts -r
     '';
     history = {
       ignorePatterns = ["git commit -m *" "git clone *" "mix test --only *" "mkdir *"];

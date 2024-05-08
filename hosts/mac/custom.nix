@@ -32,7 +32,7 @@
       html.enable = true;
       css.enable = true;
       json.enable = true;
-      rust.enable = false;
+      rust.enable = true;
       go.enable = true;
       nix.enable = true;
       nim.enable = true;
@@ -57,6 +57,7 @@
     enable = true;
     profileExtra = ''
       eval "$(/opt/homebrew/bin/brew shellenv)"
+      ${pkgs.pokemon-colorscripts-mac}/bin/pokemon-colorscripts -r
     '';
     history = {
       ignorePatterns = ["git commit -m *" "git clone *" "mix test --only *" "mkdir *"];
