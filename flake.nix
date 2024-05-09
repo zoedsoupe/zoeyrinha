@@ -24,7 +24,7 @@
 
     # LSP elixir
     lexical-lsp.url = "git+file:///Users/zoedsoupe/dev/personal/lexical";
-    next-ls.url = "github:elixir-tools/next-ls?ref=v0.20.2";
+    next-ls.url = "github:elixir-tools/next-ls?ref=v0.21.3";
     # Custom Helix package
     helix.url = "github:helix-editor/helix?ref=24.03";
 

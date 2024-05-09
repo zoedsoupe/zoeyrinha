@@ -862,16 +862,16 @@
         "nixpkgs": "nixpkgs_7"
       },
       "locked": {
-        "lastModified": 1711567155,
-        "narHash": "sha256-i/xjDLqPiPhW5dvUwtaWmT+otQ2CysMuye6b8Oor6fg=",
+        "lastModified": 1715261447,
+        "narHash": "sha256-1Sh4yOjtenh1dx/J0pXgVqEO98g/HRbRtAupDWuPnfA=",
         "owner": "elixir-tools",
         "repo": "next-ls",
-        "rev": "1ae8eaded94146b27a47789e28493974784cb74d",
+        "rev": "45bce001dfd862b19dd529d2291d819103259c2f",
         "type": "github"
       },
       "original": {
         "owner": "elixir-tools",
-        "ref": "v0.20.2",
+        "ref": "v0.21.3",
         "repo": "next-ls",
         "type": "github"
       }
