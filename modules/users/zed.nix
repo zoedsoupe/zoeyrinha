@@ -3,6 +3,7 @@
   lib,
   custom-config,
   lexical-lsp,
+  next-ls,
   ...
 }: let
   inherit (lib) mkEnableOption mkIf mkOption types mkDefault;
@@ -16,6 +17,8 @@
   erlang = elixir.erlang.extend (_: _: {elixir = elixir.package;});
   lexical = mkLexical {inherit erlang;};
 
+  next = next-ls.packages."${pkgs.system}".default;
+
   config_dir = ".config/zed/settings.json";
 
   settings = {
@@ -23,7 +26,10 @@
     vim_mode = true;
     autosave = "on_focus_change";
     soft_wrap = "editor_width";
-    elixir = {inherit (cfg.elixir) lsp;};
+    tab_bar = {show = false;};
+    copilot = {
+      disabled_globs = [".env"];
+    };
     file_types = {
       CSS = ["scss" "css"];
     };
@@ -41,15 +47,33 @@
       calt = true;
       dlig = true;
     };
+    preview_tabs = {
+      enabled = true;
+      enable_preview_from_file_finder = true;
+      enable_preview_from_code_navigation = true;
+    };
+    languages = {
+      Elixir = {
+        language_servers = ["lexical" "next-ls" "!elixir-ls"];
+      };
+      format_on_save = {
+        external = {
+          command = "${elixir.package}/bin/mix";
+          arguments = ["format" "--stdin-filename" "{buffer_path}" "-"];
+        };
+      };
+    };
     lsp = {
-      local = mkIf (cfg.elixir.lsp == "lexical") {
+      lexical = {
         path = "${lexical}/bin/lexical";
         arguments = [];
       };
-      next-ls = mkIf (cfg.elixir.lsp == "next_ls") {
+      next-ls = {
+        path = "${next}/bin/nextls";
+        arguments = ["--stdio"];
         initialization_options = {
           extensions = {
-            credo.enable = true;
+            credo.enable = false;
           };
           experimental = {
             completions.enable = true;
