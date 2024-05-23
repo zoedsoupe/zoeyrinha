@@ -15,6 +15,7 @@ in {
       enableZshIntegration = true;
       settings =
         {
+          add_newline = true;
           directory = {
             format = "[$path]($style)[$read_only]($read_only_style) ";
           };
