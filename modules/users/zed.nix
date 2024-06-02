@@ -56,6 +56,9 @@
       Elixir = {
         language_servers = ["lexical" "next-ls" "!elixir-ls"];
       };
+      HEEX = {
+        language_servers = ["lexical" "next-ls" "!elixir-ls"];
+      };
       format_on_save = {
         external = {
           command = "${elixir.package}/bin/mix";
