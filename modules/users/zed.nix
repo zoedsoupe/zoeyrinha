@@ -19,19 +19,24 @@
 
   next = next-ls.packages."${pkgs.system}".default;
 
-  config_dir = ".config/zed/settings.json";
-
   settings = {
     theme = "One Dark";
     vim_mode = true;
     autosave = "on_focus_change";
     soft_wrap = "editor_width";
     tab_bar = {show = false;};
+    vertical_scroll_margin = 10;
+    scrollbar = {show = "never";};
     copilot = {
       disabled_globs = [".env"];
     };
     file_types = {
       CSS = ["scss" "css"];
+    };
+    vim = {
+      use_system_clipboard = "never";
+      use_multiline_find = true;
+      use_smartcase_find = true;
     };
     buffer_font_size = 17;
     buffer_font_family = "Dank Mono";
@@ -112,8 +117,16 @@ in {
     home.file = {
       settings = {
         enable = true;
-        target = config_dir;
+        target = ".config/zed/settings.json";
         text = builtins.toJSON settings;
+      };
+    };
+
+    home.file = {
+      keymap = {
+        enable = true;
+        target = ".config/zed/keymap.json";
+        text = builtins.toJSON (builtins.readFile ./zed/keymap.json);
       };
     };
   };

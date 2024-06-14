@@ -21,10 +21,10 @@
 
   catppuccin = theme:
     theme-source {
-      path = /dist/catppuccin_${theme}.yml;
+      path = /themes/catppuccin_${theme}.yml;
       owner = "catppuccin";
       repo = "warp";
-      sha256 = "Q1N9Vwrv+Ub4jprb/Ys8p8GfNs1sN7Q1fLFHVAeH1e0=";
+      sha256 = "ym5hwEBtLlFe+DqMrXR3E4L2wghew2mf9IY/1aynvAI=";
     };
 
   ayu = theme:
@@ -34,7 +34,6 @@
       repo = "ayu-warp";
       sha256 = "2CCfjbR/0A9Q13ATPukQbejIQHl1KdAzdXyjXgns/8M=";
     };
-
   # melange = theme:
   #   theme-source {
   #     path = /dist/melange_${theme}.yml;
@@ -42,7 +41,6 @@
   #     owner = "zoedsoupe";
   #     sha256 = "I8ZW2//+bgDmmD9xFXZQRPEf2BwkV4TBXTJ4dnY2A3U=";
   #   };
-
   # warp-themes = theme:
   #  theme-source {
   #    path = /base16/base16_${theme}.yaml;

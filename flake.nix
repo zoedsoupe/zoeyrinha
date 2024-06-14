@@ -2,7 +2,7 @@
   description = "Zoey's personal config, aka dotfiles";
 
   inputs = {
-    nixpkgs.url = "flake:nixpkgs/nixos-23.11";
+    nixpkgs.url = "flake:nixpkgs/nixos-24.05";
 
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
@@ -19,12 +19,12 @@
     mnvim.url = "github:zoedsoupe/mnvim";
 
     # need to solve this about fcitx-engines
-    home-manager.url = "github:nix-community/home-manager";
+    home-manager.url = "github:nix-community/home-manager?ref=release-24.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     # LSP elixir
     lexical-lsp.url = "git+file:///Users/zoedsoupe/dev/personal/lexical";
-    next-ls.url = "github:elixir-tools/next-ls?ref=v0.21.3";
+    next-ls.url = "github:elixir-tools/next-ls?ref=v0.23.0";
     # Custom Helix package
     helix.url = "github:helix-editor/helix?ref=24.03";
 
