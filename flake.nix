@@ -23,10 +23,9 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     # LSP elixir
-    lexical-lsp.url = "git+file:///Users/zoedsoupe/dev/personal/lexical";
-    next-ls.url = "github:elixir-tools/next-ls?ref=v0.23.0";
+    next-ls.url = "github:elixir-tools/next-ls?ref=v0.23.1";
     # Custom Helix package
-    helix.url = "github:helix-editor/helix?ref=24.03";
+    helix.url = "github:helix-editor/helix?ref=HEAD";
 
     presenterm.url = "github:mfontanini/presenterm?ref=HEAD";
   };
@@ -67,7 +66,7 @@
 
             home-manager.users = let
               args = host: {
-                inherit (inputs) lexical-lsp next-ls helix presenterm;
+                inherit (inputs) next-ls helix presenterm;
                 inherit (host) custom-config;
               };
             in {

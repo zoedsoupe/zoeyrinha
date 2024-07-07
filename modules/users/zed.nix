@@ -2,7 +2,6 @@
   pkgs,
   lib,
   custom-config,
-  lexical-lsp,
   next-ls,
   ...
 }: let
@@ -12,10 +11,6 @@
 
   inherit (pkgs.beam.interpreters) erlangR26;
   inherit (pkgs.beam.interpreters.erlang_26) elixir_1_16;
-
-  inherit (lexical-lsp.lib) mkLexical;
-  erlang = elixir.erlang.extend (_: _: {elixir = elixir.package;});
-  lexical = mkLexical {inherit erlang;};
 
   next = next-ls.packages."${pkgs.system}".default;
 
@@ -73,7 +68,7 @@
     };
     lsp = {
       lexical = {
-        path = "${lexical}/bin/lexical";
+        path = "${pkgs.lexical}/bin/lexical";
         arguments = [];
       };
       next-ls = {
