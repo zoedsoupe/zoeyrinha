@@ -8,8 +8,6 @@
 
   services.nix-daemon.enable = true;
 
-  fonts.fontDir.enable = true;
-
   system.keyboard.enableKeyMapping = true;
   system.keyboard.remapCapsLockToEscape = true;
 

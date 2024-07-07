@@ -1,6 +1,8 @@
-{pkgs, ...}: let
-  neovim = pkgs.callPackage ./neovim.nix {inherit (pkgs) mkNeovim;};
-in {
+{pkgs, ...}:
+# let
+#   neovim = pkgs.callPackage ./neovim.nix {inherit (pkgs) mkNeovim;};
+# in
+{
   home.stateVersion = "22.11";
   home.homeDirectory = "/Users/zoedsoupe";
 
@@ -11,7 +13,7 @@ in {
 
   home.packages = with pkgs; [
     pinentry_mac
-    neovim # my custom config neovim
+    # neovim # my custom config neovim
 
     gnupg
     gitAndTools.gh

@@ -3,7 +3,6 @@
   lib,
   config,
   next-ls,
-  lexical-lsp,
   custom-config,
   ...
 }: let
@@ -25,9 +24,6 @@
   inherit (pkgs.beam) packagesWith;
   inherit (pkgs.beam.interpreters) erlangR26;
   beam = packagesWith erlangR26;
-
-  inherit (lexical-lsp.lib) mkLexical;
-  lexical = mkLexical {erlang = beam;};
 in {
   options.helix = {
     enable = mkEnableOption "Enbales Helix Editor";
@@ -103,7 +99,7 @@ in {
               args = ["--stdio"];
             };
           nil.command = mkIf nix.enable "${pkgs.nil}/bin/nil";
-          lexical-lsp.command = mkIf (elixir.enable) "${lexical}/bin/lexical";
+          lexical-lsp.command = mkIf (elixir.enable) "${pkgs.lexical}/bin/lexical";
           elixir-ls.command = mkIf elixir.enable "${beam.elixir-ls}/bin/elixir-ls";
           zls.command = mkIf zig.enable "${pkgs.zls}/bin/zls";
           nimlsp.command = mkIf nim.enable "${pkgs.nimlsp}/bin/nimlsp";
