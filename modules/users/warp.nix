@@ -24,7 +24,7 @@
       path = /themes/catppuccin_${theme}.yml;
       owner = "catppuccin";
       repo = "warp";
-      sha256 = "ym5hwEBtLlFe+DqMrXR3E4L2wghew2mf9IY/1aynvAI=";
+      sha256 = "pUmO0po/fSPXIcKstWocCSX+Yg5l+H9JsEva+pCLNhI=";
     };
 
   ayu = theme:

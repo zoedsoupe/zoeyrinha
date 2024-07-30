@@ -45,7 +45,7 @@ in {
           owner = "catppuccin";
           repo = "zsh-syntax-highlighting";
           rev = "HEAD";
-          sha256 = "Q7KmwUd9fblprL55W0Sf4g7lRcemnhjh4/v+TacJSfo=";
+          sha256 = "l6tztApzYpQ2/CiKuLBf8vI2imM6vPJuFdNDSEi7T/o=";
         }
         + /themes/${fileName}.zsh);
     in {

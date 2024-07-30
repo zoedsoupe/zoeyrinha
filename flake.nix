@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "flake:nixpkgs/nixos-24.05";
+    unstable.url = "flake:nixpkgs/nixos-unstable";
 
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
@@ -11,7 +12,7 @@
 
     darwin = {
       url = "github:lnl7/nix-darwin/master";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "unstable";
     };
 
     # My custom NeoVim config
@@ -23,7 +24,7 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     # LSP elixir
-    next-ls.url = "github:elixir-tools/next-ls?ref=v0.23.1";
+    next-ls.url = "github:elixir-tools/next-ls?ref=HEAD";
     # Custom Helix package
     helix.url = "github:helix-editor/helix?ref=HEAD";
 
