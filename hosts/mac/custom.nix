@@ -10,8 +10,8 @@
   starship.enable = true;
   xplr.enable = true;
   warp.enable = true;
-  wezterm.enable = true;
-  zellij.enable = true;
+  wezterm.enable = false;
+  zellij.enable = false;
   zoxide.enable = true;
   zed = {
     enable = true;
@@ -35,7 +35,7 @@
       rust.enable = true;
       go.enable = true;
       nix.enable = true;
-      nim.enable = true;
+      nim.enable = false;
       zig.enable = false;
       typescript.enable = false;
       elixir.enable = true;
@@ -48,7 +48,7 @@
       email = "zoey.spessanha@zeetech.io";
     };
     signing = {
-      key = null;
+      key = "0A26DE75F59B488C74D4FA408536E6F53A918170";
       signByDefault = true;
       gpgPath = "${pkgs.gnupg}/bin/gpg";
     };

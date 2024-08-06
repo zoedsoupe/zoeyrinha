@@ -49,6 +49,30 @@ in {
       signing = {
         inherit (cfg.signing) key gpgPath signByDefault;
       };
+      includes = [
+        {
+          condition = "gitdir:~/dev/swap";
+          contents = {
+            user = {
+              email = "zoey.pessanha@ext-swap.com";
+              name = "Zoey de Souza Pessanha";
+              signingKey = "F010A1F9D37C559BC00338778A38771FD08EA837";
+            };
+            commit = {gpgSign = true;};
+          };
+        }
+        {
+          condition = "gitdir:~/dev/cumbuca";
+          contents = {
+            user = {
+              email = "zoey.pessanha@cumbuca.com";
+              name = "Zoey de Souza Pessanha";
+              signingKey = "9CDC21C08CE3898288D0B87042F311094881F961";
+            };
+            commit = {gpgSign = true;};
+          };
+        }
+      ];
       aliases = {
         p = "push";
         s = "status";
