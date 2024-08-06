@@ -53,7 +53,7 @@ in {
     programs.helix = {
       inherit (cfg) enable;
       settings = {
-        theme = "zed_onedark";
+        theme = "melange-dark";
         editor = {
           auto-save = true;
           completion-replace = true;

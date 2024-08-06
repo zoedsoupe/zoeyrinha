@@ -55,7 +55,7 @@
         inherit pkgs;
         modules = let
           zoedsoupe.custom-config = import ./hosts/mac/custom.nix {inherit pkgs;};
-          zoeycumbuca.custom-config = import ./hosts/cumbuca/custom.nix {inherit pkgs;};
+          # zoeycumbuca.custom-config = import ./hosts/cumbuca/custom.nix {inherit pkgs;};
         in [
           ./hosts/mac/configuration.nix
 
@@ -71,10 +71,11 @@
                 inherit (host) custom-config;
               };
             in {
-              zoeycumbuca = {
-                _module.args = args zoeycumbuca;
-                imports = [./hosts/cumbuca/home.nix];
-              };
+              # using single user
+              # zoeycumbuca = {
+              #   _module.args = args zoeycumbuca;
+              #   imports = [./hosts/cumbuca/home.nix];
+              # };
 
               zoedsoupe = {
                 _module.args = args zoedsoupe;

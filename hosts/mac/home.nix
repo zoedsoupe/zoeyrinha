@@ -19,13 +19,23 @@
     gitAndTools.gh
     ngrok
     tmate
-    presenterm
 
     # tools
     bat
     eza # exa fork
     fd
     silver-searcher
+    exercism
+    awscli2
+    pass
+    supabase-cli
+    jq
+    glow
+    flyctl
+    earthly
+    croc
+    ngrok
+    tree
 
     # others
     any-nix-shell
