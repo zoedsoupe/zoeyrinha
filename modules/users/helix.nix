@@ -20,10 +20,6 @@
   nim = cfg.languages.nim;
   typescript = cfg.languages.typescript;
   vscode-lsp = pkgs.nodePackages.vscode-langservers-extracted;
-
-  inherit (pkgs.beam) packagesWith;
-  inherit (pkgs.beam.interpreters) erlangR26;
-  beam = packagesWith erlangR26;
 in {
   options.helix = {
     enable = mkEnableOption "Enbales Helix Editor";
@@ -100,7 +96,6 @@ in {
             };
           nil.command = mkIf nix.enable "${pkgs.nil}/bin/nil";
           lexical-lsp.command = mkIf (elixir.enable) "${pkgs.lexical}/bin/lexical";
-          elixir-ls.command = mkIf elixir.enable "${beam.elixir-ls}/bin/elixir-ls";
           zls.command = mkIf zig.enable "${pkgs.zls}/bin/zls";
           nimlsp.command = mkIf nim.enable "${pkgs.nimlsp}/bin/nimlsp";
           clojure-lsp.command = mkIf clojure.enable "${pkgs.clojure-lsp}/bin/clojure-lsp";
@@ -176,7 +171,6 @@ in {
             name = "elixir";
             auto-format = false;
             language-servers = ["nextls" "lexical-lsp"];
-            # language-servers = ["elixir-ls"];
           })
           (mkIf elixir.enable {
             inherit (mix) formatter;

@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  unstable,
+  ...
+}: {
   alacritty.enable = false;
   bat.enable = true;
   direnv.enable = true;
@@ -16,13 +20,13 @@
   zed = {
     enable = true;
     elixir = let
-      inherit (pkgs.beam) packagesWith;
-      inherit (pkgs.beam.interpreters) erlangR26;
-      erlang = packagesWith erlangR26;
-      package = erlang.elixir_1_16;
+      inherit (unstable.beam) packagesWith;
+      inherit (unstable.beam.interpreters) erlang_27;
+      erlang = packagesWith erlang_27;
+      package = erlang.elixir_1_17;
     in {
       inherit package erlang;
-      lsp = "next_ls";
+      lsp = "lexical";
     };
   };
   helix = {
