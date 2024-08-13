@@ -3,6 +3,7 @@
 
   inputs = {
     nixpkgs.url = "flake:nixpkgs/nixos-24.05";
+    nixpkgs-22.url = "flake:nixpkgs/nixos-22.05";
     unstable.url = "flake:nixpkgs/nixos-unstable";
 
     rust-overlay = {
@@ -50,11 +51,25 @@
         ];
         config.allowUnfree = true;
       };
+
+      unstable = import inputs.unstable {
+        system = "aarch64-darwin";
+        overlays = [inputs.helix.overlays.default];
+        config.allowUnfree = true;
+      };
+
+      pkgs-22 = import inputs.nixpkgs-22 {
+        system = "aarch64-darwin";
+        overlays = [inputs.helix.overlays.default];
+        config.allowUnfree = true;
+      };
     in {
       zoedsoupe = darwinSystem rec {
         inherit pkgs;
         modules = let
-          zoedsoupe.custom-config = import ./hosts/mac/custom.nix {inherit pkgs;};
+          zoedsoupe.custom-config = import ./hosts/mac/custom.nix {
+            inherit pkgs unstable;
+          };
           # zoeycumbuca.custom-config = import ./hosts/cumbuca/custom.nix {inherit pkgs;};
         in [
           ./hosts/mac/configuration.nix
@@ -67,6 +82,7 @@
 
             home-manager.users = let
               args = host: {
+                inherit pkgs-22 unstable;
                 inherit (inputs) next-ls helix presenterm;
                 inherit (host) custom-config;
               };
