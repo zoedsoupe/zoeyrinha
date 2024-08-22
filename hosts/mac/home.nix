@@ -48,6 +48,7 @@
     croc
     ngrok
     tree
+    git-filter-repo
 
     # others
     any-nix-shell
