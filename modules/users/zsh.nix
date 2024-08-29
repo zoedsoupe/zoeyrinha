@@ -18,10 +18,6 @@ in {
       type = types.str;
       default = "";
     };
-    dirHashes = mkOption {
-      description = "Set up alias for common paths";
-      type = types.nullOr types.attr;
-    };
     theme = {
       enable = mkEnableOption "Enables custom theme syntax highlighting";
       name = mkOption {
@@ -49,7 +45,7 @@ in {
         }
         + /themes/${fileName}.zsh);
     in {
-      inherit (cfg) enable sessionVariables dirHashes profileExtra;
+      inherit (cfg) enable sessionVariables profileExtra;
       autosuggestion.enable = true;
       enableCompletion = true;
       syntaxHighlighting.enable = true;

@@ -60,6 +60,7 @@
   zsh = {
     enable = true;
     profileExtra = ''
+      echo -e "\n. $(brew --prefix asdf)/libexec/asdf.sh" >> $${ZDOTDIR:-~}/.zshrc
       eval "$(/opt/homebrew/bin/brew shellenv)"
       ${pkgs.pokemon-colorscripts-mac}/bin/pokemon-colorscripts -r
     '';
@@ -77,11 +78,6 @@
       GITHUB_TOKEN = "";
       PATH = "$PATH:$HOME/.nix-profile/bin:/etc/profiles/per-user/zoedsoupe/bin:/run/current-system/sw/bin";
       EDITOR = "${pkgs.helix}/bin/hx";
-    };
-    dirHashes = {
-      zoeyrinha = "$HOME/dev/personal/zoeyrinha";
-      lvim = "$HOME/dev/personal/lvim";
-      pescarte = "$HOME/dev/pescarte/pescarte-plataforma";
     };
   };
 }
