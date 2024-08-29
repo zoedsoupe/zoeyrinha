@@ -1,9 +1,4 @@
-{
-  pkgs,
-  unstable,
-  pkgs-22,
-  ...
-}:
+{pkgs, ...}:
 # let
 #   neovim = pkgs.callPackage ./neovim.nix {inherit (pkgs) mkNeovim;};
 # in
@@ -17,13 +12,6 @@
   };
 
   home.packages = with pkgs; [
-    # languages
-    unstable.elixir_1_17
-    pkgs-22.nodejs-18_x
-
-    # package managers
-    yarn
-
     pinentry_mac
     # neovim # my custom config neovim
 
@@ -39,6 +27,7 @@
     silver-searcher
     exercism
     awscli2
+    awsebcli
     pass
     supabase-cli
     jq

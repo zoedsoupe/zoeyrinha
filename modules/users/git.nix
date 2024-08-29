@@ -43,7 +43,7 @@ in {
       inherit (cfg) enable;
       userName = cfg.user.name;
       userEmail = cfg.user.email;
-      ignores = ["*.swp" "*.swo" ".nix-*" ".postgres" ".direnv"];
+      ignores = ["*.swp" "*.swo" ".nix-*" ".postgres" ".direnv" ".lexical" ".elixir-tools"];
       lfs.enable = true;
       delta.enable = true;
       signing = {
