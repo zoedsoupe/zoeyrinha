@@ -45,7 +45,7 @@ in {
       userEmail = cfg.user.email;
       ignores = ["*.swp" "*.swo" ".nix-*" ".postgres" ".direnv" ".lexical" ".elixir-tools"];
       lfs.enable = true;
-      delta.enable = true;
+      difftastic.enable = true;
       signing = {
         inherit (cfg.signing) key gpgPath signByDefault;
       };

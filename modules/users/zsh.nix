@@ -1,5 +1,4 @@
 {
-  pkgs,
   lib,
   custom-config,
   ...
@@ -34,26 +33,24 @@ in {
   };
 
   config = mkIf cfg.enable {
-    programs.zsh = let
-      fileName = "catppuccin_${cfg.theme.flavour}-zsh-syntax-highlighting";
-      catppuccinThemePath = builtins.readFile (pkgs.fetchFromGitHub
-        {
-          owner = "catppuccin";
-          repo = "zsh-syntax-highlighting";
-          rev = "HEAD";
-          sha256 = "l6tztApzYpQ2/CiKuLBf8vI2imM6vPJuFdNDSEi7T/o=";
-        }
-        + /themes/${fileName}.zsh);
-    in {
+    programs.zsh = {
       inherit (cfg) enable sessionVariables profileExtra;
       autosuggestion.enable = true;
       enableCompletion = true;
       syntaxHighlighting.enable = true;
       enableVteIntegration = true;
       autocd = true;
-      initExtraFirst = catppuccinThemePath;
+      oh-my-zsh = {
+        enable = true;
+        plugins = ["asdf"];
+      };
+      antidote = {
+        enable = true;
+        plugins = [
+          "catppuccin/zsh-syntax-highlighting path:themes/catppuccin_macchiato-zsh-syntax-highlighting.zsh"
+        ];
+      };
       history = {
-        ignorePatterns = ["rm -rf *" "cd *" "mix *" "iex *" "mkdir *" "git *" "nix *" "docker *"];
         expireDuplicatesFirst = true;
         extended = true;
         ignoreAllDups = true;
