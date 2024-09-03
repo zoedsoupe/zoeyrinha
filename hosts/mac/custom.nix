@@ -60,7 +60,6 @@
   zsh = {
     enable = true;
     profileExtra = ''
-      echo -e "\n. $(brew --prefix asdf)/libexec/asdf.sh" >> $${ZDOTDIR:-~}/.zshrc
       eval "$(/opt/homebrew/bin/brew shellenv)"
       ${pkgs.pokemon-colorscripts-mac}/bin/pokemon-colorscripts -r
     '';
