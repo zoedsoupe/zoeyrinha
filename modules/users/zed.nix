@@ -68,12 +68,15 @@
     };
     lsp = {
       lexical = {
-        path = "${pkgs.lexical}/bin/lexical";
-        arguments = [];
+        binary = {
+          path = "${pkgs.lexical}/bin/lexical";
+        };
       };
       next-ls = {
-        path = "${next}/bin/nextls";
-        arguments = ["--stdio"];
+        binary = {
+          path = "${next}/bin/nextls";
+          arguments = ["--stdio"];
+        };
         initialization_options = {
           extensions = {
             credo.enable = false;
