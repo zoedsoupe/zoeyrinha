@@ -1,4 +1,6 @@
 {pkgs, ...}: {
+  system.stateVersion = 5;
+
   nix.configureBuildUsers = true;
 
   nix.extraOptions = ''
