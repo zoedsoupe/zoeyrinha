@@ -1,8 +1,4 @@
-{
-  pkgs,
-  unstable,
-  ...
-}: {
+{pkgs, ...}: {
   alacritty.enable = false;
   bat.enable = true;
   direnv.enable = true;
@@ -11,24 +7,16 @@
   kitty.enable = false;
   gh.enable = true;
   presenterm.enable = true;
-  starship.enable = true;
+  starship = {
+    enable = true;
+    catppuccin-theme = "frappe";
+  };
   xplr.enable = true;
   warp.enable = true;
   wezterm.enable = false;
   zellij.enable = false;
   zoxide.enable = true;
-  zed = {
-    enable = true;
-    elixir = let
-      inherit (unstable.beam) packagesWith;
-      inherit (unstable.beam.interpreters) erlang_27;
-      erlang = packagesWith erlang_27;
-      package = erlang.elixir_1_17;
-    in {
-      inherit package erlang;
-      lsp = "lexical";
-    };
-  };
+  zed.enable = true;
   helix = {
     enable = true;
     languages = {

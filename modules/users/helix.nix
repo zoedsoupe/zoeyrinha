@@ -2,8 +2,8 @@
   pkgs,
   lib,
   config,
-  next-ls,
   custom-config,
+  unstable,
   ...
 }: let
   inherit (lib) mkEnableOption mkIf;
@@ -49,7 +49,7 @@ in {
     programs.helix = {
       inherit (cfg) enable;
       settings = {
-        theme = "melange-dark";
+        theme = "zed_onedark";
         editor = {
           auto-save = true;
           completion-replace = true;
@@ -75,6 +75,11 @@ in {
             display-messages = true;
             display-inlay-hints = true;
           };
+          inline-diagnostics = {
+            cursor-line = "warning";
+            other-lines = "warning";
+          };
+          end-of-line-diagnostics = "hint";
         };
         keys.normal = {
           esc = ["collapse_selection" "keep_primary_selection"];
@@ -84,7 +89,7 @@ in {
       languages = {
         language-server = {
           nextls = mkIf elixir.enable {
-            command = "${next-ls.packages."${pkgs.system}".default}/bin/nextls";
+            command = "${unstable.next-ls}/bin/nextls";
             args = ["--stdio=true"];
           };
           typescript-language-server = let
@@ -95,7 +100,7 @@ in {
               args = ["--stdio"];
             };
           nil.command = mkIf nix.enable "${pkgs.nil}/bin/nil";
-          lexical-lsp.command = mkIf (elixir.enable) "${pkgs.lexical}/bin/lexical";
+          lexical-lsp.command = mkIf (elixir.enable) "${unstable.lexical}/bin/lexical";
           zls.command = mkIf zig.enable "${pkgs.zls}/bin/zls";
           nimlsp.command = mkIf nim.enable "${pkgs.nimlsp}/bin/nimlsp";
           clojure-lsp.command = mkIf clojure.enable "${pkgs.clojure-lsp}/bin/clojure-lsp";

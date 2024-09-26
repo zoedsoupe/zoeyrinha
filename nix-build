@@ -7,19 +7,21 @@ fi
 
 case "$1" in
   "cumbuca")
-    nix build .#nixosConfigurations.cumbuca.system && sudo ./result/activate
+    print >&2 "cumbuca profile is deactivated right now"
+    exit 1
+    # nix build .#nixosConfigurations.cumbuca.system "${@:2}" && sudo ./result/activate
     ;;
 
   "personal")
-     nix build .#darwinConfigurations.zoedsoupe.system && sudo ./result/activate
+     nix build .#darwinConfigurations.zoedsoupe.system "${@:2}" && sudo ./result/activate
      ;;
 
   "iso")
-    nix build .#installMedia.minimal.config.system.build.isoImage
+    nix build .#installMedia.minimal.config.system.build.isoImage "${@:2}"
     ;;
 
   *)
-    print >&2 "Available options are \"nubank\", \"personal\" \"iso\" for now"
+    print >&2 "Available options are \"cumbuca\", \"personal\" \"iso\" for now"
     exit 1
     ;;
 esac

@@ -4,10 +4,20 @@
   custom-config,
   ...
 }: let
-  inherit (lib) mkEnableOption mkIf;
+  inherit (lib) mkEnableOption mkIf mkOption;
   cfg = custom-config.starship;
+  theme = cfg.catppuccin-theme;
 in {
-  options.starship.enable = mkEnableOption "Enables starship shell prompt";
+  options.starship = {
+    enable = mkEnableOption "Enables starship shell prompt";
+
+    catppuccin-theme = mkOption {
+      default = "macchiato";
+      description = "The catppuccin theme to apply on starship";
+      type = lib.types.nullOr lib.types.enum ["macchiato" "frappe" "latte" "mocha"];
+    };
+  };
+
   config = mkIf cfg.enable {
     programs.starship = {
       enable = true;
@@ -66,9 +76,9 @@ in {
             owner = "catppuccin";
             repo = "starship";
             rev = "HEAD";
-            sha256 = "KzXO4dqpufxTew064ZLp3zKIXBwbF8Bi+I0Xa63j/lI=";
+            sha256 = "t/Hmd2dzBn0AbLUlbL8CBt19/we8spY5nMP0Z+VPMXA=";
           }
-          + /palettes/macchiato.toml));
+          + /themes/${theme}.toml));
     };
   };
 }
