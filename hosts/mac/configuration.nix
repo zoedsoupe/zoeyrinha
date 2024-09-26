@@ -22,7 +22,6 @@
       autoUpdate = true;
       upgrade = true;
     };
-    brews = ["asdf"];
   };
 
   users.users.zoedsoupe = {

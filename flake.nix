@@ -17,16 +17,15 @@
     };
 
     # My custom NeoVim config
-    lvim.url = "github:zoedsoupe/lvim";
-    mnvim.url = "github:zoedsoupe/mnvim";
+    # 26/09/2024 - using helix/zed
+    # lvim.url = "github:zoedsoupe/lvim";
+    # mnvim.url = "github:zoedsoupe/mnvim";
 
     # need to solve this about fcitx-engines
     home-manager.url = "github:nix-community/home-manager?ref=release-24.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    # LSP elixir
-    next-ls.url = "github:elixir-tools/next-ls?ref=HEAD";
-    # Custom Helix package
+    # Helix build from main
     helix.url = "github:helix-editor/helix?ref=HEAD";
 
     presenterm.url = "github:mfontanini/presenterm?ref=HEAD";
@@ -42,11 +41,10 @@
     inherit (darwin.lib) darwinSystem;
   in {
     darwinConfigurations = let
-      pkgs = import nixpkgs rec {
+      pkgs = import nixpkgs {
         system = "aarch64-darwin";
         overlays = with inputs; [
           rust-overlay.overlays.default
-          lvim.overlays."${system}".default
           helix.overlays.default
         ];
         config.allowUnfree = true;

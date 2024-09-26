@@ -1,18 +1,11 @@
 {
-  pkgs,
   lib,
   custom-config,
-  next-ls,
+  unstable,
   ...
 }: let
-  inherit (lib) mkEnableOption mkIf mkOption types mkDefault;
+  inherit (lib) mkEnableOption mkIf mkOption types;
   cfg = custom-config.zed;
-  elixir = cfg.elixir;
-
-  inherit (pkgs.beam.interpreters) erlangR26;
-  inherit (pkgs.beam.interpreters.erlang_26) elixir_1_16;
-
-  next = next-ls.packages."${pkgs.system}".default;
 
   settings = {
     theme = "One Dark";
@@ -54,27 +47,21 @@
     };
     languages = {
       Elixir = {
-        language_servers = ["lexical" "next-ls" "!elixir-ls"];
+        language_servers = ["lexical" "!next-ls" "!elixir-ls"];
       };
       HEEX = {
-        language_servers = ["lexical" "next-ls" "!elixir-ls"];
-      };
-      format_on_save = {
-        external = {
-          command = "${elixir.package}/bin/mix";
-          arguments = ["format" "--stdin-filename" "{buffer_path}" "-"];
-        };
+        language_servers = ["lexical" "!next-ls" "!elixir-ls"];
       };
     };
     lsp = {
       lexical = {
         binary = {
-          path = "${pkgs.lexical}/bin/lexical";
+          path = "${unstable.lexical}/bin/lexical";
         };
       };
       next-ls = {
         binary = {
-          path = "${next}/bin/nextls";
+          path = "${unstable.next-ls}/bin/nextls";
           arguments = ["--stdio"];
         };
         initialization_options = {
@@ -96,16 +83,6 @@ in {
         default = "lexical";
         type = types.enum ["next_ls" "lexical"];
         description = "The LSP to use for Elixir lang";
-      };
-      erlang = mkOption {
-        default = mkDefault erlangR26;
-        type = types.package;
-        description = "The Erlang pkg used to build both next-ls and lexical-lsp";
-      };
-      package = mkOption {
-        default = mkDefault elixir_1_16;
-        type = types.package;
-        description = "The Elixir pkg used to build both next-ls and lexical-lsp";
       };
     };
   };

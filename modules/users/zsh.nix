@@ -42,7 +42,6 @@ in {
       autocd = true;
       oh-my-zsh = {
         enable = true;
-        plugins = ["asdf"];
       };
       antidote = {
         enable = true;
