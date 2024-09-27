@@ -35,6 +35,9 @@ in {
   config = mkIf cfg.enable {
     programs.zsh = {
       inherit (cfg) enable sessionVariables profileExtra;
+      initExtra = ''
+        PROMPT="$\{PROMPT\}"$'\n'
+      '';
       autosuggestion.enable = true;
       enableCompletion = true;
       syntaxHighlighting.enable = true;

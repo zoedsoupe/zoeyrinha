@@ -1,106 +1,88 @@
 {
+  pkgs,
   custom-config,
   lib,
   ...
 }: let
-  inherit (lib) mkEnableOption mkIf;
+  inherit (lib) mkEnableOption mkIf mkOption types;
   cfg = custom-config.alacritty;
 in {
   options.alacritty = {
     enable = mkEnableOption "Enables Alacritty terminal emulator";
+    font-family = mkOption {
+      default = "Dank Mono";
+      type = types.str;
+      description = "Font familly to apply to the terminal";
+    };
+    theme = mkOption {
+      default = "catppuccin-frappe";
+      description = "Theme to apply to the terminal";
+      type = types.str;
+    };
   };
 
   config = mkIf cfg.enable {
-    programs.alacritty = {
+    programs.alacritty = let
+      download-catppuccin = theme: let
+        repo = {
+          owner = "catppuccin";
+          repo = "alacritty";
+          rev = "HEAD";
+          sha256 = "5MUWHXs8vfl2/u6YXB4krT5aLutVssPBr+DiuOdMAto=";
+        };
+      in
+        builtins.readFile ((pkgs.fetchFromGitHub repo) + /${theme}.toml);
+
+      # yeah i know...
+      is-catppuccin = str:
+        if lib.strings.match "catppuccin.+" str == null
+        then false
+        else true;
+
+      theme-toml =
+        if (is-catppuccin cfg.theme)
+        then builtins.fromTOML (download-catppuccin cfg.theme)
+        else {};
+    in {
       enable = true;
-      settings = {
-        cursor = {
-          style = {
-            blinking = "Never";
+      settings =
+        {
+          cursor = {
+            style = {
+              blinking = "Never";
+            };
             blink_interval = 300;
           };
-        };
-        window = {
-          dynamic_title = true;
-          dynamic_padding = false;
-          decorations = "full";
-          opacity = 1;
-        };
-        selection = {
-          save_to_clipboard = false;
-        };
-        scrolling = {
-          history = 50000;
-          multiplier = 2;
-        };
-        key_bindings = [
-          {
-            key = "V";
-            mods = "Control|Shift";
-            action = "Paste";
-          }
-          {
-            key = "C";
-            mods = "Control|Shift";
-            action = "Copy";
-          }
-        ];
-        font = {
-          normal = {family = "JetBrainsMono Nerd Font Mono";};
-          bold = {family = "JetBrainsMono Nerd Font Mono";};
-          italic = {family = "JetBrainsMono Nerd Font Mono";};
-          offset = {
-            x = 0;
-            y = 0;
+          window = {
+            dynamic_title = true;
+            dynamic_padding = false;
+            decorations = "full";
+            opacity = 1;
           };
-          glyph_offset = {
-            x = 0;
-            y = 0;
+          selection = {
+            save_to_clipboard = false;
           };
-          size = 14;
-        };
-        colors = {
-          primary = {
-            background = "0x191622";
-            foreground = "0xe1e1e6";
+          scrolling = {
+            history = 50000;
+            multiplier = 2;
           };
-          cursor = {
-            text = "0x191622";
-            cursor = "0xf8f8f2";
+          font = {
+            normal = {family = cfg.font-family;};
+            bold = {family = cfg.font-family;};
+            italic = {family = cfg.font-family;};
+            offset = {
+              x = 0;
+              y = 0;
+            };
+            glyph_offset = {
+              x = 0;
+              y = 0;
+            };
+            size = 14;
           };
-          normal = {
-            black = "0x000000";
-            red = "0xff5555";
-            green = "0x50fa7b";
-            yellow = "0xeffa78";
-            blue = "0xbd93f9";
-            magenta = "0xff79c6";
-            cyan = "0x8d79ba";
-            white = "0xbfbfbf";
-          };
-          bright = {
-            black = "0x4d4d4d";
-            red = "0xff6e67";
-            green = "0x5af78e";
-            yellow = "0xeaf08d";
-            blue = "0xcaa9fa";
-            magenta = "0xff92d0";
-            cyan = "0xaa91e3";
-            white = "0xe6e6e6";
-          };
-          dim = {
-            black = "0x000000";
-            red = "0xa90000";
-            green = "0x049f2b";
-            yellow = "0xa3b106";
-            blue = "0x530aba";
-            magenta = "0xbb006b";
-            cyan = "0x433364";
-            white = "0x5f5f5f";
-          };
-        };
-        draw_bold_text_with_bright_colors = true;
-      };
+          colors.draw_bold_text_with_bright_colors = true;
+        }
+        // theme-toml;
     };
   };
 }

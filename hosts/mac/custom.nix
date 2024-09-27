@@ -1,15 +1,23 @@
 {pkgs, ...}: {
-  alacritty.enable = false;
+  alacritty = {
+    enable = false;
+    font-family = "Dank Mono";
+    theme = "catppuccin-macchiato";
+  };
   bat.enable = true;
   direnv.enable = true;
   fish.enable = false;
   fzf.enable = true;
-  kitty.enable = false;
+  kitty = {
+    enable = true;
+    font-family = "Dank Mono";
+    theme = "catppuccin-macchiato";
+  };
   gh.enable = true;
   presenterm.enable = true;
   starship = {
     enable = true;
-    catppuccin-theme = "frappe";
+    catppuccin-theme = "macchiato";
   };
   xplr.enable = true;
   warp.enable = true;
@@ -49,7 +57,7 @@
     enable = true;
     profileExtra = ''
       eval "$(/opt/homebrew/bin/brew shellenv)"
-      ${pkgs.pokemon-colorscripts-mac}/bin/pokemon-colorscripts -r
+      ${pkgs.krabby}/bin/krabby random 2> /dev/null
     '';
     history = {
       ignorePatterns = ["git commit -m *" "git clone *" "mix test --only *" "mkdir *"];
