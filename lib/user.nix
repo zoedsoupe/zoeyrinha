@@ -1,7 +1,6 @@
 {
   pkgs,
   home-manager,
-  lib,
   system,
   overlays,
   ...
@@ -48,6 +47,18 @@ with builtins; {
           inherit username;
           stateVersion = "21.05";
           homeDirectory = "/Users/${username}";
+          activation.link-apps = lib.hm.dag.entryAfter ["linkGeneration"] ''
+            new_nix_apps="${config.home.homeDirectory}/Applications/Nix"
+            rm -rf "$new_nix_apps"
+            mkdir -p "$new_nix_apps"
+            find -H -L "$newGenPath/home-files/Applications" -maxdepth 1 -name "*.app" -type d -print | while read -r app; do
+              real_app=$(readlink -f "$app")
+              app_name=$(basename "$app")
+              target_app="$new_nix_apps/$app_name"
+              echo "Alias '$real_app' to '$target_app'"
+              ${pkgs.mkalias}/bin/mkalias "$real_app" "$target_app"
+            done
+          '';
         };
 
         imports = [../modules/users machineModule];

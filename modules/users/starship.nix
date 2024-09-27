@@ -25,12 +25,14 @@ in {
       enableZshIntegration = true;
       settings =
         {
+          scan_timeout = 50;
+          command_timeout = 1500;
           add_newline = true;
           directory = {
             format = "[$path]($style)[$read_only]($read_only_style) ";
           };
           git_branch = {
-            format = "[git](white)\\([$branch]($style)\\)";
+            format = "[git](white)\\([$branch]($style)\\) ";
           };
           git_status = {
             deleted = "";
@@ -56,14 +58,12 @@ in {
             direnv = {
               format = "[\\[direnv\\]]($style) ";
               style = "fg:yellow dimmed";
-              when = "env | grep -E '^DIRENV_FILE='";
+              when = "[[ -f .envrc ]]";
             };
           };
           format = lib.concatStrings [
             "$directory"
             "$git_branch"
-            "$git_status"
-            "$nix_shell"
             "$elixir"
             "$nodejs"
             "$rust"
