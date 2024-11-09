@@ -1,4 +1,5 @@
 {
+  pkgs,
   lib,
   custom-config,
   ...
@@ -37,6 +38,7 @@ in {
       inherit (cfg) enable sessionVariables profileExtra;
       initExtra = ''
         PROMPT="$\{PROMPT\}"$'\n'
+        ${pkgs.any-nix-shell}/bin/any-nix-shell zsh --info-right | source /dev/stdin
       '';
       autosuggestion.enable = true;
       enableCompletion = true;

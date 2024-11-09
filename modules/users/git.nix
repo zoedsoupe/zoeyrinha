@@ -43,7 +43,17 @@ in {
       inherit (cfg) enable;
       userName = cfg.user.name;
       userEmail = cfg.user.email;
-      ignores = ["*.swp" "*.swo" ".nix-*" ".postgres" ".direnv" ".lexical" ".elixir-tools"];
+      ignores = [
+        "*.swp"
+        "*.swo"
+        ".nix-*"
+        ".postgres"
+        ".direnv"
+        ".lexical"
+        ".elixir-tools"
+        "flake.*"
+        ".envrc"
+      ];
       lfs.enable = true;
       difftastic.enable = true;
       signing = {
@@ -51,39 +61,20 @@ in {
       };
       includes = [
         {
-          condition = "gitdir:~/dev/swap";
+          condition = "gitdir:~/dev/octoscreen";
           contents = {
             user = {
-              email = "zoey.pessanha@ext-swap.com";
-              name = "Zoey de Souza Pessanha";
-              signingKey = "F010A1F9D37C559BC00338778A38771FD08EA837";
-            };
-            commit = {gpgSign = true;};
-          };
-        }
-        {
-          condition = "gitdir:~/dev/cumbuca";
-          contents = {
-            user = {
-              email = "zoey.pessanha@cumbuca.com";
-              name = "Zoey de Souza Pessanha";
-              signingKey = "9CDC21C08CE3898288D0B87042F311094881F961";
+              email = "zoey.spessanha@zeetech.io";
+              name = "zoedsoupe";
+              signingKey = "714581B4DC152FD8C2771A71646D6C0DD9B8A525";
             };
             commit = {gpgSign = true;};
           };
         }
       ];
-      aliases = {
-        p = "push";
-        s = "status";
-        c = "commit";
-        co = "checkout";
-        aa = "add -p";
-        st = "stash";
-        br = "branch";
-        lg = "log --graph --oneline --decorate --abbrev-commit";
-      };
       extraConfig = {
+        branch.sort = "-committerdate";
+        column.ui = "auto";
         safe = {directory = "/opt/homebrew";};
         github = {user = "zoedsoupe";};
         grep = {linenumber = true;};
