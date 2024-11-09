@@ -20,25 +20,31 @@
     catppuccin-theme = "macchiato";
   };
   xplr.enable = true;
-  warp.enable = true;
   wezterm.enable = false;
   zellij.enable = false;
   zoxide.enable = true;
   zed.enable = true;
   helix = {
     enable = true;
+    editor = {
+      disable-line-numbers = true;
+    };
     languages = {
       clojure.enable = false;
       html.enable = true;
       css.enable = true;
       json.enable = true;
-      rust.enable = true;
+      rust.enable = false;
       go.enable = true;
       nix.enable = true;
       nim.enable = false;
       zig.enable = false;
       typescript.enable = false;
-      elixir.enable = true;
+      elixir = {
+        enable = true;
+        lsp-features = ["hover" "goto-definition" "completion" "goto-declaration"];
+      };
+      gleam.enable = true;
     };
   };
   git = {

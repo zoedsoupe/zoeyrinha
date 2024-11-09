@@ -29,7 +29,6 @@
     awscli2
     awsebcli
     pass
-    supabase-cli
     jq
     glow
     flyctl

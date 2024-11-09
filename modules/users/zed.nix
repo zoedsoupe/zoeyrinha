@@ -1,4 +1,5 @@
 {
+  pkgs,
   lib,
   custom-config,
   unstable,
@@ -8,7 +9,7 @@
   cfg = custom-config.zed;
 
   settings = {
-    theme = "One Dark";
+    theme = "Dark Void";
     vim_mode = true;
     autosave = "on_focus_change";
     soft_wrap = "editor_width";
@@ -88,20 +89,28 @@ in {
   };
 
   config = mkIf cfg.enable {
-    # home.packages = with pkgs; [zed-editor];
     home.file = {
       settings = {
         enable = true;
         target = ".config/zed/settings.json";
         text = builtins.toJSON settings;
       };
-    };
-
-    home.file = {
       keymap = {
         enable = true;
         target = ".config/zed/keymap.json";
         text = builtins.toJSON (builtins.readFile ./zed/keymap.json);
+      };
+      "darkvoid.json" = {
+        enable = true;
+        target = ".config/zed/themes/darkvoid.json";
+        source =
+          pkgs.fetchFromGitHub {
+            owner = "zoedsoupe";
+            repo = "darkvoid-zed";
+            rev = "e32e783";
+            sha256 = "m+v+vV5WVkSYsO+PSAkdq9K7ZXnMlkws5ch2FT/GBsY=";
+          }
+          + /darkvoid.json;
       };
     };
   };
