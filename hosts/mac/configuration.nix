@@ -2,11 +2,13 @@
   system.stateVersion = 5;
 
   nix.configureBuildUsers = true;
+  nix.optimise.automatic = true;
 
   nix.extraOptions = ''
-    auto-optimise-store = true
     experimental-features = nix-command flakes
   '';
+
+  ids.gids.nixbld = 30000;
 
   services.nix-daemon.enable = true;
 
@@ -27,12 +29,6 @@
   users.users.zoedsoupe = {
     home = "/Users/zoedsoupe";
     name = "zoedsoupe";
-    shell = pkgs.zsh;
-  };
-
-  users.users.zoeycumbuca = {
-    home = "/Users/zoeycumbuca";
-    name = "zoeycumbuca";
     shell = pkgs.zsh;
   };
 }

@@ -51,7 +51,6 @@ in {
         ".direnv"
         ".lexical"
         ".elixir-tools"
-        "flake.*"
         ".envrc"
       ];
       lfs.enable = true;

@@ -6,6 +6,11 @@
     nixpkgs-22.url = "flake:nixpkgs/nixos-22.05";
     unstable.url = "flake:nixpkgs/nixos-unstable";
 
+    lix-module = {
+      url = "https://git.lix.systems/lix-project/nixos-module/archive/2.91.1-1.tar.gz";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -35,6 +40,7 @@
     nixpkgs,
     home-manager,
     darwin,
+    lix-module,
     ...
   } @ inputs: let
     inherit (nixpkgs.lib) nixosSystem;
@@ -62,14 +68,14 @@
         config.allowUnfree = true;
       };
     in {
-      zoedsoupe = darwinSystem rec {
+      zoedsoupe-mac = darwinSystem rec {
         inherit pkgs;
         modules = let
           zoedsoupe.custom-config = import ./hosts/mac/custom.nix {
             inherit pkgs unstable;
           };
-          # zoeycumbuca.custom-config = import ./hosts/cumbuca/custom.nix {inherit pkgs;};
         in [
+          lix-module.nixosModules.default
           ./hosts/mac/configuration.nix
 
           home-manager.darwinModules.home-manager
@@ -85,12 +91,6 @@
                 inherit (host) custom-config;
               };
             in {
-              # using single user
-              # zoeycumbuca = {
-              #   _module.args = args zoeycumbuca;
-              #   imports = [./hosts/cumbuca/home.nix];
-              # };
-
               zoedsoupe = {
                 _module.args = args zoedsoupe;
                 imports = [./hosts/mac/home.nix];

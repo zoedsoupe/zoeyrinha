@@ -1,0 +1,156 @@
+#!/bin/bash
+# 
+# Purpose: simple script to remove nix from MacOS
+# author: Jason Schechner, nixfan@jasons.us
+# Last updated: 2022-05-12
+#
+# conventions used here:
+# * capitalized variables don't change during script run
+# * exit codes: 0=success, 1=minor problem, 2=major problem 
+#
+# to do
+# * ?
+# 
+# changelog
+# * 2022-05-12 - initial creation
+
+# set variables. You can override these by exporting the same variable in your shell before running me.
+#FAILSAFE="echo" # uncomment this to neuter the script so it runs checks but doesn't do anything.
+NIX_RM_LOGFILE=${NIX_RM_LOGFILE:-$(basename $0).log}
+LAUNCH_DAEMONS="org.nixos.darwin-store org.nixos.nix-daemon"
+LAUNCH_DAEMON_HOME=/Library/LaunchDaemons
+
+# you shouldn't have to touch anything below this line
+chatter(){
+# always log output, and echo to the user if in VERBOSE mode 
+    echo "$1" >> ${NIX_RM_LOGFILE}
+    test "${VERBOSE}" && echo "$1"
+}
+
+printhelp(){
+cat <<EOB
+Simple script to remove nix from MacOS
+Usage: $(basename $0) [-f|-h|-v]
+ -f|--force    = run without initial confirmation check. BE CAREFUL!
+ -h|--help     = help (you're looking at it!)
+ -v|--verbose  = verbose mode
+EOB
+exit 0
+}
+
+pfc(){
+# pre-flight check
+# verify writable log file
+test -w ${NIX_RM_LOGFILE} || touch ${NIX_RM_LOGFILE} || { echo "Unable to create log file, ${NIX_RM_LOGFILE}. Exiting."; exit 2; }
+DATESTAMP=$(date +%Y%m%d.%H%M)
+echo "${DATESTAMP} - Starting nix removal run. Logging to ${NIX_RM_LOGFILE}." | tee -a ${NIX_RM_LOGFILE}
+# clear variables
+unset backupdotfile dotfile gonogo launchdaemon nixusers usernumber FORCE VERBOSE
+exitcode=0
+case "$1" in
+    "") 
+    ;;
+    -f|--force)
+        FORCE=1
+    ;;
+    -v|--verbose)   
+        echo "verbose mode"
+        VERBOSE=1
+    ;;
+    -h|--help)        
+        printhelp
+    ;;
+    *) 
+        echo "unknown argument: $1. Perhaps you need help..."
+    printhelp
+esac
+
+if test -z "${FORCE}" -a -z "${FAILSAFE}"; then
+    echo "Run in active mode? This could make irreversible changes to your computer."
+    read -n 1 -p "'Y' to continue. Anything else to run in safe mode which makes no changes... " gonogo
+    if test "${gonogo}" == "y" -o "${gonogo}" == "Y"; then
+        chatter "Active mode. Possibly making changes." 
+    else
+        FAILSAFE="echo"
+    fi
+    echo
+fi
+test "${FAILSAFE}" == "echo" && echo "Failsafe mode." | tee -a ${NIX_RM_LOGFILE}
+}
+
+# main
+pfc "$1"
+
+# check if launch daemons are loaded and, if so, unload them. Then delete pfiles
+for launchdaemon in ${LAUNCH_DAEMONS}; do 
+    if test -f ${LAUNCH_DAEMON_HOME}/${launchdaemon}.plist; then
+    chatter "killing and removing launch daemon ${launchdaemon}"
+    if launchdaemon list ${launchdaemon} > /dev/null 2>&1; then
+        ${FAILSAFE} sudo launchctl kill ${launchdaemon}
+    fi
+        ${FAILSAFE} sudo launchctl unload ${LAUNCH_DAEMON_HOME}/${launchdaemon}.plist || exitcode=1
+    ${FAILSAFE} sudo rm ${LAUNCH_DAEMON_HOME}/${launchdaemon}.plist || exitcode=2
+    fi
+done
+
+# delete nix users
+nixusers=$(dscl . list /Users | grep -c nixbld)
+if test ${nixusers} -ge 1; then
+    chatter "Deleting ${nixusers} nix users"
+    for usernumber in $(seq 1 ${nixusers}); do 
+    ${FAILSAFE} sudo dscl . delete /Users/_nixbld${usernumber} || { chatter "unable to remove user _nixbld${usernumber}"; exitcode=2; }
+    # It looks like newer versions of Nix don't create directories for nixbld*, but in case you have them from an old rev...
+    if test -d /Users/nixblkd${usernumber}; then
+        ${FAILSAFE} sudo rm -rf /Users/nixbld${usernumber} || exitcode=1
+    fi
+    done
+fi
+
+# delete group
+if dscl . -list /Groups | grep -q nixbld; then
+    chatter "Deleting nixbld group"
+    ${FAILSAFE} /usr/bin/dscl . -delete "/Groups/nixbld" || exitcode=1
+fi
+
+# restore dot files if any backups exist
+if test $(ls /etc/*.backup-before-nix 2> /dev/null | wc -l) -ge 1; then
+    for backupdotfile in /etc/*.backup-before-nix; do
+    dotfile=${backupdotfile/.backup-before-nix}
+    chatter "backing up nix-enabled dot file and restoring original: ${dotfile}"
+    ${FAILSAFE} sudo mv ${dotfile} ${dotfile}.backup-before-removing-nix.${DATESTAMP} || exitcode=1
+    ${FAILSAFE} sudo mv ${backupdotfile} ${dotfile} || exitcode=1
+    done
+fi
+
+# make sure nix isn't in any of the relevant dot files
+if grep -q 'nix' /etc/{profile,bashrc,bash.bashrc,zshrc}; then 
+    echo "FAULT: nix is still present in at least one of your dot files. Fix this before reinstalling!"
+    grep -l 'nix' /etc/{profile,bashrc,bash.bashrc,zshrc}
+    exitcode=2
+fi
+
+for filesystemfile in fstab synthetic; do
+    if grep -E -q '/?nix ' /etc/${filesystemfile} > /dev/null 2>&1 ; then
+    echo "Updating filesystem file ${filesystemfile}"
+    ${FAILSAFE} sudo sed -i.backup-before-removing-nix.${DATESTAMP}  '/\/nix/d' /etc/${filesystemfile} || exitcode=1
+    fi
+done
+
+# delete apfs volume "Nix Store"
+if diskutil list | grep -q "Nix Store"; then
+    echo "deleting 'Nix Store' APFS volume"
+    ${FAILSAFE} sudo diskutil apfs deleteVolume "Nix Store" || exitcode=1
+fi
+
+# wrap up
+echo "$(date +%Y%m%d.%H%M) - Completed nix removal run." | tee -a ${NIX_RM_LOGFILE}
+# enable verbose mode so that exit messages go to the user and log file
+VERBOSE=1
+case ${exitcode} in
+    0) chatter "SUCCESS. Nix removal steps finished. Reboot to complete the process.";;
+    1) chatter "SUCCESS - probably. Minor problem during nix removal steps. It's likely safe to proceed and reboot but check the log first.";;
+    2) chatter "FAIL: Major failure during nix removal steps. Fix those before proceeding.";;
+    *) chatter "UNKNOWN: unknown exitcode (${exitcode}). You should not see this. Strange things are afoot."
+esac
+echo >> ${NIX_RM_LOGFILE}
+exit ${exitcode}

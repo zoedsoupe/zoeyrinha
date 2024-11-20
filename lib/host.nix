@@ -1,7 +1,6 @@
 {
   system,
   pkgs,
-  home-manager,
   lib,
   user,
   nixos,

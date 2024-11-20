@@ -26,8 +26,6 @@
     fd
     silver-searcher
     exercism
-    awscli2
-    awsebcli
     pass
     jq
     glow
