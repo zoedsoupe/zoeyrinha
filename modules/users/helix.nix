@@ -74,12 +74,24 @@ in {
           sha256 = "zVXtBoTobtsP4VbE+9SpYHTYsvYg8IjIfaLSKwqM1Xs=";
         };
       };
+
+      "lucario.toml" = {
+        enable = true;
+        target = ".config/helix/themes/lucario.toml";
+        source = fetch-theme {
+          path = /helix/lucario.toml;
+          owner = "raphamorim";
+          repo = "lucario";
+          rev = "df30a8e";
+          sha256 = "WUXbtQdgX/icFKxA+cJm2G7y5qImoCL9NgQN5WB4FvY=";
+        };
+      };
     };
 
     programs.helix = {
       inherit (cfg) enable;
       settings = {
-        theme = "darkvoid";
+        theme = "nyxvamp-veil";
         editor = {
           auto-save = true;
           completion-replace = true;
@@ -87,7 +99,7 @@ in {
           color-modes = true;
           true-color = true;
           indent-guides = {
-            render = true;
+            render = false;
             skip-levels = 1;
             character = "┊";
           };
