@@ -227,13 +227,12 @@ in {
             inherit (mix) formatter;
             name = "elixir";
             auto-format = false;
-            language-servers = ["lexical-lsp"];
-            # language-servers = [
-            #   {
-            #     name = "lexical-lsp";
-            #     only-features = elixir.lsp-features;
-            #   }
-            # ];
+            language-servers = [
+              {
+                name = "lexical-lsp";
+                except-features = elixir.lsp-features;
+              }
+            ];
           })
           (mkIf elixir.enable {
             inherit (mix) formatter;
