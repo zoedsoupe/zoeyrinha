@@ -35,6 +35,8 @@
     ngrok
     tree
     git-filter-repo
+    mise
+    just
 
     # others
     any-nix-shell

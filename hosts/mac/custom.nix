@@ -34,17 +34,18 @@
       html.enable = true;
       css.enable = true;
       json.enable = true;
-      rust.enable = false;
+      rust.enable = true;
       go.enable = true;
       nix.enable = true;
       nim.enable = false;
       zig.enable = false;
       typescript.enable = false;
+      gleam.enable = true;
       elixir = {
         enable = true;
-        lsp-features = ["hover" "goto-definition" "completion" "goto-declaration"];
+        # except lsp features
+        lsp-features = ["completion" "format" "code-action"];
       };
-      gleam.enable = true;
     };
   };
   git = {

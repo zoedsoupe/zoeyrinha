@@ -8,6 +8,8 @@
     experimental-features = nix-command flakes
   '';
 
+  fonts.packages = with pkgs; [scientifica];
+
   ids.gids.nixbld = 30000;
 
   services.nix-daemon.enable = true;
@@ -24,6 +26,7 @@
       autoUpdate = true;
       upgrade = true;
     };
+    brews = ["ncdu"];
   };
 
   users.users.zoedsoupe = {
