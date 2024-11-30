@@ -18,8 +18,11 @@
   zig = cfg.languages.zig;
   nim = cfg.languages.nim;
   gleam = cfg.languages.gleam;
+  ocaml = cfg.languages.ocaml;
   typescript = cfg.languages.typescript;
   vscode-lsp = pkgs.nodePackages.vscode-langservers-extracted;
+
+  ocamlpkgs = pkgs.ocamlPackages;
 
   fetch-theme = {
     path,
@@ -47,6 +50,7 @@ in {
           type = types.listOf types.str;
         };
       };
+      ocaml.enable = mkEnableOption "Enables OCaml support";
       nim.enable = mkEnableOption "Enables Nim support";
       nix.enable = mkEnableOption "Enables Nix Support";
       rust.enable = mkEnableOption "Enables Rust Support";
@@ -156,6 +160,7 @@ in {
               command = "${ts-server}/bin/typescript-language-server";
               args = ["--stdio"];
             };
+          ocamllsp.command = mkIf ocaml.enable "${ocamlpkgs.ocaml-lsp}/bin/ocamllsp";
           nil.command = mkIf nix.enable "${pkgs.nil}/bin/nil";
           lexical-lsp.command = mkIf elixir.enable "${unstable.lexical}/bin/lexical";
           zls.command = mkIf zig.enable "${pkgs.zls}/bin/zls";
@@ -213,6 +218,13 @@ in {
             };
           };
         in [
+          (mkIf ocaml.enable {
+            name = "ocaml";
+            auto-format = true;
+            formatter = {
+              command = "${ocamlpkgs.ocamlformat}/bin/ocamlformat";
+            };
+          })
           (mkIf css.enable {
             name = "scss";
             auto-format = true;

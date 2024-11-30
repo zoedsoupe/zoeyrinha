@@ -23,7 +23,7 @@ in {
   config = mkIf cfg.enable {
     programs.kitty = {
       enable = true;
-      theme = "Catppuccin-Macchiato";
+      # theme = "Catppuccin-Macchiato";
       font = {
         name = cfg.font-family;
         size = 16;

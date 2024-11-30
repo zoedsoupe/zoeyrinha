@@ -2,8 +2,8 @@
   description = "Zoey's personal config, aka dotfiles";
 
   inputs = {
-    nixpkgs.url = "flake:nixpkgs/nixos-24.05";
-    nixpkgs-22.url = "flake:nixpkgs/nixos-22.05";
+    nixpkgs.url = "flake:nixpkgs/nixos-24.11";
+    nixpkgs-22.url = "flake:nixpkgs/nixos-22.11";
     unstable.url = "flake:nixpkgs/nixos-unstable";
 
     lix-module = {
@@ -27,7 +27,7 @@
     # mnvim.url = "github:zoedsoupe/mnvim";
 
     # need to solve this about fcitx-engines
-    home-manager.url = "github:nix-community/home-manager?ref=release-24.05";
+    home-manager.url = "github:nix-community/home-manager?ref=release-24.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     # Helix build from main
