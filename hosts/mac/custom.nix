@@ -41,6 +41,7 @@
       zig.enable = false;
       typescript.enable = false;
       gleam.enable = true;
+      ocaml.enable = true;
       elixir = {
         enable = true;
         # except lsp features
