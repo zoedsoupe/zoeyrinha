@@ -13,6 +13,7 @@
     font-family = "Dank Mono";
     theme = "catppuccin-macchiato";
   };
+  neovim.enable = true;
   rio.enable = true;
   gh.enable = true;
   presenterm.enable = true;

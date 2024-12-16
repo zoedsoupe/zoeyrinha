@@ -27,6 +27,10 @@
     # 26/09/2024 - using helix/zed
     # lvim.url = "github:zoedsoupe/lvim";
     # mnvim.url = "github:zoedsoupe/mnvim";
+    nixvim = {
+      url = "github:nix-community/nixvim/nixos-24.11";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     # need to solve this about fcitx-engines
     home-manager.url = "github:nix-community/home-manager?ref=release-24.11";
@@ -43,6 +47,7 @@
     home-manager,
     darwin,
     lix-module,
+    nixvim,
     ...
   } @ inputs: let
     inherit (nixpkgs.lib) nixosSystem;
@@ -79,6 +84,9 @@
         in [
           lix-module.nixosModules.default
           ./hosts/mac/configuration.nix
+
+          nixvim.nixDarwinModules.nixvim
+          {imports = [./modules/users/neovim.nix];}
 
           home-manager.darwinModules.home-manager
           {
