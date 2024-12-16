@@ -6,6 +6,8 @@
     nixpkgs-22.url = "flake:nixpkgs/nixos-22.11";
     unstable.url = "flake:nixpkgs/nixos-unstable";
 
+    nix-std.url = "github:chessai/nix-std";
+
     lix-module = {
       url = "https://git.lix.systems/lix-project/nixos-module/archive/2.91.1-1.tar.gz";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -89,6 +91,7 @@
                 inherit pkgs-22 unstable;
                 inherit (inputs) next-ls helix presenterm;
                 inherit (host) custom-config;
+                nix-std = inputs.nix-std.lib;
               };
             in {
               zoedsoupe = {

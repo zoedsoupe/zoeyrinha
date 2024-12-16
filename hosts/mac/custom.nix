@@ -13,6 +13,7 @@
     font-family = "Dank Mono";
     theme = "catppuccin-macchiato";
   };
+  rio.enable = true;
   gh.enable = true;
   presenterm.enable = true;
   starship = {
@@ -39,7 +40,7 @@
       nix.enable = true;
       nim.enable = false;
       zig.enable = false;
-      typescript.enable = false;
+      typescript.enable = true;
       gleam.enable = true;
       ocaml.enable = true;
       elixir = {
