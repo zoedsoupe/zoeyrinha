@@ -1,16 +1,24 @@
 #! /bin/zsh
 
 if (( # == 0 )); then
-  print >&2 "Usage: $0 personal or iso"
+  print >&2 "Usage: $0 personal, iso or cloudwalk"
   exit 1
 fi
 
 case "$1" in
+  "cloudwalk")
+     if ! type darwin-rebuild > /dev/null; then
+       nix run nix-darwin -- switch --flake .#cloudwalk-mac
+     else
+       darwin-rebuild switch --show-trace --flake .#cloudwalk-mac
+     fi
+     ;;
+
   "personal")
      if ! type darwin-rebuild > /dev/null; then
-       nix run nix-darwin -- switch --flake .
+       nix run nix-darwin -- switch --flake .#zoedsoupe-mac
      else
-       darwin-rebuild switch --flake .
+       darwin-rebuild switch --show-trace --flake .#zoedsoupe-mac
      fi
      ;;
 
@@ -19,7 +27,7 @@ case "$1" in
     ;;
 
   *)
-    print >&2 "Available options are, \"personal\" \"iso\" for now"
+    print >&2 "Available options are, \"personal\" \"iso\" \"cloudwalk\" for now"
     exit 1
     ;;
 esac
