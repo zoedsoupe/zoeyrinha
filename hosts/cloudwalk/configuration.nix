@@ -8,7 +8,7 @@
     experimental-features = nix-command flakes
   '';
 
-  ids.gids.nixbld = 30000;
+  ids.gids.nixbld = 350;
 
   services.nix-daemon.enable = true;
 

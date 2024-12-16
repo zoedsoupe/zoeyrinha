@@ -15,6 +15,7 @@ in {
       extensions = [pkgs.gh-dash];
       settings = {
         prompt = "enabled";
+        git_protocol = "ssh";
         editor = "${pkgs.helix}/bin/hx";
       };
     };

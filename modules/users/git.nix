@@ -70,6 +70,19 @@ in {
             commit = {gpgSign = true;};
           };
         }
+        {
+          condition = "gitdir:~/dev/cloudwalk";
+          contents = {
+            signing = {};
+            gpg.format = "ssh";
+            user = {
+              email = "zoey.spessanha@cloudwalk.io";
+              name = "zoeypessanha";
+              signingKey = "~/.ssh/cw-sign";
+            };
+            commit.gpgSign = true;
+          };
+        }
       ];
       extraConfig = {
         branch.sort = "-committerdate";
