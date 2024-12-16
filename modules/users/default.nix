@@ -9,6 +9,7 @@
     ./git.nix
     ./helix.nix
     ./kitty.nix
+    ./rio.nix
     ./starship.nix
     ./xplr.nix
     ./wezterm.nix

@@ -9,6 +9,7 @@
   cfg = custom-config.zed;
 
   settings = {
+    assistant.enabled = false;
     theme = "Dark Void";
     vim_mode = true;
     autosave = "on_focus_change";
@@ -17,6 +18,7 @@
     vertical_scroll_margin = 10;
     scrollbar = {show = "never";};
     copilot = {
+      enabled = false;
       disabled_globs = [".env"];
     };
     file_types = {
@@ -28,7 +30,7 @@
       use_smartcase_find = true;
     };
     buffer_font_size = 17;
-    buffer_font_family = "Dank Mono";
+    buffer_font_family = "Mononoki Nerd Font Mono";
     buffer_font_features = {
       ss01 = true;
       ss02 = true;
