@@ -1,10 +1,12 @@
 {
   pkgs,
   lib,
+  theme,
   custom-config,
   unstable,
   ...
 }: let
+  inherit (theme) mk-nyxvamp-for;
   inherit (lib) mkEnableOption mkIf mkOption types;
   cfg = custom-config.helix;
   elixir = cfg.languages.elixir;
@@ -76,6 +78,16 @@ in {
           repo = "dark-void-helix";
           rev = "a181a2e";
           sha256 = "zVXtBoTobtsP4VbE+9SpYHTYsvYg8IjIfaLSKwqM1Xs=";
+        };
+      };
+
+      "nyxvamp-veil.toml" = {
+        enable = true;
+        target = ".config/helix/themes/nyxvamp-veil.toml";
+        source = mk-nyxvamp-for {
+          tool = "helix";
+          format = "toml";
+          variant = "veil";
         };
       };
 
