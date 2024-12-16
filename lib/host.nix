@@ -1,13 +1,38 @@
-{
-  system,
-  pkgs,
-  lib,
-  user,
-  nixos,
-  ...
-}:
-with builtins; {
+inputs: let
+  inherit (builtins) toJSON listToAttrs;
+  inherit (inputs) system;
+  inherit (inputs) nixpkgs darwin;
+  inherit (inputs) home-manager lix-module;
+  inherit (inputs.user) mkSystemUser mkDarwinUser;
+  inherit (nixpkgs.lib) nixosSystem;
+  inherit (darwin.lib) darwinSystem;
+
+  pkgs = import nixpkgs {
+    inherit system;
+    overlays = with inputs; [
+      rust-overlay.overlays.default
+      helix.overlays.default
+    ];
+    # ngrok
+    config.allowUnfree = true;
+  };
+in {
+  mkDarwin = {
+    host ? "personal-mac",
+    user ? "zoedsoupe",
+  }:
+    darwinSystem {
+      inherit pkgs;
+      modules = [
+        (../hosts + /${host}/configuration.nix)
+        lix-module.nixosModules.default
+        home-manager.darwinModules.home-manager
+        (mkDarwinUser {inherit user host;})
+      ];
+    };
+
   mkISO = {
+    system,
     name,
     initrdMods,
     kernelMods,
@@ -15,32 +40,21 @@ with builtins; {
     kernelPackage,
     systemConfig,
   }:
-    lib.nixosSystem {
+    nixosSystem {
       inherit system;
 
       specialArgs = {};
 
       modules = [
-        "${nixos}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
-        {
-          imports = [../modules/iso];
-
-          networking.hostName = "${name}";
-          networking.networkmanager.enable = true;
-          networking.useDHCP = false;
-
-          boot.initrd.availableKernelModules = initrdMods;
-          boot.kernelModules = kernelMods;
-
-          boot.kernelParams = kernelParams;
-          boot.kernelPackages = kernelPackage;
-
-          nixpkgs.pkgs = pkgs;
-        }
+        "${nixpkgs}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+        ../modules/iso/core.nix
+        ../modules/iso/user.nix
+        ../modules/iso/desktop.nix
       ];
     };
 
   mkHost = {
+    system,
     name,
     NICs,
     initrdMods,
@@ -53,6 +67,8 @@ with builtins; {
     wifi ? [],
     cpuTempSensor ? null,
   }: let
+    inherit (nixpkgs.lib) mkDefault;
+
     networkCfg = listToAttrs (map
       (n: {
         name = "${n}";
@@ -64,11 +80,11 @@ with builtins; {
       inherit name NICs systemConfig cpuCores cpuTempSensor;
     };
 
-    sys_users = map (u: user.mkSystemUser u) users;
+    sys_users = map (u: mkSystemUser u) users;
 
     usernames = map (u: u.name) users;
   in
-    lib.nixosSystem {
+    nixosSystem {
       inherit system;
 
       modules = [
@@ -91,7 +107,7 @@ with builtins; {
           hardware.enableRedistributableFirmware = true;
           hardware.enableAllFirmware = true;
           hardware.cpu.intel.updateMicrocode = true;
-          powerManagement.cpuFreqGovernor = lib.mkDefault "powersave";
+          powerManagement.cpuFreqGovernor = mkDefault "powersave";
 
           boot = {
             initrd.availableKernelModules = initrdMods;
@@ -111,7 +127,7 @@ with builtins; {
 
           nixpkgs.pkgs = pkgs;
           nix = {
-            maxJobs = lib.mkDefault cpuCores;
+            maxJobs = mkDefault cpuCores;
             autoOptimiseStore = true;
             gc = {
               automatic = true;

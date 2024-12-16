@@ -1,4 +1,4 @@
-{pkgs}: {
+{pkgs, ...}: {
   mk-nyxvamp-for = {
     tool,
     format ? "toml",
