@@ -27,7 +27,7 @@
       upgrade = true;
     };
     brews = ["ncdu"];
-    casks = ["rio"];
+    casks = ["wezterm" "rio"];
   };
 
   users.users.zoedsoupe = {

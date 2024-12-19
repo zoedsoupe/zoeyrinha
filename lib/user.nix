@@ -2,6 +2,7 @@ inputs: let
   inherit (builtins) tryEval fromJSON readFile;
   inherit (inputs) system;
   inherit (inputs) home-manager nixpkgs unstable nixpkgs-22;
+  inherit (home-manager.lib) hm;
 
   pkgs = import nixpkgs {
     inherit system;
@@ -52,6 +53,18 @@ in rec {
 
       users.${user} = {
         _module.args = mkDarwinHost host;
+        home.activation.link-apps = hm.dag.entryAfter ["linkGeneration"] ''
+          new_nix_apps="/Users/${user}/Applications/Nix"
+          rm -rf "$new_nix_apps"
+          mkdir -p "$new_nix_apps"
+          find -H -L "$newGenPath/home-files/Applications" -maxdepth 1 -name "*.app" -type d -print | while read -r app; do
+            real_app=$(readlink -f "$app")
+            app_name=$(basename "$app")
+            target_app="$new_nix_apps/$app_name"
+            echo "Alias '$real_app' to '$target_app'"
+            ${pkgs.mkalias}/bin/mkalias "$real_app" "$target_app"
+          done
+        '';
         imports = [(../hosts + /${host}/home.nix)];
       };
     };
