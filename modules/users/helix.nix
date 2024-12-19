@@ -211,6 +211,7 @@ in {
               json = {validate = {enable = true;};};
             };
           };
+          wakatime-lsp.command = "/usr/local/bin/wakatime-lsp";
         };
 
         language = let
@@ -259,6 +260,7 @@ in {
                 name = "lexical-lsp";
                 except-features = elixir.lsp-features;
               }
+              "wakatime-lsp"
             ];
           })
           (mkIf elixir.enable {
