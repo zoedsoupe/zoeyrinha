@@ -22,6 +22,7 @@
   gleam = cfg.languages.gleam;
   ocaml = cfg.languages.ocaml;
   typescript = cfg.languages.typescript;
+  lua = cfg.languages.lua;
   vscode-lsp = pkgs.nodePackages.vscode-langservers-extracted;
 
   ocamlpkgs = pkgs.ocamlPackages;
@@ -52,6 +53,7 @@ in {
           type = types.listOf types.str;
         };
       };
+      lua.enable = mkEnableOption "Enables Lua support";
       ocaml.enable = mkEnableOption "Enables OCaml support";
       nim.enable = mkEnableOption "Enables Nim support";
       nix.enable = mkEnableOption "Enables Nix Support";
@@ -172,6 +174,7 @@ in {
               command = "${ts-server}/bin/typescript-language-server";
               args = ["--stdio"];
             };
+          lua-language-server.command = mkIf lua.enable "${pkgs.lua-language-server}/bin/lua-language-server";
           ocamllsp.command = mkIf ocaml.enable "${ocamlpkgs.ocaml-lsp}/bin/ocamllsp";
           nil.command = mkIf nix.enable "${pkgs.nil}/bin/nil";
           lexical-lsp.command = mkIf elixir.enable "${unstable.lexical}/bin/lexical";

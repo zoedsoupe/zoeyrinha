@@ -13,6 +13,7 @@
     font-family = "Dank Mono";
     theme = "catppuccin-macchiato";
   };
+  tmux.enable = true;
   neovim.enable = true;
   rio.enable = true;
   gh.enable = true;
@@ -22,7 +23,7 @@
     catppuccin-theme = "macchiato";
   };
   xplr.enable = true;
-  wezterm.enable = false;
+  wezterm.enable = true;
   zellij.enable = false;
   zoxide.enable = true;
   zed.enable = true;
@@ -44,6 +45,7 @@
       typescript.enable = true;
       gleam.enable = true;
       ocaml.enable = true;
+      lua.enable = true;
       elixir = {
         enable = true;
         # except lsp features

@@ -11,6 +11,7 @@
     ./kitty.nix
     ./rio.nix
     ./starship.nix
+    ./tmux.nix
     ./xplr.nix
     ./wezterm.nix
     ./zellij.nix
