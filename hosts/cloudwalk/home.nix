@@ -11,6 +11,7 @@
     gitAndTools.gh
 
     # tools
+    aider-chat
     eza # exa fork
     fd
     silver-searcher

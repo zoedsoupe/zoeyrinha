@@ -37,7 +37,7 @@
       html.enable = false;
       css.enable = false;
       json.enable = true;
-      rust.enable = false;
+      rust.enable = true;
       go.enable = false;
       nix.enable = true;
       nim.enable = false;
