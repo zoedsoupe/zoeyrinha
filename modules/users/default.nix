@@ -6,6 +6,7 @@
     ./fish.nix
     ./fzf.nix
     ./gh.nix
+    ./ghostty.nix
     ./git.nix
     ./helix.nix
     ./kitty.nix
