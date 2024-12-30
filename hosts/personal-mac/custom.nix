@@ -15,7 +15,8 @@
   };
   tmux.enable = true;
   neovim.enable = true;
-  rio.enable = true;
+  rio.enable = false;
+  ghostty.enable = true;
   gh.enable = true;
   presenterm.enable = true;
   starship = {
@@ -41,7 +42,7 @@
       go.enable = true;
       nix.enable = true;
       nim.enable = false;
-      zig.enable = false;
+      zig.enable = true;
       typescript.enable = true;
       gleam.enable = true;
       ocaml.enable = true;

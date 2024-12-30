@@ -1,0 +1,31 @@
+# waiting for https://github.com/nix-community/home-manager/pull/6235
+
+font-family = MonoLisa
+font-feature = ss01,ss04,ss07,ss08,ss10,ss11,ss13,ss14,ss15,ss16,ss17,ss18
+font-size = 17
+
+background-opacity = 0.8
+adjust-cursor-thickness = 2
+
+macos-titlebar-style = hidden
+window-decoration = true
+
+# Unicode and glyph settings
+font-codepoint-map = "U+E0A0-U+E0A2=MonoLisa,U+E0B0-U+E0B2=MonoLisa"
+
+adjust-cell-height = "65%"
+adjust-font-baseline = "2%"
+adjust-cursor-height = 0
+
+window-padding-x = 5
+window-padding-y = 4
+window-height = 21
+window-width = 105
+
+grapheme-width-method = "unicode"
+adjust-cursor-height = "110%"
+adjust-strikethrough-position = "-2%"
+
+freetype-load-flags = true
+
+theme = "nyxvamp-veil"
