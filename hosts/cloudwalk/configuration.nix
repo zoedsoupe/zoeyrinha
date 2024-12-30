@@ -25,7 +25,7 @@
       upgrade = true;
     };
     brews = ["ncdu"];
-    casks = ["wezterm" "warp"];
+    casks = ["wezterm" "ghostty"];
   };
 
   users.users.zoeypessanha = {
