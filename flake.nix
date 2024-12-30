@@ -23,6 +23,10 @@
       inputs.nixpkgs.follows = "unstable";
     };
 
+    # ghostty = {
+    #   url = "github:ghostty-org/ghostty";
+    # };
+
     # My custom NeoVim config
     # 26/09/2024 - using helix/zed
     # lvim.url = "github:zoedsoupe/lvim";

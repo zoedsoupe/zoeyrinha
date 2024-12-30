@@ -20,18 +20,22 @@ in {
       aggressiveResize = true;
       escapeTime = 10;
       extraConfig = ''
+        set -g default-shell /bin/zsh
         set -g default-terminal "tmux-256color"
         set -ag terminal-overrides ",xterm-256color:RGB"
+        set -g mouse on
 
-        set -g prefix C-a
         unbind C-b
-        bind-key C-a send-prefix
+        set -g prefix C-Space
+        bind-key C-Space send-prefix
 
         unbind %
         bind | split-window -h
+        bind | split-window -h -c "#{pane_current_path}"
 
         unbind '"'
         bind - split-window -v
+        bind - split-window -v -c "#{pane_current_path}"
 
         unbind r
         bind r source-file ~/.tmux.conf
@@ -49,7 +53,13 @@ in {
         unbind -T copy-mode-vi MouseDragEnd1Pane # don't exit copy mode when dragging with mouse
       '';
       plugins = with plugins; [
+        yank
+        sensible
         vim-tmux-navigator
+        {
+          plugin = catppuccin;
+          extraConfig = "set -g @catppuccin_flavor 'mocha'";
+        }
         {
           plugin = continuum;
           extraConfig = "set -g @continuum-restore 'on'";

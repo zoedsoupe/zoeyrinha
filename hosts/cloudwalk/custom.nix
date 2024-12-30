@@ -16,6 +16,7 @@
   tmux.enable = true;
   neovim.enable = false;
   rio.enable = false;
+  ghostty.enable = true;
   gh.enable = true;
   presenterm.enable = false;
   starship = {

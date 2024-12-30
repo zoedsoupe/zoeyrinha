@@ -31,7 +31,7 @@ in rec {
   mkDarwinHost = host: let
     config = ../hosts + /${host}/custom.nix;
   in {
-    inherit pkgs-22 host;
+    inherit pkgs-22 host system;
     inherit (inputs) next-ls helix;
     theme = import ./theme.nix {inherit pkgs;};
     nix-std = inputs.nix-std.lib;
