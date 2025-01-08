@@ -1,7 +1,5 @@
 # waiting for https://github.com/nix-community/home-manager/pull/6235
 
-font-family = MonoLisa
-font-feature = ss01,ss04,ss07,ss08,ss10,ss11,ss13,ss14,ss15,ss16,ss17,ss18
 font-size = 17
 
 background-opacity = 0.8
