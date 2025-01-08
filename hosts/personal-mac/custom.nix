@@ -16,7 +16,10 @@
   tmux.enable = true;
   neovim.enable = true;
   rio.enable = false;
-  ghostty.enable = true;
+  ghostty = {
+    enable = true;
+    font-name = "MonaLisa";
+  };
   gh.enable = true;
   presenterm.enable = true;
   starship = {
