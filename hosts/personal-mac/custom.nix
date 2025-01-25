@@ -61,9 +61,8 @@
       email = "zoey.spessanha@zeetech.io";
     };
     signing = {
-      key = "0A26DE75F59B488C74D4FA408536E6F53A918170";
+      key = "~/.ssh/personal-sign";
       signByDefault = true;
-      gpgPath = "${pkgs.gnupg}/bin/gpg";
     };
   };
   zsh = {

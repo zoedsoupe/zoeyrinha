@@ -25,11 +25,6 @@ in {
         description = "Git GPG default signing key";
         type = types.nullOr types.str;
       };
-      gpgPath = mkOption {
-        description = "The GPG executable path";
-        type = types.str;
-        default = "${pkgs.gnupg}/bin/gpg";
-      };
       signByDefault = mkOption {
         description = "When to sign by default in git repositories";
         type = types.bool;
@@ -56,20 +51,9 @@ in {
       lfs.enable = true;
       difftastic.enable = true;
       signing = {
-        inherit (cfg.signing) key gpgPath signByDefault;
+        inherit (cfg.signing) key signByDefault;
       };
       includes = [
-        {
-          condition = "gitdir:~/dev/octoscreen";
-          contents = {
-            user = {
-              email = "zoey.spessanha@zeetech.io";
-              name = "zoedsoupe";
-              signingKey = "714581B4DC152FD8C2771A71646D6C0DD9B8A525";
-            };
-            commit = {gpgSign = true;};
-          };
-        }
         {
           condition = "gitdir:~/dev/cloudwalk";
           contents = {
@@ -80,11 +64,14 @@ in {
               name = "zoeypessanha";
               signingKey = "~/.ssh/cw-sign";
             };
-            commit.gpgSign = true;
           };
         }
       ];
       extraConfig = {
+        gpg.format = "ssh";
+        gpg.ssh.allowedSignersFile = "~/.ssh/allowed_signers";
+        tag.gpgsign = true;
+        commit.gpgsign = true;
         branch.sort = "-committerdate";
         column.ui = "auto";
         safe = {directory = "/opt/homebrew";};
