@@ -61,9 +61,8 @@
       email = "zoey.spessanha@cloudwalk.io";
     };
     signing = {
-      key = "";
-      signByDefault = false;
-      gpgPath = "${pkgs.gnupg}/bin/gpg";
+      key = "~/.ssh/cw-sign";
+      signByDefault = true;
     };
   };
   zsh = {
