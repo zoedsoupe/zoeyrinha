@@ -30,7 +30,7 @@
   wezterm.enable = true;
   zellij.enable = false;
   zoxide.enable = true;
-  zed.enable = false;
+  zed.enable = true;
   helix = {
     enable = true;
     editor = {
@@ -50,6 +50,7 @@
       gleam.enable = false;
       ocaml.enable = false;
       lua.enable = true;
+      python.enable = true;
       elixir = {
         enable = true;
         # except lsp features
@@ -87,7 +88,7 @@
       DIRENV_LOG_FORMAT = "";
       GPG_TTY = "$(tty)";
       GITHUB_TOKEN = "";
-      PATH = "$PATH:$HOME/.nix-profile/bin:/etc/profiles/per-user/zoeypessanha/bin:/run/current-system/sw/bin";
+      PATH = "$PATH:$HOME/.nix-profile/bin:/etc/profiles/per-user/zoeypessanha/bin:/run/current-system/sw/bin:$HOME/google-cloud-sdk/bin";
       EDITOR = "${pkgs.helix}/bin/hx";
     };
   };
