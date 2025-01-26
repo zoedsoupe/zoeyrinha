@@ -9,6 +9,7 @@
   cfg = custom-config.zed;
 
   settings = {
+    tab_size = 2;
     assistant.enabled = false;
     theme = "Dark Void";
     vim_mode = true;
@@ -18,19 +19,20 @@
     vertical_scroll_margin = 10;
     scrollbar = {show = "never";};
     copilot = {
-      enabled = false;
+      enabled = true;
       disabled_globs = [".env"];
     };
     file_types = {
       CSS = ["scss" "css"];
     };
+    git.inline_blame = true;
     vim = {
       use_system_clipboard = "never";
       use_multiline_find = true;
       use_smartcase_find = true;
     };
     buffer_font_size = 17;
-    buffer_font_family = "Mononoki Nerd Font Mono";
+    buffer_font_family = "Monaspace Neon";
     buffer_font_features = {
       ss01 = true;
       ss02 = true;

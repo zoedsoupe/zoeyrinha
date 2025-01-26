@@ -23,6 +23,7 @@
   ocaml = cfg.languages.ocaml;
   typescript = cfg.languages.typescript;
   lua = cfg.languages.lua;
+  python = cfg.languages.python;
   vscode-lsp = pkgs.nodePackages.vscode-langservers-extracted;
 
   ocamlpkgs = pkgs.ocamlPackages;
@@ -53,6 +54,7 @@ in {
           type = types.listOf types.str;
         };
       };
+      python.enabe = mkEnableOption "Enables Python Support";
       lua.enable = mkEnableOption "Enables Lua support";
       ocaml.enable = mkEnableOption "Enables OCaml support";
       nim.enable = mkEnableOption "Enables Nim support";
@@ -212,6 +214,10 @@ in {
             };
           };
           wakatime-lsp.command = "/usr/local/bin/wakatime-lsp";
+          ruff = mkIf python.enable {
+            command = "${pkgs.ruff}/bin/ruff";
+            args = ["server"];
+          };
         };
 
         language = let
@@ -317,6 +323,16 @@ in {
                 except-features = ["inlay-hints"];
               }
               "vscode-eslint-language-server"
+            ];
+          })
+          (mkIf python.enable {
+            name = "python";
+            auto-format = true;
+            language-servers = [
+              {
+                name = "ruff";
+                except-features = ["completion"];
+              }
             ];
           })
         ];

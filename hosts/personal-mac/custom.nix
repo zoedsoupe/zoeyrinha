@@ -50,6 +50,7 @@
       gleam.enable = true;
       ocaml.enable = true;
       lua.enable = true;
+      python.enable = false;
       elixir = {
         enable = true;
         # except lsp features
