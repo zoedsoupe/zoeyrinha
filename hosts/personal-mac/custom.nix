@@ -60,14 +60,18 @@
   };
   git = {
     enable = true;
-    user = {
-      name = "Zoey de Souza Pessanha";
-      email = "zoey.spessanha@zeetech.io";
-    };
-    signing = {
-      key = "~/.ssh/personal-sign";
-      signByDefault = true;
-    };
+    includes = [
+      {
+        condition = "gitdir:~/dev/**";
+        contents = {
+          user = {
+            email = "zoey.spessanha@zeetech.io";
+            name = "Zoey Pessanha";
+            signingKey = "~/.ssh/personal-sign";
+          };
+        };
+      }
+    ];
   };
   zsh = {
     enable = true;
