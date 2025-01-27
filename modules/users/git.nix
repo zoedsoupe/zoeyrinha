@@ -33,6 +33,7 @@ in {
       difftastic.enable = true;
       extraConfig = {
         gpg.format = "ssh";
+        gpg.ssh.allowedsignersfile = "~/.config/git/allowed-signers";
         tag.gpgsign = true;
         commit.gpgsign = true;
         branch.sort = "-committerdate";
