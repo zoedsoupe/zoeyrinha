@@ -60,14 +60,28 @@
   };
   git = {
     enable = true;
-    user = {
-      name = "Zoey de Souza Pessanha";
-      email = "zoey.spessanha@cloudwalk.io";
-    };
-    signing = {
-      key = "~/.ssh/cw-sign";
-      signByDefault = true;
-    };
+    includes = [
+      {
+        condition = "gitdir:~/dev/cloudwalk/**";
+        contents = {
+          user = {
+            email = "zoey.spessanha@cloudwalk.io";
+            name = "Zoey Pessanha";
+            signingKey = "~/.ssh/cw-sign";
+          };
+        };
+      }
+      {
+        condition = "gitdir:~/dev/zoey/**";
+        contents = {
+          user = {
+            email = "zoey.spessanha@zeetech.io";
+            name = "Zoey Pessanha";
+            signingKey = "~/.ssh/zoedsoupe";
+          };
+        };
+      }
+    ];
   };
   zsh = {
     enable = true;
