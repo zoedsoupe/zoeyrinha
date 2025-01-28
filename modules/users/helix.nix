@@ -4,6 +4,7 @@
   theme,
   custom-config,
   unstable,
+  next-ls,
   ...
 }: let
   inherit (theme) mk-nyxvamp-for;
@@ -166,7 +167,7 @@ in {
             command = "${unstable.gleam}/bin/gleam";
           };
           nextls = mkIf elixir.enable {
-            command = "${unstable.next-ls}/bin/nextls";
+            command = "${next-ls}/bin/nextls";
             args = ["--stdio=true"];
           };
           typescript-language-server = let
@@ -263,7 +264,7 @@ in {
             auto-format = false;
             language-servers = [
               {
-                name = "lexical-lsp";
+                name = "nextls";
                 except-features = elixir.lsp-features;
               }
               "wakatime-lsp"
