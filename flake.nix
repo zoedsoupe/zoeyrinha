@@ -36,6 +36,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    next-ls.url = "github:elixir-tools/next-ls?ref=v0.23.3";
+
     # need to solve this about fcitx-engines
     home-manager.url = "github:nix-community/home-manager?ref=release-24.11";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";

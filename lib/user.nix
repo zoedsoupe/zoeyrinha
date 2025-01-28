@@ -32,7 +32,8 @@ in rec {
     config = ../hosts + /${host}/custom.nix;
   in {
     inherit pkgs-22 host system;
-    inherit (inputs) next-ls helix;
+    inherit (inputs) helix;
+    next-ls = inputs.next-ls.packages.${system}.default;
     theme = import ./theme.nix {inherit pkgs;};
     nix-std = inputs.nix-std.lib;
     unstable = pkgs-u;

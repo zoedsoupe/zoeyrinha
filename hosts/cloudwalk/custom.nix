@@ -30,7 +30,11 @@
   wezterm.enable = true;
   zellij.enable = false;
   zoxide.enable = true;
-  zed.enable = true;
+  zed = {
+    enable = true;
+    theme = null;
+    elixir.lsp = "next-ls";
+  };
   helix = {
     enable = true;
     editor = {
