@@ -16,6 +16,11 @@ in {
       description = "The theme name to use, null for the default one (zed-one-dark)";
       default = null;
     };
+    font = mkOption {
+      type = types.str;
+      description = "The font to use on buffer and UI";
+      default = "MonoLisa";
+    };
     elixir = {
       lsp = mkOption {
         default = "lexical";
@@ -33,10 +38,13 @@ in {
       userKeymaps = builtins.fromJSON (builtins.readFile ./zed/keymap.json);
       userSettings = {
         tab_size = 2;
-        assistant.enabled = false;
-        theme = "Dark Void";
+        load_direnv = "shell_hook";
+        assistant.enabled = true;
+        theme = cfg.theme;
         vim_mode = true;
         autosave = "on_focus_change";
+        auto_update = true;
+        cursor_blink = false;
         soft_wrap = "editor_width";
         tab_bar = {
           show = false;
@@ -59,19 +67,10 @@ in {
           use_smartcase_find = true;
         };
         buffer_font_size = 17;
-        buffer_font_family = "Monaspace Neon";
-        buffer_font_features = {
-          ss01 = true;
-          ss02 = true;
-          ss03 = true;
-          ss04 = true;
-          ss05 = true;
-          ss06 = true;
-          ss07 = true;
-          ss08 = true;
-          calt = true;
-          dlig = true;
-        };
+        buffer_font_family = cfg.font;
+        buffer_font_features = true;
+        ui_font_family = cfg.font;
+        ui_font_features = true;
         preview_tabs = {
           enabled = true;
           enable_preview_from_file_finder = true;
