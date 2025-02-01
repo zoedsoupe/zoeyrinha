@@ -32,7 +32,8 @@
   zoxide.enable = true;
   zed = {
     enable = true;
-    theme = null;
+    theme = "NyxVamp Veil";
+    font = "Monaspace Neon";
     elixir.lsp = "next-ls";
   };
   helix = {

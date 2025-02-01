@@ -17,7 +17,7 @@
   neovim.enable = true;
   rio.enable = false;
   ghostty = {
-    enable = true;
+    enable = false;
     font-name = "MonaLisa";
   };
   gh.enable = true;
@@ -27,12 +27,13 @@
     catppuccin-theme = "macchiato";
   };
   xplr.enable = true;
-  wezterm.enable = true;
+  wezterm.enable = false;
   zellij.enable = false;
   zoxide.enable = true;
   zed = {
     enable = true;
-    theme = null;
+    theme = "NyxVamp Veil";
+    font = "MonoLisa";
     elixir.lsp = "next-ls";
   };
   helix = {
