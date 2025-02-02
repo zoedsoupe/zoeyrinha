@@ -215,6 +215,7 @@ in {
             };
           };
           wakatime-lsp.command = "/usr/local/bin/wakatime-lsp";
+          marksman.command = "${pkgs.marksman}/bin/marksman";
           ruff = mkIf python.enable {
             command = "${pkgs.ruff}/bin/ruff";
             args = ["server"];
@@ -258,6 +259,10 @@ in {
             auto-format = true;
             language-servers = ["nimlsp"];
           })
+          {
+            name = "markdown";
+            language-servers = ["marksman" "wakatime-lsp"];
+          }
           (mkIf elixir.enable {
             inherit (mix) formatter;
             name = "elixir";
@@ -274,18 +279,19 @@ in {
             inherit (mix) formatter;
             name = "heex";
             auto-format = false;
-            language-servers = ["emmet-ls" "tailwindcss-intellisense"];
+            language-servers = ["next-ls" "emmet-ls" "tailwindcss-intellisense" "wakatime-lsp"];
           })
           (mkIf elixir.enable {
             inherit (mix) formatter;
             name = "eex";
             auto-format = false;
-            language-servers = ["emmet-ls"];
+            language-servers = ["next-ls" "emmet-ls" "wakatime-lsp"];
           })
           (mkIf nix.enable {
             inherit (n) formatter;
             name = "nix";
             auto-format = true;
+            language-servers = ["nil" "wakatime-lsp"];
           })
           (mkIf go.enable {
             name = "go";
