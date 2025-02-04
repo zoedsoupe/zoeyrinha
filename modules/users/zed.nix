@@ -31,16 +31,27 @@ in {
   };
 
   config = mkIf cfg.enable {
+    home.sessionPath = [
+      (
+        if elixir.lsp == "lexical"
+        then "${unstable.lexical}/bin"
+        else "${unstable.next-ls}/bin"
+      )
+    ];
     programs.zed-editor = {
       inherit (cfg) enable;
       package = pkgs.emptyDirectory;
-      extensions = ["HTML" "Elixir" "nyxvamp" "Nix"];
+      extensions = ["elixir" "html" "nix" "nyxvamp-theme" "zig" "haskell" "wakatime"];
       userKeymaps = builtins.fromJSON (builtins.readFile ./zed/keymap.json);
       userSettings = {
         tab_size = 2;
         load_direnv = "shell_hook";
         assistant.enabled = true;
-        theme = cfg.theme;
+        theme = {
+          mode = "system";
+          light = "One Light";
+          dark = cfg.theme;
+        };
         vim_mode = true;
         autosave = "on_focus_change";
         auto_update = true;
@@ -109,16 +120,7 @@ in {
           };
         };
         lsp = {
-          lexical = {
-            binary = {
-              path = "${unstable.lexical}/bin/lexical";
-            };
-          };
           next-ls = {
-            binary = {
-              path = "${unstable.next-ls}/bin/nextls";
-              arguments = ["--stdio"];
-            };
             initialization_options = {
               extensions = {
                 credo.enable = false;
