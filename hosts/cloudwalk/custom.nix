@@ -17,7 +17,7 @@
   neovim.enable = false;
   rio.enable = false;
   ghostty = {
-    enable = true;
+    enable = false;
     font-name = "Monaspace Neon";
   };
   gh.enable = true;
@@ -27,7 +27,7 @@
     catppuccin-theme = "macchiato";
   };
   xplr.enable = true;
-  wezterm.enable = true;
+  wezterm.enable = false;
   zellij.enable = false;
   zoxide.enable = true;
   zed = {

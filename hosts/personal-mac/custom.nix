@@ -9,12 +9,12 @@
   fish.enable = false;
   fzf.enable = true;
   kitty = {
-    enable = true;
+    enable = false;
     font-family = "Dank Mono";
     theme = "catppuccin-macchiato";
   };
   tmux.enable = true;
-  neovim.enable = true;
+  neovim.enable = false;
   rio.enable = false;
   ghostty = {
     enable = false;
@@ -59,7 +59,8 @@
       elixir = {
         enable = true;
         # except lsp features
-        lsp-features = ["completion" "format" "code-action"];
+        # lsp-features = ["completion" "format" "code-action"];
+        lsp-features = [];
       };
     };
   };

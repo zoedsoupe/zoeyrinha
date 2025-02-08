@@ -3,6 +3,7 @@
   lib,
   custom-config,
   unstable,
+  wakatime-ls,
   ...
 }: let
   inherit (lib) mkEnableOption mkIf mkOption types;
@@ -37,11 +38,12 @@ in {
         then "${unstable.lexical}/bin"
         else "${unstable.next-ls}/bin"
       )
+      "${wakatime-ls}/bin/wakatime-lsp"
     ];
     programs.zed-editor = {
       inherit (cfg) enable;
       package = pkgs.emptyDirectory;
-      extensions = ["elixir" "html" "nix" "nyxvamp-theme" "zig" "haskell" "wakatime"];
+      extensions = ["elixir" "html" "nix" "nyxvamp-theme" "wakatime"];
       userKeymaps = builtins.fromJSON (builtins.readFile ./zed/keymap.json);
       userSettings = {
         tab_size = 2;
@@ -101,6 +103,7 @@ in {
                 else "!next-ls"
               )
               "!elixir-ls"
+              "wakatime-ls"
             ];
           };
           HEEX = {
@@ -116,6 +119,7 @@ in {
                 else "!next-ls"
               )
               "!elixir-ls"
+              "wakatime-ls"
             ];
           };
         };
