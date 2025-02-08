@@ -5,6 +5,7 @@
   custom-config,
   unstable,
   next-ls,
+  wakatime-ls,
   ...
 }: let
   inherit (theme) mk-nyxvamp-for;
@@ -214,7 +215,7 @@ in {
               json = {validate = {enable = true;};};
             };
           };
-          wakatime-lsp.command = "/usr/local/bin/wakatime-lsp";
+          wakatime-lsp.command = "${wakatime-ls}/bin/wakatime-lsp";
           marksman.command = "${pkgs.marksman}/bin/marksman";
           ruff = mkIf python.enable {
             command = "${pkgs.ruff}/bin/ruff";
@@ -268,10 +269,7 @@ in {
             name = "elixir";
             auto-format = false;
             language-servers = [
-              {
-                name = "nextls";
-                except-features = elixir.lsp-features;
-              }
+              "nextls"
               "wakatime-lsp"
             ];
           })

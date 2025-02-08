@@ -12,6 +12,7 @@
   };
 
   home.packages = with pkgs; [
+    wakatime-cli
     pinentry_mac
     # neovim # my custom config neovim
 

@@ -27,12 +27,32 @@ inputs: let
     # ngrok
     config.allowUnfree = true;
   };
+
+  wakatime-ls = with pkgs;
+    rustPlatform.buildRustPackage rec {
+      pname = "wakatime-ls";
+      version = "0.1.1";
+      src = fetchFromGitHub {
+        owner = "mrnossiom";
+        repo = "wakatime-ls";
+        rev = "546c1fb";
+        sha256 = "sha256-bvkig0TLiorNp7Lxer8ZRJQGB3C8lVJ96H2+SwYIT6s=";
+      };
+      cargoLock = {lockFile = "${src}/Cargo.lock";};
+      nativeBuildInputs = [makeWrapper];
+      buildInputs = [];
+      postFixup = ''
+        wrapProgram $out/bin/wakatime-lsp \
+          --suffix PATH : ${lib.makeBinPath [wakatime]}
+      '';
+    };
 in rec {
   mkDarwinHost = host: let
     config = ../hosts + /${host}/custom.nix;
   in {
     inherit pkgs-22 host system;
     inherit (inputs) helix;
+    inherit wakatime-ls;
     next-ls = inputs.next-ls.packages.${system}.default;
     theme = import ./theme.nix {inherit pkgs;};
     nix-std = inputs.nix-std.lib;
