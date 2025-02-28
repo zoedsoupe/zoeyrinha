@@ -103,7 +103,7 @@ in {
                 else "!next-ls"
               )
               "!elixir-ls"
-              "wakatime-ls"
+              "wakatime"
             ];
           };
           HEEX = {
@@ -119,7 +119,23 @@ in {
                 else "!next-ls"
               )
               "!elixir-ls"
-              "wakatime-ls"
+              "wakatime"
+            ];
+          };
+          EEX = {
+            language_servers = [
+              (
+                if elixir.lsp == "lexical"
+                then elixir.lsp
+                else "!lexical"
+              )
+              (
+                if elixir.lsp == "next-ls"
+                then elixir.lsp
+                else "!next-ls"
+              )
+              "!elixir-ls"
+              "wakatime"
             ];
           };
         };
