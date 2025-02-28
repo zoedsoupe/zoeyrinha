@@ -170,6 +170,14 @@ in {
           nextls = mkIf elixir.enable {
             command = "${next-ls}/bin/nextls";
             args = ["--stdio=true"];
+            config = {
+              extensions = {
+                credo.enable = true;
+              };
+              experimental = {
+                completions.enable = true;
+              };
+            };
           };
           typescript-language-server = let
             ts-server = pkgs.nodePackages.typescript-language-server;
@@ -217,6 +225,13 @@ in {
           };
           wakatime-lsp.command = "${wakatime-ls}/bin/wakatime-lsp";
           marksman.command = "${pkgs.marksman}/bin/marksman";
+          copilot = let
+            node = pkgs.nodejs;
+            copilot = unstable.copilot-language-server;
+          in {
+            command = "${node}/bin/node ${copilot}/dist/language-server.js";
+            args = ["--stdio"];
+          };
           ruff = mkIf python.enable {
             command = "${pkgs.ruff}/bin/ruff";
             args = ["server"];
@@ -253,7 +268,7 @@ in {
           (mkIf css.enable {
             name = "scss";
             auto-format = true;
-            language-servers = ["tailwindcss-intellisense" "vscode-css-language-server"];
+            language-servers = ["tailwindcss-intellisense" "vscode-css-language-server" "copilot"];
           })
           (mkIf nim.enable {
             name = "nim";
@@ -262,7 +277,7 @@ in {
           })
           {
             name = "markdown";
-            language-servers = ["marksman" "wakatime-lsp"];
+            language-servers = ["marksman" "wakatime-lsp" "copilot"];
           }
           (mkIf elixir.enable {
             inherit (mix) formatter;
@@ -271,25 +286,26 @@ in {
             language-servers = [
               "nextls"
               "wakatime-lsp"
+              "copilot"
             ];
           })
           (mkIf elixir.enable {
             inherit (mix) formatter;
             name = "heex";
             auto-format = false;
-            language-servers = ["next-ls" "emmet-ls" "tailwindcss-intellisense" "wakatime-lsp"];
+            language-servers = ["next-ls" "emmet-ls" "tailwindcss-intellisense" "wakatime-lsp" "copilot"];
           })
           (mkIf elixir.enable {
             inherit (mix) formatter;
             name = "eex";
             auto-format = false;
-            language-servers = ["next-ls" "emmet-ls" "wakatime-lsp"];
+            language-servers = ["next-ls" "emmet-ls" "wakatime-lsp" "copilot"];
           })
           (mkIf nix.enable {
             inherit (n) formatter;
             name = "nix";
             auto-format = true;
-            language-servers = ["nil" "wakatime-lsp"];
+            language-servers = ["nil" "wakatime-lsp" "copilot"];
           })
           (mkIf go.enable {
             name = "go";
@@ -304,7 +320,7 @@ in {
           (mkIf html.enable {
             name = "html";
             auto-format = true;
-            language-servers = ["emmet-ls" "vscode-html-language-server"];
+            language-servers = ["emmet-ls" "vscode-html-language-server" "copilot"];
           })
           (mkIf typescript.enable {
             inherit (ts) formatter;
