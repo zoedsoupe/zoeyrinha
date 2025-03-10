@@ -30,19 +30,19 @@ inputs: let
 
   wakatime-ls = with pkgs;
     rustPlatform.buildRustPackage rec {
-      pname = "wakatime-ls";
+      pname = "wakatime-lsp";
       version = "0.1.1";
       src = fetchFromGitHub {
         owner = "mrnossiom";
         repo = "wakatime-ls";
         rev = "546c1fb";
-        sha256 = "sha256-bvkig0TLiorNp7Lxer8ZRJQGB3C8lVJ96H2+SwYIT6s=";
+        sha256 = "sha256-06SFScBBqOtFBg5VYbQXsa8E7HOKEOnBMdsnEJ5lL1A=";
       };
       cargoLock = {lockFile = "${src}/Cargo.lock";};
       nativeBuildInputs = [makeWrapper];
       buildInputs = [];
       postFixup = ''
-        wrapProgram $out/bin/wakatime-lsp \
+        wrapProgram $out/bin/wakatime-ls \
           --suffix PATH : ${lib.makeBinPath [wakatime]}
       '';
     };

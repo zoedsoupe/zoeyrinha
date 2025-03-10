@@ -47,19 +47,19 @@
       css.enable = false;
       json.enable = true;
       rust.enable = true;
-      go.enable = false;
+      go.enable = true;
       nix.enable = true;
       nim.enable = false;
       zig.enable = false;
-      typescript.enable = false;
+      typescript.enable = true;
       gleam.enable = false;
       ocaml.enable = false;
-      lua.enable = true;
+      lua.enable = false;
       python.enable = true;
       elixir = {
         enable = true;
         # except lsp features
-        lsp-features = ["completion" "format" "code-action"];
+        lsp-features = [];
       };
     };
   };
@@ -106,7 +106,7 @@
       DIRENV_LOG_FORMAT = "";
       GPG_TTY = "$(tty)";
       GITHUB_TOKEN = "";
-      PATH = "$PATH:$HOME/.nix-profile/bin:/etc/profiles/per-user/zoeypessanha/bin:/run/current-system/sw/bin:$HOME/google-cloud-sdk/bin";
+      PATH = "$PATH:$HOME/.nix-profile/bin:/etc/profiles/per-user/zoeypessanha/bin:/run/current-system/sw/bin:$HOME/google-cloud-sdk/bin:$HOME/flutter/bin";
       EDITOR = "${pkgs.helix}/bin/hx";
     };
   };
