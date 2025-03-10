@@ -6,6 +6,11 @@
     nixpkgs-22.url = "flake:nixpkgs/nixos-22.11";
     unstable.url = "flake:nixpkgs/nixos-unstable";
 
+    wakatime-ls = {
+      url = "github:mrnossiom/wakatime-ls?rev=c17ce1329c26772b3518599e32f0a1921a3a01f8";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     nix-std.url = "github:chessai/nix-std";
 
     lix-module = {
@@ -43,7 +48,10 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     # Helix build from main
-    helix.url = "github:helix-editor/helix?ref=HEAD";
+    helix = {
+      url = "github:helix-editor/helix?ref=25.01.1";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = {nixpkgs, ...} @ inputs: let

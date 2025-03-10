@@ -1,7 +1,7 @@
 inputs: let
   inherit (builtins) tryEval fromJSON readFile;
   inherit (inputs) system;
-  inherit (inputs) home-manager nixpkgs unstable nixpkgs-22;
+  inherit (inputs) home-manager nixpkgs unstable nixpkgs-22 wakatime-ls;
   inherit (home-manager.lib) hm;
 
   pkgs = import nixpkgs {
@@ -27,32 +27,13 @@ inputs: let
     # ngrok
     config.allowUnfree = true;
   };
-
-  wakatime-ls = with pkgs;
-    rustPlatform.buildRustPackage rec {
-      pname = "wakatime-lsp";
-      version = "0.1.1";
-      src = fetchFromGitHub {
-        owner = "mrnossiom";
-        repo = "wakatime-ls";
-        rev = "546c1fb";
-        sha256 = "sha256-06SFScBBqOtFBg5VYbQXsa8E7HOKEOnBMdsnEJ5lL1A=";
-      };
-      cargoLock = {lockFile = "${src}/Cargo.lock";};
-      nativeBuildInputs = [makeWrapper];
-      buildInputs = [];
-      postFixup = ''
-        wrapProgram $out/bin/wakatime-ls \
-          --suffix PATH : ${lib.makeBinPath [wakatime]}
-      '';
-    };
 in rec {
   mkDarwinHost = host: let
     config = ../hosts + /${host}/custom.nix;
   in {
     inherit pkgs-22 host system;
     inherit (inputs) helix;
-    inherit wakatime-ls;
+    wakatime-ls = wakatime-ls.packages.${system}.default;
     next-ls = inputs.next-ls.packages.${system}.default;
     theme = import ./theme.nix {inherit pkgs;};
     nix-std = inputs.nix-std.lib;
