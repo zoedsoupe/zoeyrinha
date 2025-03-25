@@ -49,7 +49,7 @@
 
     # Helix build from main
     helix = {
-      url = "github:helix-editor/helix?ref=25.01.1";
+      url = "github:helix-editor/helix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
