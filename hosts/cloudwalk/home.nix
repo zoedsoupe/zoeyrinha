@@ -20,6 +20,7 @@
     ngrok
     tree
     git-filter-repo
+    slides
 
     # others
     any-nix-shell

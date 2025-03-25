@@ -76,7 +76,7 @@ in {
   config = mkIf cfg.enable {
     home.file = {
       "darkvoid.toml" = {
-        enable = true;
+        enable = false;
         target = ".config/helix/themes/darkvoid.toml";
         source = fetch-theme {
           path = /darkvoid.toml;
@@ -98,7 +98,7 @@ in {
       };
 
       "lucario.toml" = {
-        enable = true;
+        enable = false;
         target = ".config/helix/themes/lucario.toml";
         source = fetch-theme {
           path = /helix/lucario.toml;
