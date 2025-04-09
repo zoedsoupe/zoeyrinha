@@ -204,7 +204,10 @@ in {
             args = ["--stdio"];
             config = {
               provideFormatter = true;
-              css = {validate = {enable = true;};};
+              css = {
+                validate = {enable = true;};
+                lint = {unknownAtRules = "ignore";};
+              };
             };
           };
           vscode-html-language-server = mkIf html.enable {
