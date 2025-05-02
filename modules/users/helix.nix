@@ -10,6 +10,10 @@
 }: let
   inherit (theme) mk-nyxvamp-for;
   inherit (lib) mkEnableOption mkIf mkOption types;
+  inherit (pkgs.nodePackages) prettier vscode-langservers-extracted typescript-language-server;
+  vscode-lsp = vscode-langservers-extracted;
+  ts-server = typescript-language-server;
+
   cfg = custom-config.helix;
   elixir = cfg.languages.elixir;
   rust = cfg.languages.rust;
@@ -26,18 +30,8 @@
   typescript = cfg.languages.typescript;
   lua = cfg.languages.lua;
   python = cfg.languages.python;
-  vscode-lsp = pkgs.nodePackages.vscode-langservers-extracted;
 
   ocamlpkgs = pkgs.ocamlPackages;
-
-  fetch-theme = {
-    path,
-    repo,
-    owner,
-    sha256,
-    rev,
-  }:
-    pkgs.fetchFromGitHub {inherit repo owner sha256 rev;} + path;
 in {
   options.helix = {
     enable = mkEnableOption "Enbales Helix Editor";
@@ -75,18 +69,6 @@ in {
 
   config = mkIf cfg.enable {
     home.file = {
-      "darkvoid.toml" = {
-        enable = false;
-        target = ".config/helix/themes/darkvoid.toml";
-        source = fetch-theme {
-          path = /darkvoid.toml;
-          owner = "zoedsoupe";
-          repo = "dark-void-helix";
-          rev = "a181a2e";
-          sha256 = "zVXtBoTobtsP4VbE+9SpYHTYsvYg8IjIfaLSKwqM1Xs=";
-        };
-      };
-
       "nyxvamp-veil.toml" = {
         enable = true;
         target = ".config/helix/themes/nyxvamp-veil.toml";
@@ -94,18 +76,6 @@ in {
           tool = "helix";
           format = "toml";
           variant = "veil";
-        };
-      };
-
-      "lucario.toml" = {
-        enable = false;
-        target = ".config/helix/themes/lucario.toml";
-        source = fetch-theme {
-          path = /helix/lucario.toml;
-          owner = "raphamorim";
-          repo = "lucario";
-          rev = "df30a8e";
-          sha256 = "WUXbtQdgX/icFKxA+cJm2G7y5qImoCL9NgQN5WB4FvY=";
         };
       };
     };
@@ -179,13 +149,10 @@ in {
               };
             };
           };
-          typescript-language-server = let
-            ts-server = pkgs.nodePackages.typescript-language-server;
-          in
-            mkIf typescript.enable {
-              command = "${ts-server}/bin/typescript-language-server";
-              args = ["--stdio"];
-            };
+          typescript-language-server = mkIf typescript.enable {
+            command = "${ts-server}/bin/typescript-language-server";
+            args = ["--stdio"];
+          };
           lua-language-server.command = mkIf lua.enable "${pkgs.lua-language-server}/bin/lua-language-server";
           ocamllsp.command = mkIf ocaml.enable "${ocamlpkgs.ocaml-lsp}/bin/ocamllsp";
           nil.command = mkIf nix.enable "${pkgs.nil}/bin/nil";
@@ -228,13 +195,6 @@ in {
           };
           wakatime-lsp.command = "${wakatime-ls}/bin/wakatime-lsp";
           marksman.command = "${pkgs.marksman}/bin/marksman";
-          copilot = let
-            node = pkgs.nodejs;
-            copilot = unstable.copilot-language-server;
-          in {
-            command = "${node}/bin/node ${copilot}/dist/language-server.js";
-            args = ["--stdio"];
-          };
           ruff = mkIf python.enable {
             command = "${pkgs.ruff}/bin/ruff";
             args = ["server"];
@@ -257,7 +217,7 @@ in {
 
           ts = {
             formatter = {
-              command = "${pkgs.nodePackages.prettier}/bin/prettier";
+              command = "${prettier}/bin/prettier";
             };
           };
         in [
