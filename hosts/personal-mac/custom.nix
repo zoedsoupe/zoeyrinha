@@ -97,7 +97,7 @@
       DIRENV_LOG_FORMAT = "";
       GPG_TTY = "$(tty)";
       GITHUB_TOKEN = "";
-      PATH = "$PATH:$HOME/.nix-profile/bin:/etc/profiles/per-user/zoedsoupe/bin:/run/current-system/sw/bin";
+      PATH = "$HOME/.nix-profile/bin:/etc/profiles/per-user/zoedsoupe/bin:/run/current-system/sw/bin:$HOME/google-cloud-sdk/bin:$PATH";
       EDITOR = "${pkgs.helix}/bin/hx";
     };
   };
