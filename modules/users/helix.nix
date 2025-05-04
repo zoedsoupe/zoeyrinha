@@ -194,12 +194,12 @@ in {
             };
           };
           wakatime-lsp.command = "${wakatime-ls}/bin/wakatime-lsp";
-          # marksman.command = "${pkgs.marksman}/bin/marksman";
+          marksman.command = "${pkgs.marksman}/bin/marksman";
           ruff = mkIf python.enable {
             command = "${pkgs.ruff}/bin/ruff";
             args = ["server"];
           };
-          # tailwindcss-intellisense.command = "${pkgs.tailwindcss-language-server}/bin/tailwindcss-language-server";
+          tailwindcss-intellisense.command = "${pkgs.tailwindcss-language-server}/bin/tailwindcss-language-server";
         };
 
         language = let
@@ -216,8 +216,8 @@ in {
             };
           };
 
-          ts = mkIf typescript.enable {
-            formatter = {
+          ts = {
+            formatter = mkIf typescript.enable {
               command = "${prettier}/bin/prettier";
             };
           };
