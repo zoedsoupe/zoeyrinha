@@ -7,11 +7,18 @@ inputs: let
   inherit (nixpkgs.lib) nixosSystem;
   inherit (darwin.lib) darwinSystem;
 
+  unstable = import inputs.unstable {inherit system;};
+
+  nodejs-overlay = _: _: {
+    nodejs = unstable.nodejs_23;
+  };
+
   pkgs = import nixpkgs {
     inherit system;
     overlays = with inputs; [
       rust-overlay.overlays.default
       helix.overlays.default
+      nodejs-overlay
     ];
     # ngrok
     config.allowUnfree = true;

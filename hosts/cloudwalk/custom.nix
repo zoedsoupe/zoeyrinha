@@ -45,13 +45,13 @@
       clojure.enable = false;
       html.enable = false;
       css.enable = false;
-      json.enable = false;
+      json.enable = true;
       rust.enable = true;
       go.enable = true;
       nix.enable = true;
       nim.enable = false;
       zig.enable = false;
-      typescript.enable = false;
+      typescript.enable = true;
       gleam.enable = false;
       ocaml.enable = false;
       lua.enable = false;
