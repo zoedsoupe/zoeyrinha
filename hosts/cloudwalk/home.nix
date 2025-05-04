@@ -11,8 +11,7 @@
     gitAndTools.gh
 
     # tools
-    aider-chat
-    eza # exa fork
+    eza
     fd
     silver-searcher
     jq
@@ -20,7 +19,6 @@
     ngrok
     tree
     git-filter-repo
-    slides
 
     # others
     any-nix-shell

@@ -13,7 +13,7 @@
     font-family = "Dank Mono";
     theme = "catppuccin-macchiato";
   };
-  tmux.enable = true;
+  tmux.enable = false;
   neovim.enable = false;
   rio.enable = false;
   ghostty = {
@@ -45,13 +45,13 @@
       clojure.enable = false;
       html.enable = false;
       css.enable = false;
-      json.enable = true;
+      json.enable = false;
       rust.enable = true;
       go.enable = true;
       nix.enable = true;
       nim.enable = false;
       zig.enable = false;
-      typescript.enable = true;
+      typescript.enable = false;
       gleam.enable = false;
       ocaml.enable = false;
       lua.enable = false;
