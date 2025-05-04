@@ -18,25 +18,18 @@
 
     gnupg
     gitAndTools.gh
-    ngrok
-    tmate
 
     # tools
     bat
     eza # exa fork
     fd
     silver-searcher
-    exercism
     pass
     jq
-    glow
     flyctl
-    earthly
-    croc
     ngrok
     tree
     git-filter-repo
-    mise
     just
 
     # others
