@@ -10,7 +10,7 @@ inputs: let
   unstable = import inputs.unstable {inherit system;};
 
   nodejs-overlay = _: _: {
-    nodejs = unstable.nodejs_23;
+    nodejs = unstable.nodejs_24;
   };
 
   pkgs = import nixpkgs {
