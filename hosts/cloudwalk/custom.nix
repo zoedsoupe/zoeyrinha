@@ -31,7 +31,7 @@
   zellij.enable = false;
   zoxide.enable = true;
   zed = {
-    enable = true;
+    enable = false;
     theme = "NyxVamp Veil";
     font = "Monaspace Neon";
     elixir.lsp = "next-ls";
@@ -106,7 +106,7 @@
       DIRENV_LOG_FORMAT = "";
       GPG_TTY = "$(tty)";
       GITHUB_TOKEN = "";
-      PATH = "$PATH:$HOME/.nix-profile/bin:/etc/profiles/per-user/zoeypessanha/bin:/run/current-system/sw/bin:$HOME/google-cloud-sdk/bin:$HOME/flutter/bin";
+      PATH = "$PATH:$HOME/.nix-profile/bin:/etc/profiles/per-user/zoeypessanha/bin:/run/current-system/sw/bin:$HOME/google-cloud-sdk/bin:$HOME/flutter/bin:$HOME/.orbstack/bin";
       EDITOR = "${pkgs.helix}/bin/hx";
     };
   };
