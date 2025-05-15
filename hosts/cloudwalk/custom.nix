@@ -92,6 +92,7 @@
     enable = true;
     profileExtra = ''
       eval "$(/opt/homebrew/bin/brew shellenv)"
+      export DOCKER_HOST=$(docker context inspect | jq '.[] | select(.Name == "'$(docker context show)'") | .Endpoints.docker.Host' -r)
       ${pkgs.krabby}/bin/krabby random 2> /dev/null
     '';
     history = {

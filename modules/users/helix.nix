@@ -1,14 +1,12 @@
 {
   pkgs,
   lib,
-  theme,
   custom-config,
   unstable,
   next-ls,
   wakatime-ls,
   ...
 }: let
-  inherit (theme) mk-nyxvamp-for;
   inherit (lib) mkEnableOption mkIf mkOption types;
   inherit (pkgs.nodePackages) prettier vscode-langservers-extracted typescript-language-server;
   vscode-lsp = vscode-langservers-extracted;
@@ -68,18 +66,6 @@ in {
   };
 
   config = mkIf cfg.enable {
-    home.file = {
-      "nyxvamp-veil.toml" = {
-        enable = true;
-        target = ".config/helix/themes/nyxvamp-veil.toml";
-        source = mk-nyxvamp-for {
-          tool = "helix";
-          format = "toml";
-          variant = "veil";
-        };
-      };
-    };
-
     programs.helix = {
       inherit (cfg) enable;
       settings = {
@@ -141,12 +127,8 @@ in {
             command = "${next-ls}/bin/nextls";
             args = ["--stdio=true"];
             config = {
-              extensions = {
-                credo.enable = true;
-              };
-              experimental = {
-                completions.enable = true;
-              };
+              extensions = {credo.enable = false;};
+              experimental = {completions.enable = false;};
             };
           };
           typescript-language-server = mkIf typescript.enable {
@@ -203,13 +185,6 @@ in {
         };
 
         language = let
-          mix = {
-            formatter = {
-              command = "${unstable.elixir}/bin/mix";
-              args = ["format" "-"];
-            };
-          };
-
           n = {
             formatter = {
               command = "${pkgs.alejandra}/bin/alejandra";
@@ -220,6 +195,11 @@ in {
             formatter = mkIf typescript.enable {
               command = "${prettier}/bin/prettier";
             };
+          };
+
+          next = {
+            name = "nextls";
+            except-features = ["completion" "format"];
           };
         in [
           (mkIf ocaml.enable {
@@ -244,25 +224,22 @@ in {
             language-servers = ["marksman" "wakatime-lsp"];
           }
           (mkIf elixir.enable {
-            inherit (mix) formatter;
             name = "elixir";
             auto-format = false;
             language-servers = [
-              "nextls"
+              next
               "wakatime-lsp"
             ];
           })
           (mkIf elixir.enable {
-            inherit (mix) formatter;
             name = "heex";
             auto-format = false;
-            language-servers = ["next-ls" "emmet-ls" "tailwindcss-intellisense" "wakatime-lsp"];
+            language-servers = [next "emmet-ls" "tailwindcss-intellisense" "wakatime-lsp"];
           })
           (mkIf elixir.enable {
-            inherit (mix) formatter;
             name = "eex";
             auto-format = false;
-            language-servers = ["next-ls" "emmet-ls" "wakatime-lsp"];
+            language-servers = [next "emmet-ls" "wakatime-lsp"];
           })
           (mkIf nix.enable {
             inherit (n) formatter;
