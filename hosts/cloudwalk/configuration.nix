@@ -24,7 +24,7 @@
       autoUpdate = true;
       upgrade = true;
     };
-    brews = ["ncdu"];
+    brews = ["ncdu" "colima" "docker" "docker-compose" "docker-Buildx"];
     casks = ["warp"];
   };
 
