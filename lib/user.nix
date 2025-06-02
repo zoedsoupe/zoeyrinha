@@ -4,11 +4,42 @@ inputs: let
   inherit (inputs) home-manager nixpkgs unstable nixpkgs-22 wakatime-ls;
   inherit (home-manager.lib) hm;
 
+  # i want with so much paciency...
+  next-ls-overlay = self: super: let
+    beamPackages = self.beam_minimal.packages.erlang_27;
+    elixir = super.elixir_1_18;
+  in {
+    next-ls = beamPackages.mixRelease rec {
+      pname = "next-ls";
+      mixEnv = "prod";
+      removeCookie = false;
+      version = "0.23.3";
+      src = self.fetchFromGitHub {
+        owner = "elixir-tools";
+        repo = "next-ls";
+        rev = "v0.23.3";
+        sha256 = "sha256-/q7Uosh/FroVcvT196Zj+Krn4SAEGCcaH6aAlY8Dtgk=";
+      };
+      mixFodDeps = beamPackages.fetchMixDeps {
+        inherit src version elixir;
+        pname = "next-ls-deps";
+        hash = "";
+        mixEnv = "prod";
+      };
+      installPhase = ''
+        mix release --no-deps-check --path $out plain
+        echo "$out/bin/plain eval \"System.no_halt(true); Application.ensure_all_started(:next_ls)\" \"\$@\"" > "$out/bin/nextls"
+        chmod +x "$out/bin/nextls"
+      '';
+    };
+  };
+
   pkgs = import nixpkgs {
     inherit system;
     overlays = with inputs; [
       rust-overlay.overlays.default
       helix.overlays.default
+      elixir-overlay.overlays.default
     ];
     # ngrok
     config.allowUnfree = true;

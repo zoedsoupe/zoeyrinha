@@ -1,7 +1,7 @@
 {pkgs, ...}: {
   system.stateVersion = 5;
+  system.primaryUser = "zoeypessanha";
 
-  nix.configureBuildUsers = true;
   nix.optimise.automatic = true;
 
   nix.extraOptions = ''
@@ -10,13 +10,11 @@
 
   ids.gids.nixbld = 350;
 
-  services.nix-daemon.enable = true;
-
   system.keyboard.enableKeyMapping = true;
   system.keyboard.remapCapsLockToEscape = true;
 
   # Add ability to used TouchID for sudo authentication
-  security.pam.enableSudoTouchIdAuth = true;
+  security.pam.services.sudo_local.touchIdAuth = true;
 
   homebrew = {
     enable = true;

@@ -3,7 +3,6 @@
   lib,
   custom-config,
   unstable,
-  next-ls,
   wakatime-ls,
   ...
 }: let
@@ -28,7 +27,6 @@
   typescript = cfg.languages.typescript;
   lua = cfg.languages.lua;
   python = cfg.languages.python;
-
   ocamlpkgs = pkgs.ocamlPackages;
 in {
   options.helix = {
@@ -124,7 +122,7 @@ in {
             command = "${unstable.gleam}/bin/gleam";
           };
           nextls = mkIf elixir.enable {
-            command = "${next-ls}/bin/nextls";
+            command = "${pkgs.next-ls}/bin/nextls";
             args = ["--stdio=true"];
             config = {
               extensions = {credo.enable = false;};

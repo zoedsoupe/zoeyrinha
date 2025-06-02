@@ -3,8 +3,35 @@
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Build Commands
-- Build home configuration: `nix build .#homeManagerConfigurations.<username>.activationPackage`
-- Build minimal ISO: `nix build .#installMedia.minimal.config.system.build.isoImage`
+- Quick build script: `./nix-build <target>` where target is:
+  - `personal` - Build personal Mac configuration
+  - `cloudwalk` - Build CloudWalk Mac configuration
+  - `iso` - Build minimal ISO
+- Build Darwin (macOS) configuration manually: `darwin-rebuild switch --flake .#<hostname>-mac`
+  - Examples: `darwin-rebuild switch --flake .#cloudwalk-mac` or `.#zoedsoupe-mac`
+- Build minimal ISO manually: `nix build .#installMedia.minimal.config.system.build.isoImage`
+
+## Repository Architecture
+
+### Flake Structure
+The repository uses Nix flakes with modular architecture:
+- **lib/**: Core helper functions
+  - `host.nix`: Functions for creating Darwin/NixOS systems (`mkDarwin`, `mkHost`, `mkISO`)
+  - `user.nix`: User configuration helpers (`mkDarwinUser`, `mkHMUser`, `mkSystemUser`)
+  - `theme.nix`: Theming configuration
+- **hosts/**: Per-machine configurations
+  - Each host has: `configuration.nix`, `custom.nix`, `home.nix`
+- **modules/**: Reusable configuration modules
+  - `users/`: User-specific program configurations
+  - `iso/`: ISO build modules
+
+### Key Architectural Patterns
+1. **Darwin System Creation**: Uses `mkDarwin` helper which:
+   - Accepts host and user parameters
+   - Integrates home-manager, lix-module, and custom overlays
+   - Auto-links macOS applications via mkalias
+2. **Module System**: All user programs (terminal emulators, editors, etc.) are toggle-able via `enable` options
+3. **Font Management**: Centralized font configuration in terminal modules with variant support
 
 ## Code Style Guidelines
 1. **Nix Format**: Use 2-space indentation for all .nix files
