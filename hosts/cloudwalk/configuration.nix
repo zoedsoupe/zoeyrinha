@@ -25,7 +25,7 @@
       upgrade = true;
     };
     brews = ["ncdu" "colima" "docker" "docker-compose" "docker-Buildx"];
-    casks = ["warp"];
+    casks = ["warp" "ghostty"];
   };
 
   users.users.zoeypessanha = {
