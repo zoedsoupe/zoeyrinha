@@ -1,29 +1,114 @@
+# Ghostty Configuration - Warp-like Experience
 # waiting for https://github.com/nix-community/home-manager/pull/6235
 
+# Font Configuration
 font-size = 17
-
-background-opacity = 0.8
 adjust-cursor-thickness = 2
-
-macos-titlebar-style = hidden
-window-decoration = true
-
-# Unicode and glyph settings
-font-codepoint-map = "U+E0A0-U+E0A2=MonoLisa,U+E0B0-U+E0B2=MonoLisa"
-
 adjust-cell-height = "65%"
 adjust-font-baseline = "2%"
 adjust-cursor-height = 0
-
-window-padding-x = 5
-window-padding-y = 4
-window-height = 21
-window-width = 105
-
-grapheme-width-method = "unicode"
-adjust-cursor-height = "110%"
 adjust-strikethrough-position = "-2%"
 
+# Window Styling
+background-opacity = 0.8
+macos-titlebar-style = hidden
+window-decoration = true
+window-padding-x = 10
+window-padding-y = 8
+window-height = 30
+window-width = 120
+confirm-close-surface = false
+
+# Theme
+theme = "nyxvamp-veil"
+
+# Unicode and glyph settings
+font-codepoint-map = "U+E0A0-U+E0A2=MonoLisa,U+E0B0-U+E0B2=MonoLisa"
+grapheme-width-method = "unicode"
+adjust-cursor-height = "110%"
 freetype-load-flags = true
 
-theme = "nyxvamp-veil"
+# Shell Integration (for better UX)
+shell-integration = detect
+shell-integration-features = cursor,sudo,title
+
+# macOS Configuration
+macos-option-as-alt = left
+
+# Clipboard
+clipboard-read = allow
+clipboard-write = allow
+clipboard-paste-protection = true
+clipboard-trim-trailing-spaces = true
+
+# Scrollback
+scrollback-limit = 10000
+
+# Mouse
+mouse-hide-while-typing = true
+mouse-scroll-multiplier = 3
+
+# Cursor
+cursor-style = block
+cursor-style-blink = true
+
+# Command execution
+command = ""
+
+# Key Bindings - Warp-like experience
+# Tab Management
+keybind = cmd+t=new_tab
+keybind = cmd+w=close_tab
+keybind = cmd+shift+right_bracket=next_tab
+keybind = cmd+shift+left_bracket=previous_tab
+keybind = cmd+one=goto_tab:1
+keybind = cmd+two=goto_tab:2
+keybind = cmd+three=goto_tab:3
+keybind = cmd+four=goto_tab:4
+keybind = cmd+five=goto_tab:5
+keybind = cmd+six=goto_tab:6
+keybind = cmd+seven=goto_tab:7
+keybind = cmd+eight=goto_tab:8
+keybind = cmd+nine=goto_tab:9
+
+# Split Pane Management (Multiplexer)
+keybind = cmd+d=new_split:right
+keybind = cmd+shift+d=new_split:down
+keybind = cmd+alt+w=close_surface
+
+# Navigation between splits
+keybind = cmd+alt+left=goto_split:left
+keybind = cmd+alt+right=goto_split:right
+keybind = cmd+alt+up=goto_split:top
+keybind = cmd+alt+down=goto_split:bottom
+keybind = cmd+left_bracket=goto_split:previous
+keybind = cmd+right_bracket=goto_split:next
+
+# Pane resizing
+keybind = cmd+ctrl+left=resize_split:left,10
+keybind = cmd+ctrl+right=resize_split:right,10
+keybind = cmd+ctrl+up=resize_split:up,10
+keybind = cmd+ctrl+down=resize_split:down,10
+keybind = cmd+ctrl+zero=equalize_splits
+
+# Text Selection and Clipboard
+keybind = cmd+a=select_all
+keybind = cmd+c=copy_to_clipboard
+keybind = cmd+v=paste_from_clipboard
+
+# Font Size
+keybind = cmd+equal=increase_font_size:1
+keybind = cmd+minus=decrease_font_size:1
+keybind = cmd+zero=reset_font_size
+
+# Terminal Control
+keybind = cmd+k=clear_screen
+keybind = cmd+r=reload_config
+keybind = cmd+q=quit
+keybind = cmd+shift+n=new_window
+
+# Fullscreen
+keybind = cmd+enter=toggle_fullscreen
+
+# Quick Actions
+keybind = cmd+p=toggle_quick_terminal
