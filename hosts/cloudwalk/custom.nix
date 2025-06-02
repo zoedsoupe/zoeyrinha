@@ -17,7 +17,7 @@
   neovim.enable = false;
   rio.enable = false;
   ghostty = {
-    enable = false;
+    enable = true;
     font-name = "Monaspace Neon";
   };
   gh.enable = true;
