@@ -11,13 +11,18 @@ adjust-strikethrough-position = "-2%"
 
 # Window Styling
 background-opacity = 0.8
-macos-titlebar-style = hidden
 window-decoration = true
 window-padding-x = 10
 window-padding-y = 8
 window-height = 30
 window-width = 120
 confirm-close-surface = false
+
+# MacOS specific
+macos-titlebar-style = transparent
+macos-titlebar-proxy-icon = hidden
+macos-auto-secure-input = true
+macos-secure-input-indication = true
 
 # Theme
 theme = "nyxvamp-veil"
@@ -42,18 +47,15 @@ clipboard-paste-protection = true
 clipboard-trim-trailing-spaces = true
 
 # Scrollback
-scrollback-limit = 10000
+scrollback-limit = 20000
 
 # Mouse
 mouse-hide-while-typing = true
 mouse-scroll-multiplier = 3
 
 # Cursor
-cursor-style = block
+cursor-style = bar
 cursor-style-blink = true
-
-# Command execution
-command = ""
 
 # Key Bindings - Warp-like experience
 # Tab Management

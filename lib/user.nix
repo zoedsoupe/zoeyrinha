@@ -4,7 +4,7 @@ inputs: let
   inherit (inputs) home-manager nixpkgs unstable nixpkgs-22 wakatime-ls;
   inherit (home-manager.lib) hm;
 
-  # i want with so much paciency...
+  # i wasn't with so much paciency...
   next-ls-overlay = self: super: let
     beamPackages = self.beam_minimal.packages.erlang_27;
     elixir = super.elixir_1_18;
@@ -40,6 +40,7 @@ inputs: let
       rust-overlay.overlays.default
       helix.overlays.default
       elixir-overlay.overlays.default
+      next-ls-overlay
     ];
     # ngrok
     config.allowUnfree = true;
