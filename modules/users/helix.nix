@@ -173,7 +173,7 @@ in {
               json = {validate = {enable = true;};};
             };
           };
-          wakatime-lsp.command = "${wakatime-ls}/bin/wakatime-lsp";
+          wakatime-ls.command = "${wakatime-ls}/bin/wakatime-ls";
           marksman.command = "${pkgs.marksman}/bin/marksman";
           ruff = mkIf python.enable {
             command = "${pkgs.ruff}/bin/ruff";
@@ -219,31 +219,31 @@ in {
           })
           {
             name = "markdown";
-            language-servers = ["marksman" "wakatime-lsp"];
+            language-servers = ["marksman" "wakatime-ls"];
           }
           (mkIf elixir.enable {
             name = "elixir";
             auto-format = false;
             language-servers = [
               next
-              "wakatime-lsp"
+              "wakatime-ls"
             ];
           })
           (mkIf elixir.enable {
             name = "heex";
             auto-format = false;
-            language-servers = [next "emmet-ls" "tailwindcss-intellisense" "wakatime-lsp"];
+            language-servers = [next "emmet-ls" "tailwindcss-intellisense" "wakatime-ls"];
           })
           (mkIf elixir.enable {
             name = "eex";
             auto-format = false;
-            language-servers = [next "emmet-ls" "wakatime-lsp"];
+            language-servers = [next "emmet-ls" "wakatime-ls"];
           })
           (mkIf nix.enable {
             inherit (n) formatter;
             name = "nix";
             auto-format = true;
-            language-servers = ["nil" "wakatime-lsp"];
+            language-servers = ["nil" "wakatime-ls"];
           })
           (mkIf go.enable {
             name = "go";
