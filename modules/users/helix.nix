@@ -121,14 +121,14 @@ in {
           gleam = mkIf gleam.enable {
             command = "${unstable.gleam}/bin/gleam";
           };
-          nextls = mkIf elixir.enable {
-            command = "${pkgs.next-ls}/bin/nextls";
-            args = ["--stdio=true"];
-            config = {
-              extensions = {credo.enable = false;};
-              experimental = {completions.enable = false;};
-            };
-          };
+          # nextls = mkIf elixir.enable {
+          #   command = "${pkgs.next-ls}/bin/nextls";
+          #   args = ["--stdio=true"];
+          #   config = {
+          #     extensions = {credo.enable = false;};
+          #     experimental = {completions.enable = false;};
+          #   };
+          # };
           typescript-language-server = mkIf typescript.enable {
             command = "${ts-server}/bin/typescript-language-server";
             args = ["--stdio"];
@@ -196,7 +196,7 @@ in {
           };
 
           next = {
-            name = "nextls";
+            name = "lexical-lsp";
             except-features = ["completion" "format"];
           };
         in [

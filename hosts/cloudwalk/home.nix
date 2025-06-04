@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  unstable,
+  ...
+}: {
   home.stateVersion = "22.11";
   home.homeDirectory = "/Users/zoeypessanha";
 
@@ -19,6 +23,7 @@
     ngrok
     tree
     git-filter-repo
+    ripgrep
 
     # others
     any-nix-shell
