@@ -3,7 +3,6 @@
   lib,
   custom-config,
   unstable,
-  next-ls,
   wakatime-ls,
   ...
 }: let
@@ -28,7 +27,6 @@
   typescript = cfg.languages.typescript;
   lua = cfg.languages.lua;
   python = cfg.languages.python;
-
   ocamlpkgs = pkgs.ocamlPackages;
 in {
   options.helix = {
@@ -123,14 +121,14 @@ in {
           gleam = mkIf gleam.enable {
             command = "${unstable.gleam}/bin/gleam";
           };
-          nextls = mkIf elixir.enable {
-            command = "${next-ls}/bin/nextls";
-            args = ["--stdio=true"];
-            config = {
-              extensions = {credo.enable = false;};
-              experimental = {completions.enable = false;};
-            };
-          };
+          # nextls = mkIf elixir.enable {
+          #   command = "${pkgs.next-ls}/bin/nextls";
+          #   args = ["--stdio=true"];
+          #   config = {
+          #     extensions = {credo.enable = false;};
+          #     experimental = {completions.enable = false;};
+          #   };
+          # };
           typescript-language-server = mkIf typescript.enable {
             command = "${ts-server}/bin/typescript-language-server";
             args = ["--stdio"];
@@ -175,7 +173,7 @@ in {
               json = {validate = {enable = true;};};
             };
           };
-          wakatime-lsp.command = "${wakatime-ls}/bin/wakatime-lsp";
+          wakatime-ls.command = "${wakatime-ls}/bin/wakatime-ls";
           marksman.command = "${pkgs.marksman}/bin/marksman";
           ruff = mkIf python.enable {
             command = "${pkgs.ruff}/bin/ruff";
@@ -198,7 +196,7 @@ in {
           };
 
           next = {
-            name = "nextls";
+            name = "lexical-lsp";
             except-features = ["completion" "format"];
           };
         in [
@@ -221,31 +219,31 @@ in {
           })
           {
             name = "markdown";
-            language-servers = ["marksman" "wakatime-lsp"];
+            language-servers = ["marksman" "wakatime-ls"];
           }
           (mkIf elixir.enable {
             name = "elixir";
             auto-format = false;
             language-servers = [
               next
-              "wakatime-lsp"
+              "wakatime-ls"
             ];
           })
           (mkIf elixir.enable {
             name = "heex";
             auto-format = false;
-            language-servers = [next "emmet-ls" "tailwindcss-intellisense" "wakatime-lsp"];
+            language-servers = [next "emmet-ls" "tailwindcss-intellisense" "wakatime-ls"];
           })
           (mkIf elixir.enable {
             name = "eex";
             auto-format = false;
-            language-servers = [next "emmet-ls" "wakatime-lsp"];
+            language-servers = [next "emmet-ls" "wakatime-ls"];
           })
           (mkIf nix.enable {
             inherit (n) formatter;
             name = "nix";
             auto-format = true;
-            language-servers = ["nil" "wakatime-lsp"];
+            language-servers = ["nil" "wakatime-ls"];
           })
           (mkIf go.enable {
             name = "go";
