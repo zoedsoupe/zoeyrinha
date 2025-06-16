@@ -9,6 +9,7 @@ inputs: let
     overlays = with inputs; [
       rust-overlay.overlays.default
       helix.overlays.default
+      elixir-overlay.overlays.default
     ];
     # ngrok
     config.allowUnfree = true;
