@@ -1,7 +1,5 @@
 <h1 align="center">
   <br />
-  <img src="./assets/logo.png" alt="Zoey's Logo" width="300">
-  <br />
   Zoey's Dotfiles
   <br />
 </h1>
@@ -17,34 +15,51 @@
 </div>
 
 <p align="center">
-  <a href="#programs">Programs</a> •
-  <a href="#screenshots">Screenshots</a> •
+  <a href="#features">Features</a> •
   <a href="https://github.com/zoedsoupe/copper" target="_blank">Neovim</a> •
-  <a href="#how-to-use">How to use</a>
+  <a href="#how-to-use">How to use</a> •
+  <a href="#utilities">Utilities</a>
 </p>
 
 This repo is a fresh start from old config [nixnad](https://github.com/zoedsoupe/nixnad).
 
-<a id="programs" />
+<a id="features" />
 
-## You'll be installing...
-**TODO**
+## Features
 
-## Screenshots
-**TODO**
+- **macOS Support**: Full Darwin/nix-darwin configuration with automatic app linking
+- **Modular Configuration**: Each program has its own toggleable module
+- **Multiple Terminal Emulators**: Ghostty, Alacritty, Kitty, Rio, Wezterm configured
+- **Development Tools**: Helix, Neovim, Zed editors with custom configurations
+- **Shell Setup**: Fish and Zsh with Starship prompt
+- **CLI Utilities**: fzf, zoxide, bat, xplr, direnv, and more
+- **ISO Builder**: Create minimal NixOS installation media
 
 ## How to use
 
-To build the home configuration you can run:
+### Quick Build Script
 
-```sh dark
-nix build <flake-url>#homeManagerConfigurations.zoedsoupe.activationPackage
+The easiest way to build configurations is using the `nix-build` script:
+
+```sh
+./nix-build personal   # Build personal Mac configuration
+./nix-build cloudwalk  # Build CloudWalk Mac configuration  
+./nix-build iso        # Build minimal ISO
 ```
 
-If you want to build a bootable ISO, with minimal NixOS config, run:
+### Manual Build Commands
 
-```sh dark
-nix build <flake-url>#installMedia.minimal.config.system.build.isoImage
+#### macOS (Darwin) Configuration
+
+```sh
+darwin-rebuild switch --flake .#cloudwalk-mac  # For CloudWalk machine
+darwin-rebuild switch --flake .#zoedsoupe-mac  # For personal machine
 ```
 
-> If you're building locally, `<flake-url>` will be `.`!
+#### Minimal ISO
+
+```sh
+nix build .#installMedia.minimal.config.system.build.isoImage
+```
+
+The ISO will be available at `./result/iso/`.

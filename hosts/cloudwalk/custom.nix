@@ -17,7 +17,7 @@
   neovim.enable = false;
   rio.enable = false;
   ghostty = {
-    enable = false;
+    enable = true;
     font-name = "Monaspace Neon";
   };
   gh.enable = true;
@@ -107,8 +107,9 @@
       DIRENV_LOG_FORMAT = "";
       GPG_TTY = "$(tty)";
       GITHUB_TOKEN = "";
-      PATH = "$PATH:$HOME/.nix-profile/bin:/etc/profiles/per-user/zoeypessanha/bin:/run/current-system/sw/bin:$HOME/google-cloud-sdk/bin:$HOME/flutter/bin:$HOME/.orbstack/bin";
+      PATH = "$PATH:$HOME/.nix-profile/bin:/etc/profiles/per-user/zoeypessanha/bin:/run/current-system/sw/bin:$HOME/google-cloud-sdk/bin:$HOME/.pub-cache/bin:$HOME/flutter/bin";
       EDITOR = "${pkgs.helix}/bin/hx";
+      FLUTTER_ROOT = "$HOME/flutter";
     };
   };
 }

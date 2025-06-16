@@ -36,7 +36,7 @@ in {
   config = mkIf cfg.enable {
     programs.zsh = {
       inherit (cfg) enable sessionVariables profileExtra;
-      initExtra = ''
+      initContent = ''
         PROMPT="$\{PROMPT\}"$'\n'
         ${pkgs.any-nix-shell}/bin/any-nix-shell zsh --info-right | source /dev/stdin
       '';

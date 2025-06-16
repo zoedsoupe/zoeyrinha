@@ -2,7 +2,7 @@
   description = "Zoey's personal config, aka dotfiles";
 
   inputs = {
-    nixpkgs.url = "flake:nixpkgs/nixos-24.11";
+    nixpkgs.url = "flake:nixpkgs/nixos-25.05";
     nixpkgs-22.url = "flake:nixpkgs/nixos-22.11";
     unstable.url = "flake:nixpkgs/nixos-unstable";
 
@@ -26,13 +26,9 @@
     };
 
     darwin = {
-      url = "github:lnl7/nix-darwin/nix-darwin-24.11";
-      inputs.nixpkgs.follows = "unstable";
+      url = "github:lnl7/nix-darwin/nix-darwin-25.05";
+      inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    # ghostty = {
-    #   url = "github:ghostty-org/ghostty";
-    # };
 
     # My custom NeoVim config
     # 26/09/2024 - using helix/zed
@@ -43,10 +39,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    next-ls.url = "github:elixir-tools/next-ls?ref=v0.23.3";
-
     # need to solve this about fcitx-engines
-    home-manager.url = "github:nix-community/home-manager?ref=release-24.11";
+    home-manager.url = "github:nix-community/home-manager?ref=release-25.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     # Helix build from main
