@@ -25,7 +25,7 @@
       upgrade = true;
     };
     brews = ["ncdu"];
-    casks = ["warp"];
+    casks = ["warp" "ghostty"];
   };
 
   users.users.zoedsoupe = {
