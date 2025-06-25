@@ -1,4 +1,8 @@
-{pkgs, ...}:
+{
+  pkgs,
+  unstable,
+  ...
+}:
 # let
 #   neovim = pkgs.callPackage ./neovim.nix {inherit (pkgs) mkNeovim;};
 # in
@@ -31,6 +35,7 @@
     tree
     git-filter-repo
     just
+    unstable.claude-code
 
     # others
     any-nix-shell
