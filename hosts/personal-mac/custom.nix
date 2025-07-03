@@ -14,14 +14,11 @@
     theme = "catppuccin-macchiato";
   };
   tmux.enable = true;
-  neovim.enable = false;
-  rio.enable = false;
   ghostty = {
     enable = true;
     font-name = "MonaLisa";
   };
   gh.enable = true;
-  presenterm.enable = true;
   starship = {
     enable = true;
     catppuccin-theme = "macchiato";
@@ -58,9 +55,11 @@
       python.enable = false;
       elixir = {
         enable = true;
-        # except lsp features
-        # lsp-features = ["completion" "format" "code-action"];
-        lsp-features = [];
+        lsp = {
+          enabled = true;
+          name = "lexical-lsp";
+          except-features = ["completion" "format"];
+        };
       };
     };
   };

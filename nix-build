@@ -23,7 +23,7 @@ case "$1" in
      ;;
 
   "iso")
-    nix build .#installMedia.minimal.config.system.build.isoImage "${@:2}"
+    nix build .#nixosConfigurations.minimal-iso.config.system.build.isoImage "${@:2}"
     ;;
 
   *)

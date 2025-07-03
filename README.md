@@ -16,7 +16,6 @@
 
 <p align="center">
   <a href="#features">Features</a> •
-  <a href="https://github.com/zoedsoupe/copper" target="_blank">Neovim</a> •
   <a href="#how-to-use">How to use</a> •
   <a href="#utilities">Utilities</a>
 </p>
@@ -29,8 +28,8 @@ This repo is a fresh start from old config [nixnad](https://github.com/zoedsoupe
 
 - **macOS Support**: Full Darwin/nix-darwin configuration with automatic app linking
 - **Modular Configuration**: Each program has its own toggleable module
-- **Multiple Terminal Emulators**: Ghostty, Alacritty, Kitty, Rio, Wezterm configured
-- **Development Tools**: Helix, Neovim, Zed editors with custom configurations
+- **Multiple Terminal Emulators**: Ghostty, Alacritty, Kitty, Wezterm configured
+- **Development Tools**: Helix, Zed editors with custom configurations
 - **Shell Setup**: Fish and Zsh with Starship prompt
 - **CLI Utilities**: fzf, zoxide, bat, xplr, direnv, and more
 - **ISO Builder**: Create minimal NixOS installation media

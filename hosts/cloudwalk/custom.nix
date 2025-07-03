@@ -15,13 +15,11 @@
   };
   tmux.enable = false;
   neovim.enable = false;
-  rio.enable = false;
   ghostty = {
     enable = true;
     font-name = "Monaspace Neon";
   };
   gh.enable = true;
-  presenterm.enable = false;
   starship = {
     enable = true;
     catppuccin-theme = "macchiato";
@@ -58,8 +56,7 @@
       python.enable = true;
       elixir = {
         enable = true;
-        # except lsp features
-        lsp-features = [];
+        lsp.enable = false;
       };
     };
   };

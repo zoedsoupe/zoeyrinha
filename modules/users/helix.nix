@@ -41,9 +41,16 @@ in {
     languages = {
       elixir = {
         enable = mkEnableOption "Enables Elixir Support";
-        lsp-features = mkOption {
-          required = true;
+        lsp.enable = mkEnableOption "Enables Elixir LSP support";
+        lsp.name = mkOption {
+          required = false;
+          default = "lexical-lsp";
+          type = types.str;
+        };
+        lsp.except-features = mkOption {
+          required = false;
           type = types.listOf types.str;
+          default = ["completion" "format"];
         };
       };
       python.enabe = mkEnableOption "Enables Python Support";
@@ -117,18 +124,21 @@ in {
       };
 
       languages = {
-        language-server = {
+        language-server = let
+          next-enabled = elixir.enable && elixir.lsp.enable && elixir.lsp.name == "nextls";
+          lexical-enabled = elixir.enable && elixir.lsp.enable && elixir.lsp.name == "lexical-lsp";
+        in {
           gleam = mkIf gleam.enable {
             command = "${unstable.gleam}/bin/gleam";
           };
-          # nextls = mkIf elixir.enable {
-          #   command = "${pkgs.next-ls}/bin/nextls";
-          #   args = ["--stdio=true"];
-          #   config = {
-          #     extensions = {credo.enable = false;};
-          #     experimental = {completions.enable = false;};
-          #   };
-          # };
+          nextls = mkIf next-enabled {
+            command = "${pkgs.next-ls}/bin/nextls";
+            args = ["--stdio=true"];
+            config = {
+              extensions = {credo.enable = false;};
+              experimental = {completions.enable = false;};
+            };
+          };
           typescript-language-server = mkIf typescript.enable {
             command = "${ts-server}/bin/typescript-language-server";
             args = ["--stdio"];
@@ -136,7 +146,9 @@ in {
           lua-language-server.command = mkIf lua.enable "${pkgs.lua-language-server}/bin/lua-language-server";
           ocamllsp.command = mkIf ocaml.enable "${ocamlpkgs.ocaml-lsp}/bin/ocamllsp";
           nil.command = mkIf nix.enable "${pkgs.nil}/bin/nil";
-          lexical-lsp.command = mkIf elixir.enable "${unstable.lexical}/bin/lexical";
+          lexical-lsp = mkIf lexical-enabled {
+            command = "${unstable.lexical}/bin/lexical";
+          };
           zls.command = mkIf zig.enable "${pkgs.zls}/bin/zls";
           nimlsp.command = mkIf nim.enable "${pkgs.nimlsp}/bin/nimlsp";
           clojure-lsp.command = mkIf clojure.enable "${pkgs.clojure-lsp}/bin/clojure-lsp";
@@ -195,10 +207,14 @@ in {
             };
           };
 
-          next = {
-            name = "lexical-lsp";
-            except-features = ["completion" "format"];
+          elixir-lsp = {
+            inherit (elixir.lsp) except-features name;
           };
+
+          maybe-elixir-lsp =
+            if elixir.enable && elixir.lsp.enable
+            then [elixir-lsp]
+            else [];
         in [
           (mkIf ocaml.enable {
             name = "ocaml";
@@ -224,20 +240,17 @@ in {
           (mkIf elixir.enable {
             name = "elixir";
             auto-format = false;
-            language-servers = [
-              next
-              "wakatime-ls"
-            ];
+            language-servers = ["wakatime-ls"] ++ maybe-elixir-lsp;
           })
           (mkIf elixir.enable {
             name = "heex";
             auto-format = false;
-            language-servers = [next "emmet-ls" "tailwindcss-intellisense" "wakatime-ls"];
+            language-servers = ["emmet-ls" "tailwindcss-intellisense" "wakatime-ls"] ++ maybe-elixir-lsp;
           })
           (mkIf elixir.enable {
             name = "eex";
             auto-format = false;
-            language-servers = [next "emmet-ls" "wakatime-ls"];
+            language-servers = ["emmet-ls" "wakatime-ls"] ++ maybe-elixir-lsp;
           })
           (mkIf nix.enable {
             inherit (n) formatter;

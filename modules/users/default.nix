@@ -10,7 +10,6 @@
     ./git.nix
     ./helix.nix
     ./kitty.nix
-    ./rio.nix
     ./starship.nix
     ./tmux.nix
     ./xplr.nix
