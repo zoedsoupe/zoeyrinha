@@ -29,10 +29,11 @@
   zellij.enable = false;
   zoxide.enable = true;
   zed = {
-    enable = false;
+    enable = true;
     theme = "NyxVamp Veil";
     font = "Monaspace Neon";
-    elixir.lsp = "next-ls";
+    elixir.lsp.enabled = false;
+    elixir.lsp.name = "lexical";
   };
   helix = {
     enable = true;

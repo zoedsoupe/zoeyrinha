@@ -207,6 +207,13 @@ in {
             };
           };
 
+          ex = {
+            formatter = mkIf elixir.enable {
+              command = "mix";
+              args = ["format" "-"];
+            };
+          };
+
           elixir-lsp = {
             inherit (elixir.lsp) except-features name;
           };
@@ -238,18 +245,21 @@ in {
             language-servers = ["marksman" "wakatime-ls"];
           }
           (mkIf elixir.enable {
+            inherit (ex) formatter;
             name = "elixir";
-            auto-format = false;
+            auto-format = true;
             language-servers = ["wakatime-ls"] ++ maybe-elixir-lsp;
           })
           (mkIf elixir.enable {
+            inherit (ex) formatter;
             name = "heex";
-            auto-format = false;
+            auto-format = true;
             language-servers = ["emmet-ls" "tailwindcss-intellisense" "wakatime-ls"] ++ maybe-elixir-lsp;
           })
           (mkIf elixir.enable {
+            inherit (ex) formatter;
             name = "eex";
-            auto-format = false;
+            auto-format = true;
             language-servers = ["emmet-ls" "wakatime-ls"] ++ maybe-elixir-lsp;
           })
           (mkIf nix.enable {
