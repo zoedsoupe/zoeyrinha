@@ -56,7 +56,7 @@
       elixir = {
         enable = true;
         lsp = {
-          enabled = true;
+          enable = true;
           name = "lexical-lsp";
           except-features = ["completion" "format"];
         };
