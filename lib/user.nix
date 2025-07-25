@@ -1,5 +1,4 @@
 inputs: let
-  inherit (builtins) tryEval fromJSON readFile;
   inherit (inputs) system;
   inherit (inputs) home-manager nixpkgs unstable wakatime-ls;
   inherit (home-manager.lib) hm;
@@ -17,11 +16,10 @@ inputs: let
 
   pkgs-u = import unstable {
     inherit system;
-    overlays = with inputs; [helix.overlays.default];
+    overlays = with inputs; [helix.overlays.default elixir-overlay.overlays.default];
     # ngrok
     config.allowUnfree = true;
   };
-
 in rec {
   mkDarwinHost = host: let
     config = ../hosts + /${host}/custom.nix;
