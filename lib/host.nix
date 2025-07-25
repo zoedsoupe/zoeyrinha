@@ -1,5 +1,4 @@
 inputs: let
-  inherit (builtins) toJSON listToAttrs;
   inherit (inputs) system;
   inherit (inputs) nixpkgs darwin;
   inherit (inputs) home-manager;
@@ -18,6 +17,7 @@ inputs: let
     overlays = with inputs; [
       rust-overlay.overlays.default
       helix.overlays.default
+      elixir-overlay.overlays.default
       nodejs-overlay
     ];
     # ngrok
@@ -37,9 +37,7 @@ in {
       ];
     };
 
-  mkISO = {
-    system ? "x86_64-linux",
-  }:
+  mkISO = {system ? "x86_64-linux"}:
     nixosSystem {
       inherit system;
       pkgs = import nixpkgs {
