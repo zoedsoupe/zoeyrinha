@@ -42,7 +42,6 @@ The easiest way to build configurations is using the `nix-build` script:
 
 ```sh
 ./nix-build personal   # Build personal Mac configuration
-./nix-build cloudwalk  # Build CloudWalk Mac configuration  
 ./nix-build iso        # Build minimal ISO
 ```
 
@@ -51,7 +50,6 @@ The easiest way to build configurations is using the `nix-build` script:
 #### macOS (Darwin) Configuration
 
 ```sh
-darwin-rebuild switch --flake .#cloudwalk-mac  # For CloudWalk machine
 darwin-rebuild switch --flake .#zoedsoupe-mac  # For personal machine
 ```
 
