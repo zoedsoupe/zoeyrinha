@@ -5,10 +5,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Build Commands
 - Quick build script: `./nix-build <target>` where target is:
   - `personal` - Build personal Mac configuration
-  - `cloudwalk` - Build CloudWalk Mac configuration
   - `iso` - Build minimal ISO
 - Build Darwin (macOS) configuration manually: `darwin-rebuild switch --flake .#<hostname>-mac`
-  - Examples: `darwin-rebuild switch --flake .#cloudwalk-mac` or `.#zoedsoupe-mac`
+  - Examples: `darwin-rebuild switch --flake .#zoedsoupe-mac`
 - Build minimal ISO manually: `nix build .#installMedia.minimal.config.system.build.isoImage`
 
 ## Repository Architecture

@@ -39,10 +39,6 @@
     lib = import ./lib inputs;
   in {
     darwinConfigurations = {
-      cloudwalk-mac = mkDarwin {
-        host = "cloudwalk";
-        user = "zoeypessanha";
-      };
       zoedsoupe-mac = mkDarwin {
         host = "personal-mac";
       };
