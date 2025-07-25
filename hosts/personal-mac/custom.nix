@@ -31,7 +31,6 @@
     enable = true;
     theme = "NyxVamp Veil";
     font = "MonoLisa";
-    elixir.lsp = "next-ls";
   };
   helix = {
     enable = true;
@@ -44,22 +43,18 @@
       css.enable = true;
       json.enable = true;
       rust.enable = true;
-      go.enable = true;
+      go.enable = false;
       nix.enable = true;
       nim.enable = false;
       zig.enable = true;
       typescript.enable = true;
-      gleam.enable = true;
-      ocaml.enable = true;
-      lua.enable = true;
+      gleam.enable = false;
+      ocaml.enable = false;
+      lua.enable = false;
       python.enable = false;
       elixir = {
         enable = true;
-        lsp = {
-          enable = true;
-          name = "lexical-lsp";
-          except-features = ["completion" "format"];
-        };
+        lsp.enable = false;
       };
     };
   };
