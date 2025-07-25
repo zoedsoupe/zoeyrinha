@@ -2,13 +2,11 @@
   pkgs,
   lib,
   custom-config,
-  unstable,
   wakatime-ls,
   ...
 }: let
   inherit (lib) mkEnableOption mkIf mkOption types;
   cfg = custom-config.zed;
-  elixir = cfg.elixir;
 in {
   options.zed = {
     enable = mkEnableOption "Enables zed configurations";
@@ -32,19 +30,11 @@ in {
   };
 
   config = mkIf cfg.enable {
-    home.sessionPath = [
-      (
-        if elixir.lsp == "lexical"
-        then "${unstable.lexical}/bin"
-        else "${unstable.next-ls}/bin"
-      )
-      "${wakatime-ls}/bin/wakatime-lsp"
-    ];
+    home.sessionPath = ["${wakatime-ls}/bin/wakatime-lsp"];
     programs.zed-editor = {
       inherit (cfg) enable;
       package = pkgs.emptyDirectory;
       extensions = ["elixir" "html" "nix" "nyxvamp-theme" "wakatime"];
-      userKeymaps = builtins.fromJSON (builtins.readFile ./zed/keymap.json);
       userSettings = {
         tab_size = 2;
         load_direnv = "shell_hook";
@@ -92,63 +82,27 @@ in {
         languages = {
           Elixir = {
             language_servers = [
-              (
-                if elixir.lsp == "lexical"
-                then elixir.lsp
-                else "!lexical"
-              )
-              (
-                if elixir.lsp == "next-ls"
-                then elixir.lsp
-                else "!next-ls"
-              )
+              "!lexical"
+              "!next-ls"
               "!elixir-ls"
               "wakatime"
             ];
           };
           HEEX = {
             language_servers = [
-              (
-                if elixir.lsp == "lexical"
-                then elixir.lsp
-                else "!lexical"
-              )
-              (
-                if elixir.lsp == "next-ls"
-                then elixir.lsp
-                else "!next-ls"
-              )
+              "!lexical"
+              "!next-ls"
               "!elixir-ls"
               "wakatime"
             ];
           };
           EEX = {
             language_servers = [
-              (
-                if elixir.lsp == "lexical"
-                then elixir.lsp
-                else "!lexical"
-              )
-              (
-                if elixir.lsp == "next-ls"
-                then elixir.lsp
-                else "!next-ls"
-              )
+              "!lexical"
+              "!next-ls"
               "!elixir-ls"
               "wakatime"
             ];
-          };
-        };
-        lsp = {
-          next-ls = {
-            initialization_options = {
-              extensions = {
-                credo.enable = false;
-              };
-              experimental = {
-                completions.enable = true;
-              };
-            };
           };
         };
       };

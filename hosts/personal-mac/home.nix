@@ -12,6 +12,8 @@
   };
 
   home.packages = with pkgs; [
+    (elixir-with-otp erlang_28).latest
+
     wakatime-cli
     pinentry_mac
 
