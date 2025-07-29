@@ -10,10 +10,17 @@
 in {
   options.zed = {
     enable = mkEnableOption "Enables zed configurations";
-    theme = mkOption {
-      type = types.str;
-      description = "The theme name to use, null for the default one (zed-one-dark)";
-      default = null;
+    theme = {
+      dark = mkOption {
+        type = types.str;
+        description = "The dark theme name to use";
+        default = null;
+      };
+      light = mkOption {
+        type = types.str;
+        description = "The light theme name to use";
+        default = null;
+      };
     };
     font = mkOption {
       type = types.str;
@@ -48,8 +55,8 @@ in {
         };
         theme = {
           mode = "system";
-          light = "One Light";
-          dark = cfg.theme;
+          light = cfg.theme.light;
+          dark = cfg.theme.dark;
         };
         icon_theme = {
           mode = "system";

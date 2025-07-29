@@ -29,7 +29,10 @@
   zoxide.enable = true;
   zed = {
     enable = true;
-    theme = "NyxVamp Veil";
+    theme = {
+      dark = "NyxVamp Veil";
+      light = "NyxVamp Radiance";
+    };
     font = "MonoLisa";
   };
   helix = {
