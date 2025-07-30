@@ -1,6 +1,7 @@
 {
   custom-config,
   lib,
+  ghostty-themes,
   ...
 }: let
   inherit (lib) mkEnableOption mkIf mkOption strings;
@@ -24,7 +25,7 @@ in {
       ghostty-themes = {
         enable = true;
         target = ".config/ghostty/themes";
-        source = ./ghostty/themes;
+        source = ghostty-themes;
         recursive = true;
       };
       ghostty-config = let

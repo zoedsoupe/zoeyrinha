@@ -1,6 +1,6 @@
 inputs: let
   inherit (inputs) system;
-  inherit (inputs) home-manager nixpkgs unstable wakatime-ls;
+  inherit (inputs) home-manager nixpkgs unstable wakatime-ls ghostty-themes helix-themes;
   inherit (home-manager.lib) hm;
 
   pkgs = import nixpkgs {
@@ -24,7 +24,7 @@ in rec {
   mkDarwinHost = host: let
     config = ../hosts + /${host}/custom.nix;
   in {
-    inherit host system;
+    inherit host system ghostty-themes helix-themes;
     inherit (inputs) helix;
     wakatime-ls = wakatime-ls.packages.${system}.default;
     theme = import ./theme.nix {inherit pkgs;};
