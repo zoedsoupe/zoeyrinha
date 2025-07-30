@@ -74,7 +74,7 @@ in {
     programs.helix = {
       inherit (cfg) enable;
       settings = {
-        theme = "nyxvamp-veil";
+        theme = "nyxvamp-override";
         editor = {
           auto-save = true;
           completion-replace = true;
