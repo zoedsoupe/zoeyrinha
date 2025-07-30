@@ -1,3 +1,6 @@
 [submodule "wallpapers"]
 	path = wallpapers
 	url = git@github.com:zoedsoupe/wallpapers.git
+[submodule "modules/users/ghostty/themes"]
+	path = modules/users/ghostty/themes
+	url = git@github.com:nyxvamp-theme/ghostty
