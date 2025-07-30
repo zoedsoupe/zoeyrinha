@@ -4,6 +4,7 @@
   custom-config,
   unstable,
   wakatime-ls,
+  helix-themes,
   ...
 }: let
   inherit (lib) mkEnableOption mkIf mkOption types;
@@ -71,10 +72,22 @@ in {
   };
 
   config = mkIf cfg.enable {
+    home.file = {
+      helix-themes = {
+        enable = true;
+        target = ".config/helix/themes";
+        source = pkgs.runCommand "helix-themes-filtered" {} ''
+          mkdir -p $out
+          find ${helix-themes} -name "*.toml" -exec cp {} $out/ \;
+        '';
+        recursive = true;
+      };
+    };
+
     programs.helix = {
       inherit (cfg) enable;
       settings = {
-        theme = "nyxvamp-override";
+        theme = "nyxvamp-transparent";
         editor = {
           auto-save = true;
           completion-replace = true;

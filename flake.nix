@@ -31,6 +31,16 @@
       url = "github:helix-editor/helix";
       inputs.nixpkgs.follows = "nixpkgs";
     };
+
+    ghostty-themes = {
+      url = "github:nyxvamp-theme/ghostty";
+      flake = false;
+    };
+
+    helix-themes = {
+      url = "github:nyxvamp-theme/helix";
+      flake = false;
+    };
   };
 
   outputs = {nixpkgs, ...} @ inputs: let

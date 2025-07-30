@@ -58,6 +58,22 @@
         "type": "github"
       }
     },
+    "ghostty-themes": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1753473305,
+        "narHash": "sha256-0ILjBTYWjlxRszBxVAbF5KqywIUPC3kt45bKcao8tXI=",
+        "owner": "nyxvamp-theme",
+        "repo": "ghostty",
+        "rev": "c51f091abc3a7d71d22683a7f619e9b0fa17ecbc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nyxvamp-theme",
+        "repo": "ghostty",
+        "type": "github"
+      }
+    },
     "gitignore": {
       "inputs": {
         "nixpkgs": [
@@ -96,6 +112,22 @@
       },
       "original": {
         "owner": "helix-editor",
+        "repo": "helix",
+        "type": "github"
+      }
+    },
+    "helix-themes": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1753918828,
+        "narHash": "sha256-/V6ftTc5hmcDCajRyJVwIBDd01pvPUXCXHNHGPONKKI=",
+        "owner": "nyxvamp-theme",
+        "repo": "helix",
+        "rev": "e5d63dfaf54e6a4f1b5edbf7b0e9816359f118d6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nyxvamp-theme",
         "repo": "helix",
         "type": "github"
       }
@@ -156,7 +188,9 @@
       "inputs": {
         "darwin": "darwin",
         "elixir-overlay": "elixir-overlay",
+        "ghostty-themes": "ghostty-themes",
         "helix": "helix",
+        "helix-themes": "helix-themes",
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs_2",
         "rust-overlay": "rust-overlay_2",
