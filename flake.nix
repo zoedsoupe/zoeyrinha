@@ -45,12 +45,21 @@
       url = "github:nyxvamp-theme/helix";
       flake = false;
     };
+
+    bat-themes = {
+      url = "github:nyxvamp-theme/bat";
+      flake = false;
+    };
+
+    starship-themes = {
+      url = "github:nyxvamp-theme/starship";
+      flake = false;
+    };
   };
 
   outputs = {nixpkgs, ...} @ inputs: let
-    inherit (lib.host) mkDarwin mkISO;
-
     lib = import ./lib inputs;
+    inherit (lib) mkDarwin mkISO;
   in {
     darwinConfigurations = {
       zoedsoupe-mac = mkDarwin {

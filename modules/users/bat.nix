@@ -1,7 +1,7 @@
 {
-  pkgs,
   lib,
   custom-config,
+  bat-themes,
   ...
 }: let
   inherit (lib) mkEnableOption mkIf;
@@ -12,17 +12,12 @@ in {
     programs.bat = {
       enable = true;
       config = {
-        theme = "catppuccin";
+        theme = "nyxvamp-veil";
       };
       themes = {
-        catppuccin = {
-          src = pkgs.fetchFromGitHub {
-            owner = "catppuccin";
-            repo = "bat";
-            rev = "HEAD";
-            sha256 = "6WVKQErGdaqb++oaXnY3i6/GuH2FhTgK0v4TN4Y0Wbw=";
-          };
-          file = "Catppuccin-macchiato.tmTheme";
+        nyxvamp-veil = {
+          src = "${bat-themes}/themes";
+          file = "nyxvamp-veil.tmTheme";
         };
       };
     };

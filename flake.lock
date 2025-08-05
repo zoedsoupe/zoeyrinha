@@ -1,5 +1,21 @@
 {
   "nodes": {
+    "bat-themes": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1754431113,
+        "narHash": "sha256-HXUbJT/PX+LWzqM7UDg/SgOMxRRBKQfS85F0j4ljrvM=",
+        "owner": "nyxvamp-theme",
+        "repo": "bat",
+        "rev": "5fea70fc1585dc5404ccec37c7ce20e83829d951",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nyxvamp-theme",
+        "repo": "bat",
+        "type": "github"
+      }
+    },
     "darwin": {
       "inputs": {
         "nixpkgs": [
@@ -119,11 +135,11 @@
     "helix-themes": {
       "flake": false,
       "locked": {
-        "lastModified": 1753918828,
-        "narHash": "sha256-/V6ftTc5hmcDCajRyJVwIBDd01pvPUXCXHNHGPONKKI=",
+        "lastModified": 1754432837,
+        "narHash": "sha256-8t1nursZkV6fb2urNkW3bi72koJQSDgHBR1hrJNWyRc=",
         "owner": "nyxvamp-theme",
         "repo": "helix",
-        "rev": "e5d63dfaf54e6a4f1b5edbf7b0e9816359f118d6",
+        "rev": "f7e2e20561fa804aac354c20114502b1e3d79bdd",
         "type": "github"
       },
       "original": {
@@ -184,8 +200,25 @@
         "type": "indirect"
       }
     },
+    "nixpkgs_3": {
+      "locked": {
+        "lastModified": 1742669843,
+        "narHash": "sha256-G5n+FOXLXcRx+3hCJ6Rt6ZQyF1zqQ0DL0sWAMn2Nk0w=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "1e5b653dff12029333a6546c11e108ede13052eb",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
+        "bat-themes": "bat-themes",
         "darwin": "darwin",
         "elixir-overlay": "elixir-overlay",
         "ghostty-themes": "ghostty-themes",
@@ -194,7 +227,9 @@
         "home-manager": "home-manager",
         "nixpkgs": "nixpkgs_2",
         "rust-overlay": "rust-overlay_2",
+        "starship-themes": "starship-themes",
         "unstable": "unstable",
+        "uwu-colors": "uwu-colors",
         "wakatime-ls": "wakatime-ls"
       }
     },
@@ -260,7 +295,38 @@
         "type": "github"
       }
     },
+    "starship-themes": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1754433475,
+        "narHash": "sha256-obT4KL0fDS5ydBV8i298GaTB86k+XxiCLYou1iLVlZo=",
+        "owner": "nyxvamp-theme",
+        "repo": "starship",
+        "rev": "7956206da676aaffcf65247fce9fd31f4e59f814",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nyxvamp-theme",
+        "repo": "starship",
+        "type": "github"
+      }
+    },
     "systems": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    },
+    "systems_2": {
       "locked": {
         "lastModified": 1681028828,
         "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
@@ -288,6 +354,43 @@
         "id": "nixpkgs",
         "ref": "nixos-unstable",
         "type": "indirect"
+      }
+    },
+    "utils": {
+      "inputs": {
+        "systems": "systems_2"
+      },
+      "locked": {
+        "lastModified": 1731533236,
+        "narHash": "sha256-l0KFg5HjrsfsO/JpG+r7fRrqm12kzFHyUHqHCVpMMbI=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "11707dc2f618dd54ca8739b309ec4fc024de578b",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
+    "uwu-colors": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_3",
+        "utils": "utils"
+      },
+      "locked": {
+        "lastModified": 1750698731,
+        "narHash": "sha256-d+QCHXuZwSK+MzmKiYvR2ts1P0wd3i0eWoPxt4fVpaA=",
+        "owner": "q60",
+        "repo": "uwu_colors",
+        "rev": "af85b3a7c7f9ec6af8dad5a12d730a2b38d5ff1c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "q60",
+        "repo": "uwu_colors",
+        "type": "github"
       }
     },
     "wakatime-ls": {
