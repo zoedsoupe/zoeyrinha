@@ -108,13 +108,7 @@ in {
             center = [];
             right = ["diagnostics" "version-control" "register" "position"];
           };
-          whitespace = {
-            render = "none";
-            characters = {
-              newline = "↴";
-              tab = "⇥";
-            };
-          };
+          whitespace.render = "none";
           cursor-shape = {
             insert = "bar";
             normal = "block";
@@ -190,7 +184,13 @@ in {
             command = "${pkgs.ruff}/bin/ruff";
             args = ["server"];
           };
-          tailwindcss-intellisense.command = "${pkgs.tailwindcss-language-server}/bin/tailwindcss-language-server";
+          tailwindcss-intellisense = mkIf css.enable {
+            command = "${pkgs.tailwindcss-language-server}/bin/tailwindcss-language-server";
+          };
+          uwu-colors = {
+            command = "${pkgs.uwu-colors}/bin/uwu-colors";
+            args = ["--named-completions-mode" "full" "--color-collection" "colorhexa" "--variable-completions"];
+          };
         };
 
         language = let
@@ -225,7 +225,7 @@ in {
           })
           {
             name = "markdown";
-            language-servers = ["marksman" "wakatime-ls"];
+            language-servers = ["marksman" "wakatime-ls" "uwu-colors"];
           }
           (mkIf elixir.enable {
             name = "elixir";
@@ -235,18 +235,18 @@ in {
           (mkIf elixir.enable {
             name = "heex";
             auto-format = false;
-            language-servers = ["emmet-ls" "tailwindcss-intellisense" "wakatime-ls"];
+            language-servers = ["emmet-ls" "tailwindcss-intellisense" "wakatime-ls" "uwu-colors"];
           })
           (mkIf elixir.enable {
             name = "eex";
             auto-format = false;
-            language-servers = ["emmet-ls" "wakatime-ls"];
+            language-servers = ["emmet-ls" "wakatime-ls" "uwu-colors"];
           })
           (mkIf nix.enable {
             inherit (n) formatter;
             name = "nix";
             auto-format = true;
-            language-servers = ["nil" "wakatime-ls"];
+            language-servers = ["nil" "wakatime-ls" "uwu-colors"];
           })
           (mkIf go.enable {
             name = "go";
@@ -261,7 +261,7 @@ in {
           (mkIf html.enable {
             name = "html";
             auto-format = true;
-            language-servers = ["emmet-ls" "vscode-html-language-server"];
+            language-servers = ["emmet-ls" "vscode-html-language-server" "uwu-colors"];
           })
           (mkIf typescript.enable {
             inherit (ts) formatter;
@@ -273,6 +273,7 @@ in {
                 # except-features = ["inlay-hints"];
               }
               "vscode-eslint-language-server"
+              "uwu-colors"
             ];
           })
           (mkIf typescript.enable {
@@ -285,6 +286,7 @@ in {
                 except-features = ["inlay-hints"];
               }
               "vscode-eslint-language-server"
+              "uwu-colors"
             ];
           })
           (mkIf python.enable {
@@ -297,6 +299,14 @@ in {
               }
             ];
           })
+          {
+            name = "json";
+            language-servers = ["vscode-json-language-server" "uwu-colors"];
+          }
+          {
+            name = "toml";
+            language-servers = ["uwu-colors"];
+          }
         ];
       };
     };
