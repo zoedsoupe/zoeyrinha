@@ -32,6 +32,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # colorize hex colors on helix (lsp)
+    uwu-colors.url = "github:q60/uwu_colors";
+
+    # nyxvamp themes
     ghostty-themes = {
       url = "github:nyxvamp-theme/ghostty";
       flake = false;

@@ -19,6 +19,7 @@ inputs: let
       helix.overlays.default
       elixir-overlay.overlays.default
       nodejs-overlay
+      uwu-colors.overlays.default
     ];
     # ngrok
     config.allowUnfree = true;

@@ -2,13 +2,22 @@
   system.stateVersion = 5;
   system.primaryUser = "zoedsoupe";
 
-  nix.optimise.automatic = true;
-
+  nix.channel.enable = false;
+  nix.gc = {
+    automatic = true;
+    dates = "weekly";
+    options = "--delete-older-than 30d";
+    persistent = true;
+  };
+  nix.optimise = {
+    automatic = true;
+    dates = "daily";
+    persistent = true;
+  };
+  nix.settings.auto-optimise-store = true;
   nix.extraOptions = ''
     experimental-features = nix-command flakes
   '';
-
-  fonts.packages = with pkgs; [scientifica];
 
   ids.gids.nixbld = 30000;
 
@@ -24,8 +33,8 @@
       autoUpdate = true;
       upgrade = true;
     };
-    brews = ["ncdu"];
-    casks = ["warp" "ghostty"];
+    brews = [];
+    casks = ["ghostty"];
   };
 
   users.users.zoedsoupe = {
