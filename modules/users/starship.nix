@@ -1,19 +1,14 @@
 {
   lib,
   custom-config,
+  starship-themes,
   ...
 }: let
-  inherit (lib) mkEnableOption mkIf mkOption;
+  inherit (lib) mkEnableOption mkIf;
   cfg = custom-config.starship;
 in {
   options.starship = {
     enable = mkEnableOption "Enables starship shell prompt";
-
-    catppuccin-theme = mkOption {
-      default = "macchiato";
-      description = "The catppuccin theme to apply on starship";
-      type = lib.types.nullOr lib.types.enum ["macchiato" "frappe" "latte" "mocha"];
-    };
   };
 
   config = mkIf cfg.enable {
@@ -21,21 +16,19 @@ in {
       enable = true;
       enableFishIntegration = true;
       enableZshIntegration = true;
-      settings = {
+      settings = let
+        nyxvamp = builtins.fromTOML (builtins.readFile "${starship-themes}/nyxvamp-veil.toml");
+      in {
+        inherit (nyxvamp) palettes;
+        palette = "nyxvamp_veil";
         scan_timeout = 50;
         command_timeout = 1500;
-        add_newline = true;
+        add_newline = false;
         directory = {
           format = "[$path]($style)[$read_only]($read_only_style) ";
         };
         git_branch = {
           format = "[git](white)\\([$branch]($style)\\) ";
-        };
-        git_status = {
-          deleted = "";
-          ahead = "$\{count\}";
-          behind = "$\{count\}";
-          format = "[$all_status$ahead_behind]($style) ";
         };
         nix_shell = {
           format = "[nix](white)\\([$state( \($name\))]($style)\\) ";
@@ -64,6 +57,7 @@ in {
           "$elixir"
           "$nodejs"
           "$rust"
+          "$nix_shell"
           "$direnv"
         ];
       };

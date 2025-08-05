@@ -18,19 +18,6 @@ in {
       type = types.str;
       default = "";
     };
-    theme = {
-      enable = mkEnableOption "Enables custom theme syntax highlighting";
-      name = mkOption {
-        description = "Theme name for syntax highlighting";
-        type = types.enum ["catppuccin"];
-        default = "catppuccin";
-      };
-      flavour = mkOption {
-        description = "Flavour for the set theme";
-        type = types.enum ["latte" "frappe" "macchiato" "mocha"];
-        default = "frappe";
-      };
-    };
   };
 
   config = mkIf cfg.enable {
@@ -50,9 +37,7 @@ in {
       };
       antidote = {
         enable = true;
-        plugins = [
-          "catppuccin/zsh-syntax-highlighting path:themes/catppuccin_macchiato-zsh-syntax-highlighting.zsh"
-        ];
+        plugins = ["nyxvamp-theme/zsh path:nyxvamp-veil.zsh"];
       };
       history = {
         expireDuplicatesFirst = true;

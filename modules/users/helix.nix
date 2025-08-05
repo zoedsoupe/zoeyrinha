@@ -188,7 +188,7 @@ in {
             command = "${pkgs.tailwindcss-language-server}/bin/tailwindcss-language-server";
           };
           uwu-colors = {
-            command = "${pkgs.uwu-colors}/bin/uwu-colors";
+            command = "${pkgs.uwu-colors}/bin/uwu_colors";
             args = ["--named-completions-mode" "full" "--color-collection" "colorhexa" "--variable-completions"];
           };
         };

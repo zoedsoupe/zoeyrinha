@@ -5,16 +5,22 @@
   nix.channel.enable = false;
   nix.gc = {
     automatic = true;
-    dates = "weekly";
+    interval = {
+      Weekday = 3;
+      Hour = 2;
+      Minute = 0;
+    };
     options = "--delete-older-than 30d";
-    persistent = true;
   };
   nix.optimise = {
     automatic = true;
-    dates = "daily";
-    persistent = true;
+    interval = {
+      Weekday = 3;
+      Hour = 2;
+      Minute = 0;
+    };
   };
-  nix.settings.auto-optimise-store = true;
+  nix.settings.auto-optimise-store = false;
   nix.extraOptions = ''
     experimental-features = nix-command flakes
   '';
