@@ -74,6 +74,16 @@
           };
         };
       }
+      {
+        condition = "gitdir:~/dev/dashbit/**";
+        contents = {
+          user = {
+            email = "zoey.spessanha@dashbit.co";
+            name = "zoedsoupe";
+            signingKey = "~/.ssh/dashbit";
+          };
+        };
+      }
     ];
   };
   zsh = {
