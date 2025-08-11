@@ -6,6 +6,7 @@
     unstable.url = "flake:nixpkgs/nixos-unstable";
 
     elixir-overlay.url = "github:zoedsoupe/elixir-overlay";
+    next-ls.url = "github:elixir-tools/next-ls";
 
     wakatime-ls = {
       url = "github:mrnossiom/wakatime-ls";
