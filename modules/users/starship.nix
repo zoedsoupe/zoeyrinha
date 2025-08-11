@@ -30,11 +30,6 @@ in {
         git_branch = {
           format = "[git](white)\\([$branch]($style)\\) ";
         };
-        nix_shell = {
-          format = "[nix](white)\\([$state( \($name\))]($style)\\) ";
-          pure_msg = "λ";
-          impure_msg = "⎔";
-        };
         elixir = {
           format = "[elixir](white)\\([$version]($style)\\) ";
         };
@@ -57,7 +52,6 @@ in {
           "$elixir"
           "$nodejs"
           "$rust"
-          "$nix_shell"
           "$direnv"
         ];
       };

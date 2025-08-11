@@ -87,8 +87,9 @@ in {
     programs.helix = {
       inherit (cfg) enable;
       settings = {
-        theme = "nyxvamp-transparent";
+        theme = "nyxvamp-veil";
         editor = {
+          rainbow-brackets = true;
           auto-save = true;
           completion-replace = true;
           cursorline = true;
@@ -139,7 +140,12 @@ in {
             command = "${ts-server}/bin/typescript-language-server";
             args = ["--stdio"];
           };
-          lua-language-server.command = mkIf lua.enable "${pkgs.lua-language-server}/bin/lua-language-server";
+          next-ls = mkIf elixir.enable {
+            command = "${pkgs.next-ls}/bin/nextls";
+          };
+          lua-language-server = mkIf lua.enable {
+            command = "${pkgs.lua-language-server}/bin/lua-language-server";
+          };
           ocamllsp.command = mkIf ocaml.enable "${ocamlpkgs.ocaml-lsp}/bin/ocamllsp";
           nil.command = mkIf nix.enable "${pkgs.nil}/bin/nil";
           zls.command = mkIf zig.enable "${pkgs.zls}/bin/zls";
@@ -187,6 +193,10 @@ in {
           tailwindcss-intellisense = mkIf css.enable {
             command = "${pkgs.tailwindcss-language-server}/bin/tailwindcss-language-server";
           };
+          vscode-eslint-language-server = mkIf typescript.enable {
+            command = "${vscode-lsp}/bin/vscode-eslint-language-server";
+            args = ["--stdio"];
+          };
           uwu-colors = {
             command = "${pkgs.uwu-colors}/bin/uwu_colors";
             args = ["--named-completions-mode" "full" "--color-collection" "colorhexa" "--variable-completions"];
@@ -230,17 +240,36 @@ in {
           (mkIf elixir.enable {
             name = "elixir";
             auto-format = false;
-            language-servers = ["wakatime-ls"];
+            language-servers = [
+              "wakatime-ls"
+              {
+                name = "next-ls";
+                except-features = ["completion"];
+              }
+            ];
           })
           (mkIf elixir.enable {
             name = "heex";
             auto-format = false;
-            language-servers = ["emmet-ls" "tailwindcss-intellisense" "wakatime-ls" "uwu-colors"];
+            language-servers = [
+              "emmet-ls"
+              "tailwindcss-intellisense"
+              "wakatime-ls"
+              "uwu-colors"
+              {
+                name = "next-ls";
+                except-features = ["completion"];
+              }
+            ];
           })
           (mkIf elixir.enable {
             name = "eex";
             auto-format = false;
-            language-servers = ["emmet-ls" "wakatime-ls" "uwu-colors"];
+            language-servers = [
+              "emmet-ls"
+              "wakatime-ls"
+              "uwu-colors"
+            ];
           })
           (mkIf nix.enable {
             inherit (n) formatter;

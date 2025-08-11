@@ -10,7 +10,7 @@ adjust-cursor-height = 0
 adjust-strikethrough-position = "-2%"
 
 # Window Styling
-background-opacity = 0.8
+background-opacity = 0
 window-decoration = true
 window-padding-x = 10
 window-padding-y = 8

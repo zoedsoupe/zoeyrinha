@@ -9,7 +9,11 @@ inputs: let
     helix.overlays.default
     elixir-overlay.overlays.default
     uwu-colors.overlays.default
-    (_: final: {nodejs = final.nodejs_22;})
+    (_: final: {next-ls = next-ls.packages.${final.system}.default;})
+    (_: final: {
+      nodejs = final.nodejs_20;
+      nodejs_24 = final.nodejs_20;
+    })
   ];
 
   make-pkgs = {
