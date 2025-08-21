@@ -13,22 +13,199 @@
   ts-server = typescript-language-server;
 
   cfg = custom-config.helix;
-  elixir = cfg.languages.elixir;
-  rust = cfg.languages.rust;
-  go = cfg.languages.go;
-  clojure = cfg.languages.clojure;
-  nix = cfg.languages.nix;
-  html = cfg.languages.html;
-  css = cfg.languages.css;
-  json = cfg.languages.json;
-  zig = cfg.languages.zig;
-  nim = cfg.languages.nim;
-  gleam = cfg.languages.gleam;
-  ocaml = cfg.languages.ocaml;
-  typescript = cfg.languages.typescript;
-  lua = cfg.languages.lua;
-  python = cfg.languages.python;
   ocamlpkgs = pkgs.ocamlPackages;
+
+  language-configs = {
+    elixir = {
+      nix-option-name = "elixir";
+      helix-names = ["elixir" "heex" "eex"];
+      default-language-servers = ["next-ls"];
+      formatter = {
+        command = "mix";
+        args = ["format" "--stdin-filename" "%{buffer_name}"];
+      };
+      auto-format = false;
+      extra-servers = {
+        heex = ["emmet-ls" "tailwindcss-intellisense" "uwu-colors"];
+        eex = ["emmet-ls" "uwu-colors"];
+      };
+      lsp-config = {
+        enable = mkEnableOption "Enables Elixir LSP support";
+        name = mkOption {
+          required = false;
+          default = "lexical-lsp";
+          type = types.str;
+        };
+        except-features = mkOption {
+          required = false;
+          type = types.listOf types.str;
+          default = ["completion" "format"];
+        };
+      };
+    };
+
+    nix = {
+      nix-option-name = "nix";
+      helix-names = ["nix"];
+      default-language-servers = ["nil"];
+      formatter = {command = "${pkgs.alejandra}/bin/alejandra";};
+      extra-servers.nix = ["uwu-colors"];
+    };
+
+    typescript = {
+      nix-option-name = "typescript";
+      helix-names = ["typescript" "javascript"];
+      default-language-servers = ["typescript-language-server"];
+      formatter = {command = "${prettier}/bin/prettier";};
+      extra-servers = {
+        typescript = ["vscode-eslint-language-server" "uwu-colors"];
+        javascript = ["vscode-eslint-language-server" "uwu-colors"];
+      };
+    };
+
+    python = {
+      nix-option-name = "python";
+      helix-names = ["python"];
+      default-language-servers = ["ruff"];
+    };
+
+    rust = {
+      nix-option-name = "rust";
+      helix-names = ["rust"];
+      default-language-servers = ["rust-analyzer"];
+    };
+
+    go = {
+      nix-option-name = "go";
+      helix-names = ["go"];
+      default-language-servers = ["gopls"];
+    };
+
+    html = {
+      nix-option-name = "html";
+      helix-names = ["html"];
+      default-language-servers = ["emmet-ls" "vscode-html-language-server"];
+      extra-servers.html = ["uwu-colors"];
+    };
+
+    css = {
+      nix-option-name = "css";
+      helix-names = ["css" "scss"];
+      default-language-servers = ["vscode-css-language-server"];
+      extra-servers = {
+        scss = ["tailwindcss-intellisense"];
+      };
+    };
+
+    json = {
+      nix-option-name = "json";
+      helix-names = ["json"];
+      default-language-servers = ["vscode-json-language-server"];
+      extra-servers.json = ["uwu-colors"];
+    };
+
+    # Special languages without Nix options but used in Helix
+    markdown = {
+      helix-names = ["markdown"];
+      default-language-servers = ["marksman"];
+      extra-servers.markdown = ["uwu-colors"];
+    };
+
+    toml = {
+      nix-option-name = "toml";
+      helix-names = ["toml"];
+      default-language-servers = [];
+      extra-servers.toml = ["uwu-colors"];
+    };
+
+    # Other languages with minimal config
+    ocaml = {
+      nix-option-name = "ocaml";
+      helix-names = ["ocaml"];
+      default-language-servers = ["ocamllsp"];
+      formatter = {command = "${ocamlpkgs.ocamlformat}/bin/ocamlformat";};
+    };
+
+    nim = {
+      nix-option-name = "nim";
+      helix-names = ["nim"];
+      default-language-servers = ["nimlsp"];
+    };
+
+    zig = {
+      nix-option-name = "zig";
+      helix-names = ["zig"];
+      default-language-servers = ["zls"];
+    };
+
+    gleam = {
+      nix-option-name = "gleam";
+      helix-names = ["gleam"];
+      default-language-servers = ["gleam"];
+    };
+
+    lua = {
+      nix-option-name = "lua";
+      helix-names = ["lua"];
+      default-language-servers = ["lua-language-server"];
+    };
+
+    clojure = {
+      nix-option-name = "clojure";
+      helix-names = ["clojure"];
+      default-language-servers = ["clojure-lsp"];
+    };
+  };
+
+  languages-with-nix-options = lib.filterAttrs (_: lang: lang ? nix-option-name) language-configs;
+
+  get-lang-config = name: cfg.languages.${name} or {};
+
+  with-wakatime = lang-name: servers: let
+    lang-cfg = get-lang-config lang-name;
+  in
+    if (lang-cfg.wakatime or {}).enable or false
+    then servers ++ ["wakatime-ls"]
+    else servers;
+
+  any-wakatime-enabled = lib.any (
+    name: let
+      lang-cfg = get-lang-config name;
+    in
+      (lang-cfg.wakatime or {}).enable or false
+  ) (lib.attrNames languages-with-nix-options);
+
+  mk-helix-lang = lang-config: helix-name: let
+    nix-name = lang-config.nix-option-name or null;
+    lang-cfg =
+      if nix-name != null
+      then get-lang-config nix-name
+      else {};
+    enabled =
+      if nix-name != null
+      then lang-cfg.enable or false
+      else true;
+
+    base-servers = lang-config.default-language-servers or [];
+    extra-servers = lang-config.extra-servers.${helix-name} or [];
+    all-servers = base-servers ++ extra-servers;
+    final-servers =
+      if nix-name != null
+      then with-wakatime nix-name all-servers
+      else
+        all-servers
+        ++ (
+          if any-wakatime-enabled
+          then ["wakatime-ls"]
+          else []
+        );
+  in
+    mkIf enabled {
+      name = helix-name;
+      auto-format = lang-config.auto-format or true;
+      language-servers = final-servers;
+    }
+    // (lib.optionalAttrs (lang-config ? formatter) {formatter = lang-config.formatter;});
 in {
   options.helix = {
     enable = mkEnableOption "Enables Helix Editor";
@@ -39,36 +216,17 @@ in {
         default = true;
       };
     };
-    languages = {
-      elixir = {
-        enable = mkEnableOption "Enables Elixir Support";
-        lsp.enable = mkEnableOption "Enables Elixir LSP support";
-        lsp.name = mkOption {
-          required = false;
-          default = "lexical-lsp";
-          type = types.str;
-        };
-        lsp.except-features = mkOption {
-          required = false;
-          type = types.listOf types.str;
-          default = ["completion" "format"];
-        };
-      };
-      python.enabe = mkEnableOption "Enables Python Support";
-      lua.enable = mkEnableOption "Enables Lua support";
-      ocaml.enable = mkEnableOption "Enables OCaml support";
-      nim.enable = mkEnableOption "Enables Nim support";
-      nix.enable = mkEnableOption "Enables Nix Support";
-      rust.enable = mkEnableOption "Enables Rust Support";
-      clojure.enable = mkEnableOption "Enables Clojure Support";
-      html.enable = mkEnableOption "Enables HTML Support";
-      css.enable = mkEnableOption "Enables CSS Support";
-      json.enable = mkEnableOption "Enables JSON Support";
-      typescript.enable = mkEnableOption "Enables Typescript Support";
-      go.enable = mkEnableOption "Enables Go support";
-      zig.enable = mkEnableOption "Enables Zig support";
-      gleam.enable = mkEnableOption "Enables Gleam support";
-    };
+    languages = lib.mapAttrs (name: lang-config:
+      {
+        enable = mkEnableOption "Enables ${name} Support";
+        wakatime.enable = mkEnableOption "Enables WakaTime tracking for ${name}";
+      }
+      // (
+        if lang-config ? lsp-config
+        then {lsp = lang-config.lsp-config;}
+        else {}
+      ))
+    languages-with-nix-options;
   };
 
   config = mkIf cfg.enable {
@@ -140,45 +298,45 @@ in {
 
       languages = {
         language-server = {
-          gleam = mkIf gleam.enable {
+          gleam = mkIf (get-lang-config "gleam").enable {
             command = "${unstable.gleam}/bin/gleam";
           };
-          typescript-language-server = mkIf typescript.enable {
+          typescript-language-server = mkIf (get-lang-config "typescript").enable {
             command = "${ts-server}/bin/typescript-language-server";
             args = ["--stdio"];
           };
-          next-ls = mkIf elixir.enable {
+          next-ls = mkIf (get-lang-config "elixir").enable {
             command = "${pkgs.next-ls}/bin/nextls";
           };
-          lua-language-server = mkIf lua.enable {
+          lua-language-server = mkIf (get-lang-config "lua").enable {
             command = "${pkgs.lua-language-server}/bin/lua-language-server";
           };
-          ocamllsp = mkIf ocaml.enable {
+          ocamllsp = mkIf (get-lang-config "ocaml").enable {
             command = "${ocamlpkgs.ocaml-lsp}/bin/ocamllsp";
           };
-          nil = mkIf nix.enable {
+          nil = mkIf (get-lang-config "nix").enable {
             command = "${pkgs.nil}/bin/nil";
           };
-          zls = mkIf zig.enable {
+          zls = mkIf (get-lang-config "zig").enable {
             command = "${pkgs.zls}/bin/zls";
           };
-          nimlsp = mkIf nim.enable {
+          nimlsp = mkIf (get-lang-config "nim").enable {
             command = "${pkgs.nimlsp}/bin/nimlsp";
           };
-          clojure-lsp = mkIf clojure.enable {
+          clojure-lsp = mkIf (get-lang-config "clojure").enable {
             command = "${pkgs.clojure-lsp}/bin/clojure-lsp";
           };
-          rust-analyzer = mkIf rust.enable {
+          rust-analyzer = mkIf (get-lang-config "rust").enable {
             command = "${pkgs.rust-analyzer}/bin/rust-analyzer";
           };
-          gopls = mkIf go.enable {
+          gopls = mkIf (get-lang-config "go").enable {
             command = "${pkgs.gopls}/bin/gopls";
           };
-          emmet-ls = mkIf html.enable {
+          emmet-ls = mkIf (get-lang-config "html").enable {
             command = "${pkgs.emmet-ls}/bin/emmet-ls";
             args = ["--stdio"];
           };
-          vscode-css-language-server = mkIf css.enable {
+          vscode-css-language-server = mkIf (get-lang-config "css").enable {
             command = "${vscode-lsp}/bin/vscode-css-language-server";
             args = ["--stdio"];
             config = {
@@ -189,7 +347,7 @@ in {
               };
             };
           };
-          vscode-html-language-server = mkIf html.enable {
+          vscode-html-language-server = mkIf (get-lang-config "html").enable {
             command = "${vscode-lsp}/bin/vscode-html-language-server";
             args = ["--stdio"];
             config = {
@@ -197,7 +355,7 @@ in {
               html = {validate = {enable = true;};};
             };
           };
-          vscode-json-language-server = mkIf json.enable {
+          vscode-json-language-server = mkIf (get-lang-config "json").enable {
             command = "${vscode-lsp}/bin/vscode-json-language-server";
             args = ["--stdio"];
             config = {
@@ -205,18 +363,18 @@ in {
               json = {validate = {enable = true;};};
             };
           };
-          wakatime-ls = {
+          wakatime-ls = mkIf any-wakatime-enabled {
             command = "${wakatime-ls}/bin/wakatime-ls";
           };
           marksman.command = "${pkgs.marksman}/bin/marksman";
-          ruff = mkIf python.enable {
+          ruff = mkIf (get-lang-config "python").enable {
             command = "${pkgs.ruff}/bin/ruff";
             args = ["server"];
           };
-          tailwindcss-intellisense = mkIf css.enable {
+          tailwindcss-intellisense = mkIf (get-lang-config "css").enable {
             command = "${pkgs.tailwindcss-language-server}/bin/tailwindcss-language-server";
           };
-          vscode-eslint-language-server = mkIf typescript.enable {
+          vscode-eslint-language-server = mkIf (get-lang-config "typescript").enable {
             command = "${vscode-lsp}/bin/vscode-eslint-language-server";
             args = ["--stdio"];
           };
@@ -226,155 +384,73 @@ in {
           };
         };
 
-        language = let
-          n = {
-            formatter = {
-              command = "${pkgs.alejandra}/bin/alejandra";
-            };
-          };
-
-          ts = {
-            formatter = mkIf typescript.enable {
-              command = "${prettier}/bin/prettier";
-            };
-          };
-
-          ex = {
-            formatter = mkIf elixir.enable {
-              command = "mix";
-              args = [
-                "format"
-
-                "--stdin-filename"
-                "%{buffer_name}"
+        language =
+          lib.flatten (
+            lib.mapAttrsToList (
+              lang-name: lang-config:
+                map (helix-name: mk-helix-lang lang-config helix-name) lang-config.helix-names
+            )
+            language-configs
+          )
+          ++ [
+            (mkIf (get-lang-config "elixir").enable {
+              name = "elixir";
+              auto-format = false;
+              formatter = language-configs.elixir.formatter;
+              language-servers = with-wakatime "elixir" [
+                {
+                  name = "next-ls";
+                  except-features = ["completion"];
+                }
               ];
-            };
-          };
-        in [
-          (mkIf ocaml.enable {
-            name = "ocaml";
-            auto-format = true;
-            formatter = {
-              command = "${ocamlpkgs.ocamlformat}/bin/ocamlformat";
-            };
-          })
-          (mkIf css.enable {
-            name = "scss";
-            auto-format = true;
-            language-servers = ["tailwindcss-intellisense" "vscode-css-language-server"];
-          })
-          (mkIf nim.enable {
-            name = "nim";
-            auto-format = true;
-            language-servers = ["nimlsp"];
-          })
-          {
-            name = "markdown";
-            language-servers = ["marksman" "wakatime-ls" "uwu-colors"];
-          }
-          (mkIf elixir.enable {
-            inherit (ex) formatter;
-            name = "elixir";
-            auto-format = false;
-            language-servers = [
-              "wakatime-ls"
-              {
-                name = "next-ls";
-                except-features = ["completion"];
-              }
-            ];
-          })
-          (mkIf elixir.enable {
-            inherit (ex) formatter;
-            name = "heex";
-            auto-format = false;
-            language-servers = [
-              "emmet-ls"
-              "tailwindcss-intellisense"
-              "wakatime-ls"
-              "uwu-colors"
-              {
-                name = "next-ls";
-                except-features = ["completion"];
-              }
-            ];
-          })
-          (mkIf elixir.enable {
-            inherit (ex) formatter;
-            name = "eex";
-            auto-format = false;
-            language-servers = [
-              "emmet-ls"
-              "wakatime-ls"
-              "uwu-colors"
-            ];
-          })
-          (mkIf nix.enable {
-            inherit (n) formatter;
-            name = "nix";
-            auto-format = true;
-            language-servers = ["nil" "wakatime-ls" "uwu-colors"];
-          })
-          (mkIf go.enable {
-            name = "go";
-            auto-format = true;
-            language-servers = [
-              {
-                name = "gopls";
-                except-features = ["inlay-hints"];
-              }
-            ];
-          })
-          (mkIf html.enable {
-            name = "html";
-            auto-format = true;
-            language-servers = ["emmet-ls" "vscode-html-language-server" "uwu-colors"];
-          })
-          (mkIf typescript.enable {
-            inherit (ts) formatter;
-            name = "typescript";
-            auto-format = true;
-            language-servers = [
-              {
-                name = "typescript-language-server";
-                # except-features = ["inlay-hints"];
-              }
-              "vscode-eslint-language-server"
-              "uwu-colors"
-            ];
-          })
-          (mkIf typescript.enable {
-            inherit (ts) formatter;
-            name = "javascript";
-            auto-format = true;
-            language-servers = [
-              {
-                name = "typescript-language-server";
-                except-features = ["inlay-hints"];
-              }
-              "vscode-eslint-language-server"
-              "uwu-colors"
-            ];
-          })
-          (mkIf python.enable {
-            name = "python";
-            auto-format = true;
-            language-servers = [
-              {
-                name = "ruff";
-                except-features = ["completion"];
-              }
-            ];
-          })
-          {
-            name = "json";
-            language-servers = ["vscode-json-language-server" "uwu-colors"];
-          }
-          {
-            name = "toml";
-            language-servers = ["uwu-colors"];
-          }
-        ];
+            })
+            (mkIf (get-lang-config "go").enable {
+              name = "go";
+              auto-format = true;
+              language-servers = with-wakatime "go" [
+                {
+                  name = "gopls";
+                  except-features = ["inlay-hints"];
+                }
+              ];
+            })
+            (mkIf (get-lang-config "typescript").enable {
+              name = "typescript";
+              auto-format = true;
+              formatter = language-configs.typescript.formatter;
+              language-servers = with-wakatime "typescript" [
+                {
+                  name = "typescript-language-server";
+                  except-features = ["inlay-hints"];
+                }
+                "vscode-eslint-language-server"
+                "uwu-colors"
+              ];
+            })
+            (mkIf (get-lang-config "typescript").enable {
+              name = "javascript";
+              auto-format = true;
+              formatter = language-configs.typescript.formatter;
+              language-servers = with-wakatime "typescript" [
+                {
+                  name = "typescript-language-server";
+                  except-features = ["inlay-hints"];
+                }
+                "vscode-eslint-language-server"
+                "uwu-colors"
+              ];
+            })
+            (mkIf (get-lang-config "python").enable {
+              name = "python";
+              auto-format = true;
+              language-servers = with-wakatime "python" [
+                {
+                  name = "ruff";
+                  except-features = ["completion"];
+                }
+              ];
+            })
+          ];
       };
     };
   };

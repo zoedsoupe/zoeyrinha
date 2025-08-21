@@ -42,21 +42,41 @@
     };
     languages = {
       clojure.enable = false;
-      html.enable = true;
-      css.enable = true;
-      json.enable = true;
+      html = {
+        enable = true;
+        wakatime.enable = true;
+      };
+      css = {
+        enable = true;
+        wakatime.enable = true;
+      };
+      json = {
+        enable = true;
+        wakatime.enable = true;
+      };
+      toml = {
+        enable = true;
+        wakatime.enable = true;
+      };
       rust.enable = false;
       go.enable = false;
-      nix.enable = true;
+      nix = {
+        enable = true;
+        wakatime.enable = true;
+      };
       nim.enable = false;
       zig.enable = false;
-      typescript.enable = true;
+      typescript = {
+        enable = true;
+        wakatime.enable = true;
+      };
       gleam.enable = false;
       ocaml.enable = false;
       lua.enable = false;
       python.enable = false;
       elixir = {
         enable = true;
+        wakatime.enable = true;
         lsp.enable = false;
       };
     };
@@ -65,7 +85,7 @@
     enable = true;
     includes = let
       zeetech = path: {
-        condition = "gitdir:${path}";
+        condition = "gitdir:${path}/";
         contents = {
           user = {
             email = "zoey.spessanha@zeetech.io";
@@ -79,7 +99,7 @@
     in
       [
         {
-          condition = "gitdir:~/dev/dashbit";
+          condition = "gitdir:~/dev/dashbit/";
           contents = {
             user = {
               email = "zoey.spessanha@dashbit.co";
