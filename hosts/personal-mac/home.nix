@@ -34,6 +34,7 @@
     git-filter-repo
     just
     unstable.claude-code
+    glow
 
     # others
     any-nix-shell

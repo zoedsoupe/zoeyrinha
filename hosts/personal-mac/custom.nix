@@ -45,11 +45,11 @@
       html.enable = true;
       css.enable = true;
       json.enable = true;
-      rust.enable = true;
+      rust.enable = false;
       go.enable = false;
       nix.enable = true;
       nim.enable = false;
-      zig.enable = true;
+      zig.enable = false;
       typescript.enable = true;
       gleam.enable = false;
       ocaml.enable = false;
@@ -63,9 +63,9 @@
   };
   git = {
     enable = true;
-    includes = [
-      {
-        condition = "gitdir:~/dev/**";
+    includes = let
+      zeetech = path: {
+        condition = "gitdir:${path}";
         contents = {
           user = {
             email = "zoey.spessanha@zeetech.io";
@@ -73,18 +73,23 @@
             signingKey = "~/.ssh/personal-sign";
           };
         };
-      }
-      {
-        condition = "gitdir:~/dev/dashbit/**";
-        contents = {
-          user = {
-            email = "zoey.spessanha@dashbit.co";
-            name = "zoedsoupe";
-            signingKey = "~/.ssh/dashbit";
+      };
+
+      zeetech-paths = map zeetech ["~/dev/personal" "~/dev/ccuenf" "~/dev/supabase" "~/dev/zeetech" "~/dev/oss" "~/dev/elixiremfoco"];
+    in
+      [
+        {
+          condition = "gitdir:~/dev/dashbit";
+          contents = {
+            user = {
+              email = "zoey.spessanha@dashbit.co";
+              name = "zoedsoupe";
+              signingKey = "~/.ssh/dashbit";
+            };
           };
-        };
-      }
-    ];
+        }
+      ]
+      ++ zeetech-paths;
   };
   zsh = {
     enable = true;

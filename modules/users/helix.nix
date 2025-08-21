@@ -31,7 +31,7 @@
   ocamlpkgs = pkgs.ocamlPackages;
 in {
   options.helix = {
-    enable = mkEnableOption "Enbales Helix Editor";
+    enable = mkEnableOption "Enables Helix Editor";
     editor = {
       disable-line-numbers = mkOption {
         type = types.bool;
@@ -87,10 +87,11 @@ in {
     programs.helix = {
       inherit (cfg) enable;
       settings = {
-        theme = "nyxvamp-veil";
+        theme = "nyxvamp-transparent";
         editor = {
+          scrolloff = 99;
           rainbow-brackets = true;
-          auto-save = true;
+          auto-save.focus-lost = true;
           completion-replace = true;
           cursorline = true;
           color-modes = true;
@@ -100,7 +101,13 @@ in {
             skip-levels = 1;
             character = "┊";
           };
-          soft-wrap.enable = true;
+          soft-wrap = {
+            enable = true;
+            wrap-at-text-width = true;
+          };
+          continue-comments = false;
+          preview-completion-insert = true;
+          line-number = "relative";
           # disable line numbers
           gutters = ["diagnostics" "spacer" "diff"];
           statusline = {
@@ -146,13 +153,27 @@ in {
           lua-language-server = mkIf lua.enable {
             command = "${pkgs.lua-language-server}/bin/lua-language-server";
           };
-          ocamllsp.command = mkIf ocaml.enable "${ocamlpkgs.ocaml-lsp}/bin/ocamllsp";
-          nil.command = mkIf nix.enable "${pkgs.nil}/bin/nil";
-          zls.command = mkIf zig.enable "${pkgs.zls}/bin/zls";
-          nimlsp.command = mkIf nim.enable "${pkgs.nimlsp}/bin/nimlsp";
-          clojure-lsp.command = mkIf clojure.enable "${pkgs.clojure-lsp}/bin/clojure-lsp";
-          rust-analyzer.command = mkIf rust.enable "${pkgs.rust-analyzer}/bin/rust-analyzer";
-          gopls.command = mkIf go.enable "${pkgs.gopls}/bin/gopls";
+          ocamllsp = mkIf ocaml.enable {
+            command = "${ocamlpkgs.ocaml-lsp}/bin/ocamllsp";
+          };
+          nil = mkIf nix.enable {
+            command = "${pkgs.nil}/bin/nil";
+          };
+          zls = mkIf zig.enable {
+            command = "${pkgs.zls}/bin/zls";
+          };
+          nimlsp = mkIf nim.enable {
+            command = "${pkgs.nimlsp}/bin/nimlsp";
+          };
+          clojure-lsp = mkIf clojure.enable {
+            command = "${pkgs.clojure-lsp}/bin/clojure-lsp";
+          };
+          rust-analyzer = mkIf rust.enable {
+            command = "${pkgs.rust-analyzer}/bin/rust-analyzer";
+          };
+          gopls = mkIf go.enable {
+            command = "${pkgs.gopls}/bin/gopls";
+          };
           emmet-ls = mkIf html.enable {
             command = "${pkgs.emmet-ls}/bin/emmet-ls";
             args = ["--stdio"];
@@ -184,7 +205,9 @@ in {
               json = {validate = {enable = true;};};
             };
           };
-          wakatime-ls.command = "${wakatime-ls}/bin/wakatime-ls";
+          wakatime-ls = {
+            command = "${wakatime-ls}/bin/wakatime-ls";
+          };
           marksman.command = "${pkgs.marksman}/bin/marksman";
           ruff = mkIf python.enable {
             command = "${pkgs.ruff}/bin/ruff";
@@ -215,6 +238,18 @@ in {
               command = "${prettier}/bin/prettier";
             };
           };
+
+          ex = {
+            formatter = mkIf elixir.enable {
+              command = "mix";
+              args = [
+                "format"
+
+                "--stdin-filename"
+                "%{buffer_name}"
+              ];
+            };
+          };
         in [
           (mkIf ocaml.enable {
             name = "ocaml";
@@ -238,6 +273,7 @@ in {
             language-servers = ["marksman" "wakatime-ls" "uwu-colors"];
           }
           (mkIf elixir.enable {
+            inherit (ex) formatter;
             name = "elixir";
             auto-format = false;
             language-servers = [
@@ -249,6 +285,7 @@ in {
             ];
           })
           (mkIf elixir.enable {
+            inherit (ex) formatter;
             name = "heex";
             auto-format = false;
             language-servers = [
@@ -263,6 +300,7 @@ in {
             ];
           })
           (mkIf elixir.enable {
+            inherit (ex) formatter;
             name = "eex";
             auto-format = false;
             language-servers = [
