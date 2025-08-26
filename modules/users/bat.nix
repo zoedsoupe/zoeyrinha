@@ -12,12 +12,18 @@ in {
     programs.bat = {
       enable = true;
       config = {
-        theme = "nyxvamp-veil";
+        theme = "auto:system";
+        theme-dark = "nyxvamp-veil";
+        theme-light = "nyxvamp-radiance";
       };
       themes = {
         nyxvamp-veil = {
           src = "${bat-themes}/themes";
           file = "nyxvamp-veil.tmTheme";
+        };
+        nyxvamp-radiance = {
+          src = "${bat-themes}/themes";
+          file = "nyxvamp-radiance.tmTheme";
         };
       };
     };
