@@ -42,7 +42,9 @@ in {
           home-manager = {
             useGlobalPkgs = true;
             useUserPackages = true;
-            sharedModules = [../modules/users];
+            sharedModules = [
+              ../modules/users
+            ];
             users.${user} = let
               pkgs = make-pkgs {
                 inherit system;

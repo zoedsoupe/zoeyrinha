@@ -245,7 +245,7 @@ in {
     programs.helix = {
       inherit (cfg) enable;
       settings = {
-        theme = "nyxvamp-transparent";
+        theme = "nyxvamp-veil";
         editor = {
           scrolloff = 99;
           rainbow-brackets = true;

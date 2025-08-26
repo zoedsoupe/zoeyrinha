@@ -10,7 +10,8 @@ adjust-cursor-height = 0
 adjust-strikethrough-position = "-2%"
 
 # Window Styling
-background-opacity = 0.85
+background-opacity = 1
+background-blur = true
 window-decoration = true
 window-padding-x = 10
 window-padding-y = 8
@@ -25,7 +26,7 @@ macos-auto-secure-input = true
 macos-secure-input-indication = true
 
 # Theme
-theme = "nyxvamp-veil.ghostty"
+theme = dark:"nyxvamp-veil.ghostty",light:"nyxvamp-radiance.ghostty"
 
 # Unicode and glyph settings
 font-codepoint-map = "U+E0A0-U+E0A2=MonoLisa,U+E0B0-U+E0B2=MonoLisa"
