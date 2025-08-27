@@ -5,7 +5,6 @@
   unstable,
   wakatime-ls,
   helix-themes,
-  lexical-lsp,
   ...
 }: let
   inherit (lib) mkEnableOption mkIf mkOption types;
@@ -383,26 +382,6 @@ in {
             command = "${pkgs.uwu-colors}/bin/uwu_colors";
             args = ["--named-completions-mode" "full" "--color-collection" "colorhexa" "--variable-completions"];
           };
-          lexical-lsp = let
-            inherit (pkgs.beam.packages) erlang_26;
-            inherit (pkgs) elixir-with-otp;
-            inherit (lexical-lsp.lib) mkLexical;
-            elixir = (elixir-with-otp erlang_26)."1.18.4";
-            lexical =
-              (mkLexical {
-                erlang = erlang_26 // {inherit elixir;};
-              }).overrideAttrs (oldAttrs: {
-                mixFodDeps = erlang_26.fetchMixDeps {
-                  pname = "lexical";
-                  version = "development";
-                  src = lexical-lsp;
-                  sha256 = "sha256-g6BZGJ33oBDXmjbb/kBfPhart4En/iDlt4yQJYeuBzw=";
-                };
-              });
-          in
-            mkIf (get-lang-config "elixir").enable {
-              command = "${lexical}/bin/start_lexical.sh";
-            };
         };
 
         language =

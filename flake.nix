@@ -33,8 +33,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    lexical-lsp.url = "github:lexical-lsp/lexical";
-
     # colorize hex colors on helix (lsp)
     uwu-colors.url = "github:q60/uwu_colors";
 
