@@ -33,6 +33,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    lexical-lsp.url = "github:lexical-lsp/lexical";
+
     # colorize hex colors on helix (lsp)
     uwu-colors.url = "github:q60/uwu_colors";
 
@@ -73,5 +75,16 @@
         system = "x86_64-linux";
       };
     };
+
+    devShells.aarch64-darwin.default = let
+      pkgs = lib.make-pkgs {
+        system = "aarch64-darwin";
+        source = nixpkgs;
+      };
+    in
+      pkgs.mkShell {
+        name = "zoeyrinha";
+        packages = [pkgs.alejandra];
+      };
   };
 }

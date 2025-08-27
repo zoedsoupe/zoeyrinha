@@ -38,7 +38,7 @@ in {
       antidote = {
         enable = true;
         plugins = [
-          "nyxvamp-theme/zsh path:nyxvamp-radiance.zsh"
+          "nyxvamp-theme/zsh path:nyxvamp-veil.zsh"
         ];
       };
       history = {

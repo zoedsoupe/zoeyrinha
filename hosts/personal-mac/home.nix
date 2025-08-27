@@ -35,6 +35,7 @@
     just
     unstable.claude-code
     glow
+    wakatime-cli
 
     # others
     any-nix-shell

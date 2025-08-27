@@ -25,6 +25,8 @@ inputs: let
       config.allowUnfree = true;
     };
 in {
+  inherit make-pkgs;
+
   mkDarwin = {
     host ? "personal-mac",
     user ? "zoedsoupe",
@@ -53,7 +55,7 @@ in {
             in {
               _module.args = {
                 inherit host system ghostty-themes helix-themes bat-themes starship-themes;
-                inherit (inputs) helix;
+                inherit (inputs) helix lexical-lsp;
                 wakatime-ls = wakatime-ls.packages.${system}.default;
                 unstable = make-pkgs {
                   inherit system;
