@@ -9,6 +9,7 @@ inputs: let
     helix.overlays.default
     elixir-overlay.overlays.default
     uwu-colors.overlays.default
+    expert-lsp.overlays.default
     (_: final: {next-ls = next-ls.packages.${final.system}.default;})
     (_: final: {
       nodejs = final.nodejs_20;
@@ -55,8 +56,8 @@ in {
             in {
               _module.args = {
                 inherit host system ghostty-themes helix-themes bat-themes starship-themes;
-                # inherit (inputs) helix expert-lsp;
-                inherit (inputs) helix;
+                inherit (inputs) helix expert-lsp;
+                # inherit (inputs) helix;
                 wakatime-ls = wakatime-ls.packages.${system}.default;
                 unstable = make-pkgs {
                   inherit system;
