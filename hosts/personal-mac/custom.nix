@@ -77,8 +77,8 @@
       elixir = {
         enable = true;
         wakatime.enable = true;
-        lsp.enable = false;
-        lsp.name = "lexical-lsp";
+        lsp.enable = true;
+        lsp.name = "expert-lsp";
       };
     };
   };

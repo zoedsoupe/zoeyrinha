@@ -4,7 +4,7 @@
 in {
   elixir = {
     helix-names = ["elixir" "heex" "eex"];
-    language-servers = ["next-ls"];
+    language-servers = ["expert-lsp"];
     formatter = {
       command = "mix";
       args = ["format" "--stdin-filename" "%{buffer_name}"];

@@ -2,9 +2,10 @@
   pkgs,
   lib,
   custom-config,
-  unstable,
-  wakatime-ls,
   helix-themes,
+  unstable,
+  expert-lsp,
+  wakatime-ls,
   ...
 }: let
   inherit (lib) mkEnableOption mkIf mkOption types;
@@ -13,7 +14,7 @@
   language-defaults = import ./languages.nix {inherit pkgs lib;};
   helpers = import ./lib.nix {inherit lib custom-config;};
   lsp-servers = import ./lsp-servers.nix {
-    inherit pkgs lib unstable wakatime-ls custom-config;
+    inherit pkgs lib unstable custom-config expert-lsp wakatime-ls;
   };
   editor-config = import ./editor.nix {inherit lib custom-config;};
 
