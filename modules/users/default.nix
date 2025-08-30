@@ -8,7 +8,7 @@
     ./gh.nix
     ./ghostty.nix
     ./git.nix
-    ./helix.nix
+    ./helix
     ./kitty.nix
     ./starship.nix
     ./tmux.nix

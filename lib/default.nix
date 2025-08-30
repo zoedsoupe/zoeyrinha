@@ -55,7 +55,8 @@ in {
             in {
               _module.args = {
                 inherit host system ghostty-themes helix-themes bat-themes starship-themes;
-                inherit (inputs) helix lexical-lsp;
+                # inherit (inputs) helix expert-lsp;
+                inherit (inputs) helix;
                 wakatime-ls = wakatime-ls.packages.${system}.default;
                 unstable = make-pkgs {
                   inherit system;

@@ -130,8 +130,10 @@
       DIRENV_LOG_FORMAT = "";
       GPG_TTY = "$(tty)";
       GITHUB_TOKEN = "";
-      PATH = "$HOME/.nix-profile/bin:/etc/profiles/per-user/zoedsoupe/bin:/run/current-system/sw/bin:$HOME/google-cloud-sdk/bin:$PATH";
+      PATH = "$HOME/.nix-profile/bin:/etc/profiles/per-user/zoedsoupe/bin:/run/current-system/sw/bin:$HOME/google-cloud-sdk/bin:/opt/homebrew/opt/node@22/bin:$PATH";
       EDITOR = "${pkgs.helix}/bin/hx";
+      LDFLAGS = "-L/opt/homebrew/opt/node@22/lib";
+      CPPFLAGS = "-I/opt/homebrew/opt/node@22/include";
     };
   };
 }
