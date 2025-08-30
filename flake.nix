@@ -33,6 +33,8 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # expert-lsp.url = "path:~/dev/oss/expert";
+
     # colorize hex colors on helix (lsp)
     uwu-colors.url = "github:q60/uwu_colors";
 
