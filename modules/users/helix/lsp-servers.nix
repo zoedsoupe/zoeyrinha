@@ -1,7 +1,6 @@
 {
   pkgs,
   lib,
-  unstable,
   wakatime-ls,
   custom-config,
   ...
@@ -17,7 +16,7 @@
 in {
   language-server = {
     gleam = mkIf (get-lang-config "gleam").enable {
-      command = "${unstable.gleam}/bin/gleam";
+      command = "${pkgs.gleam}/bin/gleam";
     };
 
     typescript-language-server = mkIf (get-lang-config "typescript").enable {
@@ -112,9 +111,9 @@ in {
       args = ["--stdio"];
     };
 
-    expert-lsp = mkIf (get-lang-config "elixir").enable {
-      command = "${pkgs.expert-lsp}/bin/expert";
-    };
+    # expert-lsp = mkIf (get-lang-config "elixir").enable {
+    #  command = "${pkgs.expert-lsp}/bin/expert";
+    # };
 
     uwu-colors = {
       command = "${pkgs.uwu-colors}/bin/uwu_colors";

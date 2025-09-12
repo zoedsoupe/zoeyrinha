@@ -2,8 +2,7 @@
   description = "Zoey's personal config, aka dotfiles";
 
   inputs = {
-    nixpkgs.url = "flake:nixpkgs/nixos-25.05";
-    unstable.url = "flake:nixpkgs/nixos-unstable";
+    nixpkgs.url = "flake:nixpkgs/nixpkgs-25.05-darwin";
 
     elixir-overlay.url = "github:zoedsoupe/elixir-overlay";
     next-ls.url = "github:elixir-tools/next-ls";
@@ -33,7 +32,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    expert-lsp.url = "path:/Users/zoedsoupe/dev/oss/expert";
+    # expert-lsp.url = "github:elixir-lang/expert";
 
     # colorize hex colors on helix (lsp)
     uwu-colors.url = "github:q60/uwu_colors";
@@ -70,11 +69,11 @@
       };
     };
 
-    nixosConfigurations = {
-      minimal-iso = mkISO {
-        system = "x86_64-linux";
-      };
-    };
+    # nixosConfigurations = {
+    #  minimal-iso = mkISO {
+    #    system = "x86_64-linux";
+    #  };
+    # };
 
     devShells.aarch64-darwin.default = let
       pkgs = lib.make-pkgs {

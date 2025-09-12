@@ -2,30 +2,9 @@
   system.stateVersion = 5;
   system.primaryUser = "zoedsoupe";
 
-  nix.channel.enable = false;
-  nix.gc = {
-    automatic = true;
-    interval = {
-      Weekday = 3;
-      Hour = 2;
-      Minute = 0;
-    };
-    options = "--delete-older-than 30d";
-  };
-  nix.optimise = {
-    automatic = true;
-    interval = {
-      Weekday = 3;
-      Hour = 2;
-      Minute = 0;
-    };
-  };
-  nix.settings.auto-optimise-store = false;
-  nix.extraOptions = ''
-    experimental-features = nix-command flakes
-  '';
+  nix.enable = false;
 
-  ids.gids.nixbld = 30000;
+  ids.gids.nixbld = 350;
 
   system.keyboard.enableKeyMapping = true;
   system.keyboard.remapCapsLockToEscape = true;
@@ -40,7 +19,7 @@
       upgrade = true;
     };
     brews = [];
-    casks = ["ghostty"];
+    casks = ["ghostty" "claude-code"];
   };
 
   users.users.zoedsoupe = {
