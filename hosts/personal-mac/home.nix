@@ -1,6 +1,5 @@
 {
   pkgs,
-  unstable,
   ...
 }: {
   home.stateVersion = "22.11";
@@ -33,7 +32,6 @@
     tree
     git-filter-repo
     just
-    unstable.claude-code
     glow
     wakatime-cli
 
@@ -42,5 +40,10 @@
 
     # audio & video
     ffmpeg
+
+    # docker
+    colima
+    docker
+    docker-compose
   ];
 }
