@@ -3,7 +3,6 @@
   lib,
   custom-config,
   helix-themes,
-  # expert-lsp,
   wakatime-ls,
   ...
 }: let
