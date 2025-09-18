@@ -111,9 +111,9 @@ in {
       args = ["--stdio"];
     };
 
-    # expert-lsp = mkIf (get-lang-config "elixir").enable {
-    #  command = "${pkgs.expert-lsp}/bin/expert";
-    # };
+    expert-lsp = mkIf (get-lang-config "elixir").enable {
+      command = "${pkgs.expert-lsp}/bin/expert";
+    };
 
     uwu-colors = {
       command = "${pkgs.uwu-colors}/bin/uwu_colors";

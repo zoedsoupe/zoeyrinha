@@ -91,7 +91,7 @@
           user = {
             email = "zoey.spessanha@zeetech.io";
             name = "Zoey Pessanha";
-            signingKey = "~/.ssh/personal-sign";
+            signingKey = "~/.ssh/personal";
           };
         };
       };

@@ -1,6 +1,6 @@
 inputs: let
   inherit (inputs) nixpkgs darwin home-manager;
-  inherit (inputs) wakatime-ls ghostty-themes helix-themes bat-themes starship-themes;
+  inherit (inputs) wakatime-ls ghostty-themes helix-themes bat-themes starship-themes expert-lsp;
   inherit (nixpkgs.lib) nixosSystem;
   inherit (darwin.lib) darwinSystem;
 
@@ -9,8 +9,7 @@ inputs: let
     helix.overlays.default
     elixir-overlay.overlays.default
     uwu-colors.overlays.default
-    # expert-lsp.overlays.default
-    (_: final: {next-ls = next-ls.packages.${final.system}.default;})
+    (_: final: {expert-lsp = expert-lsp.packages.${final.system}.default;})
     (_: final: {
       nodejs = final.nodejs_20;
       nodejs_24 = final.nodejs_20;

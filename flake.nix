@@ -5,7 +5,7 @@
     nixpkgs.url = "flake:nixpkgs/nixpkgs-25.05-darwin";
 
     elixir-overlay.url = "github:zoedsoupe/elixir-overlay";
-    next-ls.url = "github:elixir-tools/next-ls";
+    # next-ls.url = "github:elixir-tools/next-ls";
 
     wakatime-ls = {
       url = "github:mrnossiom/wakatime-ls";
@@ -32,7 +32,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    # expert-lsp.url = "github:elixir-lang/expert";
+    expert-lsp.url = "github:elixir-lang/expert";
 
     # colorize hex colors on helix (lsp)
     uwu-colors.url = "github:q60/uwu_colors";
@@ -69,11 +69,11 @@
       };
     };
 
-    # nixosConfigurations = {
-    #  minimal-iso = mkISO {
-    #    system = "x86_64-linux";
-    #  };
-    # };
+    nixosConfigurations = {
+      minimal-iso = mkISO {
+        system = "x86_64-linux";
+      };
+    };
 
     devShells.aarch64-darwin.default = let
       pkgs = lib.make-pkgs {

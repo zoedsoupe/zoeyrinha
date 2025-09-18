@@ -26,7 +26,7 @@ macos-auto-secure-input = true
 macos-secure-input-indication = true
 
 # Theme
-theme = dark:"nyxvamp-veil.ghostty",light:"nyxvamp-radiance.ghostty"
+theme = "nyxvamp-veil.ghostty"
 
 # Unicode and glyph settings
 font-codepoint-map = "U+E0A0-U+E0A2=MonoLisa,U+E0B0-U+E0B2=MonoLisa"
