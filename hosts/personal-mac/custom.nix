@@ -117,6 +117,9 @@
     profileExtra = ''
       eval "$(/opt/homebrew/bin/brew shellenv)"
       ${pkgs.krabby}/bin/krabby random 2> /dev/null
+
+      alias ls='eza'
+      alias tree='eza --tree --git-ignore'
     '';
     history = {
       ignorePatterns = ["git commit -m *" "git clone *" "mix test --only *" "mkdir *"];
