@@ -1,7 +1,4 @@
-{
-  pkgs,
-  ...
-}: {
+{pkgs, ...}: {
   home.stateVersion = "22.11";
   home.homeDirectory = "/Users/zoedsoupe";
 
@@ -29,7 +26,6 @@
     jq
     flyctl
     ngrok
-    tree
     git-filter-repo
     just
     glow
