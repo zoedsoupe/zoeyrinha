@@ -58,14 +58,23 @@
         enable = true;
         wakatime.enable = true;
       };
-      rust.enable = false;
-      go.enable = false;
+      rust = {
+        enable = true;
+        wakatime.enable = true;
+      };
+      go = {
+        enable = true;
+        wakatime.enable = true;
+      };
       nix = {
         enable = true;
         wakatime.enable = true;
       };
       nim.enable = false;
-      zig.enable = false;
+      zig = {
+        enable = true;
+        wakatime.enable = true;
+      };
       typescript = {
         enable = true;
         wakatime.enable = true;
@@ -133,7 +142,7 @@
       DIRENV_LOG_FORMAT = "";
       GPG_TTY = "$(tty)";
       GITHUB_TOKEN = "";
-      PATH = "$HOME/.nix-profile/bin:/etc/profiles/per-user/zoedsoupe/bin:/run/current-system/sw/bin:$HOME/google-cloud-sdk/bin:/opt/homebrew/opt/node@22/bin:$PATH";
+      PATH = "$HOME/.nix-profile/bin:/etc/profiles/per-user/zoedsoupe/bin:/run/current-system/sw/bin:$HOME/google-cloud-sdk/bin:/opt/homebrew/opt/node@22/bin:$HOME/.local/bin:$PATH";
       EDITOR = "${pkgs.helix}/bin/hx";
       LDFLAGS = "-L/opt/homebrew/opt/node@22/lib";
       CPPFLAGS = "-I/opt/homebrew/opt/node@22/include";
