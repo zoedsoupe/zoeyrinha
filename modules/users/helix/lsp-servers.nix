@@ -12,6 +12,8 @@
   ocamlpkgs = pkgs.ocamlPackages;
   cfg = custom-config.helix;
 
+  rust = pkgs.rust-bin.stable.latest;
+
   get-lang-config = name: cfg.languages.${name} or {};
 in {
   language-server = {
@@ -49,7 +51,7 @@ in {
     };
 
     rust-analyzer = mkIf (get-lang-config "rust").enable {
-      command = "${pkgs.rust-analyzer}/bin/rust-analyzer";
+      command = "${rust.rust-analyzer}/bin/rust-analyzer";
     };
 
     gopls = mkIf (get-lang-config "go").enable {
