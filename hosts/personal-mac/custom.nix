@@ -6,6 +6,82 @@
   };
   bat.enable = true;
   direnv.enable = true;
+  envoluntary = {
+    enable = true;
+    entries = [
+      # === Dashbit Projects ===
+      {
+        pattern = ".*/dev/dashbit/tidewave_javascript(/.*)?";
+        flake_reference = "~/dev/nix/dashbit-node";
+      }
+      {
+        pattern = ".*/dev/dashbit/tidewave_rails(/.*)?";
+        flake_reference = "~/dev/nix/dashbit-ruby";
+      }
+      {
+        pattern = ".*/dev/dashbit/tidewave_app(/.*)?";
+        flake_reference = "~/dev/nix/dashbit-rust";
+      }
+      {
+        pattern = ".*/dev/dashbit/tidewave_phoenix(/.*)?";
+        flake_reference = "~/dev/nix/dashbit-elixir";
+      }
+      {
+        pattern = ".*/dev/dashbit/tidewave_server(/.*)?";
+        flake_reference = "~/dev/nix/dashbit-fullstack";
+      }
+
+      # === Supabase Projects (Elixir + PostgreSQL) ===
+      {
+        pattern = ".*/dev/supabase/.*";
+        flake_reference = "~/dev/nix/supabase-elixir";
+      }
+
+      # === Taina Project (Elixir + PostgreSQL) ===
+      {
+        pattern = ".*/dev/taina/.*";
+        flake_reference = "~/dev/nix/supabase-elixir";
+      }
+
+      # === OSS Elixir Projects ===
+      {
+        pattern = ".*/dev/oss/nexus(/.*)?";
+        flake_reference = "~/dev/nix/oss-elixir";
+      }
+      {
+        pattern = ".*/dev/oss/soundscape(/.*)?";
+        flake_reference = "~/dev/nix/oss-elixir";
+      }
+      {
+        pattern = ".*/dev/oss/peri(/.*)?";
+        flake_reference = "~/dev/nix/oss-elixir";
+      }
+      {
+        pattern = ".*/dev/oss/exlings(/.*)?";
+        flake_reference = "~/dev/nix/oss-elixir";
+      }
+      {
+        pattern = ".*/dev/oss/proto_rune(/.*)?";
+        flake_reference = "~/dev/nix/oss-elixir";
+      }
+
+      # === Elixir + Node Projects ===
+      {
+        pattern = ".*/dev/oss/lucide_icons(/.*)?";
+        flake_reference = "~/dev/nix/elixir-node";
+      }
+
+      # === Zig Projects ===
+      {
+        pattern = ".*/dev/personal/slimes(/.*)?";
+        flake_reference = "~/dev/nix/zig";
+      }
+      {
+        pattern = ".*/dev/personal/ziglings(/.*)?";
+        flake_reference = "~/dev/nix/zig";
+      }
+    ];
+  };
   fish.enable = false;
   fzf.enable = true;
   kitty = {
@@ -123,10 +199,9 @@
   };
   zsh = {
     enable = true;
+    # ${pkgs.krabby}/bin/krabby random 2> /dev/null pokemon sprites
     profileExtra = ''
       eval "$(/opt/homebrew/bin/brew shellenv)"
-      ${pkgs.krabby}/bin/krabby random 2> /dev/null
-
       alias ls='eza'
       alias tree='eza --tree --git-ignore'
     '';
