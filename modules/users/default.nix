@@ -3,6 +3,7 @@
     ./alacritty.nix
     ./bat.nix
     ./direnv.nix
+    ./envoluntary.nix
     ./fish.nix
     ./fzf.nix
     ./gh.nix
