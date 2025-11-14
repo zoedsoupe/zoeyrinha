@@ -12,12 +12,12 @@ in {
     enable = mkEnableOption "Enables zed configurations";
     theme = {
       dark = mkOption {
-        type = types.str;
+        type = types.nullOr types.str;
         description = "The dark theme name to use";
         default = null;
       };
       light = mkOption {
-        type = types.str;
+        type = types.nullOr types.str;
         description = "The light theme name to use";
         default = null;
       };
@@ -74,7 +74,9 @@ in {
         file_types = {
           CSS = ["scss" "css"];
         };
-        git.inline_blame = true;
+        git.inline_blame = {
+          enabled = true;
+        };
         vim = {
           default_mode = "helix_normal";
           scrollbar.show = "never";
@@ -85,9 +87,9 @@ in {
         };
         buffer_font_size = 17;
         buffer_font_family = cfg.font;
-        buffer_font_features = true;
+        buffer_font_features = null;
         ui_font_family = cfg.font;
-        ui_font_features = true;
+        ui_font_features = null;
         preview_tabs = {
           enabled = true;
           enable_preview_from_file_finder = true;
@@ -96,6 +98,7 @@ in {
         languages = {
           Elixir = {
             language_servers = [
+              "expert"
               "!lexical"
               "!next-ls"
               "!elixir-ls"
@@ -104,6 +107,7 @@ in {
           };
           HEEX = {
             language_servers = [
+              "expert"
               "!lexical"
               "!next-ls"
               "!elixir-ls"
