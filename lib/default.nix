@@ -1,5 +1,5 @@
 inputs: let
-  inherit (inputs) nixpkgs darwin home-manager envoluntary;
+  inherit (inputs) nixpkgs unstable darwin home-manager envoluntary;
   inherit (inputs) wakatime-ls ghostty-themes helix-themes bat-themes starship-themes expert-lsp;
   inherit (nixpkgs.lib) nixosSystem;
   inherit (darwin.lib) darwinSystem;
@@ -58,6 +58,10 @@ in {
               _module.args = {
                 inherit host system ghostty-themes helix-themes bat-themes starship-themes;
                 inherit (inputs) helix;
+                unstable = make-pkgs {
+                  inherit system;
+                  source = unstable;
+                };
                 wakatime-ls = wakatime-ls.packages.${system}.default;
                 custom-config = import (../hosts + /${host}/custom.nix) {
                   inherit pkgs;

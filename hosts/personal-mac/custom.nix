@@ -107,7 +107,7 @@
     enable = true;
     theme = {
       dark = "NyxVamp Veil";
-      light = "NyxVamp Radiance";
+      light = "NyxVamp Veil";
     };
     font = "MonoLisa";
   };
