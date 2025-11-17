@@ -1,5 +1,6 @@
 {
   pkgs,
+  unstable,
   lib,
   custom-config,
   ...
@@ -12,6 +13,7 @@ in {
   config = mkIf cfg.enable {
     programs.gh = {
       inherit (cfg) enable;
+      package = unstable.gh;
       extensions = [pkgs.gh-dash];
       settings = {
         prompt = "enabled";

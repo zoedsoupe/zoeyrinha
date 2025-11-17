@@ -78,7 +78,7 @@ in {
           enabled = true;
         };
         vim = {
-          default_mode = "helix_normal";
+          # default_mode = "helix_normal";
           scrollbar.show = "never";
           use_system_clipboard = "on_yank";
           use_smartcase_find = true;

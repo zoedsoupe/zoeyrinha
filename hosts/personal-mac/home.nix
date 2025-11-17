@@ -15,7 +15,6 @@
     pinentry_mac
 
     gnupg
-    gitAndTools.gh
 
     # tools
     bat

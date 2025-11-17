@@ -3,9 +3,9 @@
 
   inputs = {
     nixpkgs.url = "flake:nixpkgs/nixpkgs-25.05-darwin";
+    unstable.url = "flake:nixpkgs/nixpkgs-unstable";
 
     elixir-overlay.url = "github:zoedsoupe/elixir-overlay";
-    # next-ls.url = "github:elixir-tools/next-ls";
 
     wakatime-ls = {
       url = "github:mrnossiom/wakatime-ls";
