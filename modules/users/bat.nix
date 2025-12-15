@@ -12,9 +12,9 @@ in {
     programs.bat = {
       enable = true;
       config = {
-        theme = "auto:system";
-        theme-dark = "nyxvamp-veil";
-        theme-light = "nyxvamp-radiance";
+        theme = "nyxvamp-veil";
+        # theme-dark = "nyxvamp-veil";
+        # theme-light = "nyxvamp-radiance";
       };
       themes = {
         nyxvamp-veil = {
