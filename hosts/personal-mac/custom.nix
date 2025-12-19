@@ -9,28 +9,6 @@
   envoluntary = {
     enable = true;
     entries = [
-      # === Dashbit Projects ===
-      {
-        pattern = ".*/dev/dashbit/tidewave_javascript(/.*)?";
-        flake_reference = "~/dev/nix/dashbit-node";
-      }
-      {
-        pattern = ".*/dev/dashbit/tidewave_rails(/.*)?";
-        flake_reference = "~/dev/nix/dashbit-ruby";
-      }
-      {
-        pattern = ".*/dev/dashbit/tidewave_app(/.*)?";
-        flake_reference = "~/dev/nix/dashbit-rust";
-      }
-      {
-        pattern = ".*/dev/dashbit/tidewave_phoenix(/.*)?";
-        flake_reference = "~/dev/nix/dashbit-elixir";
-      }
-      {
-        pattern = ".*/dev/dashbit/tidewave_server(/.*)?";
-        flake_reference = "~/dev/nix/dashbit-fullstack";
-      }
-
       # === Supabase Projects (Elixir + PostgreSQL) ===
       {
         pattern = ".*/dev/supabase/.*";
@@ -183,19 +161,7 @@
 
       zeetech-paths = map zeetech ["~/dev/personal" "~/dev/ccuenf" "~/dev/supabase" "~/dev/zeetech" "~/dev/oss" "~/dev/elixiremfoco" "~/dev/taina"];
     in
-      [
-        {
-          condition = "gitdir:~/dev/dashbit/";
-          contents = {
-            user = {
-              email = "zoey.spessanha@dashbit.co";
-              name = "zoedsoupe";
-              signingKey = "~/.ssh/dashbit";
-            };
-          };
-        }
-      ]
-      ++ zeetech-paths;
+      zeetech-paths;
   };
   zsh = {
     enable = true;

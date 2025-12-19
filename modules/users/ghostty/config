@@ -39,7 +39,7 @@ shell-integration = detect
 shell-integration-features = cursor,sudo,title
 
 # macOS Configuration
-macos-option-as-alt = right
+macos-option-as-alt = true
 
 # Clipboard
 clipboard-read = allow
