@@ -115,6 +115,7 @@ in {
 
     expert-lsp = mkIf (get-lang-config "elixir").enable {
       command = "${pkgs.expert-lsp}/bin/expert";
+      args = ["--stdio"];
     };
 
     uwu-colors = {
