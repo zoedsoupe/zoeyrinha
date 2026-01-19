@@ -18,6 +18,8 @@
 
     # tools
     bat
+    felix-fm
+    chafa
     eza # exa fork
     fd
     silver-searcher

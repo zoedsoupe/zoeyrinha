@@ -17,6 +17,8 @@ in {
   };
 
   config = mkIf cfg.enable {
+    programs.difftastic = {inherit (cfg) enable;};
+
     programs.git = {
       inherit (cfg) enable includes;
       ignores = [
@@ -30,8 +32,7 @@ in {
         ".envrc"
       ];
       lfs.enable = true;
-      difftastic.enable = true;
-      extraConfig = {
+      settings = {
         gpg.format = "ssh";
         gpg.ssh.allowedsignersfile = "~/.config/git/allowed-signers";
         tag.gpgsign = true;

@@ -43,6 +43,7 @@ in {
       package = pkgs.emptyDirectory;
       extensions = ["elixir" "html" "nix" "nyxvamp-theme" "wakatime" "catppuccin-icons"];
       userSettings = {
+        disable_ai = true;
         tab_size = 2;
         load_direnv = "shell_hook";
         agent = {
@@ -94,6 +95,14 @@ in {
           enabled = true;
           enable_preview_from_file_finder = true;
           enable_preview_from_code_navigation = true;
+        };
+        lsp = {
+          expert = {
+            binary = {
+              path = "${pkgs.expert-lsp}/bin/expert";
+              arguments = ["--stdio"];
+            };
+          };
         };
         languages = {
           Elixir = {

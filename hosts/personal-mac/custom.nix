@@ -170,6 +170,7 @@
       eval "$(/opt/homebrew/bin/brew shellenv)"
       alias ls='eza'
       alias tree='eza --tree --git-ignore'
+      source <(command fx --init)
     '';
     history = {
       ignorePatterns = ["git commit -m *" "git clone *" "mix test --only *" "mkdir *"];

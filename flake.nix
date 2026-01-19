@@ -2,7 +2,7 @@
   description = "Zoey's personal config, aka dotfiles";
 
   inputs = {
-    nixpkgs.url = "flake:nixpkgs/nixpkgs-25.05-darwin";
+    nixpkgs.url = "flake:nixpkgs/nixpkgs-25.11-darwin";
     unstable.url = "flake:nixpkgs/nixpkgs-unstable";
 
     elixir-overlay.url = "github:zoedsoupe/elixir-overlay";
@@ -18,12 +18,12 @@
     };
 
     darwin = {
-      url = "github:lnl7/nix-darwin/nix-darwin-25.05";
+      url = "github:lnl7/nix-darwin/nix-darwin-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
     home-manager = {
-      url = "github:nix-community/home-manager?ref=release-25.05";
+      url = "github:nix-community/home-manager?ref=release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
