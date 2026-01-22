@@ -101,11 +101,11 @@
         "nixpkgs": "nixpkgs"
       },
       "locked": {
-        "lastModified": 1768433295,
-        "narHash": "sha256-199bA5xx7EmePvFfFP9CvSBA5wad5YgzVX4+WzXoRpU=",
+        "lastModified": 1768834828,
+        "narHash": "sha256-Chij+5V09FGu37hNGMzULBpkriD0EzGwoNeKHubj0tU=",
         "owner": "zoedsoupe",
         "repo": "elixir-overlay",
-        "rev": "643bcd7d516227a0f3f38fbee9322af95c15d7ee",
+        "rev": "5bf840d2d4cfce8ce67ac9894d9832bcfa262cc0",
         "type": "github"
       },
       "original": {
@@ -148,11 +148,11 @@
         "nixpkgs": "nixpkgs_3"
       },
       "locked": {
-        "lastModified": 1768821854,
-        "narHash": "sha256-zqNMLDjRH9uX3wfqRhjsVV1d5vj/rh57ehvpEqSD0m8=",
+        "lastModified": 1769079464,
+        "narHash": "sha256-hq9tQV9alKyYH1YAG5mNisU5y9hukE7KwqEccR7iizE=",
         "owner": "elixir-lang",
         "repo": "expert",
-        "rev": "fad5a0b24eefaaf14ddc73b52ea2f66711083492",
+        "rev": "eff68bf31a8466fb65664f3447c7274166cbf5d5",
         "type": "github"
       },
       "original": {
@@ -260,11 +260,11 @@
         "rust-overlay": "rust-overlay_2"
       },
       "locked": {
-        "lastModified": 1768806446,
-        "narHash": "sha256-wLa40belSJjNoaHkndX7CW6b72ulaeEIAadkfv7P+6c=",
+        "lastModified": 1768978366,
+        "narHash": "sha256-UVG0Xwa5FJH1a49pXGsHMyCerceSxMyWPHapF+LAfJg=",
         "owner": "helix-editor",
         "repo": "helix",
-        "rev": "d1ae83e9ccd7905acbc29969371e2c68f63bc078",
+        "rev": "e61b50b7e4c833d1ce9aec6aba6452fada1001ca",
         "type": "github"
       },
       "original": {
@@ -296,11 +296,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1768603898,
-        "narHash": "sha256-vRV1dWJOCpCal3PRr86wE2WTOMfAhTu6G7bSvOsryUo=",
+        "lastModified": 1768949235,
+        "narHash": "sha256-TtjKgXyg1lMfh374w5uxutd6Vx2P/hU81aEhTxrO2cg=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "2a63d0e9d2c72ac4d4150ebb242cf8d86f488c8c",
+        "rev": "75ed713570ca17427119e7e204ab3590cc3bf2a5",
         "type": "github"
       },
       "original": {
@@ -487,11 +487,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1768791178,
-        "narHash": "sha256-ZVqH14w7y40DEQOghli1c28NopVNFk1MNNRzEIwMa6M=",
+        "lastModified": 1769050281,
+        "narHash": "sha256-1H8DN4UZgEUqPUA5ecHOufLZMscJ4IlcGaEftaPtpBY=",
         "owner": "oxalica",
         "repo": "rust-overlay",
-        "rev": "3941028eccc4d981f75c933786e1fd95b71024f1",
+        "rev": "6deef0585c52d9e70f96b6121207e1496d4b0c49",
         "type": "github"
       },
       "original": {
@@ -508,11 +508,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1764557621,
-        "narHash": "sha256-kX5PoY8hQZ80+amMQgOO9t8Tc1JZ70gYRnzaVD4AA+o=",
+        "lastModified": 1768963622,
+        "narHash": "sha256-n6VHiUgrYD9yjagzG6ncVVqFbVTsKCI54tR9PNAFCo0=",
         "owner": "oxalica",
         "repo": "rust-overlay",
-        "rev": "93316876c2229460a5d6f5f052766cc4cef538ce",
+        "rev": "2ef5b3362af585a83bafd34e7fc9b1f388c2e5e2",
         "type": "github"
       },
       "original": {
@@ -569,11 +569,11 @@
     },
     "unstable": {
       "locked": {
-        "lastModified": 1768783163,
-        "narHash": "sha256-tLj4KcRDLakrlpvboTJDKsrp6z2XLwyQ4Zmo+w8KsY4=",
+        "lastModified": 1768875095,
+        "narHash": "sha256-dYP3DjiL7oIiiq3H65tGIXXIT1Waiadmv93JS0sS+8A=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "bde09022887110deb780067364a0818e89258968",
+        "rev": "ed142ab1b3a092c4d149245d0c4126a5d7ea00b0",
         "type": "github"
       },
       "original": {
@@ -628,11 +628,11 @@
         "rust-overlay": "rust-overlay_4"
       },
       "locked": {
-        "lastModified": 1764772399,
-        "narHash": "sha256-iZmN5d42tOsmssuFzOf3saUUeXbrwraQmDgh5czuMis=",
+        "lastModified": 1769028552,
+        "narHash": "sha256-Bar3IvEYAeIqXhu0O8estmOToMZrYxWBsrQbxlygjv8=",
         "owner": "mrnossiom",
         "repo": "wakatime-ls",
-        "rev": "b8b9c1e612f198d767a64142f34c33ffbd347fae",
+        "rev": "9aba73540151890f5df2bf2f766dec3591aca610",
         "type": "github"
       },
       "original": {

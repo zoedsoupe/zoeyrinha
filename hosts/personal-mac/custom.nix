@@ -58,6 +58,10 @@
         pattern = ".*/dev/personal/ziglings(/.*)?";
         flake_reference = "~/dev/nix/zig";
       }
+      {
+        pattern = ".*/dev/personal/morpho(/.*)?";
+        flake_reference = "~/dev/nix/zig";
+      }
     ];
   };
   fish.enable = false;
