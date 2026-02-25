@@ -25,7 +25,7 @@ in {
     font = mkOption {
       type = types.str;
       description = "The font to use on buffer and UI";
-      default = "MonoLisa";
+      default = "MonoLisa Variable";
     };
     elixir = {
       lsp = mkOption {
@@ -37,7 +37,6 @@ in {
   };
 
   config = mkIf cfg.enable {
-    home.sessionPath = ["${wakatime-ls}/bin/wakatime-lsp"];
     programs.zed-editor = {
       inherit (cfg) enable;
       package = pkgs.emptyDirectory;
@@ -70,7 +69,7 @@ in {
         cursor_blink = false;
         soft_wrap = "editor_width";
         tab_bar.show = false;
-        vertical_scroll_margin = 10;
+        vertical_scroll_margin = 25;
         scrollbar.show = "never";
         file_types = {
           CSS = ["scss" "css"];
@@ -80,11 +79,9 @@ in {
         };
         vim = {
           # default_mode = "helix_normal";
-          scrollbar.show = "never";
           use_system_clipboard = "on_yank";
           use_smartcase_find = true;
           toggle_relative_line_numbers = true;
-          vertical_scroll_margin = 99;
         };
         buffer_font_size = 17;
         buffer_font_family = cfg.font;
@@ -94,9 +91,13 @@ in {
         preview_tabs = {
           enabled = true;
           enable_preview_from_file_finder = true;
-          enable_preview_from_code_navigation = true;
         };
         lsp = {
+          wakatime = {
+            binary = {
+              path = "${wakatime-ls}/bin/wakatime-ls";
+            };
+          };
           expert = {
             binary = {
               path = "${pkgs.expert-lsp}/bin/expert";
