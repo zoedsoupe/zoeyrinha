@@ -91,7 +91,7 @@
       dark = "NyxVamp Veil";
       light = "NyxVamp Veil";
     };
-    font = "MonoLisa";
+    font = "MonoLisa Variable";
   };
   helix = {
     enable = true;
