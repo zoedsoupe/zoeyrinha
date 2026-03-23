@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  unstable,
+  ...
+}: {
   home.stateVersion = "22.11";
   home.homeDirectory = "/Users/zoedsoupe";
 
@@ -39,7 +43,7 @@
     ffmpeg
 
     # docker
-    colima
+    unstable.colima
     docker
     docker-compose
   ];
