@@ -107,5 +107,14 @@ in {
   clojure = {
     helix-names = ["clojure"];
     language-servers = ["clojure-lsp"];
+    indent = {
+      tab-width = 2;
+      unit = "   ";
+    };
+    formatter = {
+      command = "${pkgs.joker}/bin/joker";
+      args = ["--format" "-"];
+    };
+    auto-format = false;
   };
 }

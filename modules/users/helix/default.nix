@@ -117,6 +117,25 @@ in {
   };
 
   config = mkIf cfg.enable {
+    home.packages = let
+      tmux-pipe = pkgs.writeShellScriptBin "tmux-pipe" ''
+        #!/bin/bash
+        #
+        lang=$1
+
+        while IFS= read -r line; do
+          tmux send-keys -t .+ -l " $line "
+          #tmux send-keys -t .+ -H $(echo -n $line | xxd -p -u)
+        done
+
+        if [[ $lang == "ocaml" ]]; then
+          tmux send-keys -t .+ ";\;"
+        else
+          tmux send-keys -t .+ Enter
+        fi
+      '';
+    in [tmux-pipe];
+
     home.file = {
       helix-themes = {
         enable = true;

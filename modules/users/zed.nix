@@ -98,6 +98,11 @@ in {
               path = "${wakatime-ls}/bin/wakatime-ls";
             };
           };
+          clojure-lsp = {
+            binary = {
+              path = "${pkgs.clojure-lsp}/bin/clojure-lsp";
+            };
+          };
           expert = {
             binary = {
               path = "${pkgs.expert-lsp}/bin/expert";

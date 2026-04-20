@@ -32,7 +32,7 @@ in {
         content = builtins.readFile ./ghostty/config;
 
         font =
-          if cfg.font-name == "MonoLisa"
+          if cfg.font-name == "MonoLisa Variable"
           then {
             name = cfg.font-name;
             features = ["ss01" "ss04" "ss07" "ss08" "ss10" "ss11" "ss13" "ss14" "ss15" "ss16" "ss17" "ss18"];
