@@ -65,6 +65,7 @@ in {
     };
     keys.normal = {
       esc = ["collapse_selection" "keep_primary_selection"];
+      space.e.e = ":pipe-to tmux-pipe %{language}";
     };
   };
 }

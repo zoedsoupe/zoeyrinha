@@ -15,6 +15,9 @@ inputs: let
       nodejs = final.nodejs_20;
       nodejs_24 = final.nodejs_20;
     })
+    (_: prev: {
+      direnv = prev.direnv.overrideAttrs (_: {doCheck = false;});
+    })
   ];
 
   make-pkgs = {

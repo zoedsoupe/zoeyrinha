@@ -74,7 +74,7 @@
   tmux.enable = true;
   ghostty = {
     enable = true;
-    font-name = "MonaLisa";
+    font-name = "MonoLisa Variable";
   };
   gh.enable = true;
   starship = {
@@ -99,7 +99,7 @@
       disable-line-numbers = true;
     };
     languages = {
-      clojure.enable = false;
+      clojure.enable = true;
       html = {
         enable = true;
         wakatime.enable = true;
