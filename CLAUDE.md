@@ -3,6 +3,7 @@
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Build Commands
+
 - Quick build script: `./nix-build <target>` where target is:
   - `personal` - Build personal Mac configuration
   - `iso` - Build minimal ISO
@@ -13,7 +14,9 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 ## Repository Architecture
 
 ### Flake Structure
+
 The repository uses Nix flakes with modular architecture:
+
 - **lib/**: Core helper functions
   - `host.nix`: Functions for creating Darwin/NixOS systems (`mkDarwin`, `mkHost`, `mkISO`)
   - `user.nix`: User configuration helpers (`mkDarwinUser`, `mkHMUser`, `mkSystemUser`)
@@ -25,6 +28,7 @@ The repository uses Nix flakes with modular architecture:
   - `iso/`: ISO build modules
 
 ### Key Architectural Patterns
+
 1. **Darwin System Creation**: Uses `mkDarwin` helper which:
    - Accepts host and user parameters
    - Integrates home-manager, lix-module, and custom overlays
@@ -33,6 +37,7 @@ The repository uses Nix flakes with modular architecture:
 3. **Font Management**: Centralized font configuration in terminal modules with variant support
 
 ## Code Style Guidelines
+
 1. **Nix Format**: Use 2-space indentation for all .nix files
 2. **Git Commits**: Follow the template in modules/users/misc/gitmessage
    - 50 character subject line

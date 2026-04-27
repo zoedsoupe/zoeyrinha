@@ -35,18 +35,18 @@ In your `hosts/<hostname>/custom.nix`:
 {
   helix = {
     enable = true;
-    
+
     # Configure which languages to enable
     languages = {
       elixir.enable = true;
       elixir.wakatime.enable = true;
-      
+
       typescript.enable = true;
       nix.enable = true;
       rust.enable = true;
       python.enable = true;
     };
-    
+
     # Editor settings
     editor = {
       disable-line-numbers = false;
@@ -105,7 +105,7 @@ helix = {
   languages = {
     # Enable base language
     typescript.enable = true;
-    
+
     # Custom configuration for a specific project
     my-custom-lang = {
       enable = true;
@@ -128,12 +128,12 @@ Each language supports these configuration options:
 languages.<name> = {
   # Whether to enable this language
   enable = mkEnableOption "language support";
-  
+
   # WakaTime integration
   wakatime = {
     enable = mkEnableOption "WakaTime tracking";
   };
-  
+
   # LSP configuration
   lsp = {
     enable = mkEnableOption "LSP support";
@@ -224,8 +224,8 @@ my-language = {
 # Different servers based on conditions
 elixir = {
   helix-names = ["elixir" "heex" "eex"];
-  language-servers = 
-    if cfg.elixir.lsp.name == "lexical" 
+  language-servers =
+    if cfg.elixir.lsp.name == "lexical"
     then ["lexical"]
     else ["next-ls"];
 };
@@ -267,6 +267,7 @@ my-language = {
 The `lib.nix` provides several utilities:
 
 ### `with-wakatime`
+
 Automatically adds WakaTime server if enabled for a language:
 
 ```nix
@@ -275,6 +276,7 @@ servers = with-wakatime "elixir" ["lexical" "other-server"];
 ```
 
 ### `mk-helix-lang`
+
 Creates a Helix language configuration from our data structure:
 
 ```nix
@@ -282,6 +284,7 @@ helix-config = mk-helix-lang language-defaults.elixir "elixir";
 ```
 
 ### `build-language-configs`
+
 Processes all language definitions and creates Helix configurations:
 
 ```nix
@@ -298,4 +301,5 @@ helix.editor.disable-line-numbers = true;
 ```
 
 Available editor options:
+
 - `disable-line-numbers`: Hide line numbers in gutter (default: true)
