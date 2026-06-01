@@ -49,6 +49,12 @@
         flake_reference = "~/dev/nix/elixir-node";
       }
 
+      # === Canopy (newgen) ===
+      {
+        pattern = ".*/dev/newgen/canopy(/.*)?";
+        flake_reference = "~/dev/nix/canopy";
+      }
+
       # === Zig Projects ===
       {
         pattern = ".*/dev/personal/slimes(/.*)?";
@@ -144,7 +150,7 @@
       elixir = {
         enable = true;
         wakatime.enable = true;
-        lsp.enable = true;
+        lsp.enable = false;
         lsp.name = "expert-lsp";
       };
     };
@@ -163,9 +169,21 @@
         };
       };
 
+      newgen = path: {
+        condition = "gitdir:${path}/";
+        contents = {
+          user = {
+            email = "zoey@new-gen.ai";
+            name = "Zoey Pessanha";
+            signingKey = "~/.ssh/newgen";
+          };
+        };
+      };
+
       zeetech-paths = map zeetech ["~/dev/personal" "~/dev/ccuenf" "~/dev/supabase" "~/dev/zeetech" "~/dev/oss" "~/dev/elixiremfoco" "~/dev/taina"];
+      newgen-paths = map newgen ["~/dev/newgen"];
     in
-      zeetech-paths;
+      zeetech-paths ++ newgen-paths;
   };
   zsh = {
     enable = true;
