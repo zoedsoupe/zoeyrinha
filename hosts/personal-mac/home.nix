@@ -44,7 +44,7 @@
 
     # docker
     unstable.colima
-    docker
+    docker_29
     docker-compose
   ];
 }
