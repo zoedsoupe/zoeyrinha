@@ -18,7 +18,7 @@
       # === Taina Project (Elixir + PostgreSQL) ===
       {
         pattern = ".*/dev/taina/.*";
-        flake_reference = "~/dev/nix/supabase-elixir";
+        flake_reference = "~/dev/nix/taina";
       }
 
       # === OSS Elixir Projects ===
