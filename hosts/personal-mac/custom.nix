@@ -49,12 +49,6 @@
         flake_reference = "~/dev/nix/elixir-node";
       }
 
-      # === Canopy (newgen) ===
-      {
-        pattern = ".*/dev/newgen/canopy(/.*)?";
-        flake_reference = "~/dev/nix/canopy";
-      }
-
       # === Zig Projects ===
       {
         pattern = ".*/dev/personal/slimes(/.*)?";
@@ -80,7 +74,7 @@
   tmux.enable = true;
   ghostty = {
     enable = true;
-    font-name = "MonoLisa Variable";
+    font-name = "Maple Mono NF Regular";
   };
   gh.enable = true;
   starship = {
@@ -169,21 +163,9 @@
         };
       };
 
-      newgen = path: {
-        condition = "gitdir:${path}/";
-        contents = {
-          user = {
-            email = "zoey@new-gen.ai";
-            name = "Zoey Pessanha";
-            signingKey = "~/.ssh/newgen";
-          };
-        };
-      };
-
       zeetech-paths = map zeetech ["~/dev/personal" "~/dev/ccuenf" "~/dev/supabase" "~/dev/zeetech" "~/dev/oss" "~/dev/elixiremfoco" "~/dev/taina"];
-      newgen-paths = map newgen ["~/dev/newgen"];
     in
-      zeetech-paths ++ newgen-paths;
+      zeetech-paths;
   };
   zsh = {
     enable = true;
