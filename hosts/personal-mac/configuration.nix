@@ -19,7 +19,7 @@
       upgrade = true;
     };
     brews = [];
-    casks = ["ghostty" "claude-code"];
+    casks = ["ghostty"];
   };
 
   users.users.zoedsoupe = {

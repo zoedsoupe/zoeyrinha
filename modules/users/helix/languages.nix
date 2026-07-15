@@ -1,5 +1,5 @@
 {pkgs, ...}: let
-  inherit (pkgs.nodePackages) prettier;
+  inherit (pkgs) prettier;
   ocamlpkgs = pkgs.ocamlPackages;
 in {
   elixir = {

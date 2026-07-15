@@ -6,7 +6,7 @@
   ...
 }: let
   inherit (lib) mkIf;
-  inherit (pkgs.nodePackages) vscode-langservers-extracted typescript-language-server;
+  inherit (pkgs) vscode-langservers-extracted typescript-language-server;
   vscode-lsp = vscode-langservers-extracted;
   ts-server = typescript-language-server;
   ocamlpkgs = pkgs.ocamlPackages;
