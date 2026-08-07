@@ -41,6 +41,7 @@
 
     # audio & video
     ffmpeg
+    whisper-cpp
 
     # docker
     unstable.colima

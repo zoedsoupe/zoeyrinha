@@ -65,6 +65,24 @@ in {
             tmux switch-client -t "$name"
           fi
         }
+
+        # transcribe [dir?] [lang?] -> all.txt from every *.opus in dir (default: cwd, auto lang)
+        # examples:
+        #   transcribe                 # *.opus in cwd
+        #   transcribe ~/Downloads/audios pt
+        transcribe() {
+          local dir="''${1:-.}"
+          local lang="''${2:-auto}"
+          local model="$HOME/.local/share/whisper/ggml-base.bin"
+          local out="$dir/all.txt"
+          [[ -e "$out" ]] && rm "$out"
+          local f
+          for f in "$dir"/*.opus(N); do
+            ffmpeg -y -i "$f" -ar 16000 -ac 1 -c:a pcm_s16le /tmp/w.wav -loglevel error
+            whisper-cli -m "$model" -l "$lang" -f /tmp/w.wav -nt -otxt -of /tmp/w
+            cat /tmp/w.txt >> "$out"
+          done
+        }
       '';
       autosuggestion.enable = true;
       enableCompletion = true;
