@@ -14,6 +14,7 @@
   home.packages = with pkgs; [
     (elixir-with-otp erlang_28).latest
     erlang_28
+    go
 
     wakatime-cli
     pinentry_mac
@@ -42,10 +43,5 @@
     # audio & video
     ffmpeg
     whisper-cpp
-
-    # docker
-    unstable.colima
-    docker_29
-    docker-compose
   ];
 }
