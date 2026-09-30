@@ -1,6 +1,7 @@
 {
   custom-config,
   lib,
+  pkgs,
   ghostty-themes,
   ...
 }: let
@@ -18,8 +19,8 @@ in {
   };
 
   config = mkIf cfg.enable {
-    # managed by homebrew
-    # home.packages = [ghostty.packages.${system}.default];
+    # darwin: managed by homebrew
+    home.packages = lib.optional pkgs.stdenv.isLinux pkgs.ghostty;
 
     home.file = {
       ghostty-themes = {

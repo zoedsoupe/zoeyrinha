@@ -14,7 +14,7 @@
 
   rust = pkgs.rust-bin.stable.latest;
 
-  get-lang-config = name: cfg.languages.${name} or {};
+  get-lang-config = name: {enable = false;} // (cfg.languages.${name} or {});
 in {
   language-server = {
     gleam = mkIf (get-lang-config "gleam").enable {

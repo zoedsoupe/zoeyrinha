@@ -45,8 +45,10 @@
     };
   });
 
+  lang-enabled = name: (cfg.languages.${name} or {enable = false;}).enable;
+
   build-special-language-configs = {
-    elixir = mkIf cfg.languages.elixir.enable {
+    elixir = mkIf (lang-enabled "elixir") {
       name = "elixir";
       auto-format = false;
       formatter = language-defaults.elixir.formatter;
@@ -57,7 +59,7 @@
       ];
     };
 
-    go = mkIf cfg.languages.go.enable {
+    go = mkIf (lang-enabled "go") {
       name = "go";
       auto-format = true;
       language-servers = helpers.with-wakatime "go" [
@@ -68,7 +70,7 @@
       ];
     };
 
-    typescript = mkIf cfg.languages.typescript.enable {
+    typescript = mkIf (lang-enabled "typescript") {
       name = "typescript";
       auto-format = true;
       formatter = language-defaults.typescript.formatter;
@@ -82,7 +84,7 @@
       ];
     };
 
-    javascript = mkIf cfg.languages.typescript.enable {
+    javascript = mkIf (lang-enabled "typescript") {
       name = "javascript";
       auto-format = true;
       formatter = language-defaults.typescript.formatter;
@@ -96,7 +98,7 @@
       ];
     };
 
-    python = mkIf cfg.languages.python.enable {
+    python = mkIf (lang-enabled "python") {
       name = "python";
       auto-format = true;
       language-servers = helpers.with-wakatime "python" [

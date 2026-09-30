@@ -20,7 +20,8 @@ in {
     programs.difftastic = {inherit (cfg) enable;};
 
     programs.git = {
-      inherit (cfg) enable includes;
+      inherit (cfg) enable;
+      includes = cfg.includes or [];
       ignores = [
         "*.swp"
         "*.swo"
