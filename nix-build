@@ -1,7 +1,7 @@
 #! /bin/zsh
 
 if (( # == 0 )); then
-  print >&2 "Usage: $0 personal or  iso"
+  print >&2 "Usage: $0 personal | iso | yby | eveo"
   exit 1
 fi
 
@@ -18,8 +18,14 @@ case "$1" in
     nix build .#nixosConfigurations.minimal-iso.config.system.build.isoImage "${@:2}"
     ;;
 
+  # build-only checks; x86_64-linux builds need a linux builder,
+  # run on the target machine itself if none is configured
+  "yby"|"eveo")
+    nix build ".#nixosConfigurations.$1.config.system.build.toplevel" "${@:2}"
+    ;;
+
   *)
-    print >&2 "Available options are, \"personal\" \"iso\" for now"
+    print >&2 "Available options are, \"personal\" \"iso\" \"yby\" \"eveo\" for now"
     exit 1
     ;;
 esac

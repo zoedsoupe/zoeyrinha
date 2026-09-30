@@ -3,7 +3,13 @@
 
   inputs = {
     nixpkgs.url = "flake:nixpkgs/nixpkgs-26.05-darwin";
+    nixos.url = "flake:nixpkgs/nixos-26.05";
     unstable.url = "flake:nixpkgs/nixpkgs-unstable";
+
+    noctalia-shell = {
+      url = "github:noctalia-dev/noctalia-shell";
+      inputs.nixpkgs.follows = "nixos";
+    };
 
     elixir-overlay.url = "github:zoedsoupe/elixir-overlay";
 
@@ -67,7 +73,7 @@
 
   outputs = {nixpkgs, ...} @ inputs: let
     lib = import ./lib inputs;
-    inherit (lib) mkDarwin mkISO;
+    inherit (lib) mkDarwin mkHost mkISO;
   in {
     darwinConfigurations = {
       zoedsoupe-mac = mkDarwin {
@@ -78,6 +84,15 @@
     nixosConfigurations = {
       minimal-iso = mkISO {
         system = "x86_64-linux";
+      };
+
+      yby = mkHost {
+        host = "yby";
+        desktop = true;
+      };
+
+      eveo = mkHost {
+        host = "eveo";
       };
     };
 
