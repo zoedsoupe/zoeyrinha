@@ -1,7 +1,7 @@
 inputs: let
-  inherit (inputs) nixpkgs unstable darwin home-manager envoluntary;
+  inherit (inputs) nixpkgs nixos unstable darwin home-manager envoluntary;
   inherit (inputs) wakatime-ls ghostty-themes helix-themes bat-themes starship-themes expert-lsp;
-  inherit (nixpkgs.lib) nixosSystem;
+  inherit (nixos.lib) nixosSystem;
   inherit (darwin.lib) darwinSystem;
 
   overlays = with inputs; [
@@ -84,5 +84,59 @@ in {
         ../modules/iso/user.nix
         ../modules/iso/desktop.nix
       ];
+    };
+
+  mkHost = {
+    host,
+    user ? "zoedsoupe",
+    system ? "x86_64-linux",
+    desktop ? false,
+  }:
+    nixosSystem {
+      pkgs = make-pkgs {
+        inherit system;
+        source = nixos;
+      };
+      modules =
+        [
+          (../hosts + /${host}/configuration.nix)
+          ../modules/nixos/common.nix
+          home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              sharedModules =
+                [
+                  ../modules/users
+                  envoluntary.homeModules.default
+                ]
+                ++ nixpkgs.lib.optional desktop inputs.noctalia-shell.homeModules.default;
+              users.${user} = let
+                pkgs = make-pkgs {
+                  inherit system;
+                  source = nixos;
+                };
+              in {
+                _module.args = {
+                  inherit host system ghostty-themes helix-themes bat-themes starship-themes;
+                  inherit (inputs) helix;
+                  unstable = make-pkgs {
+                    inherit system;
+                    source = unstable;
+                  };
+                  wakatime-ls = wakatime-ls.packages.${system}.default;
+                  custom-config = import (../hosts + /${host}/custom.nix) {
+                    inherit pkgs;
+                  };
+                };
+                imports =
+                  [(../hosts + /${host}/home.nix)]
+                  ++ nixpkgs.lib.optional desktop ../modules/nixos/noctalia.nix;
+              };
+            };
+          }
+        ]
+        ++ nixpkgs.lib.optional desktop ../modules/nixos/desktop.nix;
     };
 }
