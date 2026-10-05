@@ -12,14 +12,14 @@
       automatic = true;
       options = "--delete-older-than 5d";
     };
-    package = pkgs.nixFlakes;
+    # no `nixFlakes` attr any more; the default package carries flakes
   };
 
   # Make this config a iso config
   imports = ["${modulesPath}/installer/cd-dvd/iso-image.nix"];
 
   networking.hostName = "nixos";
-  networking.wireless.enable = false;
+  # wireless is owned by NetworkManager below; forcing it off conflicts
   networking.networkmanager.enable = true;
   networking.useDHCP = false;
   isoImage.makeEfiBootable = true;
@@ -39,7 +39,7 @@
     httpie
     bind
     killall
-    neofetch
+    fastfetch
     bat
     unzip
     file

@@ -7,8 +7,9 @@
   ];
 
   networking.hostName = "yby";
-  # required by zfs; generate with: head -c4 /dev/urandom | od -An -tx1 | tr -d ' '
-  networking.hostId = "00000000";
+  # zfs requires a hostid. changing this after first boot re-imports the pool
+  # as a new dataset, so generate once: head -c4 /dev/urandom | od -An -tx1 | tr -d ' '
+  networking.hostId = "3a5048f5";
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;

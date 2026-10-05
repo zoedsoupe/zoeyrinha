@@ -9,6 +9,7 @@
 # if missing, pin mongo:4.4 in /var/lib/anytype/docker-compose.override.yml
 {pkgs, ...}: {
   virtualisation.docker.enable = true;
+  # listOf merges (concat) with modules/nixos/common.nix, which owns the base set
   users.users.zoedsoupe.extraGroups = ["docker"];
 
   systemd.services.anytype = {

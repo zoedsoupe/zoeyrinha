@@ -9,7 +9,6 @@
     };
   };
 
-  security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
     alsa.enable = true;
@@ -32,9 +31,8 @@
   ];
 
   # ghostty comes from home-manager (modules/users/ghostty.nix);
-  # xwayland-satellite gives niri X11 app support
+  # wl-clipboard is in hosts/yby/home.nix. xwayland-satellite gives niri X11
   environment.systemPackages = with pkgs; [
     xwayland-satellite
-    wl-clipboard
   ];
 }

@@ -6,15 +6,11 @@
 {...}: {
   services.caddy = {
     enable = true;
-    virtualHosts = {
-      "http://cloud.example.com" = {
-        extraConfig = "reverse_proxy 127.0.0.1:8080";
-      };
-      # anytype clients talk to the sync node directly (port 33010+),
-      # no http proxy needed; add vhosts here as services land
-    };
+    virtualHosts."http://cloud.example.com".extraConfig = "reverse_proxy 127.0.0.1:8080";
   };
 
+  # caddy binds every interface, so the firewall is what keeps it tailnet-only.
+  # anytype clients hit the sync node directly (33010+), no vhost needed.
   # only reachable from the tailnet
   networking.firewall.interfaces.tailscale0.allowedTCPPorts = [80];
 }

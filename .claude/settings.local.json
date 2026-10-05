@@ -1,6 +1,0 @@
-{
-  "permissions": {
-    "allow": ["WebSearch", "Bash(rtk ls *)", "Bash(rtk read *)"]
-  },
-  "enableAllProjectMcpServers": false
-}

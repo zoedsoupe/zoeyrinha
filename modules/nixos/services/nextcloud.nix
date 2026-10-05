@@ -4,7 +4,8 @@
 {pkgs, ...}: {
   services.nextcloud = {
     enable = true;
-    package = pkgs.nextcloud33;
+    # no unversioned `nextcloud` attr exists upstream; track the latest numbered
+package = pkgs.nextcloud35;
     hostName = "cloud.example.com";
     https = false; # tailnet only; wireguard already encrypts
     database.createLocally = true;

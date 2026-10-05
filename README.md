@@ -28,10 +28,12 @@ This repo is a fresh start from old config [nixnad](https://github.com/zoedsoupe
 
 - **macOS Support**: Full Darwin/nix-darwin configuration with automatic app linking
 - **Modular Configuration**: Each program has its own toggleable module
-- **Multiple Terminal Emulators**: Ghostty, Alacritty, Kitty, Wezterm configured
-- **Development Tools**: Helix, Zed editors with custom configurations
-- **Shell Setup**: Fish and Zsh with Starship prompt
+- **Terminal**: Ghostty, configured from the host's `custom.nix`
+- **Development Tools**: Helix and Zed, both nyxvamp-themed
+- **Shell Setup**: Zsh with Starship prompt
 - **CLI Utilities**: fzf, zoxide, bat, xplr, direnv, and more
+- **Helix grammars**: only the tree-sitter grammars the enabled languages need
+  are built, not all ~300 Helix ships
 - **ISO Builder**: Create minimal NixOS installation media
 
 ## How to use
@@ -43,6 +45,8 @@ The easiest way to build configurations is using the `nix-build` script:
 ```sh
 ./nix-build personal   # Build personal Mac configuration
 ./nix-build iso        # Build minimal ISO
+./nix-build yby        # Build yby (homelab) without activating
+./nix-build eveo       # Build eveo (vps) without activating
 ```
 
 ### Manual Build Commands
@@ -56,7 +60,7 @@ darwin-rebuild switch --flake .#zoedsoupe-mac  # For personal machine
 #### Minimal ISO
 
 ```sh
-nix build .#installMedia.minimal.config.system.build.isoImage
+nix build .#nixosConfigurations.minimal-iso.config.system.build.isoImage
 ```
 
 The ISO will be available at `./result/iso/`.
