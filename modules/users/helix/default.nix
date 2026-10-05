@@ -6,7 +6,7 @@
   wakatime-ls,
   ...
 }: let
-  inherit (lib) mkEnableOption mkIf mkOption types;
+  inherit (lib) mkEnableOption mkIf;
   cfg = custom-config.helix;
 
   language-defaults = import ./languages.nix {inherit pkgs lib;};
@@ -15,107 +15,11 @@
     inherit pkgs lib custom-config wakatime-ls;
   };
   editor-config = import ./editor.nix {inherit lib custom-config;};
-
-  languageType = types.submodule ({config, ...}: {
-    options = {
-      enable = mkEnableOption "language support";
-
-      wakatime = {
-        enable = mkEnableOption "WakaTime tracking";
-      };
-
-      lsp = mkOption {
-        type = types.submodule {
-          options = {
-            enable = mkEnableOption "LSP support";
-            name = mkOption {
-              type = types.str;
-              default = "";
-              description = "Primary LSP server name";
-            };
-            except-features = mkOption {
-              type = types.listOf types.str;
-              default = [];
-              description = "LSP features to disable";
-            };
-          };
-        };
-        default = {};
-      };
-    };
-  });
-
-  lang-enabled = name: (cfg.languages.${name} or {enable = false;}).enable;
-
-  build-special-language-configs = {
-    elixir = mkIf (lang-enabled "elixir") {
-      name = "elixir";
-      auto-format = false;
-      formatter = language-defaults.elixir.formatter;
-      language-servers = helpers.with-wakatime "elixir" [
-        {
-          name = cfg.languages.elixir.lsp.name or "lexical-lsp";
-        }
-      ];
-    };
-
-    go = mkIf (lang-enabled "go") {
-      name = "go";
-      auto-format = true;
-      language-servers = helpers.with-wakatime "go" [
-        {
-          name = "gopls";
-          except-features = ["inlay-hints"];
-        }
-      ];
-    };
-
-    typescript = mkIf (lang-enabled "typescript") {
-      name = "typescript";
-      auto-format = true;
-      formatter = language-defaults.typescript.formatter;
-      language-servers = helpers.with-wakatime "typescript" [
-        {
-          name = "typescript-language-server";
-          except-features = ["inlay-hints"];
-        }
-        "vscode-eslint-language-server"
-        "uwu-colors"
-      ];
-    };
-
-    javascript = mkIf (lang-enabled "typescript") {
-      name = "javascript";
-      auto-format = true;
-      formatter = language-defaults.typescript.formatter;
-      language-servers = helpers.with-wakatime "typescript" [
-        {
-          name = "typescript-language-server";
-          except-features = ["inlay-hints"];
-        }
-        "vscode-eslint-language-server"
-        "uwu-colors"
-      ];
-    };
-
-    python = mkIf (lang-enabled "python") {
-      name = "python";
-      auto-format = true;
-      language-servers = helpers.with-wakatime "python" [
-        {
-          name = "ruff";
-          except-features = ["completion"];
-        }
-      ];
-    };
-  };
 in {
   options.helix = {
     enable = mkEnableOption "Helix Editor";
 
     editor = editor-config.options.helix.editor;
-
-    languages = lib.mapAttrs (name: _: languageType) language-defaults;
   };
 
   config = mkIf cfg.enable {
@@ -157,9 +61,7 @@ in {
       languages = {
         language-server = lsp-servers.language-server;
 
-        language =
-          (helpers.build-language-configs language-defaults {})
-          ++ (lib.attrValues build-special-language-configs);
+        language = helpers.build-language-configs language-defaults;
       };
     };
   };

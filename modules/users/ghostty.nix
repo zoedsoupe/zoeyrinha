@@ -5,17 +5,15 @@
   ghostty-themes,
   ...
 }: let
-  inherit (lib) mkEnableOption mkIf mkOption strings;
+  inherit (lib) mkEnableOption mkIf mkOption types strings;
   cfg = custom-config.ghostty;
 in {
   options.ghostty = {
     enable = mkEnableOption "Enables Ghostty terminal";
-    font-name = let
-      monaspace-variants = map ["Argon" "Xenon" "Radon" "Neon" "Kryton"] (v: "Monaspace " + v);
-    in
-      mkOption {
-        type = lib.types.enum (["MonoLisa"] ++ monaspace-variants);
-      };
+    font-name = mkOption {
+      description = "Font family ghostty renders with";
+      type = types.str;
+    };
   };
 
   config = mkIf cfg.enable {
@@ -32,16 +30,10 @@ in {
       ghostty-config = let
         content = builtins.readFile ./ghostty/config;
 
-        font =
-          if cfg.font-name == "MonoLisa Variable"
-          then {
-            name = cfg.font-name;
-            features = ["ss01" "ss04" "ss07" "ss08" "ss10" "ss11" "ss13" "ss14" "ss15" "ss16" "ss17" "ss18"];
-          }
-          else {
-            name = cfg.font-name;
-            features = ["calt" "ss01" "ss02" "ss03" "ss04" "ss05" "ss06" "ss07" "ss08" "ss09" "liga"];
-          };
+        font = {
+          name = cfg.font-name;
+          features = ["calt" "ss01" "ss02" "ss03" "ss04" "ss05" "ss06" "ss07" "ss08" "ss09" "liga"];
+        };
 
         font-config = ''
 

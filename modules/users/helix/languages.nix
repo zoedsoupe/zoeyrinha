@@ -26,6 +26,7 @@ in {
   typescript = {
     helix-names = ["typescript" "javascript"];
     language-servers = ["typescript-language-server"];
+    except-features = ["inlay-hints"];
     formatter.command = "${prettier}/bin/prettier";
     extra-servers = {
       typescript = ["vscode-eslint-language-server" "uwu-colors"];
@@ -36,6 +37,7 @@ in {
   python = {
     helix-names = ["python"];
     language-servers = ["ruff"];
+    except-features = ["completion"];
   };
 
   rust = {
@@ -46,6 +48,7 @@ in {
   go = {
     helix-names = ["go"];
     language-servers = ["gopls"];
+    except-features = ["inlay-hints"];
   };
 
   html = {

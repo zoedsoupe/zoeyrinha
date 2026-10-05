@@ -1,9 +1,4 @@
 {pkgs, ...}: {
-  alacritty = {
-    enable = false;
-    font-family = "Dank Mono";
-    theme = "catppuccin-macchiato";
-  };
   bat.enable = true;
   direnv.enable = true;
   envoluntary = {
@@ -64,26 +59,15 @@
       }
     ];
   };
-  fish.enable = false;
   fzf.enable = true;
-  kitty = {
-    enable = false;
-    font-family = "Dank Mono";
-    theme = "catppuccin-macchiato";
-  };
   tmux.enable = true;
   ghostty = {
     enable = true;
     font-name = "Maple Mono NF Regular";
   };
   gh.enable = true;
-  starship = {
-    enable = true;
-    catppuccin-theme = "macchiato";
-  };
+  starship.enable = true;
   xplr.enable = true;
-  wezterm.enable = false;
-  zellij.enable = false;
   zoxide.enable = true;
   zed = {
     enable = true;
@@ -144,8 +128,6 @@
       elixir = {
         enable = true;
         wakatime.enable = true;
-        lsp.enable = false;
-        lsp.name = "expert-lsp";
       };
     };
   };
@@ -158,7 +140,6 @@
           user = {
             email = "zoey.spessanha@zeetech.io";
             name = "Zoey Pessanha";
-            signingKey = "~/.ssh/personal";
           };
         };
       };
@@ -178,11 +159,6 @@
     '';
     history = {
       ignorePatterns = ["git commit -m *" "git clone *" "mix test --only *" "mkdir *"];
-    };
-    theme = {
-      enable = true;
-      name = "catppuccin";
-      flavour = "frappe";
     };
     sessionVariables = {
       DIRENV_LOG_FORMAT = "";

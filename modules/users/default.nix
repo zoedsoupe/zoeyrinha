@@ -1,21 +1,16 @@
 {...}: {
   imports = [
-    ./alacritty.nix
     ./bat.nix
     ./direnv.nix
     ./envoluntary.nix
-    ./fish.nix
     ./fzf.nix
     ./gh.nix
     ./ghostty.nix
     ./git.nix
     ./helix
-    ./kitty.nix
     ./starship.nix
     ./tmux.nix
     ./xplr.nix
-    ./wezterm.nix
-    ./zellij.nix
     ./zoxide.nix
     ./zsh.nix
     ./zed.nix

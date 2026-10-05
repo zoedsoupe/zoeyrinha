@@ -35,7 +35,6 @@ in {
       lfs.enable = true;
       settings = {
         gpg.format = "ssh";
-        gpg.ssh.allowedsignersfile = "~/.config/git/allowed-signers";
         tag.gpgsign = true;
         commit.gpgsign = true;
         branch.sort = "-committerdate";
@@ -49,7 +48,12 @@ in {
         push = {default = "current";};
         apply = {whitespace = "nowarn";};
         help = {autocorrect = 0;};
-        user = {username = "zoedsoupe";};
+        # signingKey lives here, not per-repo: gpgsign is global above, so a host
+# without it cannot commit at all.
+        user = {
+          username = "zoedsoupe";
+          signingKey = "~/.ssh/personal";
+        };
         init = {defaultBranch = "main";};
         pull = {rebase = false;};
         url = {

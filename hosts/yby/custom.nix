@@ -6,20 +6,12 @@
   gh.enable = true;
   xplr.enable = true;
   zoxide.enable = true;
-  zellij.enable = false;
-  wezterm.enable = false;
-  kitty.enable = false;
-  alacritty.enable = false;
-  fish.enable = false;
 
   ghostty = {
     enable = true;
     font-name = "Monaspace Argon";
   };
-  starship = {
-    enable = true;
-    catppuccin-theme = "macchiato";
-  };
+  starship.enable = true;
   zed.enable = false;
 
   envoluntary = {
@@ -49,8 +41,6 @@
       elixir = {
         enable = true;
         wakatime.enable = false;
-        lsp.enable = false;
-        lsp.name = "expert-lsp";
       };
       toml.enable = true;
       json.enable = true;
@@ -83,11 +73,6 @@
     '';
     history = {
       ignorePatterns = ["git commit -m *" "git clone *" "mkdir *"];
-    };
-    theme = {
-      enable = true;
-      name = "catppuccin";
-      flavour = "frappe";
     };
     sessionVariables = {
       DIRENV_LOG_FORMAT = "";
