@@ -9,22 +9,32 @@ inputs: let
   # actually maps to. heex/eex carry no `grammar` field upstream (only a
   # scope), but helix resolves grammar by scope, so they must ship alongside
   # elixir. The predicate receives the whole grammar attrset, not its name.
-  helix-grammars =
+  #
+  # Takes pkgs as an argument rather than closing over `make-pkgs`, since the
+  # overlay below already has a real instance in scope. languages.nix only
+  # touches pkgs inside formatter commands, so only `helix-names` is ever
+  # forced -- but passing a real pkgs keeps that laziness an implementation
+  # detail instead of a landmine.
+  helix-grammars = pkgs:
     let
       langs = import ../modules/users/helix/languages.nix {
-        pkgs = null; # only helix-names is forced below
+        inherit pkgs;
         lib = nixlib;
       };
       # lix 2.95 rejects the (f, set) argument order of builtins.attrValues
+      names = builtins.map (name: langs.${name}.helix-names) (builtins.attrNames langs);
     in
-    builtins.map (name: langs.${name}.helix-names) (builtins.attrNames langs);
+    # flatten: the per-language lists must be merged into one flat list, or
+    # `builtins.elem` below compares each grammar name against a list and
+    # never matches, silently shipping zero grammars.
+    nixlib.flatten names;
 
   overlays = with inputs; [
     rust-overlay.overlays.default
     helix.overlays.default
     (_: prev: {
       helix = prev.helix.override {
-        includeGrammarIf = g: builtins.elem g.name helix-grammars;
+        includeGrammarIf = g: builtins.elem g.name (helix-grammars prev);
       };
     })
     elixir-overlay.overlays.default
