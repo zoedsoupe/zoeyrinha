@@ -86,6 +86,11 @@
         system = "x86_64-linux";
       };
 
+      yby-iso = mkISO {
+        system = "x86_64-linux";
+        host = "yby";
+      };
+
       yby = mkHost {
         host = "yby";
         desktop = true;

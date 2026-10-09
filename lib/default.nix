@@ -107,19 +107,27 @@ in {
         ];
       };
 
-  mkISO = {system ? "x86_64-linux"}:
+  mkISO = {
+    system ? "x86_64-linux",
+    host ? null,
+  }:
     nixosSystem {
       inherit system;
       pkgs = make-pkgs {
         inherit system;
         source = nixos;
       };
-      modules = [
-        "${nixos}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
-        ../modules/iso/core.nix
-        ../modules/iso/user.nix
-        ../modules/iso/desktop.nix
-      ];
+      # `host` is null for the plain minimal ISO. modules/iso/host.nix is only
+      # pulled in for a per-host installer and reads the name back from here.
+      specialArgs = {inherit host;};
+      modules =
+        [
+          "${nixos}/nixos/modules/installer/cd-dvd/installation-cd-minimal.nix"
+          ../modules/iso/core.nix
+          ../modules/iso/user.nix
+          ../modules/iso/desktop.nix
+        ]
+        ++ nixlib.optional (host != null) ../modules/iso/host.nix;
     };
 
   mkHost = {
