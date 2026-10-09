@@ -27,7 +27,7 @@ inputs: let
     # flatten: the per-language lists must be merged into one flat list, or
     # `builtins.elem` below compares each grammar name against a list and
     # never matches, silently shipping zero grammars.
-    nixlib.flatten names;
+    nixlib.flatten names ++ ["bash" "Dockerfile" "zsh" "toml" "yaml"];
 
   overlays = with inputs; [
     rust-overlay.overlays.default
