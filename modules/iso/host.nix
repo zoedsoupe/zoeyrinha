@@ -38,6 +38,8 @@ in {
   # kernel module to create the pool before nixos-install. gptfdisk/nvme-cli
   # come from core.nix.
   boot.supportedFilesystems = ["zfs"];
+  # no zfs root in the live env; silences the 26.11 default-change warning
+  boot.zfs.forceImportRoot = false;
   environment.systemPackages = with pkgs; [zfs];
 
   # quick reference once you are logged in
