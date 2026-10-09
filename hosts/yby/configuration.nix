@@ -11,6 +11,10 @@
   # as a new dataset, so generate once: head -c4 /dev/urandom | od -An -tx1 | tr -d ' '
   networking.hostId = "3a5048f5";
 
+  # wired only: yby has no wifi in use, so keep the 802.11 stack from loading.
+  # NetworkManager (common.nix) still owns the wired NIC.
+  boot.blacklistedKernelModules = ["cfg80211" "mac80211" "iwlwifi"];
+
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
