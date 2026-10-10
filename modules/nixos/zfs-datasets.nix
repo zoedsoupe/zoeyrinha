@@ -14,8 +14,13 @@
 }: let
   cfg = config.zfsDatasets;
 
-  # /var/lib/pesque -> var-lib-pesque (systemd mount unit escaping)
-  escape = mountpoint: lib.replaceStrings ["/"] ["-"] (lib.removePrefix "/" mountpoint);
+  # systemd mount-unit escaping: "/" -> "-", and "-" -> "\x2d". so
+  # /var/lib/uptime-kuma is var-lib-uptime\x2dkuma.mount, not
+  # var-lib-uptime-kuma.mount. the naive "/"->"-" alone wires the create
+  # service to a unit that does not exist, so the dataset is never created
+  # before its mount and the mount fails.
+  escape = mountpoint:
+    lib.replaceStrings ["/" "-"] ["-" "\\x2d"] (lib.removePrefix "/" mountpoint);
 in {
   options.zfsDatasets = lib.mkOption {
     type = lib.types.attrsOf lib.types.str;
