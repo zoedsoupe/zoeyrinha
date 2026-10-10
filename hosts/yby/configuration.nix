@@ -88,13 +88,9 @@ in {
   phoenixApps = {
     blog = {
       enable = true;
-      package = mkRelease {
-        pname = "zoeyrinha-web";
-        version = "0.1.0";
+      package = pkgs.callPackage ../../lib/apps/zoeyrinha-web.nix {
+        inherit mkRelease;
         src = inputs.zoeyrinha-web;
-        mixHash = "sha256-9PPLaKDiSMSjcBGwE8jp56kh06VpRe7SR/SPob5bYCk=";
-        rustler = true;
-        tailwind = pkgs.tailwindcss_4;
       };
       host = "zoedsoupe.zeetech.io";
       port = 4010;
@@ -138,7 +134,8 @@ in {
         version = "0.1.0";
         src = inputs.quintal;
         mixHash = "sha256-yB6JmDCagbRFk4BRkehlDW8kKmkO7ZxRTFs3IF60hMI=";
-        rustler = true;
+        # also needs a rustlerCache (like blog): its mdex_native NIF is
+        # precompiled-only too
       };
       host = "quintal.blog.br";
       port = 4013;

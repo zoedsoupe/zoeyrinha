@@ -1,13 +1,11 @@
 # Phoenix release built in Nix from a plain source tree (the apps ship no
-# flake package). The sandbox has no network, so the things the ecosystem
-# downloads at build time are handled instead: esbuild/tailwind binaries point
-# at store copies via env vars, rustler_precompiled and cc_precompiler NIFs
-# are built from source with a Rust toolchain available.
+# flake package). The sandbox has no network, so what the ecosystem downloads at
+# build time is handled instead: esbuild/tailwind binaries point at store copies
+# via env vars, cc_precompiler NIFs build from source, and rustler_precompiled
+# NIFs come from a pre-seeded cache (lib/rustlerCache.nix).
 {
   lib,
   beamPackages,
-  rustc,
-  cargo,
   pkg-config,
   esbuild,
   ...
@@ -28,8 +26,8 @@ in
     version,
     src,
     mixHash,
-    # rustler_precompiled NIFs present, build the crates from source
-    rustler ? false,
+    # rustler_precompiled cache (lib/rustlerCache.nix) when the app has Rust NIFs
+    rustlerCache ? null,
     # pass nixpkgs tailwindcss when the app uses the tailwind hex wrapper
     tailwind ? null,
     nativeBuildInputs ? [],
@@ -46,10 +44,7 @@ in
         hash = mixHash;
       };
 
-      nativeBuildInputs =
-        [pkg-config]
-        ++ lib.optionals rustler [rustc cargo]
-        ++ nativeBuildInputs;
+      nativeBuildInputs = [pkg-config] ++ nativeBuildInputs;
 
       inherit buildInputs;
 
@@ -59,8 +54,8 @@ in
           # exqlite/lazy_html: skip the precompiled artefact, build in-tree
           CC_PRECOMPILER_PRECOMPILE_ONLY_LOCAL = "true";
         }
-        // lib.optionalAttrs rustler {
-          RUSTLER_PRECOMPILED_FORCE_BUILD_ALL = "1";
+        // lib.optionalAttrs (rustlerCache != null) {
+          RUSTLER_PRECOMPILED_GLOBAL_CACHE_PATH = "${rustlerCache}";
         }
         // lib.optionalAttrs (tailwind != null) {
           TAILWIND_BINARY_PATH = "${tailwind}/bin/tailwindcss";
@@ -72,8 +67,8 @@ in
 
         # Injected by Nix (zoeyrinha): store binaries and source builds, since
         # the sandbox has no network.
-        if path = System.get_env("ESBUILD_BINARY_PATH"), do: config :esbuild, path: path
-        if path = System.get_env("TAILWIND_BINARY_PATH"), do: config :tailwind, path: path, version_check: false
+        if path = System.get_env("ESBUILD_BINARY_PATH"), do: config(:esbuild, path: path)
+        if path = System.get_env("TAILWIND_BINARY_PATH"), do: config(:tailwind, path: path, version_check: false)
         # exqlite/lazy_html fetch a precompiled NIF into $HOME/.cache, which the
         # sandbox cannot write; force elixir_make to build them in-tree.
         config :elixir_make, force_build: [exqlite: true, lazy_html: true]
