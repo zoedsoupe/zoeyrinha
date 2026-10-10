@@ -1,32 +1,24 @@
 {pkgs, ...}: {
   bat.enable = true;
-  direnv.enable = true;
+  direnv.enable = false;
   fzf.enable = true;
   tmux.enable = true;
   gh.enable = true;
-  xplr.enable = true;
+  xplr.enable = false;
   zoxide.enable = true;
 
   ghostty.enable = false;
   starship.enable = true;
   zed.enable = false;
 
-  envoluntary = {
-    enable = true;
-    entries = [
-      {
-        pattern = ".*/dev/taina/.*";
-        flake_reference = "~/dev/nix/taina";
-      }
-      {
-        pattern = ".*/dev/oss/.*";
-        flake_reference = "~/dev/nix/oss-elixir";
-      }
-    ];
-  };
+  # no ~/dev on the server; envoluntary maps dev dirs to flakes
+  envoluntary.enable = false;
 
   helix = {
     enable = true;
+    # highlighting only: grammars are compiled into the editor, so no language
+    # servers (or their packages) on a headless box
+    lsp = false;
     editor = {
       disable-line-numbers = true;
     };
@@ -39,10 +31,10 @@
         enable = true;
         wakatime.enable = false;
       };
-      toml.enable = true;
       json.enable = true;
-      html.enable = true;
-      css.enable = true;
+      toml.enable = true;
+      yaml.enable = true;
+      ini.enable = true;
     };
   };
 
@@ -64,6 +56,8 @@
 
   zsh = {
     enable = true;
+    fancy = false;
+    devHelpers = false;
     profileExtra = ''
       alias ls='eza'
       alias tree='eza --tree --git-ignore'

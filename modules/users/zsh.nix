@@ -7,6 +7,12 @@
   inherit (lib) mkEnableOption mkIf mkOption types;
   cfg = custom-config.zsh;
 
+  # fancy: oh-my-zsh + the nyxvamp antidote theme. devHelpers: the `dev`
+  # tmux/editor/repl function. both default on for a workstation, off for a
+  # bare server shell.
+  fancy = cfg.fancy or true;
+  devHelpers = cfg.devHelpers or true;
+
   # tmux + hx are on every host; whisper-cli only ships on darwin (whisper-cpp
   # in hosts/personal-mac/home.nix), so transcribe is darwin-only.
   transcribe = lib.optionalString pkgs.stdenv.isDarwin ''
@@ -28,6 +34,47 @@
       done
     }
   '';
+
+  devHelpersScript = lib.optionalString devHelpers ''
+    # dev <name?> <repl?> [extra-args...]  -> tmux session: editor + repl window (3 panes)
+    # repl: iex (default) | clj | mix | shell | <raw command>
+    # examples:
+    #   dev                       # iex -S mix in $(basename PWD)
+    #   dev myproj clj            # plain clj
+    #   dev myproj clj -M:test    # clj -M:test
+    #   dev . mix phx.server      # mix phx.server
+    dev() {
+      local name="''${1:-$(basename "$PWD" | tr '.' '-')}"
+      local kind="''${2:-iex}"
+      shift 2 2>/dev/null || shift $#
+      local cmd
+      case "$kind" in
+        iex)   cmd="iex -S mix ''${*}" ;;
+        clj)   cmd="clj ''${*}" ;;
+        mix)   cmd="mix ''${*}" ;;
+        shell) cmd="$SHELL" ;;
+        *)     cmd="$kind ''${*}" ;;
+      esac
+
+      if tmux has-session -t "$name" 2>/dev/null; then
+        tmux attach -t "$name"
+        return
+      fi
+
+      tmux new-session  -d -s "$name" -c "$PWD" -n editor "hx ."
+      tmux new-window   -t "$name:" -c "$PWD" -n repl "$cmd"
+      tmux split-window -t "$name:repl" -h -c "$PWD"
+      tmux split-window -t "$name:repl.2" -v -c "$PWD"
+      tmux select-pane  -t "$name:repl.1"
+      tmux select-window -t "$name:editor"
+
+      if [[ -z "$TMUX" ]]; then
+        tmux attach -t "$name"
+      else
+        tmux switch-client -t "$name"
+      fi
+    }
+  '';
 in {
   options.zsh = {
     enable = mkEnableOption "Enables ZSH config";
@@ -40,79 +87,53 @@ in {
       type = types.str;
       default = "";
     };
+    fancy = mkOption {
+      description = "Enable oh-my-zsh and the nyxvamp antidote theme.";
+      type = types.bool;
+      default = true;
+    };
+    devHelpers = mkOption {
+      description = "Install the `dev` tmux/editor/repl helper.";
+      type = types.bool;
+      default = true;
+    };
   };
 
   config = mkIf cfg.enable {
     programs.zsh = {
       inherit (cfg) enable sessionVariables profileExtra;
-      initContent = ''
-        PROMPT="$\{PROMPT\}"$'\n'
-        ${pkgs.any-nix-shell}/bin/any-nix-shell zsh --info-right | source /dev/stdin
-
-        # dev <name?> <repl?> [extra-args...]  -> tmux session: editor + repl window (3 panes)
-        # repl: iex (default) | clj | mix | shell | <raw command>
-        # examples:
-        #   dev                       # iex -S mix in $(basename PWD)
-        #   dev myproj clj            # plain clj
-        #   dev myproj clj -M:test    # clj -M:test
-        #   dev . mix phx.server      # mix phx.server
-        dev() {
-          local name="''${1:-$(basename "$PWD" | tr '.' '-')}"
-          local kind="''${2:-iex}"
-          shift 2 2>/dev/null || shift $#
-          local cmd
-          case "$kind" in
-            iex)   cmd="iex -S mix ''${*}" ;;
-            clj)   cmd="clj ''${*}" ;;
-            mix)   cmd="mix ''${*}" ;;
-            shell) cmd="$SHELL" ;;
-            *)     cmd="$kind ''${*}" ;;
-          esac
-
-          if tmux has-session -t "$name" 2>/dev/null; then
-            tmux attach -t "$name"
-            return
-          fi
-
-          tmux new-session  -d -s "$name" -c "$PWD" -n editor "hx ."
-          tmux new-window   -t "$name:" -c "$PWD" -n repl "$cmd"
-          tmux split-window -t "$name:repl" -h -c "$PWD"
-          tmux split-window -t "$name:repl.2" -v -c "$PWD"
-          tmux select-pane  -t "$name:repl.1"
-          tmux select-window -t "$name:editor"
-
-          if [[ -z "$TMUX" ]]; then
-            tmux attach -t "$name"
-          else
-            tmux switch-client -t "$name"
-          fi
-        }
-      ''
-      + transcribe;
+      initContent =
+        ''
+          PROMPT="$\{PROMPT\}"$'\n'
+          ${pkgs.any-nix-shell}/bin/any-nix-shell zsh --info-right | source /dev/stdin
+        ''
+        + devHelpersScript
+        + transcribe;
       autosuggestion.enable = true;
       enableCompletion = true;
       syntaxHighlighting.enable = true;
       enableVteIntegration = true;
       autocd = true;
       oh-my-zsh = {
-        enable = true;
+        enable = fancy;
       };
       # nyxvamp-veil, matching the starship/ghostty/helix palettes. the old
       # catppuccin zsh theme conflicted with those; `theme` in custom.nix is gone.
       antidote = {
-        enable = true;
+        enable = fancy;
         plugins = [
           "nyxvamp-theme/zsh path:nyxvamp-veil.zsh"
         ];
       };
-      history = {
-        expireDuplicatesFirst = true;
-        extended = true;
-        ignoreAllDups = true;
-        ignoreDups = true;
-        ignoreSpace = true;
-      }
-      // (cfg.history or {});
+      history =
+        {
+          expireDuplicatesFirst = true;
+          extended = true;
+          ignoreAllDups = true;
+          ignoreDups = true;
+          ignoreSpace = true;
+        }
+        // (cfg.history or {});
     };
   };
 }
