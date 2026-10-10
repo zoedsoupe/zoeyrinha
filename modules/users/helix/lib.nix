@@ -5,6 +5,7 @@
 }: let
   inherit (lib) mkIf flatten;
   cfg = custom-config.helix;
+  lspEnabled = cfg.lsp or true;
 in rec {
   with-wakatime = lang-name: servers: let
     lang-cfg = cfg.languages.${lang-name} or {};
@@ -19,7 +20,10 @@ in rec {
 
     base-servers = lang-config.language-servers or [];
     extra-servers = lang-config.extra-servers.${helix-name} or [];
-    all-servers = base-servers ++ extra-servers;
+    all-servers =
+      if lspEnabled
+      then base-servers ++ extra-servers
+      else [];
 
     # server entries are either a bare name or an attrset; normalise to attrset
     # and apply the language-level except-features to each one
@@ -46,7 +50,7 @@ in rec {
       lib.mapAttrsToList (
         lang-name: lang-config:
           map (helix-name: mk-helix-lang (lang-config // {name = lang-name;}) helix-name)
-            (lang-config.helix-names or [])
+          (lang-config.helix-names or [])
       )
       languages
     );

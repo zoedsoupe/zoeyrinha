@@ -14,18 +14,14 @@
   home.packages = with pkgs; [
     (elixir-with-otp erlang_28).latest
     erlang_28
-    go
 
     gnupg
 
     # tools
     eza
     fd
-    silver-searcher
     jq
     just
-    glow
-    ffmpeg
     zip
     unzip
   ];
