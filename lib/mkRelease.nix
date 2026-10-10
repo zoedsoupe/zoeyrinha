@@ -67,7 +67,7 @@ in
 
         # Injected by Nix (zoeyrinha): store binaries and source builds, since
         # the sandbox has no network.
-        if path = System.get_env("ESBUILD_BINARY_PATH"), do: config(:esbuild, path: path)
+        if path = System.get_env("ESBUILD_BINARY_PATH"), do: config(:esbuild, path: path, version_check: false)
         if path = System.get_env("TAILWIND_BINARY_PATH"), do: config(:tailwind, path: path, version_check: false)
         # exqlite/lazy_html fetch a precompiled NIF into $HOME/.cache, which the
         # sandbox cannot write; force elixir_make to build them in-tree.
