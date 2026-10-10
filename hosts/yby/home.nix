@@ -24,5 +24,7 @@
     just
     zip
     unzip
+    forgejo
+    cloudflared
   ];
 }
