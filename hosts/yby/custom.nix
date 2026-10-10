@@ -4,7 +4,7 @@
   fzf.enable = true;
   tmux.enable = true;
   gh.enable = true;
-  xplr.enable = false;
+  xplr.enable = true;
   zoxide.enable = true;
 
   ghostty.enable = false;
@@ -65,7 +65,6 @@
       ignorePatterns = ["git commit -m *" "git clone *" "mkdir *"];
     };
     sessionVariables = {
-      DIRENV_LOG_FORMAT = "";
       EDITOR = "${pkgs.helix}/bin/hx";
     };
   };

@@ -51,6 +51,8 @@
   pesque = {
     enable = true;
     hostname = "pds.zeetech.io";
+    mode = "path_multi";
+    identity = "plc";
   };
 
   # one dataset per service: mounted via fileSystems, created on first boot
