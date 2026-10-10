@@ -23,6 +23,14 @@
       inputs.elixir-overlay.follows = "elixir-overlay";
     };
 
+    # taina ships its own native NixOS module too (services.taina), consumed the
+    # same way as pesque.
+    taina = {
+      url = "github:taina-labs/taina";
+      inputs.nixpkgs.follows = "nixos";
+      inputs.elixir-overlay.follows = "elixir-overlay";
+    };
+
     # personal Phoenix apps, built from source by lib/mkRelease.nix. None ships
     # a flake package, so take the raw tree (flake = false).
     zoeyrinha-web = {
