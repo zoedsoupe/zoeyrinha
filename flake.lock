@@ -470,22 +470,6 @@
         "type": "github"
       }
     },
-    "palpite": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1789772330,
-        "narHash": "sha256-gFsfJGR02Z9alWhhB6dIQUGL7jj4hlGU3Q16wuOqSrg=",
-        "owner": "zoedsoupe",
-        "repo": "palpite",
-        "rev": "fb0d6e1e5cc3f65edc8b7fff1dea56a0a53456c7",
-        "type": "github"
-      },
-      "original": {
-        "owner": "zoedsoupe",
-        "repo": "palpite",
-        "type": "github"
-      }
-    },
     "pesque": {
       "inputs": {
         "elixir-overlay": [
@@ -506,6 +490,22 @@
       "original": {
         "owner": "zeeetech",
         "repo": "pesque",
+        "type": "github"
+      }
+    },
+    "pitaco": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1789772330,
+        "narHash": "sha256-gFsfJGR02Z9alWhhB6dIQUGL7jj4hlGU3Q16wuOqSrg=",
+        "owner": "zoedsoupe",
+        "repo": "pitaco",
+        "rev": "fb0d6e1e5cc3f65edc8b7fff1dea56a0a53456c7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "zoedsoupe",
+        "repo": "pitaco",
         "type": "github"
       }
     },
@@ -540,8 +540,8 @@
         "nixpkgs": "nixpkgs_4",
         "noctalia-shell": "noctalia-shell",
         "paintbox": "paintbox",
-        "palpite": "palpite",
         "pesque": "pesque",
+        "pitaco": "pitaco",
         "quintal": "quintal",
         "rust-overlay": "rust-overlay_3",
         "starship-themes": "starship-themes",
