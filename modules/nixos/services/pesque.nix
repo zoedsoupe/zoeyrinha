@@ -19,6 +19,12 @@ in {
       description = "Container image; pin a version tag for reproducibility.";
     };
 
+    pull = mkOption {
+      type = types.enum ["always" "missing" "never"];
+      default = "always";
+      description = "Image pull policy. always re-pulls on every (re)start, so a new :latest lands without a rebuild; missing only pulls when absent locally. newer is podman-only and invalid on the docker backend.";
+    };
+
     hostname = mkOption {
       type = types.str;
       example = "pds.zeetech.io";
@@ -82,6 +88,7 @@ in {
       backend = "docker";
       containers.pesque = {
         image = cfg.image;
+        pull = cfg.pull;
         environment =
           filterAttrs (_: v: v != null) {
             PDS_DATA_DIR = "/data";
