@@ -44,7 +44,7 @@
 
   # monitoring: glances web/TUI + an uptime/status page, both behind caddy
   glances.enable = true;
-  uptime-kuma.enable = true;
+  uptime-kuma.enable = false;
 
   # self-hosted atproto PDS, published on loopback and fronted by the
   # cloudflare tunnel below
@@ -60,7 +60,7 @@
     "zroot/forgejo" = "/var/lib/forgejo";
     "zroot/pesque" = "/var/lib/pesque";
     "zroot/anytype" = "/var/lib/anytype";
-    "zroot/uptime-kuma" = "/var/lib/uptime-kuma";
+    # "zroot/uptime-kuma" = "/var/lib/uptime-kuma";
   };
 
   # tailnet-facing reverse proxy
@@ -69,7 +69,7 @@
     apps = {
       "git.yby" = "127.0.0.1:3000";
       "dash.yby" = "127.0.0.1:61208";
-      "status.yby" = "127.0.0.1:3001";
+      # "status.yby" = "127.0.0.1:3001";
     };
   };
 
