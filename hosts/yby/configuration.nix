@@ -4,7 +4,6 @@
   lib,
   ...
 }: let
-  # builds each app's release from its source (see lib/mkRelease.nix)
   mkRelease = pkgs.callPackage ../../lib/mkRelease.nix {};
 in {
   imports = [
@@ -24,14 +23,11 @@ in {
   boot.loader.efi.canTouchEfiVariables = true;
 
   boot.supportedFilesystems = ["zfs"];
-  # force the root pool import. after installing from the live env the pool is
-  # still marked in-use by the installer (foreign hostid, never exported), so a
-  # non-forced import is refused and boot dies in initrd. on a single-node pool
-  # this is safe, and yby is headless: a failed boot means attaching a monitor.
+  # the installer leaves the pool marked in-use (foreign hostid), so a plain
+  # import is refused and boot dies in initrd; safe on a single-node headless host
   boot.zfs.forceImportRoot = true;
-  # the bulk-data pool lives on the sda disk, zroot on the nvme. without this
-  # only zroot is guaranteed to import at boot, so zdata's datasets never mount
-  # and the host drops into emergency mode.
+  # zdata lives on sda; without this only zroot is guaranteed to import, so
+  # zdata's datasets never mount and the host drops into emergency mode
   boot.zfs.extraPools = ["zdata"];
   # cap ARC at 2GB: default is 50% of RAM and slow to release,
   # which on 8GB with mongodb running is an OOM waiting to happen
@@ -43,9 +39,8 @@ in {
   # intel igpu; kept headless for jellyfin/qsv transcoding later
   hardware.graphics.enable = true;
 
-  # --- feature flags ---
-  # headless for now: SSH/tailnet only, no monitor or keyboard. flip niri on
-  # when a screen shows up, and set noctalia.enable in home.nix with it.
+  # headless: SSH/tailnet only. flip niri on when a screen shows up, and set
+  # noctalia.enable in home.nix with it
   niri.enable = false;
   nextcloud.enable = false;
 
@@ -54,13 +49,10 @@ in {
   # git forge: source of truth on the tailnet
   forgejo.enable = true;
 
-  # monitoring: glances web/TUI + an uptime/status page, both behind caddy
   glances.enable = true;
   uptime-kuma.enable = false;
 
-  # self-hosted atproto PDS: a plain systemd service built from the release in
-  # the pesque flake (no container runtime), published on loopback and fronted
-  # by the cloudflare tunnel below
+  # self-hosted atproto PDS, built from the release in the pesque flake
   services.pesque = {
     enable = true;
     hostname = "pds.zeetech.io";
@@ -91,9 +83,8 @@ in {
     host all quintal ::1/128 trust
   '';
 
-  # personal Phoenix apps, built from source by lib/mkRelease.nix and fronted by
-  # the cloudflare tunnel below. Secrets live in /etc/phoenix/<name>.env (see the
-  # README), never in the store.
+  # personal Phoenix apps fronted by the cloudflare tunnel below; secrets live
+  # in /etc/phoenix/<name>.env (see the README), never in the store
   phoenixApps = {
     blog = {
       enable = true;
@@ -138,9 +129,8 @@ in {
       environmentFiles = ["/etc/phoenix/paintbox.env"];
     };
 
-    # deferred: blog.br is registered at Registro.br, not a Cloudflare zone yet,
-    # so it cannot be tunneled. Move the zone to Cloudflare (or pick another
-    # hostname) and flip this back on.
+    # disabled: blog.br is registered at Registro.br, not a cloudflare zone, so
+    # it can't be tunneled. move the zone (or pick another host) and flip back on
     quintal = {
       enable = false;
       package = mkRelease {
@@ -158,10 +148,8 @@ in {
     };
   };
 
-  # taina, the community private-cloud server: native systemd from the taina
-  # flake, tailnet-only. createLocally reuses the shared postgres cluster (it
-  # only enables it and bootstraps the taina_app role); state and backups land on
-  # the sda pool.
+  # taina, the community private-cloud server: tailnet-only. createLocally
+  # reuses the shared postgres cluster (bootstraps the taina_app role)
   services.taina = {
     enable = true;
     hostname = "taina.yby";
@@ -173,12 +161,10 @@ in {
     backupDir = "/zdata/backups";
   };
 
-  # warn before the sda data disk (spinning rust) dies; smartd reads its
-  # self-tests, smartctl is here for a manual look
+  # warn before the sda data disk (spinning rust) dies; smartctl for manual checks
   services.smartd.enable = true;
   environment.systemPackages = with pkgs; [smartmontools];
 
-  # one dataset per service: mounted via fileSystems, created on first boot
   zfsDatasets = {
     "zroot/forgejo" = "/var/lib/forgejo";
     "zdata/pesque" = "/zdata/pesque";
@@ -191,7 +177,6 @@ in {
     # bulk anytype state (mongo, redis, garage blobs, networkStore) sits here on
     # the sda pool; /var/lib/anytype/.env sets STORAGE_DIR=/zdata/anytype
     "zdata/anytype" = "/zdata/anytype";
-    # "zroot/uptime-kuma" = "/var/lib/uptime-kuma";
   };
 
   # tailnet-facing reverse proxy
@@ -201,12 +186,11 @@ in {
       "git.yby" = "127.0.0.1:3000";
       "dash.yby" = "127.0.0.1:61208";
       "taina.yby" = "127.0.0.1:4014";
-      # "status.yby" = "127.0.0.1:3001";
     };
   };
 
-  # public ingress, tunneled through cloudflare (no inbound port, no home ip).
-  # cloudflare terminates tls; the origin is pesque on loopback.
+  # public ingress tunneled through cloudflare: no inbound port, no home ip;
+  # cloudflare terminates tls
   cloudflared = {
     enable = true;
     apps = {

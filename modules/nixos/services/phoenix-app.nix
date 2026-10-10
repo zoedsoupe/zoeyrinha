@@ -1,13 +1,5 @@
-# A Phoenix release run as a plain systemd service. Every personal app here
-# shares one contract, so one module covers them all:
-#
-#   PHX_SERVER=true PHX_HOST=<host> PORT=<port>  ->  $out/bin/server
-#
-# Secrets (SECRET_KEY_BASE, DATABASE_URL, ...) come from a root-owned
-# EnvironmentFile the operator writes on the host, not from the store, same as
-# pesque's account.env. Each app runs as its own system user; SQLite/state dirs
-# live on a ZFS dataset the host mounts. Stateless apps get a systemd-managed
-# StateDirectory as a writable working directory.
+# One module/contract for all personal Phoenix releases; secrets come from a
+# root-owned EnvironmentFile on the host, never from the store.
 {
   config,
   lib,
@@ -100,8 +92,7 @@ in {
         wantedBy = ["multi-user.target"];
         after = ["network-online.target"];
         wants = ["network-online.target"];
-        # stateDir is usually its own dataset; wait for it instead of writing to
-        # the empty mountpoint on root
+        # stateDir is usually its own dataset; wait for the mount, not the empty root mountpoint
         unitConfig.RequiresMountsFor = lib.optional (app.stateDir != null) app.stateDir;
 
         environment =

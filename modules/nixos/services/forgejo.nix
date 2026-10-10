@@ -48,7 +48,6 @@ in {
       };
     };
 
-    # tailnet-only: reach it at http://<host>:3000
     networking.firewall.interfaces.tailscale0.allowedTCPPorts = [3000];
   };
 }
