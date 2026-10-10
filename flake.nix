@@ -13,26 +13,22 @@
 
     elixir-overlay.url = "github:zoedsoupe/elixir-overlay";
 
-    # pesque ships its own native NixOS module (packages.pesque +
-    # nixosModules.pesque): the release is built in Nix and run as a plain
-    # systemd service, no container runtime. Consume that instead of vendoring a
-    # container definition here.
+    # pesque ships a native NixOS module (services.pesque): the release runs
+    # as a plain systemd service, so consume that instead of a container
     pesque = {
       url = "github:zeeetech/pesque";
       inputs.nixpkgs.follows = "nixos";
       inputs.elixir-overlay.follows = "elixir-overlay";
     };
 
-    # taina ships its own native NixOS module too (services.taina), consumed the
-    # same way as pesque.
+    # taina ships its native module (services.taina) the same way
     taina = {
       url = "github:taina-labs/taina";
       inputs.nixpkgs.follows = "nixos";
       inputs.elixir-overlay.follows = "elixir-overlay";
     };
 
-    # personal Phoenix apps, built from source by lib/mkRelease.nix. None ships
-    # a flake package, so take the raw tree (flake = false).
+    # personal Phoenix apps for lib/mkRelease.nix; no flake package, so raw tree
     zoeyrinha-web = {
       url = "github:zoedsoupe/zoeyrinha-web";
       flake = false;

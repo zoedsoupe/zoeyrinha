@@ -1,16 +1,8 @@
-# Build a Phoenix/Elixir release from a plain source tree. These personal apps
-# ship no flake package, so we take the raw repo and build the release in Nix,
-# the same shape as pesque's nix/package.nix but shared by all of them.
-#
-# The sandbox has no network, so the three things the ecosystem normally
-# downloads at build time are pointed at nixpkgs instead:
-#   * esbuild/tailwind: the hex wrappers read `config :..., :path`; a stanza
-#     appended to the store copy of config.exs makes them read the store
-#     binaries. No app repo is edited.
-#   * rustler_precompiled NIFs (mdex_native, makeup_syntect): forced to compile
-#     from source, with a Rust toolchain available.
-#   * cc_precompiler NIFs (exqlite, lazy_html): forced to build locally instead
-#     of fetching a precompiled .so.
+# Phoenix release built in Nix from a plain source tree (the apps ship no
+# flake package). The sandbox has no network, so the things the ecosystem
+# downloads at build time are handled instead: esbuild/tailwind binaries point
+# at store copies via env vars, rustler_precompiled and cc_precompiler NIFs
+# are built from source with a Rust toolchain available.
 {
   lib,
   beamPackages,
@@ -20,9 +12,8 @@
   esbuild,
   ...
 }: let
-  # these apps need Elixir >= 1.19; nixpkgs' default beam scope carries 1.18.
-  # nixpkgs has flip-flopped the beam override API (.overrideScope vs .extend),
-  # so pick whichever this scope carries.
+  # apps need Elixir >= 1.19; nixpkgs' default beam scope carries 1.18, and
+  # the beam override API has flip-flopped (.overrideScope vs .extend)
   override = packages: f:
     if packages ? overrideScope
     then packages.overrideScope f
@@ -37,9 +28,9 @@ in
     version,
     src,
     mixHash,
-    # rustler_precompiled NIFs present: build the crates from source
+    # rustler_precompiled NIFs present, build the crates from source
     rustler ? false,
-    # tailwind hex wrapper used (build the CSS step): pass nixpkgs tailwindcss
+    # pass nixpkgs tailwindcss when the app uses the tailwind hex wrapper
     tailwind ? null,
     nativeBuildInputs ? [],
     buildInputs ? [],
@@ -79,8 +70,7 @@ in
       postPatch = ''
               cat >> config/config.exs <<'EOF'
 
-        # Injected by Nix (zoeyrinha): use the esbuild/tailwind from the store instead
-        # of the ones the hex wrappers download, which the sandbox blocks.
+        # Injected by Nix (zoeyrinha): store binaries, sandbox blocks downloads
         if path = System.get_env("ESBUILD_BINARY_PATH"), do: config :esbuild, path: path
         if path = System.get_env("TAILWIND_BINARY_PATH"), do: config :tailwind, path: path, version_check: false
         EOF
@@ -96,8 +86,7 @@ in
               for env in "$out"/releases/*/env.sh; do
                 cat >> "$env" <<'EOF'
 
-        # Set by the Nix build. Single node, so distribution is off and the cookie
-        # exists only because the release script reads it unconditionally.
+        # Set by the Nix build: single node, cookie only satisfies the script
         export RELEASE_DISTRIBUTION="none"
         export RELEASE_COOKIE="${pname}"
         EOF

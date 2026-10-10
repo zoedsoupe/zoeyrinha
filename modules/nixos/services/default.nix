@@ -1,5 +1,5 @@
-# every service module is imported for every nixos host; each one is gated
-# behind its own `enable` option, so a host only flips what it wants on.
+# every service module is imported on every nixos host; each one is gated
+# behind its own `enable` option
 {...}: {
   imports = [
     ./anytype.nix

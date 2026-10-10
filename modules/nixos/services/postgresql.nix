@@ -1,18 +1,6 @@
-# A single PostgreSQL cluster shared by every service on the host: one server,
-# one data directory, N databases and N roles. On a small box (8GB, tailnet
-# only) a second cluster buys isolation nothing here needs and costs RAM the
-# BEAM and the ZFS ARC want back. A service adds a database and a role, never an
-# instance.
-#
-# Native apps on the same host reach it over the unix socket with peer auth:
-# the OS user and the DB role share a name, so no password ever touches the
-# Nix store. Nothing listens off-box.
-#
-#   postgres = {
-#     enable = true;
-#     databases = ["taina"];
-#     users = [{ name = "taina"; ensureDBOwnership = true; }];
-#   };
+# One shared cluster for the host: services get a database and a role, never
+# their own instance (saves RAM for the BEAM and ZFS ARC); same-host apps use
+# peer auth over the unix socket, so no password lands in the store.
 {
   config,
   lib,
@@ -68,9 +56,7 @@ in {
       ensureDatabases = cfg.databases;
       ensureUsers = cfg.users;
 
-      # Explicit and modest: the box also runs the BEAM, docker/mongo and a 2GB
-      # ARC, so leave headroom instead of taking Postgres defaults sized for a
-      # dedicated machine.
+      # Sized down for a box also running the BEAM, docker/mongo and a 2GB ARC
       settings = {
         max_connections = cfg.maxConnections;
         shared_buffers = "256MB";
@@ -79,8 +65,7 @@ in {
         maintenance_work_mem = "64MB";
       };
 
-      # Local peer auth (the nixpkgs default) is all a native app on the same
-      # host needs. No host/trust rules: nothing off-box should reach the port.
+      # No auth config here: peer auth (the nixpkgs default) covers same-host apps
     };
   };
 }
