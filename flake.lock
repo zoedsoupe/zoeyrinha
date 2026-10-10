@@ -454,6 +454,38 @@
         "type": "github"
       }
     },
+    "paintbox": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1784248749,
+        "narHash": "sha256-cZwhMYgQGTa8VO3fnOUJLCHOC+vMLdMH86dIQu3yWdA=",
+        "owner": "zoedsoupe",
+        "repo": "paintbox",
+        "rev": "a26c9d6157756fe56cf60491d2f4925e8d486687",
+        "type": "github"
+      },
+      "original": {
+        "owner": "zoedsoupe",
+        "repo": "paintbox",
+        "type": "github"
+      }
+    },
+    "palpite": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1789772330,
+        "narHash": "sha256-gFsfJGR02Z9alWhhB6dIQUGL7jj4hlGU3Q16wuOqSrg=",
+        "owner": "zoedsoupe",
+        "repo": "palpite",
+        "rev": "fb0d6e1e5cc3f65edc8b7fff1dea56a0a53456c7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "zoedsoupe",
+        "repo": "palpite",
+        "type": "github"
+      }
+    },
     "pesque": {
       "inputs": {
         "elixir-overlay": [
@@ -477,6 +509,22 @@
         "type": "github"
       }
     },
+    "quintal": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1791089670,
+        "narHash": "sha256-1RakOulgV6NO9VphfNavsEtJvJg0hUUSlFcX2VyU3Bg=",
+        "owner": "zoedsoupe",
+        "repo": "quintal",
+        "rev": "f3c78adaffb597e92f91dbeef0f3c74e1013455e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "zoedsoupe",
+        "repo": "quintal",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "bat-themes": "bat-themes",
@@ -491,12 +539,16 @@
         "nixos": "nixos",
         "nixpkgs": "nixpkgs_4",
         "noctalia-shell": "noctalia-shell",
+        "paintbox": "paintbox",
+        "palpite": "palpite",
         "pesque": "pesque",
+        "quintal": "quintal",
         "rust-overlay": "rust-overlay_3",
         "starship-themes": "starship-themes",
         "unstable": "unstable",
         "uwu-colors": "uwu-colors",
-        "wakatime-ls": "wakatime-ls"
+        "wakatime-ls": "wakatime-ls",
+        "zoeyrinha-web": "zoeyrinha-web"
       }
     },
     "rust-overlay": {
@@ -665,6 +717,22 @@
       "original": {
         "owner": "mrnossiom",
         "repo": "wakatime-ls",
+        "type": "github"
+      }
+    },
+    "zoeyrinha-web": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1788627460,
+        "narHash": "sha256-InehhTUPdJYiGjIJCXss02joEnNCd+DSwRMxi1uR2eU=",
+        "owner": "zoedsoupe",
+        "repo": "zoeyrinha-web",
+        "rev": "3fab6ab6ed38db89587d8fde63dc90d1754f0bf7",
+        "type": "github"
+      },
+      "original": {
+        "owner": "zoedsoupe",
+        "repo": "zoeyrinha-web",
         "type": "github"
       }
     }

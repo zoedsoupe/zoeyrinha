@@ -1,4 +1,12 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  inputs,
+  lib,
+  ...
+}: let
+  # builds each app's release from its source (see lib/mkRelease.nix)
+  mkRelease = pkgs.callPackage ../../lib/mkRelease.nix {};
+in {
   imports = [
     ./hardware-configuration.nix
   ];
@@ -63,10 +71,92 @@
     dataDir = "/zdata/pesque";
   };
 
-  # one Postgres for the whole host; native apps reach it over the unix socket
-  # with peer auth. taina lands here later: add its db/role then, not a second
-  # cluster.
-  postgres.enable = true;
+  # one Postgres for the whole host; each service gets a database and a role in
+  # this cluster, never its own instance. taina lands here later.
+  postgres = {
+    enable = true;
+    databases = ["quintal"];
+    users = [
+      {
+        name = "quintal";
+        ensureDBOwnership = true;
+      }
+    ];
+  };
+
+  # quintal connects over loopback TCP; its role is let in without a password
+  # (loopback only, single host). everything else stays on the peer/md5 default.
+  services.postgresql.authentication = lib.mkBefore ''
+    host all quintal 127.0.0.1/32 trust
+    host all quintal ::1/128 trust
+  '';
+
+  # personal Phoenix apps, built from source by lib/mkRelease.nix and fronted by
+  # the cloudflare tunnel below. Secrets live in /etc/phoenix/<name>.env (see the
+  # README), never in the store.
+  phoenixApps = {
+    zoeyrinha-web = {
+      enable = true;
+      package = mkRelease {
+        pname = "zoeyrinha-web";
+        version = "0.1.0";
+        src = inputs.zoeyrinha-web;
+        mixHash = "sha256-9PPLaKDiSMSjcBGwE8jp56kh06VpRe7SR/SPob5bYCk=";
+        rustler = true;
+        tailwind = pkgs.tailwindcss_4;
+      };
+      host = "zoedsoupe.zeetech.io";
+      port = 4010;
+      environmentFiles = ["/etc/phoenix/zoeyrinha-web.env"];
+    };
+
+    palpite = {
+      enable = true;
+      package = mkRelease {
+        pname = "palpite";
+        version = "0.1.0";
+        src = inputs.palpite;
+        mixHash = "sha256-aJ3Qh3hUinW8y+zP0tVgVeTLp20ZXluYrAv2w5SESJY=";
+      };
+      host = "palpite.zeetech.io";
+      port = 4011;
+      stateDir = "/zdata/palpite";
+      environment.DATABASE_PATH = "/zdata/palpite/palpite.db";
+      environmentFiles = ["/etc/phoenix/palpite.env"];
+    };
+
+    paintbox = {
+      enable = true;
+      package = mkRelease {
+        pname = "paintbox";
+        version = "0.1.0";
+        src = inputs.paintbox;
+        mixHash = "sha256-LE21sKdjAXoi4KjPtPmU9dbHeqClmf4H2biNydkzX60=";
+      };
+      host = "paintbox.zeetech.io";
+      port = 4012;
+      environmentFiles = ["/etc/phoenix/paintbox.env"];
+    };
+
+    # deferred: blog.br is registered at Registro.br, not a Cloudflare zone yet,
+    # so it cannot be tunneled. Move the zone to Cloudflare (or pick another
+    # hostname) and flip this back on.
+    quintal = {
+      enable = false;
+      package = mkRelease {
+        pname = "quintal";
+        version = "0.1.0";
+        src = inputs.quintal;
+        mixHash = "sha256-yB6JmDCagbRFk4BRkehlDW8kKmkO7ZxRTFs3IF60hMI=";
+        rustler = true;
+      };
+      host = "quintal.blog.br";
+      port = 4013;
+      migrate = true;
+      environment.DATABASE_URL = "ecto://quintal@127.0.0.1/quintal";
+      environmentFiles = ["/etc/phoenix/quintal.env"];
+    };
+  };
 
   # warn before the sda data disk (spinning rust) dies; smartd reads its
   # self-tests, smartctl is here for a manual look
@@ -78,6 +168,8 @@
     "zroot/forgejo" = "/var/lib/forgejo";
     "zdata/pesque" = "/zdata/pesque";
     "zroot/anytype" = "/var/lib/anytype";
+    # palpite's sqlite db lives here, not on the nvme
+    "zdata/palpite" = "/zdata/palpite";
     # bulk anytype state (mongo, redis, garage blobs, networkStore) sits here on
     # the sda pool; /var/lib/anytype/.env sets STORAGE_DIR=/zdata/anytype
     "zdata/anytype" = "/zdata/anytype";
@@ -100,6 +192,9 @@
     enable = true;
     apps = {
       "pds.zeetech.io" = "http://localhost:4000";
+      "zoedsoupe.zeetech.io" = "http://localhost:4010";
+      "palpite.zeetech.io" = "http://localhost:4011";
+      "paintbox.zeetech.io" = "http://localhost:4012";
     };
   };
 

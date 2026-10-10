@@ -8,6 +8,7 @@
     ./forgejo.nix
     ./glances.nix
     ./nextcloud.nix
+    ./phoenix-app.nix
     ./postgresql.nix
     ./uptime-kuma.nix
   ];
