@@ -11,12 +11,13 @@
   ts-server = typescript-language-server;
   ocamlpkgs = pkgs.ocamlPackages;
   cfg = custom-config.helix;
+  lspEnabled = cfg.lsp or true;
 
   rust = pkgs.rust-bin.stable.latest;
 
   get-lang-config = name: {enable = false;} // (cfg.languages.${name} or {});
 in {
-  language-server = {
+  language-server = mkIf lspEnabled {
     gleam = mkIf (get-lang-config "gleam").enable {
       command = "${pkgs.gleam}/bin/gleam";
     };

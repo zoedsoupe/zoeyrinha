@@ -81,6 +81,17 @@ in {
     extra-servers.toml = ["uwu-colors"];
   };
 
+  yaml = {
+    helix-names = ["yaml"];
+    language-servers = [];
+  };
+
+  # helix has no generic `conf` language; ini covers .ini/.cfg/.editorconfig
+  ini = {
+    helix-names = ["ini"];
+    language-servers = [];
+  };
+
   ocaml = {
     helix-names = ["ocaml"];
     language-servers = ["ocamllsp"];
