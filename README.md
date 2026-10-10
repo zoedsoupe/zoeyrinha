@@ -126,6 +126,7 @@ modules, flipped from `hosts/yby/configuration.nix`:
 - `forgejo` - git forge (sqlite, LFS, daily dump)
 - `pesque` - self-hosted atproto PDS (native systemd release, from the pesque flake)
 - `postgres` - one PostgreSQL 18 cluster shared by every service on the host
+- `phoenixApps` - personal Phoenix apps (zoeyrinha-web, palpite, paintbox, quintal), one module, public via cloudflare
 - `glances` - system monitor, web UI + TUI
 - `uptime-kuma` - uptime checks + status page
 - `caddy` - tailnet-facing reverse proxy
@@ -141,6 +142,7 @@ zfsDatasets = {
   "zdata/pesque" = "/zdata/pesque";
   "zroot/anytype" = "/var/lib/anytype";
   "zdata/anytype" = "/zdata/anytype";
+  "zdata/palpite" = "/zdata/palpite";
   "zroot/uptime-kuma" = "/var/lib/uptime-kuma";
 };
 ```
@@ -197,8 +199,75 @@ cloudflared = {
 ```
 
 Add more apps by appending entries and routing each hostname
-(`cloudflared tunnel route dns yby <hostname>`). Origins are loopback
-addresses, so the app must listen on `127.0.0.1` (pesque does).
+(`cloudflared tunnel route dns yby <hostname>`). One tunnel covers hostnames in
+different zones (the CNAMEs just have to live in zones on the same Cloudflare
+account), so `zeetech.io` and `blog.br` ride the same tunnel. Origins are
+loopback addresses; these apps bind dual-stack, so `localhost` reaches them.
+
+### Personal apps (`phoenixApps`)
+
+A handful of Phoenix apps (zoeyrinha-web, palpite, paintbox, quintal) run as
+plain systemd services, built from source in Nix, all through one module and
+reached only through the cloudflare tunnel:
+
+```nix
+phoenixApps.palpite = {
+  enable = true;
+  package = mkRelease {            # lib/mkRelease.nix
+    pname = "palpite"; version = "0.1.0";
+    src = inputs.palpite;
+    mixHash = "sha256-...";        # fetchMixDeps FOD hash
+  };
+  host = "palpite.zeetech.io";     # PHX_HOST
+  port = 4011;
+  stateDir = "/zdata/palpite";     # sqlite/uploads live here; null if stateless
+  environment.DATABASE_PATH = "/zdata/palpite/palpite.db";
+  environmentFiles = ["/etc/phoenix/palpite.env"];
+};
+```
+
+`lib/mkRelease.nix` wraps `beamPackages.mixRelease`: it wires esbuild/tailwind
+to the nixpkgs binaries (the hex wrappers read `config :..., :path`, so a stanza
+appended in the sandbox points them at the store), forces the rustler and
+cc_precompiler NIFs to build from source, and runs the asset build. The
+`mixHash` is the `fetchMixDeps` fixed-output hash; when an app's `mix.lock`
+changes, the build fails with the new hash to paste in.
+
+Secrets stay out of the store, one root-owned env file per app:
+
+| app | file | required |
+|---|---|---|
+| zoeyrinha-web | `/etc/phoenix/zoeyrinha-web.env` | `SECRET_KEY_BASE` |
+| palpite | `/etc/phoenix/palpite.env` | `SECRET_KEY_BASE`, `TMDB_TOKEN` |
+| paintbox | `/etc/phoenix/paintbox.env` | `SECRET_KEY_BASE` |
+| quintal | `/etc/phoenix/quintal.env` | `SECRET_KEY_BASE`, `QUINTAL_SESSION_KEY` |
+
+```sh
+sudo install -m600 /dev/null /etc/phoenix/palpite.env
+# fill it in, then rebuild
+```
+
+ines (Cassets) is not wired yet: it holds real data on fly (sqlite + uploads)
+and needs its own domain before it can move.
+
+#### Migrating quintal off fly
+
+quintal's only state is Postgres (no RLS, plain dump/restore). Dump, restore
+into the shared cluster, and keep the keys so OAuth sessions survive:
+
+```sh
+fly proxy 5432 -a quintal-db &        # expose fly pg on localhost:5432
+pg_dump -Fc "postgres://...@localhost:5432/quintal" > quintal.dump
+scp quintal.dump yby:
+
+# on yby, into the shared cluster (db and role `quintal` are ensured by the
+# postgres module):
+sudo -u postgres pg_restore -d quintal quintal.dump
+```
+
+Set `SECRET_KEY_BASE` and `QUINTAL_SESSION_KEY` in `/etc/phoenix/quintal.env` to
+fly's values, or every OAuth session is invalidated on cutover. Then point
+`quintal.blog.br` at the tunnel and flip the fly app off.
 
 ### anytype (`anytype`)
 

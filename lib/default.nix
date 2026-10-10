@@ -147,6 +147,8 @@ in {
     in
       nixosSystem {
         inherit pkgs;
+        # hosts reach the app sources to build their releases (lib/mkRelease.nix)
+        specialArgs = {inherit inputs;};
         modules = [
           (../hosts + /${host}/configuration.nix)
           ../modules/nixos/common.nix

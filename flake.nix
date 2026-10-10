@@ -23,6 +23,28 @@
       inputs.elixir-overlay.follows = "elixir-overlay";
     };
 
+    # personal Phoenix apps, built from source by lib/mkRelease.nix. None ships
+    # a flake package, so take the raw tree (flake = false).
+    zoeyrinha-web = {
+      url = "github:zoedsoupe/zoeyrinha-web";
+      flake = false;
+    };
+
+    palpite = {
+      url = "github:zoedsoupe/palpite";
+      flake = false;
+    };
+
+    paintbox = {
+      url = "github:zoedsoupe/paintbox";
+      flake = false;
+    };
+
+    quintal = {
+      url = "github:zoedsoupe/quintal";
+      flake = false;
+    };
+
     wakatime-ls = {
       url = "github:mrnossiom/wakatime-ls";
       inputs.nixpkgs.follows = "nixpkgs";
