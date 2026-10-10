@@ -1,16 +1,44 @@
-# caddy: tailnet-facing reverse proxy for yby services.
-# plain HTTP on purpose: the tailnet is wireguard-encrypted end to end,
-# TLS inside it buys nothing until a service goes public.
-# TODO: replace example.com domains; point DNS (split-horizon in headscale)
-# to yby's tailscale IP.
-{...}: {
-  services.caddy = {
-    enable = true;
-    virtualHosts."http://cloud.example.com".extraConfig = "reverse_proxy 127.0.0.1:8080";
+# tailnet-facing caddy reverse proxy. plain HTTP on purpose: the tailnet is
+# wireguard-encrypted end to end, so TLS inside it buys nothing until a
+# service goes public.
+#
+# add a project by mapping a domain to its local upstream:
+#   caddy.apps."proj.example.com" = "127.0.0.1:3000";
+# and point DNS at the host (split-horizon record in headscale, or a local
+# resolver). caddy binds every interface; the firewall keeps it tailnet-only.
+{
+  config,
+  lib,
+  ...
+}: let
+  inherit (lib) mkEnableOption mkIf mkOption types;
+  cfg = config.caddy;
+in {
+  options.caddy = {
+    enable = mkEnableOption "tailnet-facing caddy reverse proxy";
+
+    apps = mkOption {
+      type = types.attrsOf types.str;
+      default = {};
+      example = {
+        "cloud.example.com" = "127.0.0.1:8080";
+        "proj.example.com" = "127.0.0.1:3000";
+      };
+      description = "Tailnet-only reverse proxies: domain -> upstream address.";
+    };
   };
 
-  # caddy binds every interface, so the firewall is what keeps it tailnet-only.
-  # anytype clients hit the sync node directly (33010+), no vhost needed.
-  # only reachable from the tailnet
-  networking.firewall.interfaces.tailscale0.allowedTCPPorts = [80];
+  config = mkIf cfg.enable {
+    services.caddy = {
+      enable = true;
+      # the http:// scheme keeps caddy off ACME for tailnet-only domains
+      virtualHosts = lib.mapAttrs' (domain: upstream:
+        lib.nameValuePair "http://${domain}" {
+          extraConfig = "reverse_proxy ${upstream}";
+        })
+      cfg.apps;
+    };
+
+    networking.firewall.interfaces.tailscale0.allowedTCPPorts = [80];
+  };
 }

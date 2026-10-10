@@ -7,6 +7,10 @@
     command-not-found.enable = false;
   };
 
+  # no wayland shell on a headless box; flip on together with niri.enable
+  # in configuration.nix when a monitor shows up
+  noctalia.enable = false;
+
   home.packages = with pkgs; [
     (elixir-with-otp erlang_28).latest
     erlang_28
@@ -24,9 +28,5 @@
     ffmpeg
     zip
     unzip
-
-    # wayland desktop bits
-    wl-clipboard
-    chafa
   ];
 }

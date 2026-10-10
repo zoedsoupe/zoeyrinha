@@ -20,13 +20,13 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 The repository uses Nix flakes with modular architecture:
 
 - **lib/**: Core helper functions
-  - `default.nix`: Single lib file. Exports `make-pkgs`, `mkDarwin` (macOS), `mkHost` (NixOS, with `desktop` toggle), `mkISO` (optional `host` for a per-host installer)
+  - `default.nix`: Single lib file. Exports `make-pkgs`, `mkDarwin` (macOS), `mkHost` (NixOS), `mkISO` (optional `host` for a per-host installer)
 - **hosts/**: Per-machine configurations
   - Each host has: `configuration.nix`, `custom.nix`, `home.nix` (NixOS hosts also `hardware-configuration.nix`)
-  - `personal-mac` (darwin), `yby` (NixOS homelab: Niri+Noctalia desktop, ZFS, anytype/nextcloud), `eveo` (NixOS VPS: headscale+maddy)
+  - `personal-mac` (darwin), `yby` (NixOS homelab: headless over SSH, ZFS, anytype), `eveo` (NixOS VPS: headscale+maddy)
 - **modules/**: Reusable configuration modules
   - `users/`: User-specific program configurations (home-manager)
-  - `nixos/`: NixOS system modules (`common.nix`, `desktop.nix`, `noctalia.nix`, `services/`)
+  - `nixos/`: NixOS system modules (`common.nix`, `niri.nix`, `noctalia.nix` (home-manager), `services/`)
   - `iso/`: ISO build modules
 
 ### Key Architectural Patterns
