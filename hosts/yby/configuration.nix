@@ -142,6 +142,15 @@ in {
     };
   };
 
+  # app commits auto-deploy: the timer re-locks zoeyrinha-web and rebuilds the
+  # host; host changes stay a deliberate, manual pull. one-time setup:
+  #   sudo git clone https://github.com/zoedsoupe/zoeyrinha /var/lib/zoeyrinha
+  selfDeploy = {
+    enable = true;
+    flake = "/var/lib/zoeyrinha";
+    inputs = ["zoeyrinha-web"];
+  };
+
   # taina, the community private-cloud server: tailnet-only. createLocally
   # reuses the shared postgres cluster (bootstraps the taina_app role)
   services.taina = {
