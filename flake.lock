@@ -545,6 +545,7 @@
         "quintal": "quintal",
         "rust-overlay": "rust-overlay_3",
         "starship-themes": "starship-themes",
+        "taina": "taina",
         "unstable": "unstable",
         "uwu-colors": "uwu-colors",
         "wakatime-ls": "wakatime-ls",
@@ -662,6 +663,29 @@
       "original": {
         "owner": "nix-systems",
         "repo": "default",
+        "type": "github"
+      }
+    },
+    "taina": {
+      "inputs": {
+        "elixir-overlay": [
+          "elixir-overlay"
+        ],
+        "nixpkgs": [
+          "nixos"
+        ]
+      },
+      "locked": {
+        "lastModified": 1791657450,
+        "narHash": "sha256-VnoCHmPRW4LGfqN7Da+doZHAhFeDbqgZJw9aCWRzing=",
+        "owner": "taina-labs",
+        "repo": "taina",
+        "rev": "847d2c4ec3be71164ffffbc2950061bb16d37d85",
+        "type": "github"
+      },
+      "original": {
+        "owner": "taina-labs",
+        "repo": "taina",
         "type": "github"
       }
     },

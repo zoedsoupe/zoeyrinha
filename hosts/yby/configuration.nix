@@ -158,6 +158,21 @@ in {
     };
   };
 
+  # taina, the community private-cloud server: native systemd from the taina
+  # flake, tailnet-only. createLocally reuses the shared postgres cluster (it
+  # only enables it and bootstraps the taina_app role); state and backups land on
+  # the sda pool.
+  services.taina = {
+    enable = true;
+    hostname = "taina.yby";
+    port = 4014;
+    urlScheme = "http";
+    urlPort = 80;
+    database.createLocally = true;
+    storageDir = "/zdata/ybira";
+    backupDir = "/zdata/backups";
+  };
+
   # warn before the sda data disk (spinning rust) dies; smartd reads its
   # self-tests, smartctl is here for a manual look
   services.smartd.enable = true;
@@ -170,6 +185,9 @@ in {
     "zroot/anytype" = "/var/lib/anytype";
     # palpite's sqlite db lives here, not on the nvme
     "zdata/palpite" = "/zdata/palpite";
+    # taina: ybira blob storage and nhaman backups
+    "zdata/ybira" = "/zdata/ybira";
+    "zdata/backups" = "/zdata/backups";
     # bulk anytype state (mongo, redis, garage blobs, networkStore) sits here on
     # the sda pool; /var/lib/anytype/.env sets STORAGE_DIR=/zdata/anytype
     "zdata/anytype" = "/zdata/anytype";
@@ -182,6 +200,7 @@ in {
     apps = {
       "git.yby" = "127.0.0.1:3000";
       "dash.yby" = "127.0.0.1:61208";
+      "taina.yby" = "127.0.0.1:4014";
       # "status.yby" = "127.0.0.1:3001";
     };
   };

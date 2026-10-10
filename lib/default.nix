@@ -157,6 +157,8 @@ in {
           ../modules/nixos/services
           # pesque's upstream module (services.pesque), gated by its own enable
           inputs.pesque.nixosModules.pesque
+          # taina's upstream module (services.taina), same shape
+          inputs.taina.nixosModules.taina
           home-manager.nixosModules.home-manager
           {
             home-manager = {

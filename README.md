@@ -126,6 +126,7 @@ modules, flipped from `hosts/yby/configuration.nix`:
 - `forgejo` - git forge (sqlite, LFS, daily dump)
 - `pesque` - self-hosted atproto PDS (native systemd release, from the pesque flake)
 - `postgres` - one PostgreSQL 18 cluster shared by every service on the host
+- `taina` - community private cloud (native systemd, tailnet-only, shares postgres)
 - `phoenixApps` - personal Phoenix apps (zoeyrinha-web, palpite, paintbox, quintal), one module, public via cloudflare
 - `glances` - system monitor, web UI + TUI
 - `uptime-kuma` - uptime checks + status page
@@ -268,6 +269,17 @@ sudo -u postgres pg_restore -d quintal quintal.dump
 Set `SECRET_KEY_BASE` and `QUINTAL_SESSION_KEY` in `/etc/phoenix/quintal.env` to
 fly's values, or every OAuth session is invalidated on cutover. Then point
 `quintal.blog.br` at the tunnel and flip the fly app off.
+
+### taina (`services.taina`)
+
+The community private-cloud server runs natively from the taina flake's own
+module, tailnet-only behind caddy at `http://taina.yby` (plain http: the tailnet
+is already wireguard-encrypted). `database.createLocally` reuses the shared
+postgres cluster: it enables it, ensures the `taina` database, and bootstraps
+the `taina_app` role through the release's own task. A first-boot oneshot
+generates `/var/lib/taina/taina.env` (session key + db password, mode 0600).
+Ybira storage and Nhaman backups live on the sda pool (`/zdata/ybira`,
+`/zdata/backups`).
 
 ### anytype (`anytype`)
 
