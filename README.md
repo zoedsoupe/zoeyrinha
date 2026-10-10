@@ -139,11 +139,15 @@ zfsDatasets = {
   "zroot/forgejo" = "/var/lib/forgejo";
   "zroot/pesque" = "/var/lib/pesque";
   "zroot/anytype" = "/var/lib/anytype";
+  "zdata/anytype" = "/zdata/anytype";
   "zroot/uptime-kuma" = "/var/lib/uptime-kuma";
 };
 ```
 
 Each entry is mounted via `fileSystems` and created on first boot if missing.
+`zdata` is a second pool on the sda disk for bulk data, so it needs
+`boot.zfs.extraPools = ["zdata"];` for systemd to import it at boot (only
+`zroot` is forced by `forceImportRoot`).
 
 ### Tailnet apps (`caddy`)
 
@@ -209,10 +213,18 @@ One-time setup, on the host:
 sudo git clone https://github.com/anyproto/any-sync-dockercompose /var/lib/anytype
 cd /var/lib/anytype
 sudo cp .env.example .env
-# publish the sync node on yby's tailnet IP so remote clients can reach it
-sudo $EDITOR .env   # set EXTERNAL_LISTEN_HOSTS="<yby tailnet IP>"
+# publish the sync node on yby's tailnet IP so remote clients can reach it and
+# keep bulk state off the nvme: point STORAGE_DIR straight at the zdata dataset
+# (compose bind-mounts it and will not mkdir an absolute path for you)
+sudo $EDITOR .env   # EXTERNAL_LISTEN_HOSTS="<yby tailnet IP>", STORAGE_DIR=/zdata/anytype
 sudo make start     # generates ./etc/, starts every service
 ```
+
+Note: the compose file uses bind mounts, not named volumes. `./etc` (config)
+stays on `zroot/anytype`, while `${STORAGE_DIR}` (mongo, redis, garage blobs,
+`anyStorage`, `networkStore`) lands wherever you point it. If that path is not a
+real mount, docker silently writes to `zroot/root`; verify with
+`findmnt /zdata/anytype` before `make start`.
 
 Clients connect to the sync node directly on TCP 33010-33030, opened on
 `tailscale0` only (no vhost, no public ingress). Upload `./etc/client.yml` to the

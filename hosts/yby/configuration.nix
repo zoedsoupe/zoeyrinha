@@ -21,6 +21,10 @@
   # non-forced import is refused and boot dies in initrd. on a single-node pool
   # this is safe, and yby is headless: a failed boot means attaching a monitor.
   boot.zfs.forceImportRoot = true;
+  # the bulk-data pool lives on the sda disk, zroot on the nvme. without this
+  # only zroot is guaranteed to import at boot, so zdata's datasets never mount
+  # and the host drops into emergency mode.
+  boot.zfs.extraPools = ["zdata"];
   # cap ARC at 2GB: default is 50% of RAM and slow to release,
   # which on 8GB with mongodb running is an OOM waiting to happen
   boot.kernelParams = ["zfs.zfs_arc_max=2147483648"];
@@ -60,6 +64,9 @@
     "zroot/forgejo" = "/var/lib/forgejo";
     "zroot/pesque" = "/var/lib/pesque";
     "zroot/anytype" = "/var/lib/anytype";
+    # bulk anytype state (mongo, redis, garage blobs, networkStore) sits here on
+    # the sda pool; /var/lib/anytype/.env sets STORAGE_DIR=/zdata/anytype
+    "zdata/anytype" = "/zdata/anytype";
     # "zroot/uptime-kuma" = "/var/lib/uptime-kuma";
   };
 
