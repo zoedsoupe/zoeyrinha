@@ -10,6 +10,7 @@
     ./nextcloud.nix
     ./phoenix-app.nix
     ./postgresql.nix
+    ./self-deploy.nix
     ./uptime-kuma.nix
   ];
 }

@@ -90,6 +90,10 @@ in
         export RELEASE_COOKIE="${pname}"
         EOF
               done
+
+              # env.sh.eex computes RELEASE_NODE from $(hostname), which is not
+              # on the service PATH; distribution is off, so pin the node.
+              sed -i 's/\$(hostname)/127.0.0.1/g' "$out"/releases/*/env.sh
       '';
 
       meta = {
