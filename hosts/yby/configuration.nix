@@ -58,6 +58,7 @@ in {
     hostname = "pds.zeetech.io";
     mode = "path_multi";
     identity = "plc";
+    crawler = ["https://bsky.network"];
 
     # whole server state (sqlite, keys, blobs) on the sda pool, not the nvme
     dataDir = "/zdata/pesque";
