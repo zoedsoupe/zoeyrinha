@@ -127,7 +127,7 @@ modules, flipped from `hosts/yby/configuration.nix`:
 - `pesque` - self-hosted atproto PDS (native systemd release, from the pesque flake)
 - `postgres` - one PostgreSQL 18 cluster shared by every service on the host
 - `taina` - community private cloud (native systemd, tailnet-only, shares postgres)
-- `phoenixApps` - personal Phoenix apps (zoeyrinha-web, palpite, paintbox, quintal), one module, public via cloudflare
+- `phoenixApps` - personal Phoenix apps (blog, pitaco, paintbox, quintal), one module, public via cloudflare
 - `glances` - system monitor, web UI + TUI
 - `uptime-kuma` - uptime checks + status page
 - `caddy` - tailnet-facing reverse proxy
@@ -143,8 +143,7 @@ zfsDatasets = {
   "zdata/pesque" = "/zdata/pesque";
   "zroot/anytype" = "/var/lib/anytype";
   "zdata/anytype" = "/zdata/anytype";
-  "zdata/palpite" = "/zdata/palpite";
-  "zroot/uptime-kuma" = "/var/lib/uptime-kuma";
+  "zdata/pitaco" = "/zdata/pitaco";
 };
 ```
 
@@ -207,23 +206,23 @@ loopback addresses; these apps bind dual-stack, so `localhost` reaches them.
 
 ### Personal apps (`phoenixApps`)
 
-A handful of Phoenix apps (zoeyrinha-web, palpite, paintbox, quintal) run as
+A handful of Phoenix apps (blog, pitaco, paintbox, quintal) run as
 plain systemd services, built from source in Nix, all through one module and
 reached only through the cloudflare tunnel:
 
 ```nix
-phoenixApps.palpite = {
+phoenixApps.pitaco = {
   enable = true;
   package = mkRelease {            # lib/mkRelease.nix
-    pname = "palpite"; version = "0.1.0";
-    src = inputs.palpite;
+    pname = "pitaco"; version = "0.1.0";
+    src = inputs.pitaco;
     mixHash = "sha256-...";        # fetchMixDeps FOD hash
   };
-  host = "palpite.zeetech.io";     # PHX_HOST
+  host = "pitaco.zeetech.io";     # PHX_HOST
   port = 4011;
-  stateDir = "/zdata/palpite";     # sqlite/uploads live here; null if stateless
-  environment.DATABASE_PATH = "/zdata/palpite/palpite.db";
-  environmentFiles = ["/etc/phoenix/palpite.env"];
+  stateDir = "/zdata/pitaco";     # sqlite/uploads live here; null if stateless
+  environment.DATABASE_PATH = "/zdata/pitaco/pitaco.db";
+  environmentFiles = ["/etc/phoenix/pitaco.env"];
 };
 ```
 
@@ -238,13 +237,13 @@ Secrets stay out of the store, one root-owned env file per app:
 
 | app | file | required |
 |---|---|---|
-| zoeyrinha-web | `/etc/phoenix/zoeyrinha-web.env` | `SECRET_KEY_BASE` |
-| palpite | `/etc/phoenix/palpite.env` | `SECRET_KEY_BASE`, `TMDB_TOKEN` |
+| blog | `/etc/phoenix/blog.env` | `SECRET_KEY_BASE` |
+| pitaco | `/etc/phoenix/pitaco.env` | `SECRET_KEY_BASE`, `TMDB_TOKEN` |
 | paintbox | `/etc/phoenix/paintbox.env` | `SECRET_KEY_BASE` |
 | quintal | `/etc/phoenix/quintal.env` | `SECRET_KEY_BASE`, `QUINTAL_SESSION_KEY` |
 
 ```sh
-sudo install -m600 /dev/null /etc/phoenix/palpite.env
+sudo install -m600 /dev/null /etc/phoenix/pitaco.env
 # fill it in, then rebuild
 ```
 

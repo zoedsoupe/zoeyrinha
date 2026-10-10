@@ -95,7 +95,7 @@ in {
   # the cloudflare tunnel below. Secrets live in /etc/phoenix/<name>.env (see the
   # README), never in the store.
   phoenixApps = {
-    zoeyrinha-web = {
+    blog = {
       enable = true;
       package = mkRelease {
         pname = "zoeyrinha-web";
@@ -107,22 +107,22 @@ in {
       };
       host = "zoedsoupe.zeetech.io";
       port = 4010;
-      environmentFiles = ["/etc/phoenix/zoeyrinha-web.env"];
+      environmentFiles = ["/etc/phoenix/blog.env"];
     };
 
-    palpite = {
+    pitaco = {
       enable = true;
       package = mkRelease {
-        pname = "palpite";
+        pname = "pitaco";
         version = "0.1.0";
-        src = inputs.palpite;
+        src = inputs.pitaco;
         mixHash = "sha256-aJ3Qh3hUinW8y+zP0tVgVeTLp20ZXluYrAv2w5SESJY=";
       };
-      host = "palpite.zeetech.io";
+      host = "pitaco.zeetech.io";
       port = 4011;
-      stateDir = "/zdata/palpite";
-      environment.DATABASE_PATH = "/zdata/palpite/palpite.db";
-      environmentFiles = ["/etc/phoenix/palpite.env"];
+      stateDir = "/zdata/pitaco";
+      environment.DATABASE_PATH = "/zdata/pitaco/pitaco.db";
+      environmentFiles = ["/etc/phoenix/pitaco.env"];
     };
 
     paintbox = {
@@ -183,8 +183,8 @@ in {
     "zroot/forgejo" = "/var/lib/forgejo";
     "zdata/pesque" = "/zdata/pesque";
     "zroot/anytype" = "/var/lib/anytype";
-    # palpite's sqlite db lives here, not on the nvme
-    "zdata/palpite" = "/zdata/palpite";
+    # pitaco's sqlite db lives here, not on the nvme
+    "zdata/pitaco" = "/zdata/pitaco";
     # taina: ybira blob storage and nhaman backups
     "zdata/ybira" = "/zdata/ybira";
     "zdata/backups" = "/zdata/backups";
@@ -212,7 +212,7 @@ in {
     apps = {
       "pds.zeetech.io" = "http://localhost:4000";
       "zoedsoupe.zeetech.io" = "http://localhost:4010";
-      "palpite.zeetech.io" = "http://localhost:4011";
+      "pitaco.zeetech.io" = "http://localhost:4011";
       "paintbox.zeetech.io" = "http://localhost:4012";
     };
   };
