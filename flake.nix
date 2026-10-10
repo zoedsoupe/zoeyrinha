@@ -38,8 +38,8 @@
       flake = false;
     };
 
-    palpite = {
-      url = "github:zoedsoupe/palpite";
+    pitaco = {
+      url = "github:zoedsoupe/pitaco";
       flake = false;
     };
 
