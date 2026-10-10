@@ -153,6 +153,8 @@ in {
           ../modules/nixos/niri.nix
           ../modules/nixos/zfs-datasets.nix
           ../modules/nixos/services
+          # pesque's upstream module (services.pesque), gated by its own enable
+          inputs.pesque.nixosModules.pesque
           home-manager.nixosModules.home-manager
           {
             home-manager = {

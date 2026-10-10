@@ -1,4 +1,4 @@
-{...}: {
+{pkgs, ...}: {
   imports = [
     ./hardware-configuration.nix
   ];
@@ -50,19 +50,33 @@
   glances.enable = true;
   uptime-kuma.enable = false;
 
-  # self-hosted atproto PDS, published on loopback and fronted by the
-  # cloudflare tunnel below
-  pesque = {
+  # self-hosted atproto PDS: a plain systemd service built from the release in
+  # the pesque flake (no container runtime), published on loopback and fronted
+  # by the cloudflare tunnel below
+  services.pesque = {
     enable = true;
     hostname = "pds.zeetech.io";
     mode = "path_multi";
     identity = "plc";
+
+    # whole server state (sqlite, keys, blobs) on the sda pool, not the nvme
+    dataDir = "/zdata/pesque";
   };
+
+  # one Postgres for the whole host; native apps reach it over the unix socket
+  # with peer auth. taina lands here later: add its db/role then, not a second
+  # cluster.
+  postgres.enable = true;
+
+  # warn before the sda data disk (spinning rust) dies; smartd reads its
+  # self-tests, smartctl is here for a manual look
+  services.smartd.enable = true;
+  environment.systemPackages = with pkgs; [smartmontools];
 
   # one dataset per service: mounted via fileSystems, created on first boot
   zfsDatasets = {
     "zroot/forgejo" = "/var/lib/forgejo";
-    "zroot/pesque" = "/var/lib/pesque";
+    "zdata/pesque" = "/zdata/pesque";
     "zroot/anytype" = "/var/lib/anytype";
     # bulk anytype state (mongo, redis, garage blobs, networkStore) sits here on
     # the sda pool; /var/lib/anytype/.env sets STORAGE_DIR=/zdata/anytype

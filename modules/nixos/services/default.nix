@@ -8,7 +8,7 @@
     ./forgejo.nix
     ./glances.nix
     ./nextcloud.nix
-    ./pesque.nix
+    ./postgresql.nix
     ./uptime-kuma.nix
   ];
 }
