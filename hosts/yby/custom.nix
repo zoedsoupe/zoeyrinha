@@ -40,15 +40,17 @@
 
   git = {
     enable = true;
-    includes = {
-      condition = "gitdir:~/code/";
-      contents = {
-        user = {
-          email = "zoey.spessanha@zeetech.io";
-          name = "Zoey Pessanha";
+    includes = [
+      {
+        condition = "gitdir:~/code/";
+        contents = {
+          user = {
+            email = "zoey.spessanha@zeetech.io";
+            name = "Zoey Pessanha";
+          };
         };
-      };
-    };
+      }
+    ];
   };
 
   zsh = {
