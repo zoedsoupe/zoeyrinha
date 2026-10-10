@@ -454,6 +454,29 @@
         "type": "github"
       }
     },
+    "pesque": {
+      "inputs": {
+        "elixir-overlay": [
+          "elixir-overlay"
+        ],
+        "nixpkgs": [
+          "nixos"
+        ]
+      },
+      "locked": {
+        "lastModified": 1791654392,
+        "narHash": "sha256-pQQZeHvkq3tN8UW6wSOklFoXSyxv6ZZePe0iTG/O1v0=",
+        "owner": "zeeetech",
+        "repo": "pesque",
+        "rev": "a041b7345d862505380caaf40b4f9766957244c2",
+        "type": "github"
+      },
+      "original": {
+        "owner": "zeeetech",
+        "repo": "pesque",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "bat-themes": "bat-themes",
@@ -468,6 +491,7 @@
         "nixos": "nixos",
         "nixpkgs": "nixpkgs_4",
         "noctalia-shell": "noctalia-shell",
+        "pesque": "pesque",
         "rust-overlay": "rust-overlay_3",
         "starship-themes": "starship-themes",
         "unstable": "unstable",

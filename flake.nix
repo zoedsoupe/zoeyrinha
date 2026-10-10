@@ -13,6 +13,16 @@
 
     elixir-overlay.url = "github:zoedsoupe/elixir-overlay";
 
+    # pesque ships its own native NixOS module (packages.pesque +
+    # nixosModules.pesque): the release is built in Nix and run as a plain
+    # systemd service, no container runtime. Consume that instead of vendoring a
+    # container definition here.
+    pesque = {
+      url = "github:zeeetech/pesque";
+      inputs.nixpkgs.follows = "nixos";
+      inputs.elixir-overlay.follows = "elixir-overlay";
+    };
+
     wakatime-ls = {
       url = "github:mrnossiom/wakatime-ls";
       inputs.nixpkgs.follows = "nixpkgs";

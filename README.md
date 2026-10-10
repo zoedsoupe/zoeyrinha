@@ -124,7 +124,8 @@ modules, flipped from `hosts/yby/configuration.nix`:
 
 - `anytype` - anytype self-hosted sync stack (docker)
 - `forgejo` - git forge (sqlite, LFS, daily dump)
-- `pesque` - self-hosted atproto PDS (OCI container)
+- `pesque` - self-hosted atproto PDS (native systemd release, from the pesque flake)
+- `postgres` - one PostgreSQL 18 cluster shared by every service on the host
 - `glances` - system monitor, web UI + TUI
 - `uptime-kuma` - uptime checks + status page
 - `caddy` - tailnet-facing reverse proxy
@@ -137,7 +138,7 @@ Service state lives on per-service ZFS datasets, declared with `zfsDatasets`:
 ```nix
 zfsDatasets = {
   "zroot/forgejo" = "/var/lib/forgejo";
-  "zroot/pesque" = "/var/lib/pesque";
+  "zdata/pesque" = "/zdata/pesque";
   "zroot/anytype" = "/var/lib/anytype";
   "zdata/anytype" = "/zdata/anytype";
   "zroot/uptime-kuma" = "/var/lib/uptime-kuma";
@@ -315,18 +316,17 @@ sudo -u forgejo forgejo admin user create \
   --admin --username zoedsoupe --email you@zeetech.io
 ```
 
-`pesque` likewise (password stays out of nix):
+`pesque` runs as a plain systemd service, not a container: `services.pesque`
+comes from the pesque flake input, which builds the release in Nix and runs
+`bin/pesque start`. State (sqlite, keys, blobs) lives on the `zdata/pesque`
+dataset via `services.pesque.dataDir`. The operator tasks are oneshot units
+against that directory, and the password stays out of nix in an env file:
 
 ```sh
-docker exec \
-  -e PDS_SERVE=false \
-  -e ACCOUNT_HANDLE=pds.zeetech.io \
-  -e ACCOUNT_EMAIL=you@zeetech.io \
-  -e ACCOUNT_PASSWORD='…' \
-  pesque /app/bin/pesque eval \
-  'Pesque.Release.boot!(); case Pesque.Release.create_account_from_env() do :ok -> :ok; :error -> System.halt(1) end'
-```
+install -m600 /dev/null /zdata/pesque/account.env
+# fill in ACCOUNT_HANDLE, ACCOUNT_EMAIL, ACCOUNT_PASSWORD
 
-Then `docker exec pesque /app/bin/pesque eval 'Pesque.Doctor.run()'` for the
-federation preflight.
+sudo systemctl start pesque-account   # create an account
+sudo systemctl start pesque-doctor     # federation preflight
+```
 
