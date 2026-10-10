@@ -35,6 +35,13 @@ in {
     systemd.services = lib.mapAttrs' (dataset: mountpoint:
       lib.nameValuePair "zfs-${escape mountpoint}" {
         description = "Create the ${dataset} dataset if missing";
+        # default deps would add After=basic.target/sysinit.target, and since this
+        # unit runs before the mount which runs before local-fs.target, while
+        # systemd-tmpfiles-setup is After=local-fs.target, that closes an ordering
+        # cycle. systemd breaks it by deleting the tmpfiles-setup job, so no
+        # tmpfiles rule runs and every dataset root stays root:root. opt out of
+        # default deps: ordering is fully pinned by zfs-import.target/<mount>.mount
+        unitConfig.DefaultDependencies = false;
         after = ["zfs-import.target"];
         before = ["${escape mountpoint}.mount"];
         requiredBy = ["${escape mountpoint}.mount"];
