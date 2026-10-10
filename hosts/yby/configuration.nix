@@ -42,6 +42,10 @@
   # git forge: source of truth on the tailnet
   forgejo.enable = true;
 
+  # monitoring: glances web/TUI + an uptime/status page, both behind caddy
+  glances.enable = true;
+  uptime-kuma.enable = true;
+
   # self-hosted atproto PDS, published on loopback and fronted by the
   # cloudflare tunnel below
   pesque = {
@@ -53,6 +57,8 @@
   zfsDatasets = {
     "zroot/forgejo" = "/var/lib/forgejo";
     "zroot/pesque" = "/var/lib/pesque";
+    "zroot/anytype" = "/var/lib/anytype";
+    "zroot/uptime-kuma" = "/var/lib/uptime-kuma";
   };
 
   # tailnet-facing reverse proxy
@@ -60,6 +66,8 @@
     enable = true;
     apps = {
       "git.yby" = "127.0.0.1:3000";
+      "dash.yby" = "127.0.0.1:61208";
+      "status.yby" = "127.0.0.1:3001";
     };
   };
 

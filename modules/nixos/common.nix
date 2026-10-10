@@ -17,7 +17,8 @@
   };
 
   # join the tailnet manually once per host:
-  #   tailscale up --login-server=https://hs.<domain>
+  #   tailscale up     # official control plane; headscale later with
+  #                    # `--login-server=https://hs.<domain>`
   # (auth key management deferred until sops-nix lands)
   services.tailscale = {
     enable = true;
@@ -28,8 +29,9 @@
     isNormalUser = true;
     extraGroups = ["wheel" "networkmanager"];
     shell = pkgs.zsh;
-    # TODO: paste authorized key(s) here
-    openssh.authorizedKeys.keys = [];
+    openssh.authorizedKeys.keys = [
+      "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFeJxOV+YaD2ILOGT9PAiJ2qEXD6jNGPFOGSj2pYA7Dh zoey.spessanha@zeetech.io"
+    ];
   };
 
   programs.zsh.enable = true;

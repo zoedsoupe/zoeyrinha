@@ -6,7 +6,9 @@
     ./caddy.nix
     ./cloudflared.nix
     ./forgejo.nix
+    ./glances.nix
     ./nextcloud.nix
     ./pesque.nix
+    ./uptime-kuma.nix
   ];
 }
