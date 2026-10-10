@@ -59,6 +59,7 @@ in {
     mode = "path_multi";
     identity = "plc";
     crawler = ["https://bsky.network"];
+    settings.blob_upload_limit = "104857600";
 
     # whole server state (sqlite, keys, blobs) on the sda pool, not the nvme
     dataDir = "/zdata/pesque";
