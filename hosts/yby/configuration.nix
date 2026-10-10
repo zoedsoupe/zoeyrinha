@@ -1,9 +1,6 @@
 {...}: {
   imports = [
     ./hardware-configuration.nix
-    ../../modules/nixos/services/anytype.nix
-    ../../modules/nixos/services/nextcloud.nix
-    ../../modules/nixos/services/caddy.nix
   ];
 
   networking.hostName = "yby";
@@ -27,8 +24,49 @@
   services.zfs.autoScrub.enable = true;
   services.zfs.autoSnapshot.enable = true;
 
-  # intel igpu
+  # intel igpu; kept headless for jellyfin/qsv transcoding later
   hardware.graphics.enable = true;
+
+  # --- feature flags ---
+  # headless for now: SSH/tailnet only, no monitor or keyboard. flip niri on
+  # when a screen shows up, and set noctalia.enable in home.nix with it.
+  niri.enable = false;
+  nextcloud.enable = false;
+
+  anytype.enable = true;
+
+  # git forge: source of truth on the tailnet
+  forgejo.enable = true;
+
+  # self-hosted atproto PDS, published on loopback and fronted by the
+  # cloudflare tunnel below
+  pesque = {
+    enable = true;
+    hostname = "pds.zeetech.io";
+  };
+
+  # one dataset per service: mounted via fileSystems, created on first boot
+  zfsDatasets = {
+    "zroot/forgejo" = "/var/lib/forgejo";
+    "zroot/pesque" = "/var/lib/pesque";
+  };
+
+  # tailnet-facing reverse proxy
+  caddy = {
+    enable = true;
+    apps = {
+      "git.yby" = "127.0.0.1:3000";
+    };
+  };
+
+  # public ingress, tunneled through cloudflare (no inbound port, no home ip).
+  # cloudflare terminates tls; the origin is pesque on loopback.
+  cloudflared = {
+    enable = true;
+    apps = {
+      "pds.zeetech.io" = "http://localhost:4000";
+    };
+  };
 
   system.stateVersion = "26.05";
 }

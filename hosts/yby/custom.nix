@@ -7,10 +7,7 @@
   xplr.enable = true;
   zoxide.enable = true;
 
-  ghostty = {
-    enable = true;
-    font-name = "Monaspace Argon";
-  };
+  ghostty.enable = false;
   starship.enable = true;
   zed.enable = false;
 

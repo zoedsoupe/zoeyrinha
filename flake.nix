@@ -93,7 +93,6 @@
 
       yby = mkHost {
         host = "yby";
-        desktop = true;
       };
 
       eveo = mkHost {

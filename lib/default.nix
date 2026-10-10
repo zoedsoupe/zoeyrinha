@@ -130,11 +130,14 @@ in {
         ++ nixlib.optional (host != null) ../modules/iso/host.nix;
     };
 
+  # every nixos host gets the compositor and service modules imported; each is
+  # gated behind its own `enable` option and flipped from the host's config
+  # (or, for noctalia, from the host's home.nix). no more `desktop` boolean
+  # wiring the compositor and the shell together.
   mkHost = {
     host,
     user ? "zoedsoupe",
     system ? "x86_64-linux",
-    desktop ? false,
   }:
     let
       pkgs = make-pkgs {
@@ -144,28 +147,28 @@ in {
     in
       nixosSystem {
         inherit pkgs;
-        modules =
-          [
-            (../hosts + /${host}/configuration.nix)
-            ../modules/nixos/common.nix
-            home-manager.nixosModules.home-manager
-            {
-              home-manager = {
-                useGlobalPkgs = true;
-                useUserPackages = true;
-                sharedModules =
-                  [
-                    ../modules/users
-                    envoluntary.homeModules.default
-                  ]
-                  ++ nixlib.optional desktop inputs.noctalia-shell.homeModules.default;
-                users.${user} = mkHM {
-                  inherit host system pkgs;
-                  extraImports = nixlib.optional desktop ../modules/nixos/noctalia.nix;
-                };
+        modules = [
+          (../hosts + /${host}/configuration.nix)
+          ../modules/nixos/common.nix
+          ../modules/nixos/niri.nix
+          ../modules/nixos/zfs-datasets.nix
+          ../modules/nixos/services
+          home-manager.nixosModules.home-manager
+          {
+            home-manager = {
+              useGlobalPkgs = true;
+              useUserPackages = true;
+              sharedModules = [
+                ../modules/users
+                envoluntary.homeModules.default
+                inputs.noctalia-shell.homeModules.default
+              ];
+              users.${user} = mkHM {
+                inherit host system pkgs;
+                extraImports = [../modules/nixos/noctalia.nix];
               };
-            }
-          ]
-          ++ nixlib.optional desktop ../modules/nixos/desktop.nix;
+            };
+          }
+        ];
       };
 }
