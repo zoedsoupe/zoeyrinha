@@ -116,3 +116,102 @@ zpool export zroot
 ```
 
 `/etc/install-note` on the live system repeats these steps.
+
+## Homelab (yby)
+
+`yby` is a headless NixOS host (SSH/tailnet only). Its services are toggleable
+modules, flipped from `hosts/yby/configuration.nix`:
+
+- `anytype` - anytype self-hosted sync stack (docker)
+- `forgejo` - git forge (sqlite, LFS, daily dump)
+- `pesque` - self-hosted atproto PDS (OCI container)
+- `caddy` - tailnet-facing reverse proxy
+- `cloudflared` - public ingress via cloudflare tunnel
+- `niri` + `noctalia` - wayland session, off for now (enable together)
+- `nextcloud` - off for now
+
+Service state lives on per-service ZFS datasets, declared with `zfsDatasets`:
+
+```nix
+zfsDatasets = {
+  "zroot/forgejo" = "/var/lib/forgejo";
+  "zroot/pesque" = "/var/lib/pesque";
+};
+```
+
+Each entry is mounted via `fileSystems` and created on first boot if missing.
+
+### Tailnet apps (`caddy`)
+
+Anything only your devices need gets a domain -> upstream entry. Served over
+plain HTTP on purpose: the tailnet is already wireguard-encrypted, so TLS inside
+it buys nothing until a service goes public.
+
+```nix
+caddy = {
+  enable = true;
+  apps = {
+    "git.yby" = "127.0.0.1:3000";   # forgejo
+    # "proj.yby" = "127.0.0.1:3000";
+  };
+};
+```
+
+The domain must resolve to yby's tailnet IP: headscale's split-horizon
+`dns.extra_records`, or `/etc/hosts` on a client until that lands.
+
+### Public apps (`cloudflared`)
+
+For services the internet must reach. Custom domains work here (unlike Tailscale
+Funnel). The tunnel is outbound-only: no inbound port, no exposed home IP, and
+it works behind CGNAT. Cloudflare terminates TLS and can read the traffic, so
+keep this to public, non-sensitive services.
+
+One-time tunnel setup, off-host:
+
+```sh
+cloudflared tunnel login
+cloudflared tunnel create yby
+install -m 600 ~/.cloudflared/<uuid>.json /var/lib/cloudflared/credentials.json
+cloudflared tunnel route dns yby pds.zeetech.io
+```
+
+Then declare the ingress in `hosts/yby/configuration.nix`:
+
+```nix
+cloudflared = {
+  enable = true;
+  apps = {
+    "pds.zeetech.io" = "http://localhost:4000";   # pesque
+  };
+};
+```
+
+Add more apps by appending entries and routing each hostname
+(`cloudflared tunnel route dns yby <hostname>`). Origins are loopback
+addresses, so the app must listen on `127.0.0.1` (pesque does).
+
+### First accounts
+
+`forgejo` registration is closed, so create the first admin from the CLI:
+
+```sh
+sudo -u forgejo forgejo admin user create \
+  --admin --username zoedsoupe --email you@zeetech.io
+```
+
+`pesque` likewise (password stays out of nix):
+
+```sh
+docker exec \
+  -e PDS_SERVE=false \
+  -e ACCOUNT_HANDLE=pds.zeetech.io \
+  -e ACCOUNT_EMAIL=you@zeetech.io \
+  -e ACCOUNT_PASSWORD='…' \
+  pesque /app/bin/pesque eval \
+  'Pesque.Release.boot!(); case Pesque.Release.create_account_from_env() do :ok -> :ok; :error -> System.halt(1) end'
+```
+
+Then `docker exec pesque /app/bin/pesque eval 'Pesque.Doctor.run()'` for the
+federation preflight.
+
