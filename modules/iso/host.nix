@@ -56,6 +56,7 @@ in {
            cp /mnt/etc/nixos/hardware-configuration.nix \
               /tmp/zoeyrinha/hosts/${host}/hardware-configuration.nix
       4. nixos-install --flake /tmp/zoeyrinha#${host}
-      5. commit the real hardware-configuration.nix back to the repo
+      5. umount -R /mnt && zpool export zroot   # else the first boot refuses
+      6. commit the real hardware-configuration.nix back to the repo
   '';
 }

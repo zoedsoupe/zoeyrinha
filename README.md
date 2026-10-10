@@ -107,6 +107,12 @@ cp -r /etc/zoeyrinha /tmp/zoeyrinha && chmod -R u+w /tmp/zoeyrinha
 cp /mnt/etc/nixos/hardware-configuration.nix \
    /tmp/zoeyrinha/hosts/yby/hardware-configuration.nix
 nixos-install --flake /tmp/zoeyrinha#yby
+
+# hand the pool cleanly to the installed system; without this the first boot
+# refuses to import zroot (forceImportRoot now covers it, but exporting is
+# the correct thing to do)
+umount -R /mnt
+zpool export zroot
 ```
 
 `/etc/install-note` on the live system repeats these steps.

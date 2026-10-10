@@ -16,7 +16,11 @@
   boot.loader.efi.canTouchEfiVariables = true;
 
   boot.supportedFilesystems = ["zfs"];
-  boot.zfs.forceImportRoot = false;
+  # force the root pool import. after installing from the live env the pool is
+  # still marked in-use by the installer (foreign hostid, never exported), so a
+  # non-forced import is refused and boot dies in initrd. on a single-node pool
+  # this is safe, and yby is headless: a failed boot means attaching a monitor.
+  boot.zfs.forceImportRoot = true;
   # cap ARC at 2GB: default is 50% of RAM and slow to release,
   # which on 8GB with mongodb running is an OOM waiting to happen
   boot.kernelParams = ["zfs.zfs_arc_max=2147483648"];
