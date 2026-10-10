@@ -88,10 +88,7 @@ in {
   phoenixApps = {
     blog = {
       enable = true;
-      package = pkgs.callPackage ../../lib/apps/zoeyrinha-web.nix {
-        inherit mkRelease;
-        src = inputs.zoeyrinha-web;
-      };
+      package = inputs.zoeyrinha-web.packages.${pkgs.stdenv.hostPlatform.system}.default;
       host = "zoedsoupe.zeetech.io";
       port = 4010;
       environmentFiles = ["/etc/phoenix/blog.env"];

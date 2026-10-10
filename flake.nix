@@ -28,10 +28,10 @@
       inputs.elixir-overlay.follows = "elixir-overlay";
     };
 
-    # personal Phoenix apps for lib/mkRelease.nix; no flake package, so raw tree
+    # zoeyrinha-web ships its own release derivation (packages.default)
     zoeyrinha-web = {
       url = "github:zoedsoupe/zoeyrinha-web";
-      flake = false;
+      inputs.nixpkgs.follows = "nixos";
     };
 
     pitaco = {
