@@ -5,6 +5,10 @@
   ...
 }: let
   mkRelease = pkgs.callPackage ../../lib/mkRelease.nix {};
+  # TODO: the DID of the pesque account that owns the knot. the first admin is
+  # the owner the knot advertises to the appview, so it has to be the real DID
+  # before the knot can be registered in Tangled settings.
+  knotOwnerDid = "did:plc:CHANGEME";
 in {
   imports = [
     ./hardware-configuration.nix
@@ -63,6 +67,44 @@ in {
 
     # whole server state (sqlite, keys, blobs) on the sda pool, not the nvme
     dataDir = "/zdata/pesque";
+  };
+
+  # self-hosted tangled knot: a git server whose auth layer is the atproto
+  # social graph. state (repos + sealed keys) on the sda pool for zfs
+  # snapshots, which the vps has none of. yby has no inbound path, so caddy on
+  # eveo fronts the http api and a tcp relay there carries git-over-ssh.
+  services.tangled.knot-rs = {
+    enable = true;
+    stateDir = "/zdata/knot";
+    # eveo is the only thing that reaches it, and only over the tailnet
+    openFirewall = false;
+    environmentFile = "/etc/knot/knot.env";
+    settings = {
+      server = {
+        hostname = "knot.zeetech.io";
+        admins = [knotOwnerDid];
+        # wildcard bind: the unit runs under PrivateUsers, which cannot bind a
+        # specific address. the firewall keeps this tailnet-only regardless
+        listen_addr = "[::]:5555";
+        # knot2's default ssh port; the eveo relay republishes it publicly
+        ssh_listen_addr = "[::]:2222";
+      };
+      atproto.plc_directory = "https://plc.directory";
+      # eveo is the only trusted proxy, and it connects from the tailnet cgnat
+      # range; anything else is rate-limited by its real address
+      xrpc = {
+        trusted_proxy_header = "x-forwarded-for";
+        trusted_proxies = ["100.64.0.0/10"];
+      };
+      # github and forgejo are sha1, and sha1/sha256 repos cannot push or fetch
+      # between each other, so stay sha1 or the mirror plan breaks
+      git.object_format = "sha1";
+      # lfs on, same as forgejo
+      lfs.store_path = "/zdata/knot/lfs";
+      # no tls on the knot itself: caddy terminates it. a plain tcp frontend
+      # can't proxy quic, so http3 would just bind an unreachable udp port
+      tls.http3 = false;
+    };
   };
 
   # one Postgres for the whole host; each service gets a database and a role in
@@ -179,6 +221,8 @@ in {
     # taina: ybira blob storage and nhaman backups
     "zdata/ybira" = "/zdata/ybira";
     "zdata/backups" = "/zdata/backups";
+    # tangled knot: repos + sealed signing keys
+    "zdata/knot" = "/zdata/knot";
     # bulk anytype state (mongo, redis, garage blobs, networkStore) sits here on
     # the sda pool; /var/lib/anytype/.env sets STORAGE_DIR=/zdata/anytype
     "zdata/anytype" = "/zdata/anytype";
@@ -197,8 +241,9 @@ in {
   # eveo (public vps) terminates tls for the PDS and reaches it here over the
   # tailnet, since this host is behind cgnat with no inbound path; that gives a
   # relay a stable firehose connection off cloudflare. open the pds port to the
-  # tailnet only
-  networking.firewall.interfaces.tailscale0.allowedTCPPorts = [4000];
+  # tailnet only. 5555/2222 are the knot's http api and ssh, also reached
+  # through eveo (caddy + a tcp relay), never directly
+  networking.firewall.interfaces.tailscale0.allowedTCPPorts = [4000 5555 2222];
 
   # public ingress tunneled through cloudflare: no inbound port, no home ip;
   # cloudflare terminates tls. the pds is not here: cloudflare's edge drops the

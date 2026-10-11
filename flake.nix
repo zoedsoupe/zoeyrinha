@@ -35,6 +35,14 @@
       inputs.elixir-overlay.follows = "elixir-overlay";
     };
 
+    # tangled ships the knot-rs NixOS module (services.tangled.knot-rs), so the
+    # knot runs native like pesque and taina, not the docker image. pinned by DID
+    # (the repo's stable identity) rather than its handle.
+    tangled = {
+      url = "git+https://tangled.org/did:plc:j5hmlfdrwkvtxm7cjmu7j2is";
+      inputs.nixpkgs.follows = "nixos";
+    };
+
     # zoeyrinha-web ships its own release derivation (packages.default)
     zoeyrinha-web = {
       url = "github:zoedsoupe/zoeyrinha-web";

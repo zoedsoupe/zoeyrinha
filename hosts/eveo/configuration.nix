@@ -1,5 +1,9 @@
 # minimal vps: headscale coordination server (maddy personal smtp off for now).
-{inputs, ...}: {
+{
+  inputs,
+  config,
+  ...
+}: {
   imports = [
     inputs.disko.nixosModules.disko
     ./hardware-configuration.nix
@@ -47,8 +51,9 @@
 
   networking.firewall = {
     enable = true;
-    # 25/465/587/993 (smtp/imap) come back with maddy below
-    allowedTCPPorts = [22 80 443];
+    # 25/465/587/993 (smtp/imap) come back with maddy below. 2222 is the knot's
+    # ssh relay (see below)
+    allowedTCPPorts = [22 80 443 2222];
     # 41641/udp: tailscale wireguard
     allowedUDPPorts = [41641];
   };
@@ -101,6 +106,30 @@
       "pds.zeetech.io".extraConfig = ''
         reverse_proxy http://100.107.145.79:4000
       '';
+      # the knot also runs on yby. caddy terminates tls here and reaches it over
+      # the tailnet, websockets (/events) included; the ssh side is relayed by
+      # the socket-proxyd unit below
+      "knot.zeetech.io".extraConfig = ''
+        reverse_proxy http://100.107.145.79:5555
+      '';
+    };
+  };
+
+  # --- tangled knot: git-over-ssh relay ---
+  # the knot lives on yby for zfs snapshots, but yby is behind cgnat with no
+  # inbound path, so this vps accepts the ssh endpoint and splices it over the
+  # tailnet. 2222 is knot2's default ssh port; Tangled's ui assumes 22, so ssh
+  # users need ssh://git@knot.zeetech.io:2222/... or an ssh config Port entry.
+  systemd.sockets.knot-ssh-relay = {
+    wantedBy = ["sockets.target"];
+    listenStreams = ["2222"];
+  };
+
+  systemd.services.knot-ssh-relay = {
+    description = "Forward git-over-ssh on 2222 to the knot on yby over the tailnet";
+    serviceConfig = {
+      ExecStart = "${config.systemd.package}/lib/systemd/systemd-socket-proxyd --exit-idle-time=5min 100.107.145.79:2222";
+      DynamicUser = true;
     };
   };
 
