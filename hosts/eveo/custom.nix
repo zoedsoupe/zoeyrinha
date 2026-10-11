@@ -1,6 +1,6 @@
 {pkgs, ...}: {
   bat.enable = true;
-  direnv.enable = true;
+  direnv.enable = false;
   fzf.enable = true;
   tmux.enable = true;
   gh.enable = false;
@@ -14,13 +14,21 @@
 
   helix = {
     enable = true;
+    # highlighting only: grammars are compiled into the editor, so no language
+    # servers (or their packages) on a headless vps
+    lsp = false;
     editor = {
       disable-line-numbers = true;
     };
     languages = {
-      nix.enable = true;
-      toml.enable = true;
+      nix = {
+        enable = true;
+        wakatime.enable = false;
+      };
       json.enable = true;
+      toml.enable = true;
+      yaml.enable = true;
+      ini.enable = true;
     };
   };
 
@@ -28,6 +36,8 @@
 
   zsh = {
     enable = true;
+    fancy = false;
+    devHelpers = false;
     profileExtra = ''
       alias ls='eza'
     '';
@@ -35,7 +45,6 @@
       ignorePatterns = ["git commit -m *" "mkdir *"];
     };
     sessionVariables = {
-      DIRENV_LOG_FORMAT = "";
       EDITOR = "${pkgs.helix}/bin/hx";
     };
   };

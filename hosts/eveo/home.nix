@@ -11,7 +11,6 @@
     eza
     fd
     jq
-    glow
     zip
     unzip
   ];
