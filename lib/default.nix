@@ -5,31 +5,50 @@ inputs: let
   inherit (darwin.lib) darwinSystem;
   nixlib = nixpkgs.lib;
 
-  # build only the tree-sitter grammars languages.nix maps to. heex/eex carry
-  # no `grammar` field upstream (only a scope), but helix resolves grammar by
-  # scope, so they must ship alongside elixir. takes pkgs as an argument
-  # rather than closing over make-pkgs, since the overlay below already has a
-  # real instance in scope.
-  helix-grammars = pkgs: let
+  # nixpkgs' helix splits the editor (helix-unwrapped, a plain cached rust
+  # build) from the grammars (one derivation each). overriding lockedGrammars
+  # keeps helix-unwrapped cached and only realises the grammar derivations a
+  # host needs, instead of the from-source helix-flake build carrying every
+  # grammar. the default set is read from nixpkgs so a name never drifts from
+  # what the package actually ships.
+  default-helix-grammars = pkgs:
+    builtins.fromJSON (builtins.readFile (pkgs.path + "/pkgs/by-name/he/helix/grammars.json"));
+
+  # helix-names double as tree-sitter grammar names, so the enabled languages
+  # map straight onto lockedGrammars keys. bash/dockerfile/toml/yaml are always
+  # kept: shell, docker and those config formats are wanted even without a
+  # language block. the intersect in helix-overlay drops any name nixpkgs does
+  # not ship, keeping the package's grammar-count check consistent.
+  helix-grammar-names = pkgs: host: let
+    cfg = import (../hosts + /${host}/custom.nix) {inherit pkgs;};
     langs = import ../modules/users/helix/languages.nix {
       inherit pkgs;
       lib = nixlib;
     };
-    # lix 2.95 rejects the (f, set) argument order of builtins.attrValues
-    names = builtins.map (name: langs.${name}.helix-names) (builtins.attrNames langs);
+    enabled = name: (cfg.helix.languages.${name} or {}).enable or false;
+    wanted =
+      nixlib.concatMap (
+        name:
+          if enabled name
+          then langs.${name}.helix-names or []
+          else []
+      )
+      (builtins.attrNames langs);
   in
-    # flattened: otherwise builtins.elem below compares each grammar name
-    # against a list and never matches, shipping zero grammars
-    nixlib.flatten names ++ ["bash" "Dockerfile" "zsh" "toml" "yaml"];
+    wanted ++ ["bash" "dockerfile" "toml" "yaml"];
+
+  # per-host: a host with helix off realises no grammars, one with a handful of
+  # languages realises only those
+  helix-overlay = host: _final: prev: {
+    helix = prev.helix.override {
+      lockedGrammars = nixlib.filterAttrs (
+        name: _: builtins.elem name (helix-grammar-names prev host)
+      ) (default-helix-grammars prev);
+    };
+  };
 
   overlays = with inputs; [
     rust-overlay.overlays.default
-    helix.overlays.default
-    (_: prev: {
-      helix = prev.helix.override {
-        includeGrammarIf = g: builtins.elem g.name (helix-grammars prev);
-      };
-    })
     elixir-overlay.overlays.default
     uwu-colors.overlays.default
     envoluntary.overlays.default
@@ -39,9 +58,11 @@ inputs: let
   make-pkgs = {
     system,
     source,
+    extraOverlays ? [],
   }:
     import source {
-      inherit system overlays;
+      inherit system;
+      overlays = overlays ++ extraOverlays;
       config.allowUnfree = true;
     };
 
@@ -78,6 +99,7 @@ in {
     pkgs = make-pkgs {
       inherit system;
       source = nixpkgs;
+      extraOverlays = [(helix-overlay host)];
     };
   in
     darwinSystem {
@@ -132,6 +154,7 @@ in {
     pkgs = make-pkgs {
       inherit system;
       source = nixos;
+      extraOverlays = [(helix-overlay host)];
     };
   in
     nixosSystem {

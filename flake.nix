@@ -90,11 +90,6 @@
       inputs.home-manager.follows = "home-manager";
     };
 
-    helix = {
-      url = "github:helix-editor/helix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     expert-lsp.url = "github:elixir-lang/expert";
 
     # colorize hex colors on helix (lsp)

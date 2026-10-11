@@ -18,7 +18,10 @@ in {
       settings = {
         prompt = "enabled";
         git_protocol = "ssh";
-        editor = "${pkgs.helix}/bin/hx";
+        editor =
+          if custom-config.helix.enable
+          then "${pkgs.helix}/bin/hx"
+          else "${pkgs.vim}/bin/vim";
       };
     };
   };
