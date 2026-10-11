@@ -13,5 +13,6 @@
     jq
     zip
     unzip
+    vim
   ];
 }

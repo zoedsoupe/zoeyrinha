@@ -49,7 +49,7 @@ in {
         apply = {whitespace = "nowarn";};
         help = {autocorrect = 0;};
         # signingKey lives here, not per-repo: gpgsign is global above, so a host
-# without it cannot commit at all.
+        # without it cannot commit at all.
         user = {
           username = "zoedsoupe";
           signingKey = "~/.ssh/personal";
@@ -69,7 +69,12 @@ in {
           abbrevCommit = true;
         };
         core = {
-          editor = "${pkgs.helix}/bin/hx";
+          # vim when the host turns helix off, so a bare server does not pull
+          # the editor into the closure just for git's EDITOR
+          editor =
+            if custom-config.helix.enable
+            then "${pkgs.helix}/bin/hx"
+            else "${pkgs.vim}/bin/vim";
           autocrlf = "input";
           whitespace = "fix,-indent-with-non-tab,trailing-space,cr-at-eol";
         };

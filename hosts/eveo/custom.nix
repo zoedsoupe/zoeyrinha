@@ -13,7 +13,7 @@
   starship.enable = true;
 
   helix = {
-    enable = true;
+    enable = false;
     # highlighting only: grammars are compiled into the editor, so no language
     # servers (or their packages) on a headless vps
     lsp = false;
@@ -45,7 +45,8 @@
       ignorePatterns = ["git commit -m *" "mkdir *"];
     };
     sessionVariables = {
-      EDITOR = "${pkgs.helix}/bin/hx";
+      # helix is off here; vim keeps EDITOR pointing at something that exists
+      EDITOR = "${pkgs.vim}/bin/vim";
     };
   };
 }
