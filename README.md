@@ -476,12 +476,11 @@ sha1/sha256 repos cannot push or fetch between each other, so a sha256 knot repo
 could be neither mirrored to github (sha1 only) nor fetched from forgejo. It
 only applies to repos the knot creates, so set it before creating any.
 
-Two values are placeholders and must be set before it works:
-
-`knotOwnerDid` (in `hosts/yby/configuration.nix`) is your pesque account's DID,
-the knot's owner. The knot advertises it as `sh.tangled.owner`, and registration
-in tangled settings checks it. `KNOT_MASTER_KEY` is the base64 key that unseals
-the per-repo signing keys, generated once and kept off the host:
+`knotOwnerDid` (in `hosts/yby/configuration.nix`) is set to your pesque
+account's DID, the knot's owner. The knot advertises it as `sh.tangled.owner`,
+and registration in tangled settings checks it. One value is still a placeholder:
+`KNOT_MASTER_KEY`, the base64 key that unseals the per-repo signing keys,
+generated once and kept off the host:
 
 ```sh
 sudo install -d -m 700 /etc/knot
