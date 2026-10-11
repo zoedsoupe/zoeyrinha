@@ -137,22 +137,22 @@
         {
           name = "yby";
           type = "A";
-          value = "100.107.145.79";
+          value = "100.64.0.2";
         }
         {
           name = "taina.yby";
           type = "A";
-          value = "100.107.145.79";
+          value = "100.64.0.2";
         }
         {
           name = "git.yby";
           type = "A";
-          value = "100.107.145.79";
+          value = "100.64.0.2";
         }
         {
           name = "dash.yby";
           type = "A";
-          value = "100.107.145.79";
+          value = "100.64.0.2";
         }
       ];
     };
