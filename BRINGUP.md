@@ -162,7 +162,10 @@ account's DID. Generate the master key that unseals the per-repo signing keys,
 and keep a copy **off the host**:
 
 ```sh
-sudo install -d -m 700 /etc/knot
+# the knot runs as the `knot` user and reads /etc/knot/config.toml (written by
+# the module), so the dir must be traversable by it; the env file stays 600
+# (systemd reads EnvironmentFile as root before dropping privileges)
+sudo install -d -m 755 /etc/knot
 printf 'KNOT_MASTER_KEY=%s\n' "$(openssl rand -base64 32)" \
   | sudo tee /etc/knot/knot.env > /dev/null
 sudo chmod 600 /etc/knot/knot.env
