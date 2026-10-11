@@ -112,9 +112,28 @@
         nameservers.global = ["1.1.1.1" "9.9.9.9"];
       };
       # split-horizon: point service domains at yby's tailscale ip here, e.g.
-      # dns.extra_records = [
-      #   { name = "taina.yby"; type = "A"; value = "100.x.y.z"; }
-      # ];
+      dns.extra_records = [
+        {
+          name = "yby";
+          type = "A";
+          value = "100.107.145.79";
+        }
+        {
+          name = "taina.yby";
+          type = "A";
+          value = "100.107.145.79";
+        }
+        {
+          name = "git.yby";
+          type = "A";
+          value = "100.107.145.79";
+        }
+        {
+          name = "dash.yby";
+          type = "A";
+          value = "100.107.145.79";
+        }
+      ];
     };
   };
 
