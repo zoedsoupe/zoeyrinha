@@ -2,3 +2,10 @@
 /.direnv/
 result
 /.lexical/
+
+# secrets never belong in the store or the repo (they live out of band:
+# /etc/phoenix, /var/lib/cloudflared, /etc/knot, tailscale auth keys)
+*.env
+*.pem
+*.key
+credentials.json
