@@ -194,12 +194,18 @@ in {
     };
   };
 
+  # eveo (public vps) terminates tls for the PDS and reaches it here over the
+  # tailnet, since this host is behind cgnat with no inbound path; that gives a
+  # relay a stable firehose connection off cloudflare. open the pds port to the
+  # tailnet only
+  networking.firewall.interfaces.tailscale0.allowedTCPPorts = [4000];
+
   # public ingress tunneled through cloudflare: no inbound port, no home ip;
-  # cloudflare terminates tls
+  # cloudflare terminates tls. the pds is not here: cloudflare's edge drops the
+  # firehose websocket, so caddy on eveo fronts it directly instead
   cloudflared = {
     enable = true;
     apps = {
-      "pds.zeetech.io" = "http://localhost:4000";
       "zoedsoupe.zeetech.io" = "http://localhost:4010";
       "pitaco.zeetech.io" = "http://localhost:4011";
       "paintbox.zeetech.io" = "http://localhost:4012";
