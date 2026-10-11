@@ -37,6 +37,12 @@ helix = {
 server list comes from `languages.nix`, so overriding it per host would drift
 from the defaults; change `languages.nix` instead.
 
+The editor block has two toggles: `disable-line-numbers` and
+`rainbow-brackets`. `rainbow-brackets` defaults to `false` and must stay that
+way on any tagged Helix: the key only exists on master, and the release nixpkgs
+ships (25.07.1) rejects the whole editor table when it parses it. Turn it on
+only against a master build.
+
 ## Anatomy of a language entry
 
 ```nix
