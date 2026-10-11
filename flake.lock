@@ -762,11 +762,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1791668719,
-        "narHash": "sha256-3tjuaujU9yyOWCA8Kxs4yNVz/NyVTAYTQj8oJdLE68M=",
+        "lastModified": 1791727307,
+        "narHash": "sha256-9oaZ59g7xUs80BBa01GrT8WQlo81utUy/NrAoOyVENU=",
         "owner": "zeeetech",
         "repo": "pesque",
-        "rev": "f9dac7504788c3b3cecb434f26b29a25df1439cf",
+        "rev": "cbbb18855a82c9ef5213c93cea0013ccbcdabcab",
         "type": "github"
       },
       "original": {
