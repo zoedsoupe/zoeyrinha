@@ -46,7 +46,7 @@
 
   users.users.zoedsoupe = {
     isNormalUser = true;
-    extraGroups = ["wheel" "networkmanager"];
+    extraGroups = ["wheel" "networkmanager" "systemd-journal"];
     shell = pkgs.zsh;
     openssh.authorizedKeys.keys = [
       "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFeJxOV+YaD2ILOGT9PAiJ2qEXD6jNGPFOGSj2pYA7Dh zoey.spessanha@zeetech.io"
