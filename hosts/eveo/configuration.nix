@@ -3,7 +3,13 @@
   inputs,
   config,
   ...
-}: {
+}: let
+  # yby's tailnet ip, assigned by headscale. one place to change if the node
+  # re-registers with a different address: eveo's caddy and the ssh relay dial
+  # it directly (accept-dns is off on this host, so magic dns names don't
+  # resolve here).
+  ybyTailnetIp = "100.64.0.2";
+in {
   imports = [
     inputs.disko.nixosModules.disko
     ./hardware-configuration.nix
@@ -137,22 +143,22 @@
         {
           name = "yby";
           type = "A";
-          value = "100.64.0.2";
+          value = ybyTailnetIp;
         }
         {
           name = "taina.yby";
           type = "A";
-          value = "100.64.0.2";
+          value = ybyTailnetIp;
         }
         {
           name = "git.yby";
           type = "A";
-          value = "100.64.0.2";
+          value = ybyTailnetIp;
         }
         {
           name = "dash.yby";
           type = "A";
-          value = "100.64.0.2";
+          value = ybyTailnetIp;
         }
       ];
     };
@@ -171,13 +177,13 @@
       # relay can crawl it without cloudflare in between. yby's tailnet ip, not
       # a magic dns name, since accept-dns is off above
       "pds.zeetech.io".extraConfig = ''
-        reverse_proxy http://100.107.145.79:4000
+        reverse_proxy http://${ybyTailnetIp}:4000
       '';
       # the knot also runs on yby. caddy terminates tls here and reaches it over
       # the tailnet, websockets (/events) included; the ssh side is relayed by
       # the socket-proxyd unit below
       "knot.zeetech.io".extraConfig = ''
-        reverse_proxy http://100.107.145.79:5555
+        reverse_proxy http://${ybyTailnetIp}:5555
       '';
     };
   };
@@ -195,7 +201,7 @@
   systemd.services.knot-ssh-relay = {
     description = "Forward git-over-ssh on 2222 to the knot on yby over the tailnet";
     serviceConfig = {
-      ExecStart = "${config.systemd.package}/lib/systemd/systemd-socket-proxyd --exit-idle-time=5min 100.107.145.79:2222";
+      ExecStart = "${config.systemd.package}/lib/systemd/systemd-socket-proxyd --exit-idle-time=5min ${ybyTailnetIp}:2222";
       DynamicUser = true;
     };
   };
