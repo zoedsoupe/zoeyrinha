@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  lib,
+  ...
+}: {
   nix.settings.experimental-features = ["nix-command" "flakes"];
   nix.gc = {
     automatic = true;
@@ -6,7 +10,9 @@
     options = "--delete-older-than 14d";
   };
 
-  networking.networkmanager.enable = true;
+  # default, not forced: a host with a static ip (eveo) opts out and drives
+  # the nic with systemd-networkd instead
+  networking.networkmanager.enable = lib.mkDefault true;
 
   services.openssh = {
     enable = true;

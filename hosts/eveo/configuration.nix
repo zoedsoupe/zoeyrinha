@@ -11,6 +11,33 @@
 
   networking.hostName = "eveo";
 
+  # hypehost assigns a static address: its netplan runs no dhcp, so
+  # networkmanager + dhcp never brings the nic up and, with no console, the box
+  # just looks hung. pin the provider's address instead, matched by mac so the
+  # kernel's interface name does not matter.
+  networking.networkmanager.enable = false;
+  networking.useDHCP = false;
+  networking.useNetworkd = true;
+  networking.nameservers = ["8.8.8.8" "1.1.1.1" "2606:4700:4700::1111"];
+  systemd.network = {
+    enable = true;
+    networks."10-eveo" = {
+      matchConfig.MACAddress = "52:54:00:a2:74:2a";
+      address = [
+        "212.38.89.221/24"
+        "2a0c:9a40:8f40:0:212:38:89:221/48"
+      ];
+      routes = [
+        {Gateway = "212.38.89.1";}
+        {
+          Gateway = "2a0e:b107:1ef0::1";
+          GatewayOnLink = true;
+        }
+      ];
+      dns = ["8.8.8.8" "1.1.1.1" "2606:4700:4700::1111"];
+    };
+  };
+
   # hypecloud boots UEFI (OVMF), not legacy BIOS: the disk needs an EFI System
   # Partition and an EFI bootloader. systemd-boot writes both the NVRAM entry
   # and the fallback EFI/BOOT/BOOTX64.EFI, so it still boots if the provider
