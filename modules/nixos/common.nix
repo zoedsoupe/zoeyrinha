@@ -3,6 +3,11 @@
   lib,
   ...
 }: {
+  # ssh clients running ghostty/kitty/alacritty/... set TERM to their own name;
+  # without the matching terminfo the login shell spams "can't find terminal
+  # definition for xterm-ghostty". installs terminfo for the common terminals.
+  environment.enableAllTerminfo = true;
+
   nix.settings.experimental-features = ["nix-command" "flakes"];
   nix.gc = {
     automatic = true;
