@@ -5,10 +5,10 @@
   ...
 }: let
   mkRelease = pkgs.callPackage ../../lib/mkRelease.nix {};
-  # TODO: the DID of the pesque account that owns the knot. the first admin is
-  # the owner the knot advertises to the appview, so it has to be the real DID
-  # before the knot can be registered in Tangled settings.
-  knotOwnerDid = "did:plc:CHANGEME";
+  # the pesque account that owns the knot. the first admin is the owner the
+  # knot advertises to the appview, and Tangled's registration checks it, so it
+  # has to be the account's real did:plc
+  knotOwnerDid = "did:plc:4rt5dyqvarrbolr7qmfcbcsm";
 in {
   imports = [
     ./hardware-configuration.nix
