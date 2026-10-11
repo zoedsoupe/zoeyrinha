@@ -148,6 +148,8 @@ in {
         inputs.pesque.nixosModules.pesque
         # taina's upstream module (services.taina), same shape
         inputs.taina.nixosModules.taina
+        # tangled's knot-rs module (services.tangled.knot-rs), same shape
+        inputs.tangled.nixosModules.knot-rs
         home-manager.nixosModules.home-manager
         {
           home-manager = {

@@ -125,6 +125,7 @@ modules, flipped from `hosts/yby/configuration.nix`:
 - `anytype` - anytype self-hosted sync stack (docker)
 - `forgejo` - git forge (sqlite, LFS, daily dump)
 - `pesque` - self-hosted atproto PDS (native systemd release, from the pesque flake)
+- `knot` - self-hosted tangled knot, a git server on the atproto social graph (native module, from the tangled flake)
 - `postgres` - one PostgreSQL 18 cluster shared by every service on the host
 - `taina` - community private cloud (native systemd, tailnet-only, shares postgres)
 - `phoenixApps` - personal Phoenix apps (blog, pitaco, paintbox, quintal), one module, public via cloudflare
@@ -144,6 +145,7 @@ zfsDatasets = {
   "zroot/anytype" = "/var/lib/anytype";
   "zdata/anytype" = "/zdata/anytype";
   "zdata/pitaco" = "/zdata/pitaco";
+  "zdata/knot" = "/zdata/knot";
 };
 ```
 
@@ -435,4 +437,87 @@ install -m600 /dev/null /zdata/pesque/account.env
 sudo systemctl start pesque-account   # create an account
 sudo systemctl start pesque-doctor     # federation preflight
 ```
+
+### tangled knot (`services.tangled.knot-rs`)
+
+A [tangled](https://tangled.org/) knot is a git server whose auth layer is the
+atproto social graph: users publish an ssh key on their PDS, the knot admin
+grants membership by DID, and the shared appview at tangled.org does the social
+half (issues, PRs, discovery). Self-host the repos, stay findable in one place,
+instead of a tailnet-isolated forgejo.
+
+The knot runs on **yby** so repos land on a zfs dataset and inherit
+`autoSnapshot` + `autoScrub`, but yby is behind cgnat with no inbound path, so
+**eveo** is the public edge: caddy terminates tls and proxies the http api over
+the tailnet, and a `systemd-socket-proxyd` unit relays git-over-ssh from public
+`:2222` to the knot's `:2222` over the tailnet. It is upstream's native module
+(the rust knot2), consumed from the tangled flake like pesque and taina:
+
+```nix
+services.tangled.knot-rs = {
+  enable = true;
+  stateDir = "/zdata/knot";
+  openFirewall = false;                # eveo is the only entry, over the tailnet
+  environmentFile = "/etc/knot/knot.env";
+  settings = {
+    server.hostname = "knot.zeetech.io";
+    server.admins = [knotOwnerDid];    # the pesque account DID, see below
+    server.listen_addr = "[::]:5555";
+    server.ssh_listen_addr = "[::]:2222";
+    atproto.plc_directory = "https://plc.directory";
+    git.object_format = "sha1";        # sha1 or the github/forgejo mirrors break
+    lfs.store_path = "/zdata/knot/lfs";
+  };
+};
+```
+
+`object_format` is pinned to `sha1` on purpose. knot2 defaults to `sha256`, and
+sha1/sha256 repos cannot push or fetch between each other, so a sha256 knot repo
+could be neither mirrored to github (sha1 only) nor fetched from forgejo. It
+only applies to repos the knot creates, so set it before creating any.
+
+Two values are placeholders and must be set before it works:
+
+`knotOwnerDid` (in `hosts/yby/configuration.nix`) is your pesque account's DID,
+the knot's owner. The knot advertises it as `sh.tangled.owner`, and registration
+in tangled settings checks it. `KNOT_MASTER_KEY` is the base64 key that unseals
+the per-repo signing keys, generated once and kept off the host:
+
+```sh
+sudo install -d -m 700 /etc/knot
+printf 'KNOT_MASTER_KEY=%s\n' "$(openssl rand -base64 32)" \
+  | sudo tee /etc/knot/knot.env > /dev/null
+sudo chmod 600 /etc/knot/knot.env
+```
+
+Back that file up **separately from the host**, together with the sealed key
+store it unseals (`/zdata/knot/sealed-keys`). Losing the master key leaves the
+repos readable as plain git but strips the knot of the ability to prove
+ownership over atproto. The repos themselves are the knot's whole state (git is
+the database), and they live on `zdata/knot`, so zfs snapshots cover them; add
+that dataset to whatever ships `zdata` off-host.
+
+One-time, once the DID and key are in place:
+
+```sh
+# dns: knot.zeetech.io -> eveo's public ip, then rebuild yby + eveo, then
+# register the domain under tangled settings -> knots with the same DID.
+# it verifies over the http vhost, so caddy on eveo must be up first.
+```
+
+ssh is on `2222`, not `22`, so tangled's copy-paste url assumes a port that is
+not there. Push over https instead, or rewrite the remote / add an ssh config
+entry:
+
+```sh
+git clone ssh://git@knot.zeetech.io:2222/did:plc:<you>/<repo>
+# ~/.ssh/config, to keep the short form working:
+#   Host knot.zeetech.io
+#       Port 2222
+```
+
+knot2 pushes over https too, so a contributor who would rather not use ssh can
+use `https://knot.zeetech.io/<handle>/<repo>` with a tangled-minted service
+token.
+
 
