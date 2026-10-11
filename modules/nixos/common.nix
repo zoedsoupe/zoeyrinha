@@ -16,10 +16,13 @@
     };
   };
 
-  # join the tailnet manually once per host:
-  #   tailscale up     # official control plane; headscale later with
-  #                    # `--login-server=https://hs.<domain>`
-  # (auth key management deferred until sops-nix lands)
+  # join the tailnet manually once per host, against our own headscale (eveo):
+  #   tailscale up --login-server=https://hs.zeetech.io
+  # then approve the node on eveo:
+  #   headscale users create zoey
+  #   headscale nodes register --user zoey --key <nodekey>
+  # (declarative auth keys deferred until sops-nix lands; extraUpFlags only
+  #  takes effect alongside services.tailscale.authKeyFile)
   services.tailscale = {
     enable = true;
     useRoutingFeatures = "client";

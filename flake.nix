@@ -13,6 +13,13 @@
 
     elixir-overlay.url = "github:zoedsoupe/elixir-overlay";
 
+    # declarative disk partitioning, consumed by nixos-anywhere to provision
+    # the eveo vps (debian -> nixos)
+    disko = {
+      url = "github:nix-community/disko";
+      inputs.nixpkgs.follows = "nixos";
+    };
+
     # pesque ships a native NixOS module (services.pesque): the release runs
     # as a plain systemd service, so consume that instead of a container
     pesque = {
