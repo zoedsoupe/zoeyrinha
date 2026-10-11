@@ -19,6 +19,11 @@
   # the nic with systemd-networkd instead
   networking.networkmanager.enable = lib.mkDefault true;
 
+  # ssh is key-only (PasswordAuthentication = false) and neither zoedsoupe nor
+  # root has a password, so a wheel user can't answer sudo's prompt. the key is
+  # already the only gate and it already grants wheel, so drop the prompt.
+  security.sudo.wheelNeedsPassword = false;
+
   services.openssh = {
     enable = true;
     settings = {
