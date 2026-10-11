@@ -38,6 +38,27 @@
     };
   };
 
+  # hardware-configuration.nix is empty (disko owns fileSystems), so the default
+  # initrd module set ships without the vps disk's controller driver: the disk is
+  # on qemu's scsi/virtio bus, so root never mounts and the box drops to
+  # emergency with no network. normally nixos-generate-config adds these; add
+  # them by hand (virtio-scsi plus the emulated hbas, to be safe).
+  boot.initrd.availableKernelModules = [
+    "virtio_pci"
+    "virtio_blk"
+    "virtio_scsi"
+    "scsi_mod"
+    "sd_mod"
+    "sr_mod"
+    "ahci"
+    "nvme"
+    "mptspi"
+    "mptsas"
+    "megaraid_sas"
+    "sym53c8xx"
+    "qla2xxx"
+  ];
+
   # hypecloud boots UEFI (OVMF), not legacy BIOS: the disk needs an EFI System
   # Partition and an EFI bootloader. systemd-boot writes both the NVRAM entry
   # and the fallback EFI/BOOT/BOOTX64.EFI, so it still boots if the provider
