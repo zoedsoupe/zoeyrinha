@@ -123,8 +123,8 @@ Rebuild eveo after editing.
 ## 4. Switch yby
 
 ```sh
-# on yby, from the selfDeploy clone (see step 9)
-sudo nixos-rebuild switch --flake /var/lib/zoeyrinha#yby
+# on yby (the repo is public, so the flake can be fetched)
+sudo nixos-rebuild switch --flake github:zoedsoupe/zoeyrinha#yby
 ```
 
 yby joins the tailnet (step 3) and its services become reachable over it.
@@ -236,12 +236,6 @@ cloudflared tunnel route dns yby paintbox.zeetech.io
 `route dns` creates the proxied CNAMEs Cloudflare terminates TLS on. Origins are
 loopback (`http://localhost:401x`).
 
-Then set up app auto-deploy (on yby):
-
-```sh
-sudo git clone https://github.com/zoedsoupe/zoeyrinha /var/lib/zoeyrinha
-```
-
 ## 10. (optional) anytype
 
 Enabled on yby, inert until its compose file exists (the unit is gated on
@@ -266,7 +260,7 @@ nixos-anywhere --flake .#eveo root@212.38.89.221
 sudo nixos-rebuild switch --flake github:zoedsoupe/zoeyrinha#eveo
 
 # yby update
-sudo nixos-rebuild switch --flake /var/lib/zoeyrinha#yby
+sudo nixos-rebuild switch --flake github:zoedsoupe/zoeyrinha#yby
 
 # tailnet
 sudo headscale users create zoey
