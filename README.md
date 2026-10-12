@@ -252,32 +252,6 @@ sudo install -m600 /dev/null /etc/phoenix/pitaco.env
 ines (Cassets) is not wired yet: it holds real data on fly (sqlite + uploads)
 and needs its own domain before it can move.
 
-#### App deploys (`selfDeploy`)
-
-Apps build and ship their own release (`packages.default`), so the host pins a
-revision, not a dependency hash. A timer re-locks the app input in a checkout of
-this repo and rebuilds, closing the loop:
-
-```nix
-selfDeploy = {
-  enable = true;
-  flake = "/var/lib/zoeyrinha";
-  inputs = ["zoeyrinha-web"];
-};
-```
-
-One-time, on the host:
-
-```sh
-sudo git clone https://github.com/zoedsoupe/zoeyrinha /var/lib/zoeyrinha
-```
-
-Then a push to an app's `main` reaches yby within the hour: the timer runs
-`nix flake update <input>` in that checkout and switches only when the applied
-lock moved. Host changes stay manual: pull the checkout and rebuild yourself, so
-a bad commit in this repo can never roll the whole host on its own. Leaving
-`inputs` empty re-locks every input, the nuclear option.
-
 #### Migrating quintal off fly
 
 quintal's only state is Postgres (no RLS, plain dump/restore). Dump, restore
