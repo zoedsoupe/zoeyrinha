@@ -817,11 +817,11 @@
         "zig-overlay": "zig-overlay_2"
       },
       "locked": {
-        "lastModified": 1791923985,
-        "narHash": "sha256-GMrLBxXa6L7wRAOOxde2ppCZ7IuQxvHxzW9BwZYzDdo=",
+        "lastModified": 1791975161,
+        "narHash": "sha256-hDHl8vZVUzorqPx7jTEfZg/irlnJDTxgKX7uC/01VNU=",
         "owner": "zeeetech",
         "repo": "pesque",
-        "rev": "a788cdf6b310bac99d803a35ccaddbd2fcc13853",
+        "rev": "159d022ba13798081030fe78931bb19e4fc63659",
         "type": "github"
       },
       "original": {
