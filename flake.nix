@@ -26,6 +26,7 @@
       url = "github:zeeetech/pesque";
       inputs.nixpkgs.follows = "nixos";
       inputs.elixir-overlay.follows = "elixir-overlay";
+      inputs.zig-overlay.inputs.nixpkgs.follows = "nixos";
     };
 
     # taina ships its native module (services.taina) the same way

@@ -243,6 +243,22 @@
     "flake-compat": {
       "flake": false,
       "locked": {
+        "lastModified": 1696426674,
+        "narHash": "sha256-kvjfFW7WAETZlt09AgDn1MrtKzP7t90Vf7vypd3OL1U=",
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "rev": "0f9255e01c2351cc7d116c072cb317785dd33b33",
+        "type": "github"
+      },
+      "original": {
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "type": "github"
+      }
+    },
+    "flake-compat_2": {
+      "flake": false,
+      "locked": {
         "lastModified": 1751685974,
         "narHash": "sha256-NKw96t+BgHIYzHUjkTK95FqYRVKB8DHpVhefWSz/kTw=",
         "rev": "549f2762aebeff29a2e5ece7a7dc0f955281a1d1",
@@ -328,7 +344,7 @@
     },
     "flake-utils_2": {
       "inputs": {
-        "systems": "systems_2"
+        "systems": "systems_3"
       },
       "locked": {
         "lastModified": 1731533236,
@@ -721,11 +737,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1791739434,
-        "narHash": "sha256-jsV+D5BxJ0AJ9MlEbp60UztZ44gPnf0K3PxS87jtONY=",
+        "lastModified": 1791767933,
+        "narHash": "sha256-ifEx3uL3QjVornrVrSSO8I5dzhWx5L0w8upbNysQbnw=",
         "owner": "noctalia-dev",
         "repo": "noctalia-shell",
-        "rev": "93a1b3dbdadb86a08f36cc4f34266fd7e1acfe63",
+        "rev": "8504aff8aab007a5f72fe634fb84fbba56418df7",
         "type": "github"
       },
       "original": {
@@ -757,14 +773,15 @@
         ],
         "nixpkgs": [
           "nixos"
-        ]
+        ],
+        "zig-overlay": "zig-overlay"
       },
       "locked": {
-        "lastModified": 1791727307,
-        "narHash": "sha256-9oaZ59g7xUs80BBa01GrT8WQlo81utUy/NrAoOyVENU=",
+        "lastModified": 1791770990,
+        "narHash": "sha256-ghgVXEAdIOGshxRSDSBQFsB+NRp6iA1LJyuk09PBkyY=",
         "owner": "zeeetech",
         "repo": "pesque",
-        "rev": "cbbb18855a82c9ef5213c93cea0013ccbcdabcab",
+        "rev": "798ddce36f255b7f7d33c5e68a7232200a0007c8",
         "type": "github"
       },
       "original": {
@@ -973,6 +990,7 @@
       }
     },
     "systems_2": {
+      "flake": false,
       "locked": {
         "lastModified": 1681028828,
         "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
@@ -988,6 +1006,21 @@
       }
     },
     "systems_3": {
+      "locked": {
+        "lastModified": 1681028828,
+        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
+        "owner": "nix-systems",
+        "repo": "default",
+        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-systems",
+        "repo": "default",
+        "type": "github"
+      }
+    },
+    "systems_4": {
       "locked": {
         "lastModified": 1681028828,
         "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
@@ -1043,7 +1076,7 @@
         "actor-typeahead-src": "actor-typeahead-src",
         "fenix": "fenix",
         "fetch-tangled": "fetch-tangled",
-        "flake-compat": "flake-compat",
+        "flake-compat": "flake-compat_2",
         "gomod2nix": "gomod2nix",
         "hls-src": "hls-src",
         "htmx-src": "htmx-src",
@@ -1129,13 +1162,35 @@
         "type": "github"
       }
     },
+    "zig-overlay": {
+      "inputs": {
+        "flake-compat": "flake-compat",
+        "nixpkgs": [
+          "nixos"
+        ],
+        "systems": "systems_2"
+      },
+      "locked": {
+        "lastModified": 1791635236,
+        "narHash": "sha256-AnEn78XeUUzBKISAhdyD462id4QP7gkn3kbIi9ZB9Pw=",
+        "owner": "mitchellh",
+        "repo": "zig-overlay",
+        "rev": "f0acd78ef01f2d5e3471cc01b08022ab4e665898",
+        "type": "github"
+      },
+      "original": {
+        "owner": "mitchellh",
+        "repo": "zig-overlay",
+        "type": "github"
+      }
+    },
     "zoeyrinha-web": {
       "inputs": {
         "flake-parts": "flake-parts_3",
         "nixpkgs": [
           "nixos"
         ],
-        "systems": "systems_3"
+        "systems": "systems_4"
       },
       "locked": {
         "lastModified": 1791661458,
