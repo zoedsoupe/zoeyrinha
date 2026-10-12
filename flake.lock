@@ -777,11 +777,11 @@
         "zig-overlay": "zig-overlay"
       },
       "locked": {
-        "lastModified": 1791809675,
-        "narHash": "sha256-K5YYt9I03/1KHD9hGS1DTnabiyeOU/Ap+hYmDKmYO7Q=",
+        "lastModified": 1791813657,
+        "narHash": "sha256-drsQuXXs8R/6wx1Qe4ttl1MLPxg2xi3OqJeJQ66LVUU=",
         "owner": "zeeetech",
         "repo": "pesque",
-        "rev": "d5ef06a12cde58087035b32d16e8ad9e898f6a13",
+        "rev": "4c4638d4ed26c1d26b6075bdbe21847f0cd6273b",
         "type": "github"
       },
       "original": {
