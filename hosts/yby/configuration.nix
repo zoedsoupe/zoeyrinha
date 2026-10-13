@@ -186,15 +186,15 @@ in {
     };
   };
 
-  # taina, the community private-cloud server: tailnet-only. createLocally
-  # reuses the shared postgres cluster (bootstraps the taina_app role)
+  # taina, the community private-cloud server: tailnet-only. the sqlite db
+  # lives on the sda pool; blobs and backups stay on their own datasets.
   services.taina = {
     enable = true;
     hostname = "taina.yby";
     port = 4014;
     urlScheme = "http";
     urlPort = 80;
-    database.createLocally = true;
+    dataDir = "/zdata/taina";
     storageDir = "/zdata/ybira";
     backupDir = "/zdata/backups";
   };
@@ -209,7 +209,8 @@ in {
     "zroot/anytype" = "/var/lib/anytype";
     # pitaco's sqlite db lives here, not on the nvme
     "zdata/pitaco" = "/zdata/pitaco";
-    # taina: ybira blob storage and nhaman backups
+    # taina: sqlite db, ybira blob storage and nhaman backups
+    "zdata/taina" = "/zdata/taina";
     "zdata/ybira" = "/zdata/ybira";
     "zdata/backups" = "/zdata/backups";
     # tangled knot: repos + sealed signing keys

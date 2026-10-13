@@ -36,6 +36,16 @@
       inputs.elixir-overlay.follows = "elixir-overlay";
     };
 
+    # oka ships the taina NixOS module (services.taina) and the operator CLI.
+    # The module moved here from the taina repo; the release still comes from
+    # the taina input above.
+    oka = {
+      url = "github:taina-labs/oka";
+      inputs.nixpkgs.follows = "nixos";
+      inputs.taina.follows = "taina";
+      inputs.zig-overlay.inputs.nixpkgs.follows = "nixos";
+    };
+
     # tangled ships the knot-rs NixOS module (services.tangled.knot-rs), so the
     # knot runs native like pesque and taina, not the docker image. pinned by DID
     # (the repo's stable identity) rather than its handle.

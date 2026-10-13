@@ -169,8 +169,8 @@ in {
         ../modules/nixos/services
         # pesque's upstream module (services.pesque), gated by its own enable
         inputs.pesque.nixosModules.pesque
-        # taina's upstream module (services.taina), same shape
-        inputs.taina.nixosModules.taina
+        # taina's module (services.taina) now ships from oka, same shape
+        inputs.oka.nixosModules.taina
         # tangled's knot-rs module (services.tangled.knot-rs), same shape
         inputs.tangled.nixosModules.knot-rs
         home-manager.nixosModules.home-manager
