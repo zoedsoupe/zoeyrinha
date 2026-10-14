@@ -69,6 +69,22 @@ in {
     dataDir = "/zdata/pesque";
   };
 
+  # Refuse to start when /zdata/pesque is not the zdata/pesque dataset's mount.
+  # A dataset that mounts before its pool root ends up shadowed by it: the path
+  # resolves into the pool root's own directory and the server would initialize
+  # an empty database and key set there (it did, once). Fail the start instead,
+  # so the doctor reports it and nothing is written.
+  systemd.services.pesque.serviceConfig.ExecStartPre =
+    pkgs.writeShellScript "pesque-mount-guard" ''
+      set -eu
+      if ! ${pkgs.util-linux}/bin/findmnt -R /zdata -n -o TARGET | ${pkgs.gnugrep}/bin/grep -q '/zdata/pesque'; then
+        echo "pesque: /zdata/pesque is not the zdata/pesque dataset mount" >&2
+        echo "        (orphaned or shadowed); refusing to start rather than" >&2
+        echo "        initializing an empty data directory." >&2
+        exit 1
+      fi
+    '';
+
   # self-hosted tangled knot: a git server whose auth layer is the atproto
   # social graph. state (repos + sealed keys) on the sda pool for zfs
   # snapshots, which the vps has none of. yby has no inbound path, so caddy on
