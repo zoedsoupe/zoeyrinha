@@ -110,7 +110,7 @@ in {
   # one Postgres for the whole host; each service gets a database and a role in
   # this cluster, never its own instance. taina lands here later.
   postgres = {
-    enable = true;
+    enable = false;
     databases = ["quintal"];
     users = [
       {
