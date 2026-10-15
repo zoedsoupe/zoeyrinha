@@ -184,11 +184,11 @@
         "nixpkgs": "nixpkgs_3"
       },
       "locked": {
-        "lastModified": 1791929249,
-        "narHash": "sha256-tuKxigzw1ACUStB2cD/9+YYTuvvoJ1CBxIgaTOeIqso=",
+        "lastModified": 1792087467,
+        "narHash": "sha256-ncCRLF59be+Tvfp+/BtYzLZgqBEL2ebOOQBRJuHmabo=",
         "owner": "elixir-lang",
         "repo": "expert",
-        "rev": "e2874ca36f3bcf28e3cb67ab952eecb2196c5935",
+        "rev": "73b0d1ed669fba0b6aec1b7d0182c31a1cb325e9",
         "type": "github"
       },
       "original": {
@@ -511,14 +511,14 @@
     "ibm-plex-mono-src": {
       "flake": false,
       "locked": {
-        "lastModified": 1731402384,
+        "lastModified": 1731402378,
         "narHash": "sha256-OwUmrPfEehLDz0fl2ChYLK8FQM2p0G1+EMrGsYEq+6g=",
         "type": "tarball",
-        "url": "https://github.com/IBM/plex/releases/download/@ibm%2Fplex-mono@1.1.0/ibm-plex-mono.zip"
+        "url": "https://github.com/IBM/plex/releases/download/@ibm/plex-mono@1.1.0/ibm-plex-mono.zip"
       },
       "original": {
         "type": "tarball",
-        "url": "https://github.com/IBM/plex/releases/download/@ibm%2Fplex-mono@1.1.0/ibm-plex-mono.zip"
+        "url": "https://github.com/IBM/plex/releases/download/@ibm/plex-mono@1.1.0/ibm-plex-mono.zip"
       }
     },
     "indigo": {
@@ -611,11 +611,12 @@
     },
     "nixos": {
       "locked": {
-        "lastModified": 1791765022,
-        "narHash": "sha256-TnALPKp8o/dtUYgE243iQMbRP4183ZPhWu33FD05k/4=",
-        "rev": "7993f34ee47e28a3d607a525aadc6c94b73be728",
-        "type": "tarball",
-        "url": "https://releases.nixos.org/nixos/26.05/nixos-26.05.11767.7993f34ee47e/nixexprs.tar.zst"
+        "lastModified": 1791883866,
+        "narHash": "sha256-yvkDdToRZ4IgPc9tSBzzCYJvTLf8n5eE3rgUkpCuD5A=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "a033e66ab94a6bedf2c3d58d93a36319d3cbbbaf",
+        "type": "github"
       },
       "original": {
         "id": "nixpkgs",
@@ -718,11 +719,12 @@
     },
     "nixpkgs_4": {
       "locked": {
-        "lastModified": 1791678325,
-        "narHash": "sha256-BAN6lLJUJ2vsa4xMf2df2HvP6YnNPxobqMaG+NEif2Y=",
-        "rev": "240fddad86d7a0520319f21d8be1b43db426b18d",
-        "type": "tarball",
-        "url": "https://releases.nixos.org/nixpkgs/26.05-darwin/nixpkgs-darwin-26.05pre1015999.240fddad86d7/nixexprs.tar.zst"
+        "lastModified": 1792052774,
+        "narHash": "sha256-E7Hc6xMjd2onLR6KEwaGJHaFlbhE2J+R0ikHzBo0Xis=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "7529d323f8f9926b38df356da2483c2a4e759d00",
+        "type": "github"
       },
       "original": {
         "id": "nixpkgs",
@@ -753,11 +755,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1791964679,
-        "narHash": "sha256-/Uuhh7uZvcNQYeZmuFjErs9GmDXvsspgIRZacSC+ywk=",
+        "lastModified": 1792102333,
+        "narHash": "sha256-rw90dqK3s2F1ioSawECZpdszoOPWe9fCymP4uHnxmj0=",
         "owner": "noctalia-dev",
         "repo": "noctalia-shell",
-        "rev": "488660a7994b51069b6542f070d5c433c66b5629",
+        "rev": "78419cb996aa552a39136c380aeae9239e321444",
         "type": "github"
       },
       "original": {
@@ -817,11 +819,11 @@
         "zig-overlay": "zig-overlay_2"
       },
       "locked": {
-        "lastModified": 1791975161,
-        "narHash": "sha256-hDHl8vZVUzorqPx7jTEfZg/irlnJDTxgKX7uC/01VNU=",
+        "lastModified": 1792102911,
+        "narHash": "sha256-5y/P9x9FauMltNIGDBeS8ymHU6nhOWaWcCllez3JAZg=",
         "owner": "zeeetech",
         "repo": "pesque",
-        "rev": "159d022ba13798081030fe78931bb19e4fc63659",
+        "rev": "b55ed93cc52c4bf0be826217269357c9220bce04",
         "type": "github"
       },
       "original": {
@@ -936,11 +938,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1791962566,
-        "narHash": "sha256-rEB0dvSZw1niBVJvt0AiWygNS/OMdA81lquTzLIWuvo=",
+        "lastModified": 1792087235,
+        "narHash": "sha256-vQHkG9lwSHJI3MVnyilP50hWW3TNnBWFTbLIurWgPhI=",
         "owner": "oxalica",
         "repo": "rust-overlay",
-        "rev": "8111d2b45adcbaeaff037f996643f1ac43f944e6",
+        "rev": "87ffb7f777aef2e2647fd8fd718a5b3cbc825588",
         "type": "github"
       },
       "original": {
@@ -1115,11 +1117,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1791976368,
-        "narHash": "sha256-Yq6xPdGUFF5l4lfeAxDsVRhPaZQUZjSy/bZ5pw2htXI=",
+        "lastModified": 1792103354,
+        "narHash": "sha256-3TzdyrFk4nBbtZckWc1GHpxdljLWiVfKfGaiwGpnKTI=",
         "owner": "taina-labs",
         "repo": "taina",
-        "rev": "75d9765525a7248ca6298420db87c6a6d5a45b93",
+        "rev": "92c7f6eec39c3f003b752bdeff0a69f6276b8444",
         "type": "github"
       },
       "original": {
@@ -1167,11 +1169,12 @@
     },
     "unstable": {
       "locked": {
-        "lastModified": 1791487292,
-        "narHash": "sha256-6BIvCXtdLW4HQwsOGkgH444aB3vCbHypE9TA78ireh8=",
-        "rev": "8edc0c72e3a38faf5434e40d1f19431125fe4b30",
-        "type": "tarball",
-        "url": "https://releases.nixos.org/nixpkgs/nixpkgs-26.11pre1088030.8edc0c72e3a3/nixexprs.tar.zst"
+        "lastModified": 1791966044,
+        "narHash": "sha256-t1hT8UW97rFCWCJO7/pClvu0AhLN5V3uir2M0ic4w/Q=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "319e4cebef10cbb636c6ea392137b52ad105336a",
+        "type": "github"
       },
       "original": {
         "id": "nixpkgs",
