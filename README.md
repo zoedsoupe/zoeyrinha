@@ -273,14 +273,31 @@ fly's values, or every OAuth session is invalidated on cutover. Then point
 
 ### taina (`services.taina`)
 
-The community private-cloud server runs natively from the taina flake's own
-module, tailnet-only behind caddy at `http://taina.yby` (plain http: the tailnet
-is already wireguard-encrypted). `database.createLocally` reuses the shared
-postgres cluster: it enables it, ensures the `taina` database, and bootstraps
-the `taina_app` role through the release's own task. A first-boot oneshot
-generates `/var/lib/taina/taina.env` (session key + db password, mode 0600).
-Ybira storage and Nhaman backups live on the sda pool (`/zdata/ybira`,
-`/zdata/backups`).
+The community private-cloud server runs natively from oka's module
+(`services.taina`), tailnet-only behind caddy at `http://taina.yby` (plain http:
+the tailnet is already wireguard-encrypted). State is SQLite plus blob storage,
+all on the sda pool: the db in `/zdata/taina`, Ybira uploads in `/zdata/ybira`,
+Nhaman backups in `/zdata/backups`, each its own dataset so it inherits
+`autoSnapshot` + `autoScrub`. Scheduled backups are on (`backup.enable = true`).
+
+The session signing key is the only secret, and it lives outside the data
+dataset in a root-owned env file, like knot's and the phoenix apps':
+
+| service | file | required |
+|---|---|---|
+| taina | `/etc/taina/taina.env` | `SECRET_KEY_BASE` |
+
+```sh
+# on a running box, seed it from the auto-generated key so existing sessions
+# survive the switch (a fresh install generates one instead, see BRINGUP.md)
+sudo install -d -m700 /etc/taina
+sudo cp /zdata/taina/taina.env /etc/taina/taina.env
+sudo chmod 600 /etc/taina/taina.env
+```
+
+Setting `environmentFile` disables the module's first-boot generator, so the unit
+fails to start if the file is missing. The community itself is created on first
+visit (the setup wizard), never in config.
 
 ### anytype (`anytype`)
 

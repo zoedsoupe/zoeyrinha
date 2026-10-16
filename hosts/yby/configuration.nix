@@ -203,7 +203,9 @@ in {
   };
 
   # taina, the community private-cloud server: tailnet-only. the sqlite db
-  # lives on the sda pool; blobs and backups stay on their own datasets.
+  # lives on the sda pool; blobs and backups stay on their own datasets. the
+  # session key lives outside the data dataset, in a root-owned env file like
+  # knot's and the phoenix apps' secrets (/etc/taina/taina.env, see README).
   services.taina = {
     enable = true;
     hostname = "taina.yby";
@@ -213,6 +215,8 @@ in {
     dataDir = "/zdata/taina";
     storageDir = "/zdata/ybira";
     backupDir = "/zdata/backups";
+    environmentFile = "/etc/taina/taina.env";
+    backup.enable = true;
   };
 
   # warn before the sda data disk (spinning rust) dies; smartctl for manual checks
