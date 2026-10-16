@@ -195,10 +195,18 @@ ssh key published on a member's PDS. Membership is `settings.acl.admission =
 
 ## 7. Taina
 
-Nothing manual for the secret: a first-boot oneshot generates
-`/var/lib/taina/taina.env` (session key + db password, mode 0600). Reach the UI
-on the tailnet at `http://taina.yby` and create the community there. It's plain
-http on purpose: the tailnet is already WireGuard-encrypted.
+The session key lives in a root-owned env file, never in the store (on yby):
+
+```sh
+sudo install -d -m700 /etc/taina
+printf 'SECRET_KEY_BASE=%s\n' "$(openssl rand -base64 48)" \
+  | sudo tee /etc/taina/taina.env > /dev/null
+sudo chmod 600 /etc/taina/taina.env
+```
+
+Reach the UI on the tailnet at `http://taina.yby` and create the community there
+(the setup wizard). It's plain http on purpose: the tailnet is already
+WireGuard-encrypted.
 
 ## 8. Forgejo first admin
 
