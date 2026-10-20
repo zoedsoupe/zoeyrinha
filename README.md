@@ -122,7 +122,6 @@ zpool export zroot
 `yby` is a headless NixOS host (SSH/tailnet only). Its services are toggleable
 modules, flipped from `hosts/yby/configuration.nix`:
 
-- `anytype` - anytype self-hosted sync stack (docker)
 - `forgejo` - git forge (sqlite, LFS, daily dump)
 - `pesque` - self-hosted atproto PDS (native systemd release, from the pesque flake)
 - `knot` - self-hosted tangled knot, a git server on the atproto social graph (native module, from the tangled flake)
@@ -142,8 +141,6 @@ Service state lives on per-service ZFS datasets, declared with `zfsDatasets`:
 zfsDatasets = {
   "zroot/forgejo" = "/var/lib/forgejo";
   "zdata/pesque" = "/zdata/pesque";
-  "zroot/anytype" = "/var/lib/anytype";
-  "zdata/anytype" = "/zdata/anytype";
   "zdata/pitaco" = "/zdata/pitaco";
   "zdata/knot" = "/zdata/knot";
 };
@@ -298,44 +295,6 @@ sudo chmod 600 /etc/taina/taina.env
 Setting `environmentFile` disables the module's first-boot generator, so the unit
 fails to start if the file is missing. The community itself is created on first
 visit (the setup wizard), never in config.
-
-### anytype (`anytype`)
-
-anytype has no nixpkgs module (the stack is ~5 Go services plus mongo, redis and
-Garage), so this wraps the upstream
-[`any-sync-dockercompose`](https://github.com/anyproto/any-sync-dockercompose)
-stack in a systemd oneshot. `anytype.enable = true` brings in `docker` and the
-unit; the compose file itself is cloned on the host, never vendored.
-
-One-time setup, on the host:
-
-```sh
-sudo git clone https://github.com/anyproto/any-sync-dockercompose /var/lib/anytype
-cd /var/lib/anytype
-sudo cp .env.example .env
-# publish the sync node on yby's tailnet IP so remote clients can reach it and
-# keep bulk state off the nvme: point STORAGE_DIR straight at the zdata dataset
-# (compose bind-mounts it and will not mkdir an absolute path for you)
-sudo $EDITOR .env   # EXTERNAL_LISTEN_HOSTS="<yby tailnet IP>", STORAGE_DIR=/zdata/anytype
-sudo make start     # generates ./etc/, starts every service
-```
-
-Note: the compose file uses bind mounts, not named volumes. `./etc` (config)
-stays on `zroot/anytype`, while `${STORAGE_DIR}` (mongo, redis, garage blobs,
-`anyStorage`, `networkStore`) lands wherever you point it. If that path is not a
-real mount, docker silently writes to `zroot/root`; verify with
-`findmnt /zdata/anytype` before `make start`.
-
-Clients connect to the sync node directly on TCP 33010-33030, opened on
-`tailscale0` only (no vhost, no public ingress). Upload `./etc/client.yml` to the
-Anytype app to switch it onto this network.
-
-The unit is gated on `/var/lib/anytype/docker-compose.yml`
-(`ConditionPathExists`), so it stays inert until the clone above exists. After
-that it starts with the rest of `multi-user.target` on every boot.
-
-MongoDB 5+ needs AVX. On a CPU without it (check `grep -q avx /proc/cpuinfo`),
-pin `mongo:4.4` in a `docker-compose.override.yml`.
 
 ### Monitoring (`glances`, `uptime-kuma`)
 

@@ -244,20 +244,6 @@ cloudflared tunnel route dns yby paintbox.zeetech.io
 `route dns` creates the proxied CNAMEs Cloudflare terminates TLS on. Origins are
 loopback (`http://localhost:401x`).
 
-## 10. (optional) anytype
-
-Enabled on yby, inert until its compose file exists (the unit is gated on
-`/var/lib/anytype/docker-compose.yml`):
-
-```sh
-sudo git clone https://github.com/anyproto/any-sync-dockercompose /var/lib/anytype
-cd /var/lib/anytype
-sudo cp .env.example .env
-# EXTERNAL_LISTEN_HOSTS="<yby tailnet ip>", STORAGE_DIR=/zdata/anytype
-sudo -e .env
-sudo make start
-```
-
 ---
 
 ## Cheat sheet

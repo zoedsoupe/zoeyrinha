@@ -2,7 +2,6 @@
 # behind its own `enable` option
 {...}: {
   imports = [
-    ./anytype.nix
     ./caddy.nix
     ./cloudflared.nix
     ./forgejo.nix

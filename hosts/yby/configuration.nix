@@ -48,8 +48,6 @@ in {
   niri.enable = false;
   nextcloud.enable = false;
 
-  anytype.enable = true;
-
   # git forge: source of truth on the tailnet
   forgejo.enable = true;
 
@@ -74,16 +72,15 @@ in {
   # resolves into the pool root's own directory and the server would initialize
   # an empty database and key set there (it did, once). Fail the start instead,
   # so the doctor reports it and nothing is written.
-  systemd.services.pesque.serviceConfig.ExecStartPre =
-    pkgs.writeShellScript "pesque-mount-guard" ''
-      set -eu
-      if ! ${pkgs.util-linux}/bin/findmnt -R /zdata -n -o TARGET | ${pkgs.gnugrep}/bin/grep -q '/zdata/pesque'; then
-        echo "pesque: /zdata/pesque is not the zdata/pesque dataset mount" >&2
-        echo "        (orphaned or shadowed); refusing to start rather than" >&2
-        echo "        initializing an empty data directory." >&2
-        exit 1
-      fi
-    '';
+  systemd.services.pesque.serviceConfig.ExecStartPre = pkgs.writeShellScript "pesque-mount-guard" ''
+    set -eu
+    if ! ${pkgs.util-linux}/bin/findmnt -R /zdata -n -o TARGET | ${pkgs.gnugrep}/bin/grep -q '/zdata/pesque'; then
+      echo "pesque: /zdata/pesque is not the zdata/pesque dataset mount" >&2
+      echo "        (orphaned or shadowed); refusing to start rather than" >&2
+      echo "        initializing an empty data directory." >&2
+      exit 1
+    fi
+  '';
 
   # self-hosted tangled knot: a git server whose auth layer is the atproto
   # social graph. state (repos + sealed keys) on the sda pool for zfs
@@ -226,7 +223,6 @@ in {
   zfsDatasets = {
     "zroot/forgejo" = "/var/lib/forgejo";
     "zdata/pesque" = "/zdata/pesque";
-    "zroot/anytype" = "/var/lib/anytype";
     # pitaco's sqlite db lives here, not on the nvme
     "zdata/pitaco" = "/zdata/pitaco";
     # taina: sqlite db, ybira blob storage and nhaman backups
@@ -235,9 +231,6 @@ in {
     "zdata/backups" = "/zdata/backups";
     # tangled knot: repos + sealed signing keys
     "zdata/knot" = "/zdata/knot";
-    # bulk anytype state (mongo, redis, garage blobs, networkStore) sits here on
-    # the sda pool; /var/lib/anytype/.env sets STORAGE_DIR=/zdata/anytype
-    "zdata/anytype" = "/zdata/anytype";
   };
 
   # tailnet-facing reverse proxy

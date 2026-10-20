@@ -23,7 +23,7 @@ The repository uses Nix flakes with modular architecture:
   - `default.nix`: Single lib file. Exports `make-pkgs`, `mkDarwin` (macOS), `mkHost` (NixOS), `mkISO` (optional `host` for a per-host installer)
 - **hosts/**: Per-machine configurations
   - Each host has: `configuration.nix`, `custom.nix`, `home.nix` (NixOS hosts also `hardware-configuration.nix`)
-  - `personal-mac` (darwin), `yby` (NixOS homelab: headless over SSH, ZFS, anytype), `eveo` (NixOS VPS: headscale; maddy smtp off for now)
+  - `personal-mac` (darwin), `yby` (NixOS homelab: headless over SSH, ZFS), `eveo` (NixOS VPS: headscale; maddy smtp off for now)
 - **modules/**: Reusable configuration modules
   - `users/`: User-specific program configurations (home-manager)
   - `nixos/`: NixOS system modules (`common.nix`, `niri.nix`, `noctalia.nix` (home-manager), `services/`)
