@@ -242,9 +242,7 @@ in {
     "zdata/taina" = "/zdata/taina";
     "zdata/ybira" = "/zdata/ybira";
     "zdata/backups" = "/zdata/backups";
-    # tangled knot: repos + sealed signing keys
     "zdata/knot" = "/zdata/knot";
-    # docker's storage root (data-root above)
     "zdata/docker" = "/zdata/docker";
   };
 

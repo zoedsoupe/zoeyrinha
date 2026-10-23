@@ -49,6 +49,9 @@ in {
   # tailnet's records, so eveo itself can resolve *.yby and *.eveo (the gatus
   # checks use the names, not raw tailnet ips)
   networking.nameservers = ["127.0.0.1" "1.1.1.1" "2606:4700:4700::1111"];
+  # useNetworkd pulls in systemd-resolved (mkDefault), and it hogs :53, which
+  # adguard needs to own as the tailnet resolver. drop it: adguard owns DNS here.
+  services.resolved.enable = false;
   systemd.network = {
     enable = true;
     networks."10-eveo" = {
