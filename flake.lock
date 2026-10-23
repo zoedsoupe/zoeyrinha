@@ -779,11 +779,11 @@
         "zig-overlay": "zig-overlay"
       },
       "locked": {
-        "lastModified": 1792110401,
-        "narHash": "sha256-bqXqfX7sO4xTnznbJgiaBVG7dyxYsIk8BECTFhJj5f0=",
+        "lastModified": 1792729068,
+        "narHash": "sha256-MmIxbZ5Ovg9Khq1+5szeLlh+Qv256yOxgBmS9So2zYI=",
         "owner": "taina-labs",
         "repo": "oka",
-        "rev": "bea0e784579a2691dc64420cb7bcb1e270b929fc",
+        "rev": "eed27e724c5b30515013f8f1d837960ddc620429",
         "type": "github"
       },
       "original": {
@@ -1117,11 +1117,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1792110342,
-        "narHash": "sha256-MObMvZx0zUU9+JBgHM1NT/jXuPhMlU3O2tiaj3IY6Hg=",
+        "lastModified": 1792729023,
+        "narHash": "sha256-T3w0NR/UbVDIaSG9lj4Z57fAZrIvgZ6vv0CtMGzu/ro=",
         "owner": "taina-labs",
         "repo": "taina",
-        "rev": "d883518edea5c4126be3f26b3c3551249e2a118d",
+        "rev": "2f718aa3b8d8c38477d0369f751e0f5d4b2b74ee",
         "type": "github"
       },
       "original": {
