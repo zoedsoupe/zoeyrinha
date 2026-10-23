@@ -112,14 +112,11 @@ cloudflared tunnel route dns yby paintbox.zeetech.io
 ```sh
 # gatus email (icloud app-specific password)
 sudo install -d -m 750 /etc/gatus
-printf 'GATUS_SMTP_PASSWORD=%s\n' '<app-specific-password>' \
+printf 'GATUS_SMTP_PASSWORD=%s\n' '<app-password>' \
   | sudo tee /etc/gatus/gatus.env > /dev/null
 sudo chmod 600 /etc/gatus/gatus.env
 
-# grafana
-sudo install -d -m 750 /etc/grafana
+# grafana: files are created by tmpfiles owned by the grafana user; fill them once
 printf '%s\n' "$(openssl rand -base64 18)" | sudo tee /etc/grafana/admin-password > /dev/null
 printf '%s\n' "$(openssl rand -hex 32)"    | sudo tee /etc/grafana/secret-key > /dev/null
-sudo chown grafana:grafana /etc/grafana/admin-password /etc/grafana/secret-key
-sudo chmod 600 /etc/grafana/admin-password /etc/grafana/secret-key
 ```

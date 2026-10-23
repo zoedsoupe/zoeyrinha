@@ -2,16 +2,13 @@
 # loki is provisioned as the default datasource so the UI is useful on first
 # login, no manual setup.
 #
-# the admin password and secret_key never enter the store: grafana reads both
-# from files with its file provider. create them once, readable by the grafana
-# user:
-#   sudo install -d -m 750 /etc/grafana
+# the admin password and secret_key use grafana's file provider, and the files
+# are created by tmpfiles already owned by the grafana user (a static user, so
+# tmpfiles runs after sysusers). fill them once, as root, after a rebuild:
 #   printf '%s\n' "$(openssl rand -base64 18)" \
 #     | sudo tee /etc/grafana/admin-password > /dev/null
 #   printf '%s\n' "$(openssl rand -hex 32)" \
 #     | sudo tee /etc/grafana/secret-key > /dev/null
-#   sudo chown grafana:grafana /etc/grafana/admin-password /etc/grafana/secret-key
-#   sudo chmod 600 /etc/grafana/admin-password /etc/grafana/secret-key
 {
   config,
   lib,
@@ -38,13 +35,13 @@ in {
     adminPasswordFile = mkOption {
       type = types.path;
       default = "/etc/grafana/admin-password";
-      description = "File holding the admin password, readable by the grafana user.";
+      description = "File holding the admin password, owned by the grafana user (tmpfiles).";
     };
 
     secretKeyFile = mkOption {
       type = types.path;
       default = "/etc/grafana/secret-key";
-      description = "File holding Grafana's secret_key (encrypts datasource secrets), readable by the grafana user.";
+      description = "File holding Grafana's secret_key (encrypts datasource secrets), owned by the grafana user.";
     };
   };
 
@@ -57,8 +54,7 @@ in {
           http_addr = "127.0.0.1";
           http_port = cfg.port;
         };
-        # grafana has no default secret_key, and both it and the admin password
-        # go through the file provider to stay out of the nix store
+        # the file provider keeps both secrets out of the nix store
         security = {
           admin_password = "$__file{${cfg.adminPasswordFile}}";
           secret_key = "$__file{${cfg.secretKeyFile}}";
@@ -78,5 +74,13 @@ in {
         ];
       };
     };
+
+    # own the files up front so no chown is needed; the grafana user is static
+    # and tmpfiles runs after sysusers, so this works before first start
+    systemd.tmpfiles.rules = [
+      "d /etc/grafana 0750 root grafana -"
+      "f ${cfg.adminPasswordFile} 0600 grafana grafana -"
+      "f ${cfg.secretKeyFile} 0600 grafana grafana -"
+    ];
   };
 }
