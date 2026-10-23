@@ -37,6 +37,20 @@ in {
   # which on 8GB with mongodb running is an OOM waiting to happen
   boot.kernelParams = ["zfs.zfs_arc_max=2147483648"];
 
+  # kexec a crash kernel at boot and force a panic on hard/soft lockups, so a
+  # freeze lands in a dump-capture kernel with /proc/vmcore instead of hanging
+  # dark. only fires on panics/lockups, never on a clean poweroff, and the
+  # capture kernel drops to systemd rescue, so pulling the dump needs console.
+  boot.crashDump = {
+    enable = true;
+    reservedMemory = "256M";
+  };
+
+  # headless: a phantom/shorted front-panel power switch must not take the host
+  # down. a short press now does nothing (a >5s firmware hold still cuts power),
+  # so shut down deliberately with `sudo poweroff` instead.
+  services.logind.settings.Login.HandlePowerKey = "ignore";
+
   services.zfs.autoScrub.enable = true;
   services.zfs.autoSnapshot.enable = true;
 
