@@ -26,6 +26,12 @@ in {
       };
       description = "Tailnet-only reverse proxies: domain -> upstream address.";
     };
+
+    accessLog = mkOption {
+      type = types.bool;
+      default = true;
+      description = "Emit access logs on every site. They land in the journal, where alloy ships them.";
+    };
   };
 
   config = mkIf cfg.enable {
@@ -34,7 +40,10 @@ in {
       # the http:// scheme keeps caddy off ACME for tailnet-only domains
       virtualHosts = lib.mapAttrs' (domain: upstream:
         lib.nameValuePair "http://${domain}" {
-          extraConfig = "reverse_proxy ${upstream}";
+          extraConfig = ''
+            ${lib.optionalString cfg.accessLog "log"}
+            reverse_proxy ${upstream}
+          '';
         })
       cfg.apps;
     };

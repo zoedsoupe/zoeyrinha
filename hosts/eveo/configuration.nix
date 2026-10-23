@@ -9,6 +9,27 @@
   # it directly (accept-dns is off on this host, so magic dns names don't
   # resolve here).
   ybyTailnetIp = "100.64.0.2";
+
+  # eveo's own tailnet ip. adguard answers DNS here and the dashboards resolve
+  # to it.
+  eveoTailnetIp = "100.64.0.1";
+
+  # caddy here is the public one (tls for headscale and the pds), bound to
+  # 0.0.0.0:80/443, so a tailnet-only dashboard is gated by remote ip rather
+  # than the firewall. without the gate, "Host: status.eveo" against the public
+  # ip would reach it. loopback is allowed too so gatus can check the vhosts
+  # locally. the log directive lands access logs in the journal, where alloy
+  # ships them.
+  tailnetVhost = upstream: ''
+    @tailnet remote_ip 100.64.0.0/10 fd7a:115c:a1e0::/48 127.0.0.1/32 ::1/128
+    handle @tailnet {
+      reverse_proxy ${upstream}
+    }
+    handle {
+      respond 403
+    }
+    log
+  '';
 in {
   imports = [
     inputs.disko.nixosModules.disko
@@ -24,7 +45,10 @@ in {
   networking.networkmanager.enable = false;
   networking.useDHCP = false;
   networking.useNetworkd = true;
-  networking.nameservers = ["8.8.8.8" "1.1.1.1" "2606:4700:4700::1111"];
+  # adguard (this host) answers first, then a public fallback: adguard owns the
+  # tailnet's records, so eveo itself can resolve *.yby and *.eveo (the gatus
+  # checks use the names, not raw tailnet ips)
+  networking.nameservers = ["127.0.0.1" "1.1.1.1" "2606:4700:4700::1111"];
   systemd.network = {
     enable = true;
     networks."10-eveo" = {
@@ -40,7 +64,7 @@ in {
           GatewayOnLink = true;
         }
       ];
-      dns = ["8.8.8.8" "1.1.1.1" "2606:4700:4700::1111"];
+      dns = ["127.0.0.1" "1.1.1.1" "2606:4700:4700::1111"];
     };
   };
 
@@ -126,6 +150,70 @@ in {
 
   services.fail2ban.enable = true;
 
+  # --- ops node ---
+  # gatus watches everything (its own services and yby's, over the tailnet): a
+  # monitor has to outlive what it watches, and yby is the box that goes dark.
+  # adguard is the tailnet resolver; loki + grafana collect and read logs. all
+  # of it is tailnet-only behind caddy (status/dns/logs.eveo).
+  gatus = {
+    enable = true;
+    email.to = "zoey.spessanha@icloud.com";
+    endpoints = [
+      # yby, reached over the tailnet through its caddy
+      {
+        name = "forgejo";
+        group = "yby";
+        url = "http://git.yby";
+      }
+      # public edge
+      {
+        name = "knot";
+        group = "public";
+        url = "https://knot.zeetech.io";
+      }
+      {
+        name = "headscale";
+        group = "public";
+        url = "https://hs.zeetech.io/health";
+      }
+      {
+        name = "pds";
+        group = "public";
+        url = "https://pds.zeetech.io/xrpc/_health";
+      }
+      # eveo itself
+      {
+        name = "adguard";
+        group = "eveo";
+        url = "http://dns.eveo";
+      }
+      {
+        name = "grafana";
+        group = "eveo";
+        url = "http://logs.eveo/api/health";
+      }
+      {
+        name = "loki";
+        group = "eveo";
+        url = "http://127.0.0.1:3100/ready";
+      }
+    ];
+  };
+
+  adguard.enable = true;
+  loki.enable = true;
+  grafana.enable = true;
+
+  # ship this host's journal to loki (local, so loopback)
+  alloy = {
+    enable = true;
+    lokiUrl = "http://127.0.0.1:3100";
+  };
+
+  # docker for upstream compose stacks; the journald log driver (docker.nix)
+  # puts container logs in the journal so alloy ships them too
+  docker.enable = true;
+
   # --- headscale ---
   services.headscale = {
     enable = true;
@@ -136,31 +224,15 @@ in {
       dns = {
         base_domain = "tail.zeetech.io";
         magic_dns = true;
-        nameservers.global = ["1.1.1.1" "9.9.9.9"];
+        # adguard (on this host) is the tailnet's single source of truth for
+        # records; headscale only forwards here and keeps serving the automatic
+        # magic-dns node names. 1.1.1.1 is a failover for when adguard is down.
+        nameservers.global = ["100.64.0.1" "1.1.1.1"];
+        # extra records live in adguard now, added in its web UI:
+        #   yby, git.yby, dash.yby, taina.yby   -> 100.64.0.2
+        #   status.eveo, dns.eveo, logs.eveo    -> 100.64.0.1
+        extra_records = [];
       };
-      # split-horizon: point service domains at yby's tailscale ip here, e.g.
-      dns.extra_records = [
-        {
-          name = "yby";
-          type = "A";
-          value = ybyTailnetIp;
-        }
-        {
-          name = "taina.yby";
-          type = "A";
-          value = ybyTailnetIp;
-        }
-        {
-          name = "git.yby";
-          type = "A";
-          value = ybyTailnetIp;
-        }
-        {
-          name = "dash.yby";
-          type = "A";
-          value = ybyTailnetIp;
-        }
-      ];
     };
   };
 
@@ -170,12 +242,14 @@ in {
     email = "zoey.spessanha@zeetech.io";
     virtualHosts = {
       "hs.zeetech.io".extraConfig = ''
+        log
         reverse_proxy 127.0.0.1:8080
       '';
       # the PDS runs on yby (cgnat, no inbound), so this vps terminates tls and
       # reaches it over the tailnet; caddy holds the firehose websocket up so a
       # relay can crawl it without cloudflare in between. yby's tailnet ip, not
-      # a magic dns name, since accept-dns is off above
+      # a magic dns name, since accept-dns is off above. no access log: the
+      # firehose would flood loki
       "pds.zeetech.io".extraConfig = ''
         reverse_proxy http://${ybyTailnetIp}:4000
       '';
@@ -183,8 +257,14 @@ in {
       # the tailnet, websockets (/events) included; the ssh side is relayed by
       # the socket-proxyd unit below
       "knot.zeetech.io".extraConfig = ''
+        log
         reverse_proxy http://${ybyTailnetIp}:5555
       '';
+
+      # tailnet-only dashboards, gated by remote ip (see tailnetVhost above)
+      "http://status.eveo".extraConfig = tailnetVhost "127.0.0.1:8080";
+      "http://dns.eveo".extraConfig = tailnetVhost "127.0.0.1:3000";
+      "http://logs.eveo".extraConfig = tailnetVhost "127.0.0.1:3002";
     };
   };
 

@@ -52,7 +52,20 @@ in {
   forgejo.enable = true;
 
   glances.enable = true;
-  uptime-kuma.enable = false;
+
+  # ship this host's journal (services, docker, caddy access logs) to loki on
+  # eveo
+  alloy = {
+    enable = true;
+    lokiUrl = "http://100.64.0.1:3100";
+  };
+
+  # docker for upstream compose stacks; state on the sda pool, container logs to
+  # the journal for alloy
+  docker = {
+    enable = true;
+    dataRoot = "/zdata/docker";
+  };
 
   # self-hosted atproto PDS, built from the release in the pesque flake
   services.pesque = {
@@ -231,6 +244,8 @@ in {
     "zdata/backups" = "/zdata/backups";
     # tangled knot: repos + sealed signing keys
     "zdata/knot" = "/zdata/knot";
+    # docker's storage root (data-root above)
+    "zdata/docker" = "/zdata/docker";
   };
 
   # tailnet-facing reverse proxy
