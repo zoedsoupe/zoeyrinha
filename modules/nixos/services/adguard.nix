@@ -4,7 +4,7 @@
 #
 # records and filter lists are managed in the web UI, not here: mutableSettings
 # is on, so the UI owns everything the module does not pin below. add
-#   yby, git.yby, dash.yby, taina.yby              -> 100.64.0.2
+#   yby, git.yby, dash.yby              -> 100.64.0.2
 #   status.eveo, dns.eveo, logs.eveo               -> 100.64.0.1
 # under Filters -> DNS rewrites. reach the UI at http://dns.eveo (caddy on
 # eveo, tailnet-only).

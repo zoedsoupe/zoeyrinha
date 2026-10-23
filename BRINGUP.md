@@ -34,7 +34,7 @@ sudo headscale nodes register --user zoey --key <nodekey>
 tailnet names live in adguard (`http://dns.eveo` -> Filters -> DNS rewrites), no rebuild:
 
 ```
-yby, git.yby, dash.yby, taina.yby   ->  <yby tailnet ip, 100.64.0.2 default>
+yby, git.yby, dash.yby   ->  <yby tailnet ip, 100.64.0.2 default>
 status.eveo, dns.eveo, logs.eveo    ->  100.64.0.1
 ```
 
@@ -81,8 +81,6 @@ printf 'SECRET_KEY_BASE=%s\n' "$(openssl rand -base64 48)" \
   | sudo tee /etc/taina/taina.env > /dev/null
 sudo chmod 600 /etc/taina/taina.env
 ```
-
-ui at `http://taina.yby`, create the community there (setup wizard).
 
 ## 8. forgejo admin
 

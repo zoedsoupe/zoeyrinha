@@ -117,7 +117,7 @@ in {
   };
 
   # one Postgres for the whole host; each service gets a database and a role in
-  # this cluster, never its own instance. taina lands here later.
+  # this cluster, never its own instance.
   postgres = {
     enable = false;
     databases = ["quintal"];
@@ -204,7 +204,8 @@ in {
     hostname = "solaria.taina.dev.br";
     port = 4014;
     urlScheme = "https";
-    urlPort = 80;
+    bindIp = "0.0.0.0";
+    urlPort = 443;
     dataDir = "/zdata/taina";
     storageDir = "/zdata/ybira";
     backupDir = "/zdata/backups";
@@ -235,7 +236,6 @@ in {
     apps = {
       "git.yby" = "127.0.0.1:3000";
       "dash.yby" = "127.0.0.1:61208";
-      "taina.yby" = "127.0.0.1:4014";
     };
   };
 

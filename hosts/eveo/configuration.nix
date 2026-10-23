@@ -232,7 +232,7 @@ in {
         # magic-dns node names. 1.1.1.1 is a failover for when adguard is down.
         nameservers.global = ["100.64.0.1" "1.1.1.1"];
         # extra records live in adguard now, added in its web UI:
-        #   yby, git.yby, dash.yby, taina.yby   -> 100.64.0.2
+        #   yby, git.yby, dash.yby   -> 100.64.0.2
         #   status.eveo, dns.eveo, logs.eveo    -> 100.64.0.1
         extra_records = [];
       };
