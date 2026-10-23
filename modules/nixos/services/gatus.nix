@@ -51,8 +51,8 @@ in {
 
     port = mkOption {
       type = types.port;
-      default = 8080;
-      description = "Loopback port the Gatus web UI/API listens on.";
+      default = 3001;
+      description = "Loopback port the Gatus web UI/API listens on. 8080 is headscale's on eveo.";
     };
 
     endpoints = mkOption {

@@ -262,7 +262,7 @@ in {
       '';
 
       # tailnet-only dashboards, gated by remote ip (see tailnetVhost above)
-      "http://status.eveo".extraConfig = tailnetVhost "127.0.0.1:8080";
+      "http://status.eveo".extraConfig = tailnetVhost "127.0.0.1:3001";
       "http://dns.eveo".extraConfig = tailnetVhost "127.0.0.1:3000";
       "http://logs.eveo".extraConfig = tailnetVhost "127.0.0.1:3002";
     };
