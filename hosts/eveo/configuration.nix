@@ -256,6 +256,9 @@ in {
       "pds.zeetech.io".extraConfig = ''
         reverse_proxy http://${ybyTailnetIp}:4000
       '';
+      "solaria.taina.dev.br".extraConfig = ''
+        reverse_proxy http://${ybyTailnetIp}:4014
+      '';
       # the knot also runs on yby. caddy terminates tls here and reaches it over
       # the tailnet, websockets (/events) included; the ssh side is relayed by
       # the socket-proxyd unit below
