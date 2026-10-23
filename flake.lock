@@ -819,11 +819,11 @@
         "zig-overlay": "zig-overlay_2"
       },
       "locked": {
-        "lastModified": 1792114259,
-        "narHash": "sha256-d8Yr764J1pB4+LMpOpUj7CwssEd8NI3cklWZ1RHsI+s=",
+        "lastModified": 1792791958,
+        "narHash": "sha256-Rsca4rnfRYGpwzJpSOegDfOLV2xXbtc6G96A44klbsQ=",
         "owner": "zeeetech",
         "repo": "pesque",
-        "rev": "15863458dc066fa5af1896c9345c628de69a3de1",
+        "rev": "7a615b5dae5c1f8e511e9ff6f77871dc4592c3af",
         "type": "github"
       },
       "original": {
