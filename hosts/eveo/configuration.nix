@@ -212,7 +212,7 @@ in {
 
   # docker for upstream compose stacks; the journald log driver (docker.nix)
   # puts container logs in the journal so alloy ships them too
-  docker.enable = true;
+  docker.enable = false;
 
   # --- headscale ---
   services.headscale = {
