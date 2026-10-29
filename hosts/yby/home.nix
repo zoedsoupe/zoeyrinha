@@ -1,4 +1,8 @@
-{pkgs, ...}: {
+{
+  pkgs,
+  unstable,
+  ...
+}: {
   home.stateVersion = "26.05";
   home.homeDirectory = "/home/zoedsoupe";
 
@@ -25,6 +29,9 @@
     zip
     unzip
     forgejo
+    vim
+    silver-searcher
+    unstable.opencode
     # patch de seguranca eMudhra (emSign)
     ((pkgs.cloudflared.override {
         buildGoModule = pkgs.buildGo127Module;

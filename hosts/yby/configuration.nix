@@ -84,12 +84,17 @@ in {
   # self-hosted atproto PDS, built from the release in the pesque flake
   services.pesque = {
     enable = true;
-    hostname = "pds.zeetech.io";
-    mode = "path_multi";
-    identity = "plc";
-    crawler = ["https://bsky.network"];
-    settings.blob_upload_limit = "104857600";
+    mode = "multi";
+    uid = 991;
+    gid = 989;
     dataDir = "/zdata/pesque";
+    crawler = ["https://bsky.network"];
+    scheme = "https";
+    hostname = "pds.zeetech.io";
+    port = 4000;
+    listenAddress = "100.64.0.2";
+    image = "ghcr.io/zeeetech/pesque:1.15.7";
+    settings.blob_upload_limit = "104857600";
   };
 
   # self-hosted tangled knot: a git server whose auth layer is the atproto
