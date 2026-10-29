@@ -33,25 +33,23 @@
     silver-searcher
     unstable.opencode
     # patch de seguranca eMudhra (emSign)
-    ((pkgs.cloudflared.override {
-        buildGoModule = pkgs.buildGo127Module;
-      }).overrideAttrs (finalAttrs: oldAttrs: {
-        version = "2026.10.4";
+    (pkgs.cloudflared.overrideAttrs (finalAttrs: oldAttrs: {
+      version = "2026.10.4";
 
-        src = pkgs.fetchFromGitHub {
-          owner = "cloudflare";
-          repo = "cloudflared";
-          rev = finalAttrs.version;
-          sha256 = "sha256-HuKjytbGutwjUMepozeUmeeHczm4qI7vMvS+hgLsaZ0=";
-        };
+      src = pkgs.fetchFromGitHub {
+        owner = "cloudflare";
+        repo = "cloudflared";
+        rev = finalAttrs.version;
+        sha256 = "sha256-HuKjytbGutwjUMepozeUmeeHczm4qI7vMvS+hgLsaZ0=";
+      };
 
-        preCheck = "";
-        doCheck = false;
-        proxyVendor = true;
-        configureFlags = ["-mod=mod"];
-        makeFlags = ["-mod=mod"];
+      preCheck = "";
+      doCheck = false;
+      proxyVendor = true;
+      configureFlags = ["-mod=mod"];
+      makeFlags = ["-mod=mod"];
 
-        vendorHash = "sha256-+A92cHKGNThxlJyrMo5RhizLclKeh3ovjuraZBU262M=";
-      }))
+      vendorHash = "sha256-+A92cHKGNThxlJyrMo5RhizLclKeh3ovjuraZBU262M=";
+    }))
   ];
 }

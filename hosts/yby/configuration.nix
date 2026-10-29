@@ -95,6 +95,7 @@ in {
     listenAddress = "100.64.0.2";
     image = "ghcr.io/zeeetech/pesque:1.15.7";
     settings.blob_upload_limit = "104857600";
+    settings.admin_dids = knotOwnerDid;
   };
 
   # self-hosted tangled knot: a git server whose auth layer is the atproto
@@ -117,6 +118,7 @@ in {
         # knot2's default ssh port; the eveo relay republishes it publicly
         ssh_listen_addr = "[::]:2222";
       };
+      contact.email = "zoedsoupe.zeetech.io";
       atproto.plc_directory = "https://plc.directory";
       # eveo is the only trusted proxy, and it connects from the tailnet cgnat
       # range; anything else is rate-limited by its real address
