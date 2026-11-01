@@ -172,9 +172,9 @@ in {
       enable = true;
       package = mkRelease {
         pname = "pitaco";
-        version = "0.1.0";
+        version = "0.1.1";
         src = inputs.pitaco;
-        mixHash = "sha256-aJ3Qh3hUinW8y+zP0tVgVeTLp20ZXluYrAv2w5SESJY=";
+        mixHash = "sha256-2/ZKd90+p0kYyEg/eLps7h2ijBW8m7FVYOjTahlkWfw=";
       };
       host = "pitaco.zeetech.io";
       port = 4011;

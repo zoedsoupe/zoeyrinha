@@ -864,11 +864,11 @@
     "pitaco": {
       "flake": false,
       "locked": {
-        "lastModified": 1789772330,
-        "narHash": "sha256-gFsfJGR02Z9alWhhB6dIQUGL7jj4hlGU3Q16wuOqSrg=",
+        "lastModified": 1793495136,
+        "narHash": "sha256-WsOAcGD51xO2GgADFidtq0vqGsdbLHiPwk2dmtkR04Q=",
         "owner": "zoedsoupe",
         "repo": "pitaco",
-        "rev": "fb0d6e1e5cc3f65edc8b7fff1dea56a0a53456c7",
+        "rev": "630e8a25bd2346b0f3354ae6a1f9ca7337cc1d17",
         "type": "github"
       },
       "original": {
