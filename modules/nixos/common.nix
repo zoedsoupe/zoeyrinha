@@ -8,7 +8,17 @@
   # definition for xterm-ghostty". installs terminfo for the common terminals.
   environment.enableAllTerminfo = true;
 
-  nix.settings.experimental-features = ["nix-command" "flakes"];
+  nix.settings = {
+    experimental-features = ["nix-command" "flakes"];
+    extra-substituters = [
+      "https://zoedsoupe.cachix.org"
+      "https://elixir-overlay.cachix.org"
+    ];
+    extra-trusted-public-keys = [
+      "zoedsoupe.cachix.org-1:Qsa6hA95F/Ny+lPEyq1FYtjmQL1+os4jTUSvf6GVzLs="
+      "elixir-overlay.cachix.org-1:03zcUxISSuNn2vnKPfUJFinDGU5vzhyc+cPbB7u77xA="
+    ];
+  };
   nix.gc = {
     automatic = true;
     dates = "weekly";

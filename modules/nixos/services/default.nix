@@ -13,7 +13,6 @@
     ./grafana.nix
     ./loki.nix
     ./nextcloud.nix
-    ./phoenix-app.nix
     ./postgresql.nix
   ];
 }

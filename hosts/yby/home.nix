@@ -16,8 +16,10 @@
   noctalia.enable = false;
 
   home.packages = with pkgs; [
-    (elixir-with-otp erlang_28).latest
-    erlang_28
+    (pkgs.beam-overlay.mkToolchain {
+      elixir.version = "1.20.5";
+      erlang-otp.version = "29";
+    })
 
     gnupg
 

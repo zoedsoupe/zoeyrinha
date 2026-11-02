@@ -11,7 +11,7 @@
       inputs.nixpkgs.follows = "nixos";
     };
 
-    elixir-overlay.url = "github:zoedsoupe/elixir-overlay";
+    beam-overlay.url = "github:zeeetech/beam-overlay";
 
     # declarative disk partitioning, consumed by nixos-anywhere to provision
     # the eveo vps (debian -> nixos)
@@ -23,7 +23,7 @@
     pesque = {
       url = "github:zeeetech/pesque";
       inputs.nixpkgs.follows = "nixos";
-      inputs.elixir-overlay.follows = "elixir-overlay";
+      inputs.beam-overlay.follows = "beam-overlay";
     };
 
     # oka ships the taina NixOS module (services.taina) and the operator CLI.
@@ -61,7 +61,8 @@
 
     quintal = {
       url = "github:zoedsoupe/quintal";
-      flake = false;
+      inputs.nixpkgs.follows = "nixos";
+      inputs.beam-overlay.follows = "beam-overlay";
     };
 
     wakatime-ls = {

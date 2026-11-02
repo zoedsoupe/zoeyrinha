@@ -49,7 +49,7 @@ inputs: let
 
   overlays = with inputs; [
     rust-overlay.overlays.default
-    elixir-overlay.overlays.default
+    beam-overlay.overlays.default
     uwu-colors.overlays.default
     envoluntary.overlays.default
     (_: final: {expert-lsp = expert-lsp.packages.${final.system}.default;})
@@ -159,7 +159,7 @@ in {
   in
     nixosSystem {
       inherit pkgs;
-      # hosts reach the app sources to build their releases (lib/mkRelease.nix)
+      # hosts reach the app sources to build their releases
       specialArgs = {inherit inputs;};
       modules = [
         (../hosts + /${host}/configuration.nix)
@@ -167,8 +167,10 @@ in {
         ../modules/nixos/niri.nix
         ../modules/nixos/zfs-datasets.nix
         ../modules/nixos/services
+        inputs.beam-overlay.nixosModules.beam
         # pesque's upstream module (services.pesque), gated by its own enable
         inputs.pesque.nixosModules.pesque
+        inputs.quintal.nixosModules.quintal
         # taina's module (services.taina) now ships from oka, same shape
         inputs.oka.nixosModules.taina
         # tangled's knot-rs module (services.tangled.knot-rs), same shape

@@ -53,16 +53,32 @@ cloudflared.apps."foo.zeetech.io" = "http://localhost:PORT";
 ## add a phoenix app (yby)
 
 ```nix
-phoenixApps.foo = {
+# in the host let:
+# toolchain = pkgs.beam-overlay.mkToolchain {
+#   elixir.version = "1.20.5";
+#   erlang-otp.version = "29";
+# };
+services.beam.apps.foo = {
   enable = true;
-  package = mkRelease { pname = "foo"; version = "0.1.0"; src = inputs.foo; mixHash = "sha256-..."; };
-  host = "foo.zeetech.io";
-  port = 4015;
+  package = pkgs.beam-overlay.mkPhoenixRelease {
+    inherit toolchain;
+    pname = "foo";
+    version = "0.1.0";
+    src = inputs.foo;
+    mixDepsHash = "sha256-...";
+    tailwindcss = null; # when the app does not use the tailwind Hex wrapper
+  };
+  command = "bin/server";
+  environment = {
+    PHX_SERVER = "true";
+    PHX_HOST = "foo.zeetech.io";
+    PORT = "4015";
+  };
   environmentFiles = ["/etc/phoenix/foo.env"];
 };
 ```
 
-+ `cloudflared.apps` + an env file (see secrets). `mixHash` is the fetchMixDeps FOD the build prints when `mix.lock` changes.
++ `cloudflared.apps` + an env file (see secrets). `mixDepsHash` is the fetchMixDeps FOD the build prints when `mix.lock` changes.
 
 ## add a monitor
 

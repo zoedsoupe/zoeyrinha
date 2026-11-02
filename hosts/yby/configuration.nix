@@ -4,7 +4,39 @@
   lib,
   ...
 }: let
-  mkRelease = pkgs.callPackage ../../lib/mkRelease.nix {};
+  beamToolchain = pkgs.beam-overlay.mkToolchain {
+    elixir.version = "1.20.5";
+    erlang-otp.version = "29";
+  };
+
+  phoenixReleaseDefaults = {
+    toolchain = beamToolchain;
+    tailwindcss = null;
+    nativeBuildInputs = [pkgs.pkg-config];
+    env.CC_PRECOMPILER_PRECOMPILE_ONLY_LOCAL = "true";
+    preConfigure = ''
+      cat >> config/config.exs <<'EOF'
+      config :elixir_make, force_build: [exqlite: true, lazy_html: true]
+      EOF
+    '';
+  };
+
+  pitacoRelease = pkgs.beam-overlay.mkPhoenixRelease (phoenixReleaseDefaults
+    // {
+      pname = "pitaco";
+      version = "0.1.1";
+      src = inputs.pitaco;
+      mixDepsHash = "sha256-2/ZKd90+p0kYyEg/eLps7h2ijBW8m7FVYOjTahlkWfw=";
+    });
+
+  paintboxRelease = pkgs.beam-overlay.mkPhoenixRelease (phoenixReleaseDefaults
+    // {
+      pname = "paintbox";
+      version = "0.1.0";
+      src = inputs.paintbox;
+      mixDepsHash = "sha256-LE21sKdjAXoi4KjPtPmU9dbHeqClmf4H2biNydkzX60=";
+    });
+
   # the pesque account that owns the knot. the first admin is the owner the
   # knot advertises to the appview, and Tangled's registration checks it, so it
   # has to be the account's real did:plc
@@ -27,9 +59,7 @@ in {
   boot.loader.efi.canTouchEfiVariables = true;
 
   boot.supportedFilesystems = ["zfs"];
-  # the installer leaves the pool marked in-use (foreign hostid), so a plain
-  # import is refused and boot dies in initrd; safe on a single-node headless host
-  boot.zfs.forceImportRoot = true;
+  boot.zfs.forceImportRoot = false;
   # zdata lives on sda; without this only zroot is guaranteed to import, so
   # zdata's datasets never mount and the host drops into emergency mode
   boot.zfs.extraPools = ["zdata"];
@@ -118,7 +148,7 @@ in {
         # knot2's default ssh port; the eveo relay republishes it publicly
         ssh_listen_addr = "[::]:2222";
       };
-      contact.email = "zoedsoupe.zeetech.io";
+      contact.email = "zoey.spessanha@zeetech.io";
       atproto.plc_directory = "https://plc.directory";
       # eveo is the only trusted proxy, and it connects from the tailnet cgnat
       # range; anything else is rate-limited by its real address
@@ -139,81 +169,69 @@ in {
 
   # one Postgres for the whole host; each service gets a database and a role in
   # this cluster, never its own instance.
-  postgres = {
-    enable = false;
-    databases = ["quintal"];
-    users = [
-      {
-        name = "quintal";
-        ensureDBOwnership = true;
-      }
-    ];
-  };
-
-  # quintal connects over loopback TCP; its role is let in without a password
-  # (loopback only, single host). everything else stays on the peer/md5 default.
-  services.postgresql.authentication = lib.mkBefore ''
-    host all quintal 127.0.0.1/32 trust
-    host all quintal ::1/128 trust
-  '';
+  postgres.enable = false;
 
   # personal Phoenix apps fronted by the cloudflare tunnel below; secrets live
   # in /etc/phoenix/<name>.env (see the README), never in the store
-  phoenixApps = {
+  services.beam.apps = {
     blog = {
       enable = true;
       package = inputs.zoeyrinha-web.packages.${pkgs.stdenv.hostPlatform.system}.default;
-      host = "zoedsoupe.zeetech.io";
-      port = 4010;
+      command = "bin/server";
+      environment = {
+        PHX_SERVER = "true";
+        PHX_HOST = "zoedsoupe.zeetech.io";
+        PORT = "4010";
+      };
       environmentFiles = ["/etc/phoenix/blog.env"];
     };
 
     pitaco = {
       enable = true;
-      package = mkRelease {
-        pname = "pitaco";
-        version = "0.1.1";
-        src = inputs.pitaco;
-        mixHash = "sha256-2/ZKd90+p0kYyEg/eLps7h2ijBW8m7FVYOjTahlkWfw=";
-      };
-      host = "pitaco.zeetech.io";
-      port = 4011;
+      package = pitacoRelease;
+      command = "bin/server";
       stateDir = "/zdata/pitaco";
-      environment.DATABASE_PATH = "/zdata/pitaco/pitaco.db";
+      environment = {
+        PHX_SERVER = "true";
+        PHX_HOST = "pitaco.zeetech.io";
+        PORT = "4011";
+        DATABASE_PATH = "/zdata/pitaco/pitaco.db";
+        RELEASE_DISTRIBUTION = "none";
+        RELEASE_COOKIE = "pitaco";
+        RELEASE_NODE = "palpite@127.0.0.1";
+      };
       environmentFiles = ["/etc/phoenix/pitaco.env"];
     };
 
     paintbox = {
       enable = true;
-      package = mkRelease {
-        pname = "paintbox";
-        version = "0.1.0";
-        src = inputs.paintbox;
-        mixHash = "sha256-LE21sKdjAXoi4KjPtPmU9dbHeqClmf4H2biNydkzX60=";
+      package = paintboxRelease;
+      command = "bin/server";
+      environment = {
+        PHX_SERVER = "true";
+        PHX_HOST = "paintbox.zeetech.io";
+        PORT = "4012";
+        RELEASE_DISTRIBUTION = "none";
+        RELEASE_COOKIE = "paintbox";
+        RELEASE_NODE = "paintbox@127.0.0.1";
       };
-      host = "paintbox.zeetech.io";
-      port = 4012;
       environmentFiles = ["/etc/phoenix/paintbox.env"];
     };
+  };
 
-    # disabled: blog.br is registered at Registro.br, not a cloudflare zone, so
-    # it can't be tunneled. move the zone (or pick another host) and flip back on
-    quintal = {
-      enable = false;
-      package = mkRelease {
-        pname = "quintal";
-        version = "0.1.0";
-        src = inputs.quintal;
-        mixHash = "sha256-yB6JmDCagbRFk4BRkehlDW8kKmkO7ZxRTFs3IF60hMI=";
-        # also needs a rustlerCache (like blog): its mdex_native NIF is
-        # precompiled-only too
-      };
-      host = "quintal.blog.br";
-      port = 4013;
-      migrate = true;
-      environment.DATABASE_URL = "ecto://quintal@127.0.0.1/quintal";
-      environmentFiles = ["/etc/phoenix/quintal.env"];
-    };
+  # The shared OCI image carries the release and its native dependencies. The
+  # public hostname still needs a Cloudflare zone before ingress can be enabled.
+  services.quintal = {
+    enable = false;
+    image = "ghcr.io/zoedsoupe/quintal:1.0.0";
+    hostname = "quintal.blog.br";
+    port = 4013;
+    uid = 992;
+    gid = 992;
+    dataDir = "/zdata/quintal";
+    backupDir = "/zdata/backups/quintal";
+    requiredMounts = ["/zdata" "/zdata/backups"];
+    environmentFiles = ["/etc/phoenix/quintal.env"];
   };
 
   # taina, the community private-cloud server: tailnet-only. the sqlite db
@@ -241,9 +259,8 @@ in {
   zfsDatasets = {
     "zroot/forgejo" = "/var/lib/forgejo";
     "zdata/pesque" = "/zdata/pesque";
-    # pitaco's sqlite db lives here, not on the nvme
     "zdata/pitaco" = "/zdata/pitaco";
-    # taina: sqlite db, ybira blob storage and nhaman backups
+    # "zdata/quintal" = "/zdata/quintal";
     "zdata/taina" = "/zdata/taina";
     "zdata/ybira" = "/zdata/ybira";
     "zdata/backups" = "/zdata/backups";
