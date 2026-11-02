@@ -26,13 +26,6 @@
       inputs.elixir-overlay.follows = "elixir-overlay";
     };
 
-    # taina ships its native module (services.taina) the same way
-    taina = {
-      url = "github:taina-labs/taina";
-      inputs.nixpkgs.follows = "nixos";
-      inputs.elixir-overlay.follows = "elixir-overlay";
-    };
-
     # oka ships the taina NixOS module (services.taina) and the operator CLI.
     # The module moved here from the taina repo; the release still comes from
     # the taina input above.
