@@ -53,6 +53,14 @@ inputs: let
     uwu-colors.overlays.default
     envoluntary.overlays.default
     (_: final: {expert-lsp = expert-lsp.packages.${final.system}.default;})
+    # rebar3 3.28.0's own CT suite fails in the sandbox (multiple_app_files in
+    # rebar_src_dirs_SUITE), and it is a build-only tool here, so skip the
+    # checks. nixpkgs #579064.
+    (_final: prev: {
+      beamPackages = prev.beamPackages.extend (_: super: {
+        rebar3 = super.rebar3.overrideAttrs (_: {doCheck = false;});
+      });
+    })
   ];
 
   make-pkgs = {
