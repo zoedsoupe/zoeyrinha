@@ -26,13 +26,15 @@
       inputs.beam-overlay.follows = "beam-overlay";
     };
 
-    # oka ships the taina NixOS module (services.taina) and the operator CLI.
-    # The module moved here from the taina repo; the release still comes from
-    # the taina input above.
+    zig-overlay = {
+      url = "github:mitchellh/zig-overlay";
+      inputs.nixpkgs.follows = "nixos";
+    };
+
     oka = {
       url = "github:taina-labs/oka";
       inputs.nixpkgs.follows = "nixos";
-      inputs.zig-overlay.inputs.nixpkgs.follows = "nixos";
+      inputs.zig-overlay.follows = "zig-overlay";
     };
 
     # tangled ships the knot-rs NixOS module (services.tangled.knot-rs), so the

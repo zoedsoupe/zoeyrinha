@@ -738,7 +738,9 @@
           "nixos"
         ],
         "taina": "taina",
-        "zig-overlay": "zig-overlay"
+        "zig-overlay": [
+          "zig-overlay"
+        ]
       },
       "locked": {
         "lastModified": 1793641636,
@@ -857,6 +859,7 @@
         "unstable": "unstable",
         "uwu-colors": "uwu-colors",
         "wakatime-ls": "wakatime-ls",
+        "zig-overlay": "zig-overlay",
         "zoeyrinha-web": "zoeyrinha-web"
       }
     },
