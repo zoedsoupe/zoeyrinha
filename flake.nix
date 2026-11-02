@@ -32,7 +32,6 @@
     oka = {
       url = "github:taina-labs/oka";
       inputs.nixpkgs.follows = "nixos";
-      inputs.taina.follows = "taina";
       inputs.zig-overlay.inputs.nixpkgs.follows = "nixos";
     };
 
