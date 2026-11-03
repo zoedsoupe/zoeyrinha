@@ -109,7 +109,14 @@ in {
   docker = {
     enable = true;
     dataRoot = "/zdata/docker";
+    # atuin sync server: sqlite db on the sda pool, fronted by caddy below
+    composeProjects.atuin.directory = ./atuin;
   };
+
+  # the atuin image runs as uid 1000 and writes the sqlite db under /config
+  systemd.tmpfiles.rules = [
+    "d /zdata/atuin/config 0750 1000 1000 -"
+  ];
 
   # self-hosted atproto PDS, built from the release in the pesque flake
   services.pesque = {
@@ -266,6 +273,7 @@ in {
     "zdata/backups" = "/zdata/backups";
     "zdata/knot" = "/zdata/knot";
     "zdata/docker" = "/zdata/docker";
+    "zdata/atuin" = "/zdata/atuin";
   };
 
   # tailnet-facing reverse proxy
@@ -274,6 +282,7 @@ in {
     apps = {
       "git.yby" = "127.0.0.1:3000";
       "dash.yby" = "127.0.0.1:61208";
+      "atuin.yby" = "127.0.0.1:8888";
     };
   };
 

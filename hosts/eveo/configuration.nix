@@ -168,6 +168,11 @@ in {
         group = "yby";
         url = "http://git.yby";
       }
+      {
+        name = "atuin";
+        group = "yby";
+        url = "http://atuin.yby/healthz";
+      }
       # public edge
       {
         name = "knot";
