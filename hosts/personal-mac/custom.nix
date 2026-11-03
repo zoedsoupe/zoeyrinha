@@ -1,63 +1,23 @@
 {pkgs, ...}: {
   bat.enable = true;
-  direnv.enable = true;
-  envoluntary = {
-    enable = true;
-    entries = [
-      # === Supabase Projects (Elixir + PostgreSQL) ===
-      {
-        pattern = ".*/dev/supabase/.*";
-        flake_reference = "~/dev/nix/supabase-elixir";
-      }
-
-      # === Taina Project (Elixir + PostgreSQL) ===
-      {
-        pattern = ".*/dev/taina/.*";
-        flake_reference = "~/dev/nix/taina";
-      }
-
-      # === OSS Elixir Projects ===
-      {
-        pattern = ".*/dev/oss/nexus(/.*)?";
-        flake_reference = "~/dev/nix/oss-elixir";
-      }
-      {
-        pattern = ".*/dev/oss/soundscape(/.*)?";
-        flake_reference = "~/dev/nix/oss-elixir";
-      }
-      {
-        pattern = ".*/dev/oss/peri(/.*)?";
-        flake_reference = "~/dev/nix/oss-elixir";
-      }
-      {
-        pattern = ".*/dev/oss/exlings(/.*)?";
-        flake_reference = "~/dev/nix/oss-elixir";
-      }
-      {
-        pattern = ".*/dev/oss/proto_rune(/.*)?";
-        flake_reference = "~/dev/nix/oss-elixir";
-      }
-
-      # === Elixir + Node Projects ===
-      {
-        pattern = ".*/dev/oss/lucide_icons(/.*)?";
-        flake_reference = "~/dev/nix/elixir-node";
-      }
-
-      # === Zig Projects ===
-      {
-        pattern = ".*/dev/personal/slimes(/.*)?";
-        flake_reference = "~/dev/nix/zig";
-      }
-      {
-        pattern = ".*/dev/personal/ziglings(/.*)?";
-        flake_reference = "~/dev/nix/zig";
-      }
-      {
-        pattern = ".*/dev/personal/morpho(/.*)?";
-        flake_reference = "~/dev/nix/zig";
-      }
-    ];
+  direnv.enable = false;
+  envoluntary = let
+    elixir-only =
+      map (p: {
+        pattern = ".*/dev/${p}(/.*)?";
+        flake_reference = "~/dev/nix#elixir";
+      })
+      ["taina" "supabase" "oss/peri" "oss/exlings" "oss/proto_rune"];
+  in {
+    enable = false;
+    entries =
+      [
+        {
+          pattern = ".*/dev/oss/lucide_icons(/.*)?";
+          flake_reference = "~/dev/nix#elixir-node";
+        }
+      ]
+      ++ elixir-only;
   };
   fzf.enable = true;
   tmux.enable = true;
@@ -70,7 +30,7 @@
   xplr.enable = true;
   zoxide.enable = true;
   zed = {
-    enable = true;
+    enable = false;
     theme = {
       dark = "NyxVamp Veil";
       light = "NyxVamp Veil";
@@ -150,8 +110,8 @@
   };
   zsh = {
     enable = true;
-    # ${pkgs.krabby}/bin/krabby random 2> /dev/null pokemon sprites
     profileExtra = ''
+      ${pkgs.krabby}/bin/krabby random 2> /dev/null pokemon sprites
       eval "$(/opt/homebrew/bin/brew shellenv)"
       alias ls='eza'
       alias tree='eza --tree --git-ignore'
@@ -161,9 +121,7 @@
       ignorePatterns = ["git commit -m *" "git clone *" "mix test --only *" "mkdir *"];
     };
     sessionVariables = {
-      DIRENV_LOG_FORMAT = "";
       GPG_TTY = "$(tty)";
-      GITHUB_TOKEN = "";
       PATH = "$HOME/.nix-profile/bin:/etc/profiles/per-user/zoedsoupe/bin:/run/current-system/sw/bin:$HOME/google-cloud-sdk/bin:/opt/homebrew/opt/node@22/bin:$HOME/.local/bin:$PATH";
       EDITOR = "${pkgs.helix}/bin/hx";
       LDFLAGS = "-L/opt/homebrew/opt/node@22/lib";
