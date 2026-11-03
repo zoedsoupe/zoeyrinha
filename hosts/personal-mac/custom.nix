@@ -23,7 +23,7 @@
   tmux.enable = true;
   ghostty = {
     enable = true;
-    font-name = "Maple Mono NF Regular";
+    font-name = "Berkeley Mono";
   };
   gh.enable = true;
   starship.enable = true;
