@@ -1,8 +1,4 @@
-{
-  pkgs,
-  unstable,
-  ...
-}: {
+{pkgs, ...}: {
   home.stateVersion = "22.11";
   home.homeDirectory = "/Users/zoedsoupe";
 
@@ -24,6 +20,7 @@
     gnupg
 
     # tools
+    atuin
     bat
     felix-fm
     chafa

@@ -24,6 +24,7 @@
     gnupg
 
     # tools
+    atuin
     eza
     fd
     jq
