@@ -39,6 +39,9 @@
         Type = "oneshot";
         RemainAfterExit = true;
         WorkingDirectory = directory;
+        ExecStartPre =
+          lib.optional (project.preStart != "")
+          (pkgs.writeShellScript "docker-compose-${name}-prestart" project.preStart);
         ExecStart = "${pkgs.docker-compose}/bin/docker-compose up -d";
         ExecStop = "${pkgs.docker-compose}/bin/docker-compose down";
         TimeoutStartSec = "5min";
@@ -78,6 +81,12 @@ in {
             type = types.bool;
             default = true;
             description = "Start the stack on boot.";
+          };
+
+          preStart = mkOption {
+            type = types.lines;
+            default = "";
+            description = "Shell run as root before `docker-compose up -d`, e.g. to own host directories docker would create as root.";
           };
         };
       });

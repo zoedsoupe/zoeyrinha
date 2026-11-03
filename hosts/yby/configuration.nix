@@ -109,14 +109,15 @@ in {
   docker = {
     enable = true;
     dataRoot = "/zdata/docker";
-    # atuin sync server: sqlite db on the sda pool, fronted by caddy below
-    composeProjects.atuin.directory = ./atuin;
+    composeProjects.atuin = {
+      directory = ./atuin;
+      preStart = ''
+        ${pkgs.coreutils}/bin/mkdir -p /zdata/atuin/config
+        ${pkgs.coreutils}/bin/chown 1000:1000 /zdata/atuin/config
+        ${pkgs.coreutils}/bin/chmod 0750 /zdata/atuin/config
+      '';
+    };
   };
-
-  # the atuin image runs as uid 1000 and writes the sqlite db under /config
-  systemd.tmpfiles.rules = [
-    "d /zdata/atuin/config 0750 1000 1000 -"
-  ];
 
   # self-hosted atproto PDS, built from the release in the pesque flake
   services.pesque = {
