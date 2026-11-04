@@ -45,10 +45,10 @@
       inputs.nixpkgs.follows = "nixos";
     };
 
-    # zoeyrinha-web ships its own release derivation (packages.default)
     zoeyrinha-web = {
       url = "github:zoedsoupe/zoeyrinha-web";
       inputs.nixpkgs.follows = "nixos";
+      inputs.beam-overlay.follows = "beam-overlay";
     };
 
     pitaco = {

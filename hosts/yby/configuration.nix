@@ -120,18 +120,22 @@ in {
   };
 
   # self-hosted atproto PDS, built from the release in the pesque flake
-  services.pesque = {
+  services.beam.containers.pesque = {
     enable = true;
-    mode = "multi";
+    image = "ghcr.io/zeeetech/pesque:1.15.7";
     uid = 991;
     gid = 989;
     dataDir = "/zdata/pesque";
+    requiredMounts = ["/zdata"];
+    port = 4000;
+    listenAddress = "100.64.0.2";
+  };
+
+  services.pesque = {
+    mode = "multi";
     crawler = ["https://bsky.network"];
     scheme = "https";
     hostname = "pds.zeetech.io";
-    port = 4000;
-    listenAddress = "100.64.0.2";
-    image = "ghcr.io/zeeetech/pesque:1.15.7";
     settings.blob_upload_limit = "104857600";
     settings.admin_dids = knotOwnerDid;
   };
@@ -181,19 +185,17 @@ in {
 
   # personal Phoenix apps fronted by the cloudflare tunnel below; secrets live
   # in /etc/phoenix/<name>.env (see the README), never in the store
-  services.beam.apps = {
-    blog = {
-      enable = true;
-      package = inputs.zoeyrinha-web.packages.${pkgs.stdenv.hostPlatform.system}.default;
-      command = "bin/server";
-      environment = {
-        PHX_SERVER = "true";
-        PHX_HOST = "zoedsoupe.zeetech.io";
-        PORT = "4010";
-      };
-      environmentFiles = ["/etc/phoenix/blog.env"];
-    };
+  services.beam.containers.zoeyrinha-web = {
+    enable = true;
+    image = "ghcr.io/zoedsoupe/zoeyrinha-web:0.1.0";
+    uid = 993;
+    gid = 993;
+    port = 4010;
+    environmentFiles = ["/etc/phoenix/blog.env"];
+  };
+  services.zoeyrinha-web.hostname = "zoedsoupe.zeetech.io";
 
+  services.beam.apps = {
     pitaco = {
       enable = true;
       package = pitacoRelease;
@@ -229,18 +231,17 @@ in {
 
   # The shared OCI image carries the release and its native dependencies. The
   # public hostname still needs a Cloudflare zone before ingress can be enabled.
-  services.quintal = {
+  services.beam.containers.quintal = {
     enable = false;
     image = "ghcr.io/zoedsoupe/quintal:1.0.0";
-    hostname = "quintal.blog.br";
     port = 4013;
     uid = 992;
     gid = 992;
     dataDir = "/zdata/quintal";
-    backupDir = "/zdata/backups/quintal";
     requiredMounts = ["/zdata" "/zdata/backups"];
     environmentFiles = ["/etc/phoenix/quintal.env"];
   };
+  services.quintal.hostname = "quintal.blog.br";
 
   # taina, the community private-cloud server: tailnet-only. the sqlite db
   # lives on the sda pool; blobs and backups stay on their own datasets. the
