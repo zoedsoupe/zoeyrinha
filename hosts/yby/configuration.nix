@@ -1,7 +1,6 @@
 {
   pkgs,
   inputs,
-  lib,
   ...
 }: let
   beamToolchain = pkgs.beam-overlay.mkToolchain {
@@ -288,16 +287,11 @@ in {
     };
   };
 
-  # eveo (public vps) terminates tls for the PDS and reaches it here over the
-  # tailnet, since this host is behind cgnat with no inbound path; that gives a
-  # relay a stable firehose connection off cloudflare. open the pds port to the
-  # tailnet only. 5555/2222 are the knot's http api and ssh, also reached
-  # through eveo (caddy + a tcp relay), never directly
+  # PSD + tangled knot ports
   networking.firewall.interfaces.tailscale0.allowedTCPPorts = [4000 5555 2222];
 
   # public ingress tunneled through cloudflare: no inbound port, no home ip;
-  # cloudflare terminates tls. the pds is not here: cloudflare's edge drops the
-  # firehose websocket, so caddy on eveo fronts it directly instead
+  # cloudflare terminates tls.
   cloudflared = {
     enable = true;
     apps = {

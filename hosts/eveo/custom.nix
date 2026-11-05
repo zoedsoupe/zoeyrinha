@@ -17,6 +17,7 @@
     fancy = false;
     devHelpers = false;
     profileExtra = ''
+      eval "$(atuin init zsh)"
       alias ls='eza'
     '';
     history = {

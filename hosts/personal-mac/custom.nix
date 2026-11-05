@@ -113,6 +113,7 @@
     profileExtra = ''
       ${pkgs.krabby}/bin/krabby random 2> /dev/null pokemon sprites
       eval "$(/opt/homebrew/bin/brew shellenv)"
+      eval "$(atuin init zsh)"
       alias ls='eza'
       alias tree='eza --tree --git-ignore'
       source <(command fx --init)

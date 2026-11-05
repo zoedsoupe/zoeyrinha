@@ -35,6 +35,7 @@
     just
     glow
     wakatime-cli
+    postgresql
 
     # others
     any-nix-shell
