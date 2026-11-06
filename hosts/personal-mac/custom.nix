@@ -123,7 +123,7 @@
     };
     sessionVariables = {
       GPG_TTY = "$(tty)";
-      PATH = "$HOME/.nix-profile/bin:/etc/profiles/per-user/zoedsoupe/bin:/run/current-system/sw/bin:$HOME/google-cloud-sdk/bin:/opt/homebrew/opt/node@22/bin:$HOME/.local/bin:$PATH";
+      PATH = "/opt/homebrew/lib/ruby/gems/4.0.0/bin:$HOME/dev/.flutter/bin:$HOME/.nix-profile/bin:/etc/profiles/per-user/zoedsoupe/bin:/run/current-system/sw/bin:$HOME/google-cloud-sdk/bin:/opt/homebrew/opt/node@22/bin:$HOME/.local/bin:$PATH";
       EDITOR = "${pkgs.helix}/bin/hx";
       LDFLAGS = "-L/opt/homebrew/opt/node@22/lib";
       CPPFLAGS = "-I/opt/homebrew/opt/node@22/include";
