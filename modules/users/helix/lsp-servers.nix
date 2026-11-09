@@ -1,6 +1,7 @@
 {
   pkgs,
   lib,
+  config,
   wakatime-ls,
   custom-config,
   ...
@@ -12,6 +13,7 @@
   ocamlpkgs = pkgs.ocamlPackages;
   cfg = custom-config.helix;
   lspEnabled = cfg.lsp or true;
+  flutter-bin = "${config.home.homeDirectory}/dev/.flutter/bin";
 
   rust = pkgs.rust-bin.stable.latest;
 
@@ -117,6 +119,15 @@ in {
     expert-lsp = mkIf (get-lang-config "elixir").enable {
       command = "${pkgs.expert-lsp}/bin/expert";
       args = ["--stdio"];
+    };
+
+    sourcekit-lsp = mkIf (get-lang-config "swift").enable {
+      command = "/usr/bin/sourcekit-lsp";
+    };
+
+    dart = mkIf (get-lang-config "dart").enable {
+      command = "${flutter-bin}/dart";
+      args = ["language-server" "--client-id=helix"];
     };
 
     uwu-colors = {

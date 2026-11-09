@@ -1,6 +1,7 @@
 {
   pkgs,
   lib,
+  config,
   custom-config,
   helix-themes,
   wakatime-ls,
@@ -12,7 +13,7 @@
   language-defaults = import ./languages.nix {inherit pkgs lib;};
   helpers = import ./lib.nix {inherit lib custom-config;};
   lsp-servers = import ./lsp-servers.nix {
-    inherit pkgs lib custom-config wakatime-ls;
+    inherit pkgs lib config custom-config wakatime-ls;
   };
   editor-config = import ./editor.nix {inherit lib custom-config;};
 in {

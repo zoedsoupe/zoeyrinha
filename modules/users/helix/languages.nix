@@ -131,4 +131,14 @@ in {
     };
     auto-format = false;
   };
+
+  swift = {
+    helix-names = ["swift"];
+    language-servers = ["sourcekit-lsp"];
+  };
+
+  dart = {
+    helix-names = ["dart"];
+    language-servers = ["dart"];
+  };
 }
