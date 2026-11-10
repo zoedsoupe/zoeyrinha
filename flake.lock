@@ -64,11 +64,11 @@
         "nixpkgs": "nixpkgs_5"
       },
       "locked": {
-        "lastModified": 1793647007,
-        "narHash": "sha256-x2n8BHSmhd/5dgfrL5dtp6U/ZVot5RJQakBUxinpytY=",
+        "lastModified": 1793817286,
+        "narHash": "sha256-VKGKWlqbATPp5+CbybTCl8jVTefk/VTQOqGGS1LjbXg=",
         "owner": "zeeetech",
         "repo": "beam-overlay",
-        "rev": "8eb676782915b99a11eca08c5a43a336b71e19f1",
+        "rev": "2d96b27617dd20f3bf9cf22d5544845274437da8",
         "type": "github"
       },
       "original": {
@@ -185,11 +185,11 @@
         "nixpkgs": "nixpkgs_3"
       },
       "locked": {
-        "lastModified": 1794276724,
-        "narHash": "sha256-zwWnDBD1PNeDccTjEVN2B8VojeZk5EHx+puawv1aBsc=",
+        "lastModified": 1794320031,
+        "narHash": "sha256-RxovwFdXCIQbp0TbWKFTl+hyRfZhdowiFy3EIxPs8CE=",
         "owner": "elixir-lang",
         "repo": "expert",
-        "rev": "e284a781cef4b4fb41550c5df3fe479426ad1e82",
+        "rev": "5e6997518c55c2bdd5199f42d5c5893e786c967a",
         "type": "github"
       },
       "original": {
@@ -253,22 +253,6 @@
       "original": {
         "type": "tarball",
         "url": "https://git.lix.systems/lix-project/flake-compat/archive/main.tar.gz"
-      }
-    },
-    "flake-compat_2": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1696426674,
-        "narHash": "sha256-kvjfFW7WAETZlt09AgDn1MrtKzP7t90Vf7vypd3OL1U=",
-        "owner": "edolstra",
-        "repo": "flake-compat",
-        "rev": "0f9255e01c2351cc7d116c072cb317785dd33b33",
-        "type": "github"
-      },
-      "original": {
-        "owner": "edolstra",
-        "repo": "flake-compat",
-        "type": "github"
       }
     },
     "flake-parts": {
@@ -680,27 +664,6 @@
         "type": "github"
       }
     },
-    "oka": {
-      "inputs": {
-        "nixpkgs": [
-          "nixos"
-        ],
-        "taina": "taina"
-      },
-      "locked": {
-        "lastModified": 1793724338,
-        "narHash": "sha256-8LJGLYGws8/cRQ4/zU30XsMVxgztUmFcXWsumViQl4Y=",
-        "owner": "taina-labs",
-        "repo": "oka",
-        "rev": "56a6b4e6cdc1f9985b2070d1e811f85752e81c75",
-        "type": "github"
-      },
-      "original": {
-        "owner": "taina-labs",
-        "repo": "oka",
-        "type": "github"
-      }
-    },
     "paintbox": {
       "flake": false,
       "locked": {
@@ -793,18 +756,17 @@
         "nixos": "nixos",
         "nixpkgs": "nixpkgs_4",
         "noctalia-shell": "noctalia-shell",
-        "oka": "oka",
         "paintbox": "paintbox",
         "pesque": "pesque",
         "pitaco": "pitaco",
         "quintal": "quintal",
         "rust-overlay": "rust-overlay_2",
         "starship-themes": "starship-themes",
+        "taina": "taina",
         "tangled": "tangled",
         "unstable": "unstable",
         "uwu-colors": "uwu-colors",
         "wakatime-ls": "wakatime-ls",
-        "zig-overlay": "zig-overlay",
         "zoeyrinha-web": "zoeyrinha-web"
       }
     },
@@ -947,41 +909,23 @@
         "type": "github"
       }
     },
-    "systems_2": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1681028828,
-        "narHash": "sha256-Vy1rq5AaRuLzOxct8nz4T6wlgyUR7zLU309k9mBC768=",
-        "owner": "nix-systems",
-        "repo": "default",
-        "rev": "da67096a3b9bf56a91d16901293e51ba5b49a27e",
-        "type": "github"
-      },
-      "original": {
-        "owner": "nix-systems",
-        "repo": "default",
-        "type": "github"
-      }
-    },
     "taina": {
       "inputs": {
         "beam-overlay": "beam-overlay_2",
         "nixpkgs": [
-          "oka",
-          "nixpkgs"
+          "nixos"
         ]
       },
       "locked": {
-        "lastModified": 1793717194,
-        "narHash": "sha256-2RayMY2LfjPlPOBSxsFgX9W6KyXShLEW3Zo+SkOv2Xo=",
+        "lastModified": 1794324746,
+        "narHash": "sha256-5E5PFDAK+YOh3KPEPyTtvVklkST8jcYMELdPiHnwjLA=",
         "owner": "taina-labs",
         "repo": "taina",
-        "rev": "aa07cd650d93baff7883d164bc13d3585ebe9891",
+        "rev": "83243b94d6088d40ed54fc545c0a455d794f5b0a",
         "type": "github"
       },
       "original": {
         "owner": "taina-labs",
-        "ref": "v0.7.0",
         "repo": "taina",
         "type": "github"
       }
@@ -1083,28 +1027,6 @@
       "original": {
         "owner": "mrnossiom",
         "repo": "wakatime-ls",
-        "type": "github"
-      }
-    },
-    "zig-overlay": {
-      "inputs": {
-        "flake-compat": "flake-compat_2",
-        "nixpkgs": [
-          "nixos"
-        ],
-        "systems": "systems_2"
-      },
-      "locked": {
-        "lastModified": 1794270599,
-        "narHash": "sha256-guOw4u3mta6P1xKs4lqI99A6Z9+UYuQ5yxzbDZdOTwQ=",
-        "owner": "mitchellh",
-        "repo": "zig-overlay",
-        "rev": "cdee611548e242af5284c85c430e6db2f9c46391",
-        "type": "github"
-      },
-      "original": {
-        "owner": "mitchellh",
-        "repo": "zig-overlay",
         "type": "github"
       }
     },

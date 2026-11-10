@@ -26,13 +26,8 @@
       inputs.beam-overlay.follows = "beam-overlay";
     };
 
-    zig-overlay = {
-      url = "github:mitchellh/zig-overlay";
-      inputs.nixpkgs.follows = "nixos";
-    };
-
-    oka = {
-      url = "github:taina-labs/oka";
+    taina = {
+      url = "github:taina-labs/taina";
       inputs.nixpkgs.follows = "nixos";
     };
 

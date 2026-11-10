@@ -246,17 +246,21 @@ in {
   # lives on the sda pool; blobs and backups stay on their own datasets. the
   # session key lives outside the data dataset, in a root-owned env file like
   # knot's and the phoenix apps' secrets (/etc/taina/taina.env, see README).
-  services.taina = {
+  services.beam.containers.taina = {
     enable = true;
-    hostname = "solaria.taina.dev.br";
+    image = "ghcr.io/taina-labs/taina:v0.7.1";
+    uid = 989;
+    gid = 987;
     port = 4014;
-    urlScheme = "https";
-    bindIp = "0.0.0.0";
-    urlPort = 443;
     dataDir = "/zdata/taina";
+    requiredMounts = ["/zdata"];
+  };
+
+  services.taina = {
+    hostname = "solaria.taina.dev.br";
+    scheme = "https";
     storageDir = "/zdata/ybira";
     backupDir = "/zdata/backups";
-    environmentFile = "/etc/taina/taina.env";
     backup.enable = true;
   };
 
