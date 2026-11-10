@@ -10,14 +10,20 @@
 
   nix.settings = {
     experimental-features = ["nix-command" "flakes"];
-    extra-substituters = [
+    substituters = [
+      "https://cache.nixos.org"
+      "https://cache.lix.systems"
       "https://zoedsoupe.cachix.org"
       "https://elixir-overlay.cachix.org"
     ];
-    extra-trusted-public-keys = [
+    trusted-public-keys = [
+      "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY="
+      "cache.lix.systems:aBnZUw8zA7H35Cz2RyKFVs3H4PlGTLawyY5KRbvJR8o="
       "zoedsoupe.cachix.org-1:Qsa6hA95F/Ny+lPEyq1FYtjmQL1+os4jTUSvf6GVzLs="
       "elixir-overlay.cachix.org-1:03zcUxISSuNn2vnKPfUJFinDGU5vzhyc+cPbB7u77xA="
+      "nix-community.cachix.org-1:mB9FSh9qf2dCimDSUo8Zy7bkq5CX+/rkCWyvRCYg3Fs="
     ];
+    trusted-users = ["root" "zoedsoupe"];
   };
   nix.gc = {
     automatic = true;

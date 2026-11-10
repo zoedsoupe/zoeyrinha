@@ -34,7 +34,6 @@
     oka = {
       url = "github:taina-labs/oka";
       inputs.nixpkgs.follows = "nixos";
-      inputs.zig-overlay.follows = "zig-overlay";
     };
 
     # tangled ships the knot-rs NixOS module (services.tangled.knot-rs), so the
