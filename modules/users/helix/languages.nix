@@ -71,7 +71,7 @@ in {
 
   markdown = {
     helix-names = ["markdown"];
-    language-servers = ["marksman"];
+    language-servers = ["harper-ls"];
     extra-servers.markdown = ["uwu-colors"];
   };
 

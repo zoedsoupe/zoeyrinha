@@ -100,7 +100,9 @@ in {
       command = "${wakatime-ls}/bin/wakatime-ls";
     };
 
-    marksman.command = "${pkgs.marksman}/bin/marksman";
+    harper-ls = mkIf (get-lang-config "markdown").enable {
+      command = "${pkgs.harper-ls}/bin/harper";
+    };
 
     ruff = mkIf (get-lang-config "python").enable {
       command = "${pkgs.ruff}/bin/ruff";
