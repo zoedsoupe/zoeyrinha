@@ -11,14 +11,10 @@
   # resolve here).
   ybyTailnetIp = "100.64.0.2";
 
-  # eveo's own tailnet ip. adguard answers DNS here and the dashboards resolve
-  # to it.
-  eveoTailnetIp = "100.64.0.1";
-
   # keep the unprotected bootstrap/recovery listener off the public proxy.
   # complete the wizard through the ssh tunnel on host port 8081, then flip
   # this to true and redeploy to serve the webui, jmap and autodiscovery.
-  stalwartPublicHttp = false;
+  stalwartPublicHttp = true;
 
   # caddy here is the public one (tls for headscale and the pds), bound to
   # 0.0.0.0:80/443, so a tailnet-only dashboard is gated by remote ip rather
