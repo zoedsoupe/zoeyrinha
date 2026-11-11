@@ -103,20 +103,52 @@ in {
     lokiUrl = "http://100.64.0.1:3100";
   };
 
-  # docker for upstream compose stacks; state on the sda pool, container logs to
-  # the journal for alloy
+  # docker for OCI containers; state on the sda pool, container logs to the
+  # journal for alloy
   docker = {
     enable = true;
     dataRoot = "/zdata/docker";
-    composeProjects.atuin = {
-      directory = ./atuin;
-      preStart = ''
-        ${pkgs.coreutils}/bin/mkdir -p /zdata/atuin/config
-        ${pkgs.coreutils}/bin/chown 1000:1000 /zdata/atuin/config
-        ${pkgs.coreutils}/bin/chmod 0750 /zdata/atuin/config
-      '';
+  };
+
+  virtualisation.oci-containers = {
+    backend = "docker";
+    containers = {
+      atuin = {
+        image = "ghcr.io/atuinsh/atuin:18.24.4";
+        cmd = ["start"];
+        ports = ["127.0.0.1:8888:8888"];
+        volumes = ["/zdata/atuin/config:/config"];
+        environment = {
+          ATUIN_HOST = "0.0.0.0";
+          ATUIN_PORT = "8888";
+          ATUIN_OPEN_REGISTRATION = "true";
+          ATUIN_DB_URI = "sqlite:///config/atuin.db";
+          RUST_LOG = "info,atuin_server=debug";
+        };
+      };
+
+      # public through eveo's caddy over the tailnet. secrets live outside the
+      # store in /etc/vaultwarden/vaultwarden.env (ADMIN_TOKEN, SMTP, etc.)
+      vaultwarden = {
+        image = "ghcr.io/dani-garcia/vaultwarden:1.37.5-alpine";
+        ports = ["100.64.0.2:8222:80"];
+        volumes = ["/zdata/vaultwarden:/data"];
+        environment = {
+          DOMAIN = "https://vault.zeetech.io";
+          SIGNUPS_ALLOWED = "false";
+          # caddy forwards the client ip; only eveo may supply that header
+          IP_HEADER = "X-Forwarded-For";
+          IP_HEADER_TRUSTED_PROXIES = "100.64.0.1/32";
+        };
+        environmentFiles = ["/etc/vaultwarden/vaultwarden.env"];
+      };
     };
   };
+
+  systemd.tmpfiles.rules = [
+    "d /zdata/atuin/config 0750 1000 1000 - -"
+    "d /zdata/vaultwarden 0750 root root - -"
+  ];
 
   # self-hosted atproto PDS, built from the release in the pesque flake
   services.beam.containers.pesque = {
@@ -279,6 +311,7 @@ in {
     "zdata/knot" = "/zdata/knot";
     "zdata/docker" = "/zdata/docker";
     "zdata/atuin" = "/zdata/atuin";
+    "zdata/vaultwarden" = "/zdata/vaultwarden";
   };
 
   # tailnet-facing reverse proxy
@@ -291,8 +324,8 @@ in {
     };
   };
 
-  # PSD + tangled knot ports
-  networking.firewall.interfaces.tailscale0.allowedTCPPorts = [4000 5555 2222];
+  # PDS + tangled knot + vaultwarden ports
+  networking.firewall.interfaces.tailscale0.allowedTCPPorts = [4000 5555 2222 8222];
 
   # public ingress tunneled through cloudflare: no inbound port, no home ip;
   # cloudflare terminates tls.
