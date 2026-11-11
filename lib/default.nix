@@ -179,9 +179,7 @@ in {
         inputs.pesque.nixosModules.pesque
         inputs.quintal.nixosModules.quintal
         inputs.zoeyrinha-web.nixosModules.zoeyrinha-web
-        # taina's module (services.taina) now ships from oka, same shape
-        inputs.oka.nixosModules.taina
-        # tangled's knot-rs module (services.tangled.knot-rs), same shape
+        inputs.taina.nixosModules.taina
         inputs.tangled.nixosModules.knot-rs
         home-manager.nixosModules.home-manager
         {
