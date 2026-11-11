@@ -284,6 +284,7 @@ in {
     uid = 989;
     gid = 987;
     port = 4014;
+    listenAddress = "100.64.0.2";
     dataDir = "/zdata/taina";
     requiredMounts = ["/zdata"];
   };
@@ -324,8 +325,8 @@ in {
     };
   };
 
-  # PDS + tangled knot + vaultwarden ports
-  networking.firewall.interfaces.tailscale0.allowedTCPPorts = [4000 5555 2222 8222];
+  # PDS + taina + tangled knot + vaultwarden ports
+  networking.firewall.interfaces.tailscale0.allowedTCPPorts = [4000 4014 5555 2222 8222];
 
   # public ingress tunneled through cloudflare: no inbound port, no home ip;
   # cloudflare terminates tls.
