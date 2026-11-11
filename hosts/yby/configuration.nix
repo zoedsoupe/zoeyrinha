@@ -135,7 +135,7 @@ in {
         volumes = ["/zdata/vaultwarden:/data"];
         environment = {
           DOMAIN = "https://vault.zeetech.io";
-          SIGNUPS_ALLOWED = "true";
+          SIGNUPS_ALLOWED = "false";
           # caddy forwards the client ip; only eveo may supply that header
           IP_HEADER = "X-Forwarded-For";
           IP_HEADER_TRUSTED_PROXIES = "100.64.0.1/32";
