@@ -1,7 +1,8 @@
-# minimal vps: headscale coordination server (maddy personal smtp off for now).
+# minimal vps: headscale coordination server + stalwart personal mail.
 {
   inputs,
   config,
+  lib,
   ...
 }: let
   # yby's tailnet ip, assigned by headscale. one place to change if the node
@@ -13,6 +14,11 @@
   # eveo's own tailnet ip. adguard answers DNS here and the dashboards resolve
   # to it.
   eveoTailnetIp = "100.64.0.1";
+
+  # keep the unprotected bootstrap/recovery listener off the public proxy.
+  # complete the wizard through the ssh tunnel on host port 8081, then flip
+  # this to true and redeploy to serve the webui, jmap and autodiscovery.
+  stalwartPublicHttp = false;
 
   # caddy here is the public one (tls for headscale and the pds), bound to
   # 0.0.0.0:80/443, so a tailnet-only dashboard is gated by remote ip rather
@@ -132,9 +138,9 @@ in {
 
   networking.firewall = {
     enable = true;
-    # 25/465/587/993 (smtp/imap) come back with maddy below. 2222 is the knot's
-    # ssh relay (see below)
-    allowedTCPPorts = [22 80 443 2222];
+    # stalwart: smtp, submissions, imaps, pop3s and managesieve. its http port
+    # stays on loopback behind caddy. 2222 is the knot's ssh relay (see below)
+    allowedTCPPorts = [22 25 80 443 465 587 993 995 2222 4190];
     # 41641/udp: tailscale wireguard
     allowedUDPPorts = [41641];
   };
@@ -218,9 +224,51 @@ in {
     lokiUrl = "http://127.0.0.1:3100";
   };
 
-  # docker for upstream compose stacks; the journald log driver (docker.nix)
-  # puts container logs in the journal so alloy ships them too
-  docker.enable = false;
+  # docker for stalwart; the journald log driver (docker.nix) puts container
+  # logs in the journal so alloy ships them too
+  docker.enable = true;
+
+  virtualisation.oci-containers = {
+    backend = "docker";
+    containers.stalwart = {
+      # follow 1.x fixes without crossing a major-version upgrade boundary
+      image = "docker.io/stalwartlabs/stalwart:v1";
+      extraOptions = ["--init"];
+      ports = [
+        "25:25"
+        "465:465"
+        "587:587"
+        "993:993"
+        "995:995"
+        "4190:4190"
+        # bootstrap/recovery and caddy's upstream; never expose this publicly.
+        # host 8080 already belongs to headscale
+        "127.0.0.1:8081:8080"
+      ];
+      volumes = [
+        "/var/lib/stalwart/etc:/etc/stalwart"
+        "/var/lib/stalwart/data:/var/lib/stalwart"
+      ];
+      environment = {
+        STALWART_HOSTNAME = "mail.zeetech.io";
+        STALWART_PUBLIC_URL = "https://mail.zeetech.io";
+      };
+      # optional bootstrap/recovery credential; remove it after setup
+      environmentFiles = ["/etc/stalwart/stalwart.env"];
+    };
+  };
+
+  # the official image runs as uid/gid 2000 and needs both directories to
+  # persist: the first-boot wizard writes config.json for sqlite, while the
+  # database holds mail and the rest of the configuration.
+  systemd.tmpfiles.rules = [
+    "d /etc/stalwart 0750 root root - -"
+    "d /var/lib/stalwart 0750 2000 2000 - -"
+    "d /var/lib/stalwart/etc 0750 2000 2000 - -"
+    "d /var/lib/stalwart/data 0750 2000 2000 - -"
+  ];
+
+  systemd.services.docker-stalwart.serviceConfig.LimitNOFILE = 65536;
 
   # --- headscale ---
   services.headscale = {
@@ -248,35 +296,62 @@ in {
   services.caddy = {
     enable = true;
     email = "zoey.spessanha@zeetech.io";
-    virtualHosts = {
-      "hs.zeetech.io".extraConfig = ''
-        log
-        reverse_proxy 127.0.0.1:8080
-      '';
-      # the PDS runs on yby (cgnat, no inbound), so this vps terminates tls and
-      # reaches it over the tailnet; caddy holds the firehose websocket up so a
-      # relay can crawl it without cloudflare in between. yby's tailnet ip, not
-      # a magic dns name, since accept-dns is off above. no access log: the
-      # firehose would flood loki
-      "pds.zeetech.io".extraConfig = ''
-        reverse_proxy http://${ybyTailnetIp}:4000
-      '';
-      "solaria.taina.dev.br".extraConfig = ''
-        reverse_proxy http://${ybyTailnetIp}:4014
-      '';
-      # the knot also runs on yby. caddy terminates tls here and reaches it over
-      # the tailnet, websockets (/events) included; the ssh side is relayed by
-      # the socket-proxyd unit below
-      "knot.zeetech.io".extraConfig = ''
-        log
-        reverse_proxy http://${ybyTailnetIp}:5555
-      '';
+    virtualHosts =
+      {
+        "hs.zeetech.io".extraConfig = ''
+          log
+          reverse_proxy 127.0.0.1:8080
+        '';
+        # the PDS runs on yby (cgnat, no inbound), so this vps terminates tls and
+        # reaches it over the tailnet; caddy holds the firehose websocket up so a
+        # relay can crawl it without cloudflare in between. yby's tailnet ip, not
+        # a magic dns name, since accept-dns is off above. no access log: the
+        # firehose would flood loki
+        "pds.zeetech.io".extraConfig = ''
+          reverse_proxy http://${ybyTailnetIp}:4000
+        '';
+        "solaria.taina.dev.br".extraConfig = ''
+          reverse_proxy http://${ybyTailnetIp}:4014
+        '';
+        # vaultwarden runs on yby; caddy terminates public tls and reaches it
+        # over the tailnet, websockets included. no access log: notification
+        # websocket urls carry a jwt in the access_token query parameter
+        "vault.zeetech.io".extraConfig = ''
+          reverse_proxy http://${ybyTailnetIp}:8222
+        '';
+        # the knot also runs on yby. caddy terminates tls here and reaches it over
+        # the tailnet, websockets (/events) included; the ssh side is relayed by
+        # the socket-proxyd unit below
+        "knot.zeetech.io".extraConfig = ''
+          log
+          reverse_proxy http://${ybyTailnetIp}:5555
+        '';
 
-      # tailnet-only dashboards, gated by remote ip (see tailnetVhost above)
-      "http://status.eveo".extraConfig = tailnetVhost "127.0.0.1:3001";
-      "http://dns.eveo".extraConfig = tailnetVhost "127.0.0.1:3000";
-      "http://logs.eveo".extraConfig = tailnetVhost "127.0.0.1:3002";
-    };
+        # tailnet-only dashboards, gated by remote ip (see tailnetVhost above)
+        "http://status.eveo".extraConfig = tailnetVhost "127.0.0.1:3001";
+        "http://dns.eveo".extraConfig = tailnetVhost "127.0.0.1:3000";
+        "http://logs.eveo".extraConfig = tailnetVhost "127.0.0.1:3002";
+      }
+      // lib.optionalAttrs stalwartPublicHttp {
+        # stalwart terminates tls for the mail protocols itself. caddy owns 443,
+        # so only its http endpoints are proxied; the backend is loopback-only.
+        # the other names serve client discovery and the mta-sts policy.
+        "mail.zeetech.io".extraConfig = ''
+          reverse_proxy http://127.0.0.1:8081
+        '';
+        "autoconfig.zeetech.io".extraConfig = ''
+          reverse_proxy http://127.0.0.1:8081
+        '';
+        "autodiscover.zeetech.io".extraConfig = ''
+          reverse_proxy http://127.0.0.1:8081
+        '';
+        "mta-sts.zeetech.io".extraConfig = ''
+          reverse_proxy http://127.0.0.1:8081
+        '';
+        "ua-auto-config.zeetech.io".extraConfig = ''
+          reverse_proxy http://127.0.0.1:8081
+        '';
+      };
   };
 
   # --- tangled knot: git-over-ssh relay ---
@@ -295,22 +370,6 @@ in {
       ExecStart = "${config.systemd.package}/lib/systemd/systemd-socket-proxyd --exit-idle-time=5min ${ybyTailnetIp}:2222";
       DynamicUser = true;
     };
-  };
-
-  # --- maddy: personal smtp ---
-  # off for now: port 25 outbound is blocked by default on most vps providers,
-  # so it needs an unblock request + rDNS/PTR before it is worth enabling.
-  # re-enable the mail firewall ports above when this flips to true.
-  # after first boot:
-  #   - check /var/lib/maddy/dkim_keys/ and publish the DKIM dns record
-  #   - set SPF + DMARC records for the real domain
-  services.maddy = {
-    enable = false;
-    primaryDomain = "example.com";
-    hostname = "mail.example.com";
-    # TODO: add accounts, e.g.
-    # ensureAccounts = ["zoey@example.com"];
-    # ensureCredentials."zoey@example.com".passwordFile = "/var/lib/maddy-secrets/zoey";
   };
 
   system.stateVersion = "26.05";
