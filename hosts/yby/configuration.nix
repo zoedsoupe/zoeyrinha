@@ -139,6 +139,7 @@ in {
           # caddy forwards the client ip; only eveo may supply that header
           IP_HEADER = "X-Forwarded-For";
           IP_HEADER_TRUSTED_PROXIES = "100.64.0.1/32";
+          TZ = "America/Sao_Paulo";
         };
         environmentFiles = ["/etc/vaultwarden/vaultwarden.env"];
       };
