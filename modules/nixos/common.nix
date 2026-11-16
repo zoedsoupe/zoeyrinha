@@ -8,8 +8,6 @@
   # definition for xterm-ghostty". installs terminfo for the common terminals.
   environment.enableAllTerminfo = true;
 
-  boot.kernelPackages = pkgs.linuxPackages_7_2;
-
   nix.settings = {
     experimental-features = ["nix-command" "flakes"];
     substituters = [
