@@ -227,6 +227,27 @@ in {
   };
   services.zoeyrinha-web.hostname = "zoedsoupe.zeetech.io";
 
+  services.beam.containers.tela = {
+    enable = true;
+    image = "ghcr.io/zoedsoupe/tela:0.1.0";
+    uid = 994;
+    gid = 994;
+    dataDir = "/zdata/tela";
+    requiredMounts = ["/zdata"];
+    port = 4013;
+    environment = {
+      PHX_SERVER = "true";
+      PHX_HOST = "tela.zeetech.io";
+      PORT = "4013";
+      DATABASE_PATH = "/data/tela.db";
+      UPLOADS_DIR = "/data/uploads";
+      RELEASE_DISTRIBUTION = "none";
+    };
+    environmentFiles = [
+      "/etc/phoenix/tela.env"
+    ];
+  };
+
   services.beam.apps = {
     pitaco = {
       enable = true;
@@ -314,6 +335,7 @@ in {
     "zdata/docker" = "/zdata/docker";
     "zdata/atuin" = "/zdata/atuin";
     "zdata/vaultwarden" = "/zdata/vaultwarden";
+    "zdata/tela" = "/zdata/tela";
   };
 
   # tailnet-facing reverse proxy
@@ -337,6 +359,7 @@ in {
       "zoedsoupe.zeetech.io" = "http://localhost:4010";
       "pitaco.zeetech.io" = "http://localhost:4011";
       "paintbox.zeetech.io" = "http://localhost:4012";
+      "tela.zeetech.io" = "http://localhost:4013";
     };
   };
 
