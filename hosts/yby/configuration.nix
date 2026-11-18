@@ -229,7 +229,7 @@ in {
 
   services.beam.containers.tela = {
     enable = true;
-    image = "ghcr.io/zoedsoupe/tela:0.2.0";
+    image = "ghcr.io/zoedsoupe/tela:0.3.0";
     uid = 994;
     gid = 994;
     dataDir = "/zdata/tela";
