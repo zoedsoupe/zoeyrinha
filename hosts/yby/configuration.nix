@@ -92,7 +92,7 @@ in {
   nextcloud.enable = false;
 
   # git forge: source of truth on the tailnet
-  forgejo.enable = true;
+  forgejo.enable = false;
 
   glances.enable = true;
 
@@ -324,7 +324,7 @@ in {
   environment.systemPackages = with pkgs; [smartmontools];
 
   zfsDatasets = {
-    "zroot/forgejo" = "/var/lib/forgejo";
+    # "zroot/forgejo" = "/var/lib/forgejo";
     "zdata/pesque" = "/zdata/pesque";
     "zdata/pitaco" = "/zdata/pitaco";
     # "zdata/quintal" = "/zdata/quintal";
