@@ -302,7 +302,7 @@ in {
   # knot's and the phoenix apps' secrets (/etc/taina/taina.env, see README).
   services.beam.containers.taina = {
     enable = true;
-    image = "ghcr.io/taina-labs/taina:v0.8.0";
+    image = "ghcr.io/taina-labs/taina:v0.9.0";
     uid = 989;
     gid = 987;
     port = 4014;
