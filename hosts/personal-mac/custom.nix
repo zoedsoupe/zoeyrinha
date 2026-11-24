@@ -113,7 +113,7 @@
   zsh = {
     enable = true;
     profileExtra = ''
-      ${pkgs.krabby}/bin/krabby random 2> /dev/null pokemon sprites
+      ${pkgs.krabby}/bin/krabby random 2> /dev/null
       eval "$(/opt/homebrew/bin/brew shellenv)"
       eval "$(atuin init zsh)"
       alias ls='eza'
