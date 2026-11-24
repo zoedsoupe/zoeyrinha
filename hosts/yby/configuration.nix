@@ -316,6 +316,9 @@ in {
     scheme = "https";
     storageDir = "/zdata/ybira";
     backupDir = "/zdata/backups";
+    maxBlobSize = 3072;
+    maxConcurrentUploads = 5;
+    updateCheck = true;
     backup.enable = true;
   };
 
