@@ -176,7 +176,7 @@ in {
   # self-hosted atproto PDS, built from the release in the pesque flake
   services.beam.containers.pesque = {
     enable = true;
-    image = "ghcr.io/zeeetech/pesque:1.15.7";
+    image = "ghcr.io/zeeetech/pesque:1.16.0";
     uid = 991;
     gid = 989;
     dataDir = "/zdata/pesque";
@@ -241,7 +241,7 @@ in {
   # in /etc/phoenix/<name>.env (see the README), never in the store
   services.beam.containers.zoeyrinha-web = {
     enable = true;
-    image = "ghcr.io/zoedsoupe/zoeyrinha-web:0.1.0";
+    image = "ghcr.io/zoedsoupe/zoeyrinha-web:0.2.0";
     uid = 993;
     gid = 993;
     port = 4010;
