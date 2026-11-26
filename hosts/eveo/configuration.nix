@@ -280,6 +280,9 @@ in {
         # records; headscale only forwards here and keeps serving the automatic
         # magic-dns node names. 1.1.1.1 is a failover for when adguard is down.
         nameservers.global = ["100.64.0.1" "1.1.1.1"];
+        # service aliases are not magic-dns node names. an explicit split route
+        # keeps macOS from sending the short yby zone to the lan resolver.
+        nameservers.split."yby" = ["100.64.0.1"];
         # extra records live in adguard now, added in its web UI:
         #   yby, git.yby, dash.yby   -> 100.64.0.2
         #   status.eveo, dns.eveo, logs.eveo    -> 100.64.0.1
