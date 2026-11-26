@@ -127,6 +127,27 @@ in {
         };
       };
 
+      # upstream only publishes the self-host client as latest, so pin the
+      # multi-arch manifest. drawings live in browser storage, not on yby
+      excalidraw = {
+        image = "excalidraw/excalidraw@sha256:f7ee194addd607bf831d2af0f0a34463dd4225e426cf35199ef0b12a803398e9";
+        ports = ["127.0.0.1:4015:80"];
+      };
+
+      # browser-only workspace; the access code lives outside the nix store
+      siyuan = {
+        image = "b3log/siyuan:v3.8.12";
+        cmd = ["serve" "--workspace=/siyuan/workspace/"];
+        ports = ["127.0.0.1:6806:6806"];
+        volumes = ["/zdata/siyuan/workspace:/siyuan/workspace"];
+        environment = {
+          PUID = "1000";
+          PGID = "1000";
+          TZ = "America/Sao_Paulo";
+        };
+        environmentFiles = ["/etc/siyuan/siyuan.env"];
+      };
+
       # public through eveo's caddy over the tailnet. secrets live outside the
       # store in /etc/vaultwarden/vaultwarden.env (ADMIN_TOKEN, SMTP, etc.)
       vaultwarden = {
@@ -148,6 +169,7 @@ in {
 
   systemd.tmpfiles.rules = [
     "d /zdata/atuin/config 0750 1000 1000 - -"
+    "d /zdata/siyuan/workspace 0750 1000 1000 - -"
     "d /zdata/vaultwarden 0750 root root - -"
   ];
 
@@ -337,6 +359,7 @@ in {
     "zdata/knot" = "/zdata/knot";
     "zdata/docker" = "/zdata/docker";
     "zdata/atuin" = "/zdata/atuin";
+    "zdata/siyuan" = "/zdata/siyuan";
     "zdata/vaultwarden" = "/zdata/vaultwarden";
     "zdata/tela" = "/zdata/tela";
   };
@@ -348,8 +371,18 @@ in {
       "git.yby" = "127.0.0.1:3000";
       "dash.yby" = "127.0.0.1:61208";
       "atuin.yby" = "127.0.0.1:8888";
+      "draw.yby" = "127.0.0.1:4015";
     };
   };
+
+  # SiYuan requires the real client address, not a caller-supplied forwarding
+  # chain. caddy preserves Host and upgrades /ws automatically.
+  services.caddy.virtualHosts."http://notes.yby".extraConfig = ''
+    log
+    reverse_proxy 127.0.0.1:6806 {
+      header_up X-Forwarded-For {remote_host}
+    }
+  '';
 
   # PDS + taina + tangled knot + vaultwarden ports
   networking.firewall.interfaces.tailscale0.allowedTCPPorts = [4000 4014 5555 2222 8222];

@@ -34,7 +34,7 @@ sudo headscale nodes register --user zoey --key <nodekey>
 tailnet names live in adguard (`http://dns.eveo` -> Filters -> DNS rewrites), no rebuild:
 
 ```
-yby, git.yby, dash.yby   ->  <yby tailnet ip, 100.64.0.2 default>
+yby, git.yby, dash.yby, notes.yby, draw.yby   ->  <yby tailnet ip, 100.64.0.2 default>
 status.eveo, dns.eveo, logs.eveo    ->  100.64.0.1
 ```
 
@@ -105,7 +105,20 @@ cloudflared tunnel route dns yby pitaco.zeetech.io
 cloudflared tunnel route dns yby paintbox.zeetech.io
 ```
 
-## 10. ops (eveo)
+## 10. siyuan + excalidraw
+
+create SiYuan's access code before rebuilding yby:
+
+```sh
+sudo install -d -m700 /etc/siyuan
+printf 'SIYUAN_ACCESS_AUTH_CODE=%s\n' "$(openssl rand -base64 32)" \
+  | sudo tee /etc/siyuan/siyuan.env > /dev/null
+sudo chmod 600 /etc/siyuan/siyuan.env
+```
+
+open `http://notes.yby` and `http://draw.yby` after adding the DNS rewrites above. SiYuan's Docker deployment is browser-only and keeps its workspace in `/zdata/siyuan/workspace`. Excalidraw keeps drawings in browser storage, so export `.excalidraw` files for backups; its self-hosted client has no sharing or collaboration backend.
+
+## 11. ops (eveo)
 
 ```sh
 # gatus email (icloud app-specific password)

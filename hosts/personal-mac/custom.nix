@@ -19,7 +19,7 @@
       ]
       ++ elixir-only;
   };
-  fzf.enable = true;
+  fzf.enable = false;
   tmux.enable = true;
   ghostty = {
     enable = true;

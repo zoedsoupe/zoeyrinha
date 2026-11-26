@@ -1,7 +1,7 @@
 {pkgs, ...}: {
   bat.enable = true;
   direnv.enable = false;
-  fzf.enable = true;
+  fzf.enable = false;
   tmux.enable = true;
   gh.enable = false;
   xplr.enable = false;
